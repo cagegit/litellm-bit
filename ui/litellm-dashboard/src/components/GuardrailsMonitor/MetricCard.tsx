@@ -1,4 +1,5 @@
 import React, { type ReactNode } from "react";
+import { useTranslations } from "@/i18n";
 
 interface MetricCardProps {
   label: string;
@@ -9,6 +10,8 @@ interface MetricCardProps {
 }
 
 export function MetricCard({ label, value, valueColor = "text-gray-900", icon, subtitle }: MetricCardProps) {
+  const { t } = useTranslations("settings");
+
   return (
     <div className="h-full bg-white border border-gray-200 rounded-lg p-5 flex flex-col">
       <div className="flex items-center justify-between mb-1">

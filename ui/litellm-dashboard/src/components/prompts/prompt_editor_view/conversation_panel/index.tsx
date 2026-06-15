@@ -3,12 +3,15 @@ import { ClearOutlined } from "@ant-design/icons";
 import { Button as TremorButton } from "@tremor/react";
 import { ConversationPanelProps } from "./types";
 import { useConversation } from "./useConversation";
+import { useTranslations } from "@/i18n";
 import VariableInput from "./VariableInput";
 import MessageList from "./MessageList";
 import VariableWarning from "./VariableWarning";
 import MessageInput from "./MessageInput";
 
 const ConversationPanel: React.FC<ConversationPanelProps> = ({ prompt, accessToken }) => {
+  const { t } = useTranslations("prompts");
+
   const {
     isLoading,
     messages,
@@ -43,7 +46,7 @@ const ConversationPanel: React.FC<ConversationPanelProps> = ({ prompt, accessTok
             className="bg-gray-100 hover:bg-gray-200 text-gray-700 border-gray-300"
             icon={ClearOutlined}
           >
-            Clear Chat
+            {t("clearChat")}
           </TremorButton>
         </div>
       )}

@@ -4,6 +4,7 @@ import { InfoCircleOutlined } from "@ant-design/icons";
 import { FormInstance } from "antd/es/form";
 import { AUTH_TYPE, OAUTH_FLOW } from "./types";
 import OpenAPIQuickPicker, { OpenAPIRegistryEntry, OpenAPIKeyTool } from "./OpenAPIQuickPicker";
+import { useTranslations } from "@/i18n";
 
 interface OpenAPIFormSectionProps {
   form: FormInstance;
@@ -31,6 +32,7 @@ const OpenAPIFormSection: React.FC<OpenAPIFormSectionProps> = ({
   onLogoUrlChange,
   onOAuthDocsUrlChange,
 }) => {
+  const { t } = useTranslations("mcp");
   const [selectedPreset, setSelectedPreset] = useState<string | null>(null);
 
   const handlePresetSelect = (entry: OpenAPIRegistryEntry) => {
@@ -66,17 +68,17 @@ const OpenAPIFormSection: React.FC<OpenAPIFormSectionProps> = ({
       <Form.Item
         label={
           <span className="text-sm font-medium text-gray-700 flex items-center">
-            OpenAPI Spec URL
-            <Tooltip title="URL to an OpenAPI specification (JSON or YAML). MCP tools will be automatically generated from the API endpoints defined in the spec.">
+            {t("openapiSpecUrl")}
+            <Tooltip title={t("openapiSpecUrlTooltip")}>
               <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
             </Tooltip>
           </span>
         }
         name="spec_path"
-        rules={[{ required: true, message: "Please enter an OpenAPI spec URL" }]}
+        rules={[{ required: true, message: t("openapiSpecUrlRequired") }]}
       >
         <Input
-          placeholder="https://petstore3.swagger.io/api/v3/openapi.json"
+          placeholder={t("openapiSpecUrlPlaceholder")}
           className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
           onChange={() => {
             // Clear the preset selection when the user manually edits the spec URL

@@ -1,3 +1,4 @@
+import { useTranslations } from "@/i18n";
 import { useOrganizations } from "@/app/(dashboard)/hooks/organizations/useOrganizations";
 import AvailableTeamsPanel from "@/components/team/available_teams";
 import TeamInfoView from "@/components/team/TeamInfo";
@@ -175,6 +176,7 @@ const Teams: React.FC<TeamProps> = ({
   organizations,
   premiumUser = false,
 }) => {
+  const { t } = useTranslations("common");
   console.log(`organizations: ${JSON.stringify(organizations)}`);
   const { data: organizationsData } = useOrganizations();
   const [isLoading, setIsLoading] = useState(true);
@@ -224,7 +226,7 @@ const Teams: React.FC<TeamProps> = ({
       setTeams(response.teams ?? []);
       setTotalTeams(response.total ?? 0);
     } catch (err: any) {
-      setFetchError(err?.message || "Failed to fetch teams");
+      setFetchError(err?.message || t("failedToFetchTeams"));
     } finally {
       setIsLoading(false);
     }
@@ -407,9 +409,9 @@ const Teams: React.FC<TeamProps> = ({
       setIsTeamDeleting(true);
       await teamDeleteCall(accessToken, teamToDelete.team_id);
       await fetchTeamsV2();
-      NotificationsManager.success("Team deleted successfully");
+      NotificationsManager.success(t("teamDeletedSuccessfully"));
     } catch (error) {
-      NotificationsManager.fromBackend("Error deleting the team: " + error);
+      NotificationsManager.fromBackend(t("errorDeletingTeam") + ": " + error);
     } finally {
       setIsTeamDeleting(false);
       setIsDeleteModalOpen(false);
@@ -458,7 +460,7 @@ const Teams: React.FC<TeamProps> = ({
           throw new Error(`Team alias ${newTeamAlias} already exists, please pick another alias`);
         }
 
-        NotificationsManager.info("Creating Team");
+        NotificationsManager.info(t("creatingTeam"));
 
         // Handle logging settings in metadata
         if (loggingSettings.length > 0) {
@@ -578,7 +580,7 @@ const Teams: React.FC<TeamProps> = ({
         }
 
         await teamCreateCall(accessToken, formValues);
-        NotificationsManager.success("Team created");
+        NotificationsManager.success(t("teamCreated"));
         await fetchTeamsV2({
           page: currentPage,
           size: pageSize,
@@ -592,7 +594,7 @@ const Teams: React.FC<TeamProps> = ({
       }
     } catch (error) {
       console.error("Error creating the team:", error);
-      NotificationsManager.fromBackend("Error creating the team: " + error);
+      NotificationsManager.fromBackend(t("errorCreatingTeam") + ": " + error);
     }
   };
 
@@ -680,7 +682,7 @@ const Teams: React.FC<TeamProps> = ({
   const teamColumns: ColumnsType<Team> = useMemo(
     () => [
       {
-        title: "Team ID",
+        title: t("teamId"),
         dataIndex: "team_id",
         key: "team_id",
         width: 170,
@@ -700,7 +702,7 @@ const Teams: React.FC<TeamProps> = ({
         ),
       },
       {
-        title: "Team Alias",
+        title: t("teamAlias"),
         dataIndex: "team_alias",
         key: "team_alias",
         ellipsis: true,
@@ -716,7 +718,7 @@ const Teams: React.FC<TeamProps> = ({
         ),
       },
       {
-        title: "Organization",
+        title: t("organization"),
         key: "organization",
         width: 160,
         ellipsis: true,
@@ -732,7 +734,7 @@ const Teams: React.FC<TeamProps> = ({
         },
       },
       {
-        title: "Resources",
+        title: t("resources"),
         key: "resources",
         width: 240,
         render: (_: unknown, record: Team) => {
@@ -741,7 +743,7 @@ const Teams: React.FC<TeamProps> = ({
           const keyCount = perTeamInfo?.[record.team_id]?.keys_count ?? 0;
           return (
             <Flex gap={12} align="center">
-              <Tooltip title={`${memberCount} Members`}>
+              <Tooltip title={`${memberCount} ${t("members")}`}>
                 <Tag color="purple" style={{ fontSize: 14, padding: "2px 8px", margin: 0 }}>
                   <Flex align="center" gap={6}>
                     <UsersIcon size={14} />
@@ -749,7 +751,7 @@ const Teams: React.FC<TeamProps> = ({
                   </Flex>
                 </Tag>
               </Tooltip>
-              <Tooltip title={`${modelCount} Models`}>
+              <Tooltip title={`${modelCount} ${t("models")}`}>
                 <Tag color="blue" style={{ fontSize: 14, padding: "2px 8px", margin: 0 }}>
                   <Flex align="center" gap={6}>
                     <LayersIcon size={14} />
@@ -757,7 +759,7 @@ const Teams: React.FC<TeamProps> = ({
                   </Flex>
                 </Tag>
               </Tooltip>
-              <Tooltip title={`${keyCount} Keys`}>
+              <Tooltip title={`${keyCount} ${t("keys")}`}>
                 <Tag color="cyan" style={{ fontSize: 14, padding: "2px 8px", margin: 0 }}>
                   <Flex align="center" gap={6}>
                     <KeyIcon size={14} />
@@ -770,7 +772,7 @@ const Teams: React.FC<TeamProps> = ({
         },
       },
       {
-        title: "Spend / Budget",
+        title: t("spendBudget"),
         key: "spend",
         width: 200,
         sorter: true,
@@ -781,7 +783,7 @@ const Teams: React.FC<TeamProps> = ({
           const budgetStr =
             budgetVal != null
               ? `$${budgetVal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
-              : "Unlimited";
+              : t("unlimited");
           const percent = budgetVal != null && budgetVal > 0 ? Math.min((spendVal / budgetVal) * 100, 100) : null;
           return (
             <Flex vertical gap={2}>
@@ -806,7 +808,7 @@ const Teams: React.FC<TeamProps> = ({
         },
       },
       {
-        title: "Created",
+        title: t("created"),
         dataIndex: "created_at",
         key: "created_at",
         width: 130,
@@ -821,7 +823,7 @@ const Teams: React.FC<TeamProps> = ({
         ),
       },
       {
-        title: "Actions",
+        title: t("actions"),
         key: "actions",
         width: 120,
         align: "right" as const,
@@ -829,19 +831,19 @@ const Teams: React.FC<TeamProps> = ({
           <Space size={4}>
             <TableIconActionButton
               variant="Copy"
-              tooltipText="Copy Team ID"
+              tooltipText={t("copyTeamId")}
               onClick={() => {
                 navigator.clipboard
                   .writeText(record.team_id)
-                  .then(() => message.success("Team ID copied"))
-                  .catch(() => message.error("Failed to copy"));
+                  .then(() => message.success(t("teamIdCopied")))
+                  .catch(() => message.error(t("failedToCopy")));
               }}
             />
             {userRole === "Admin" && (
               <>
                 <TableIconActionButton
                   variant="Edit"
-                  tooltipText="Edit team"
+                  tooltipText={t("editTeam")}
                   dataTestId="edit-team-button"
                   onClick={() => {
                     setSelectedTeamId(record.team_id);
@@ -850,7 +852,7 @@ const Teams: React.FC<TeamProps> = ({
                 />
                 <TableIconActionButton
                   variant="Delete"
-                  tooltipText="Delete team"
+                  tooltipText={t("deleteTeam")}
                   dataTestId="delete-team-button"
                   onClick={() => handleDelete(record)}
                 />
@@ -878,13 +880,13 @@ const Teams: React.FC<TeamProps> = ({
       return (
         <Flex vertical align="center" gap={16} style={{ padding: "64px 0" }}>
           <Text type="danger" style={{ fontSize: 15 }}>
-            Failed to load teams
+            {t("failedToLoadTeams")}
           </Text>
           <Text type="secondary" style={{ fontSize: 13 }}>
             {fetchError}
           </Text>
           <Button icon={<ReloadOutlined />} onClick={handleRetry}>
-            Retry
+            {t("retry")}
           </Button>
         </Flex>
       );
@@ -902,11 +904,11 @@ const Teams: React.FC<TeamProps> = ({
             <div style={{ padding: "64px 0", textAlign: "center" }}>
               <TeamOutlined style={{ fontSize: 40, color: "#d9d9d9", marginBottom: 12 }} />
               <div>
-                <Text style={{ fontSize: 15, color: "#595959" }}>No teams yet</Text>
+                <Text style={{ fontSize: 15, color: "#595959" }}>{t("noTeamsYet")}</Text>
               </div>
               <div style={{ marginTop: 4 }}>
                 <Text type="secondary" style={{ fontSize: 13 }}>
-                  Create your first team to organize members and manage access to models.
+                  {t("createYourFirstTeam")}
                 </Text>
               </div>
               {canCreateOrManageTeams(userRole, userID, organizations) && (
@@ -932,7 +934,7 @@ const Teams: React.FC<TeamProps> = ({
   const tabItems = [
     {
       key: "your-teams",
-      label: "Your Teams",
+      label: t("yourTeams"),
       children: (
         <>
           <Card styles={{ body: { padding: 0 } }}>
@@ -941,7 +943,7 @@ const Teams: React.FC<TeamProps> = ({
                 <Input
                   prefix={<SearchIcon size={16} />}
                   suffix={isSearching ? <AntDLoadingSpinner size="small" /> : null}
-                  placeholder="Search teams by name or ID..."
+                  placeholder={t("searchTeamsByNameOrId")}
                   onChange={(e) => handleSearchChange(e.target.value)}
                   allowClear
                   style={{ maxWidth: 400 }}
@@ -963,7 +965,7 @@ const Teams: React.FC<TeamProps> = ({
                   fetchTeamsV2({ page, size });
                 }}
                 size="small"
-                showTotal={(total) => `${total} teams`}
+                showTotal={(total) => `${total} ${t("teams")}`}
                 showSizeChanger
                 pageSizeOptions={["10", "20", "50"]}
               />
@@ -974,23 +976,21 @@ const Teams: React.FC<TeamProps> = ({
 
           <DeleteResourceModal
             isOpen={isDeleteModalOpen}
-            title="Delete Team?"
+            title={t("deleteTeamQuestion")}
             alertMessage={(() => {
               const deleteKeyCount = teamToDelete?.keys_count ?? teamToDelete?.keys?.length ?? 0;
-              return deleteKeyCount === 0
-                ? undefined
-                : `Warning: This team has ${deleteKeyCount} keys associated with it. Deleting the team will also delete all associated keys. This action is irreversible.`;
+              return deleteKeyCount === 0 ? undefined : t("teamHasKeysWarning", { count: deleteKeyCount });
             })()}
-            message="Are you sure you want to delete this team and all its keys? This action cannot be undone."
-            resourceInformationTitle="Team Information"
+            message={t("deleteTeamAndKeysConfirmation")}
+            resourceInformationTitle={t("teamInformation")}
             resourceInformation={[
-              { label: "Team ID", value: teamToDelete?.team_id, code: true },
-              { label: "Team Name", value: teamToDelete?.team_alias },
+              { label: t("teamId"), value: teamToDelete?.team_id, code: true },
+              { label: t("teamName"), value: teamToDelete?.team_alias },
               {
-                label: "Keys",
+                label: t("keys"),
                 value: teamToDelete?.keys_count ?? teamToDelete?.keys?.length ?? 0,
               },
-              { label: "Members", value: teamToDelete?.members_with_roles?.length },
+              { label: t("members"), value: teamToDelete?.members_with_roles?.length },
             ]}
             requiredConfirmation={teamToDelete?.team_alias}
             onCancel={cancelDelete}
@@ -1002,14 +1002,14 @@ const Teams: React.FC<TeamProps> = ({
     },
     {
       key: "available-teams",
-      label: "Available Teams",
+      label: t("availableTeams"),
       children: <AvailableTeamsPanel accessToken={accessToken} userID={userID} />,
     },
     ...(isProxyAdminRole(userRole || "")
       ? [
           {
             key: "default-settings",
-            label: "Default Team Settings",
+            label: t("defaultTeamSettings"),
             children: <TeamSSOSettings accessToken={accessToken} userID={userID || ""} userRole={userRole || ""} />,
           },
         ]
@@ -1052,9 +1052,9 @@ const Teams: React.FC<TeamProps> = ({
             <Space direction="vertical" size={0}>
               <Title level={2} style={{ margin: 0 }}>
                 <TeamOutlined style={{ marginRight: 8 }} />
-                Teams
+                {t("teams")}
               </Title>
-              <Text type="secondary">Manage teams, members, and their access to models and budgets</Text>
+              <Text type="secondary">{t("manageTeamsMembersAndAccess")}</Text>
             </Space>
             {canCreateOrManageTeams(userRole, userID, organizations) && (
               <Button
@@ -1074,7 +1074,7 @@ const Teams: React.FC<TeamProps> = ({
 
       {canCreateOrManageTeams(userRole, userID, organizations) && (
         <Modal
-          title="Create Team"
+          title={t("createTeam")}
           open={isTeamModalVisible}
           width={1000}
           footer={null}
@@ -1084,12 +1084,12 @@ const Teams: React.FC<TeamProps> = ({
           <Form form={form} onFinish={handleCreate} labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} labelAlign="left">
             <>
               <Form.Item
-                label="Team Name"
+                label={t("teamName")}
                 name="team_alias"
                 rules={[
                   {
                     required: true,
-                    message: "Please input a team name",
+                    message: t("pleaseInputTeamName"),
                   },
                 ]}
               >
@@ -1106,11 +1106,11 @@ const Teams: React.FC<TeamProps> = ({
                     <Form.Item
                       label={
                         <span>
-                          Organization{" "}
+                          {t("organization")}{" "}
                           <Tooltip
                             title={
                               <span>
-                                Organizations can have multiple teams. Learn more about{" "}
+                                {t("organizationsCanHaveMultipleTeams")}{" "}
                                 <a
                                   href="https://docs.litellm.ai/docs/proxy/user_management_heirarchy"
                                   target="_blank"
@@ -1121,7 +1121,7 @@ const Teams: React.FC<TeamProps> = ({
                                   }}
                                   onClick={(e) => e.stopPropagation()}
                                 >
-                                  user management hierarchy
+                                  {t("userManagementHierarchy")}
                                 </a>
                               </span>
                             }
@@ -1138,24 +1138,20 @@ const Teams: React.FC<TeamProps> = ({
                           ? [
                               {
                                 required: true,
-                                message: "Please select an organization",
+                                message: t("pleaseSelectAnOrganization"),
                               },
                             ]
                           : []
                       }
                       help={
-                        isSingleOrg
-                          ? "You can only create teams within this organization"
-                          : isOrgAdmin
-                            ? "required"
-                            : ""
+                        isSingleOrg ? t("youCanOnlyCreateTeamsWithinThisOrganization") : isOrgAdmin ? t("required") : ""
                       }
                     >
                       <Select
                         showSearch
                         allowClear={!isOrgAdmin}
                         disabled={isSingleOrg}
-                        placeholder={hasNoOrgs ? "No organizations available" : "Search or select an Organization"}
+                        placeholder={hasNoOrgs ? t("noOrganizationsAvailable") : t("searchOrSelectOrganization")}
                         onChange={(value) => {
                           form.setFieldValue("organization_id", value);
                           setCurrentOrgForCreateTeam(adminOrgs?.find((org) => org.organization_id === value) || null);
@@ -1179,10 +1175,7 @@ const Teams: React.FC<TeamProps> = ({
                     {/* Show message when org admin needs to select organization */}
                     {isOrgAdmin && !isSingleOrg && adminOrgs.length > 1 && (
                       <div className="mb-8 p-4 bg-blue-50 border border-blue-200 rounded-md">
-                        <Text style={{ color: "#1e40af", fontSize: 14 }}>
-                          Please select an organization to create a team for. You can only create teams within
-                          organizations where you are an admin.
-                        </Text>
+                        <Text style={{ color: "#1e40af", fontSize: 14 }}>{t("selectOrganizationToCreateTeam")}</Text>
                       </div>
                     )}
                   </>
@@ -1191,8 +1184,8 @@ const Teams: React.FC<TeamProps> = ({
               <Form.Item
                 label={
                   <span>
-                    Models{" "}
-                    <Tooltip title="These are the models that your selected team has access to">
+                    {t("models")}{" "}
+                    <Tooltip title={t("modelsTeamHasAccessTo")}>
                       <InfoCircleOutlined style={{ marginLeft: "4px" }} />
                     </Tooltip>
                   </span>
@@ -1200,7 +1193,7 @@ const Teams: React.FC<TeamProps> = ({
                 rules={[
                   {
                     required: true,
-                    message: "Please select at least one model",
+                    message: t("pleaseSelectAtLeastOneModel"),
                   },
                 ]}
                 name="models"
@@ -1218,20 +1211,20 @@ const Teams: React.FC<TeamProps> = ({
                 />
               </Form.Item>
 
-              <Form.Item label="Max Budget (USD)" name="max_budget">
+              <Form.Item label={t("maxBudgetUsd")} name="max_budget">
                 <NumericalInput step={0.01} precision={2} width={200} />
               </Form.Item>
-              <Form.Item className="mt-8" label="Reset Budget" name="budget_duration">
-                <Select defaultValue={null} placeholder="n/a">
+              <Form.Item className="mt-8" label={t("resetBudget")} name="budget_duration">
+                <Select defaultValue={null} placeholder={t("nA")}>
                   <Select.Option value="24h">daily</Select.Option>
                   <Select.Option value="7d">weekly</Select.Option>
                   <Select.Option value="30d">monthly</Select.Option>
                 </Select>
               </Form.Item>
-              <Form.Item label="Tokens per minute Limit (TPM)" name="tpm_limit">
+              <Form.Item label={t("tokensPerMinuteLimit")} name="tpm_limit">
                 <NumericalInput step={1} width={400} />
               </Form.Item>
-              <Form.Item label="Requests per minute Limit (RPM)" name="rpm_limit">
+              <Form.Item label={t("requestsPerMinuteLimit")} name="rpm_limit">
                 <NumericalInput step={1} width={400} />
               </Form.Item>
 
@@ -1245,14 +1238,10 @@ const Teams: React.FC<TeamProps> = ({
                 }}
               >
                 <AccordionHeader>
-                  <b>Additional Settings</b>
+                  <b>{t("additionalSettings")}</b>
                 </AccordionHeader>
                 <AccordionBody>
-                  <Form.Item
-                    label="Team ID"
-                    name="team_id"
-                    help="ID of the team you want to create. If not provided, it will be generated automatically."
-                  >
+                  <Form.Item label={t("teamId")} name="team_id" help={t("teamIdHelpText")}>
                     <TextInput
                       onChange={(e) => {
                         e.target.value = e.target.value.trim();
@@ -1260,49 +1249,41 @@ const Teams: React.FC<TeamProps> = ({
                     />
                   </Form.Item>
                   <Form.Item
-                    label="Team Member Budget (USD)"
+                    label={t("teamMemberBudgetUsd")}
                     name="team_member_budget"
                     normalize={(value) => (value ? Number(value) : undefined)}
-                    tooltip="This is the individual budget for a user in the team."
+                    tooltip={t("individualBudgetForAUser")}
                   >
                     <NumericalInput step={0.01} precision={2} width={200} />
                   </Form.Item>
                   <Form.Item
-                    label="Team Member Key Duration (eg: 1d, 1mo)"
+                    label={t("teamMemberKeyDuration")}
                     name="team_member_key_duration"
-                    tooltip="Set a limit to the duration of a team member's key. Format: 30s (seconds), 30m (minutes), 30h (hours), 30d (days), 1mo (month)"
+                    tooltip={t("teamMemberKeyDurationTooltip")}
                   >
-                    <TextInput placeholder="e.g., 30d" />
+                    <TextInput placeholder={t("eg30d")} />
                   </Form.Item>
                   <Form.Item
-                    label="Team Member RPM Limit"
+                    label={t("teamMemberRpmLimit")}
                     name="team_member_rpm_limit"
-                    tooltip="The RPM (Requests Per Minute) limit for individual team members"
+                    tooltip={t("rpmLimitForIndividualTeamMembers")}
                   >
                     <NumericalInput step={1} width={400} />
                   </Form.Item>
                   <Form.Item
-                    label="Team Member TPM Limit"
+                    label={t("teamMemberTpmLimit")}
                     name="team_member_tpm_limit"
-                    tooltip="The TPM (Tokens Per Minute) limit for individual team members"
+                    tooltip={t("tpmLimitForIndividualTeamMembers")}
                   >
                     <NumericalInput step={1} width={400} />
                   </Form.Item>
-                  <Form.Item
-                    label="Metadata"
-                    name="metadata"
-                    help="Additional team metadata. Enter metadata as JSON object."
-                  >
+                  <Form.Item label={t("metadata")} name="metadata" help={t("additionalTeamMetadataJson")}>
                     <Input.TextArea rows={4} />
                   </Form.Item>
                   <Form.Item
-                    label="Secret Manager Settings"
+                    label={t("secretManagerSettings")}
                     name="secret_manager_settings"
-                    help={
-                      premiumUser
-                        ? "Enter secret manager configuration as a JSON object."
-                        : "Premium feature - Upgrade to manage secret manager settings."
-                    }
+                    help={premiumUser ? t("enterSecretManagerConfig") : t("premiumFeatureUpgradeSecretManager")}
                     rules={[
                       {
                         validator: async (_, value) => {
@@ -1313,7 +1294,7 @@ const Teams: React.FC<TeamProps> = ({
                             JSON.parse(value);
                             return Promise.resolve();
                           } catch (error) {
-                            return Promise.reject(new Error("Please enter valid JSON"));
+                            return Promise.reject(new Error(t("pleaseEnterValidJson")));
                           }
                         },
                       },
@@ -1328,8 +1309,8 @@ const Teams: React.FC<TeamProps> = ({
                   <Form.Item
                     label={
                       <span>
-                        Guardrails{" "}
-                        <Tooltip title="Setup your first guardrail">
+                        {t("guardrails")}{" "}
+                        <Tooltip title={t("setupYourFirstGuardrail")}>
                           <a
                             href="https://docs.litellm.ai/docs/proxy/guardrails/quick_start"
                             target="_blank"
@@ -1343,12 +1324,12 @@ const Teams: React.FC<TeamProps> = ({
                     }
                     name="guardrails"
                     className="mt-8"
-                    help="Select existing guardrails or enter new ones"
+                    help={t("selectExistingGuardrailsOrEnterNew")}
                   >
                     <Select
                       mode="tags"
                       style={{ width: "100%" }}
-                      placeholder="Select or enter guardrails"
+                      placeholder={t("selectOrEnterGuardrails")}
                       options={guardrailsList.map((name) => ({
                         value: name,
                         label: name,
@@ -1383,7 +1364,7 @@ const Teams: React.FC<TeamProps> = ({
                     label={
                       <span>
                         Policies{" "}
-                        <Tooltip title="Apply policies to this team to control guardrails and other settings">
+                        <Tooltip title={t("common.applyPoliciesToThisTeamToControlGuardrailsAndOtherSettings")}>
                           <a
                             href="https://docs.litellm.ai/docs/proxy/guardrails/guardrail_policies"
                             target="_blank"
@@ -1402,7 +1383,7 @@ const Teams: React.FC<TeamProps> = ({
                     <Select
                       mode="tags"
                       style={{ width: "100%" }}
-                      placeholder="Select or enter policies"
+                      placeholder={t("common.selectOrEnterPolicies")}
                       options={policiesList.map((name) => ({
                         value: name,
                         label: name,
@@ -1422,7 +1403,7 @@ const Teams: React.FC<TeamProps> = ({
                     className="mt-8"
                     help="Select access groups to assign to this team"
                   >
-                    <AccessGroupSelector placeholder="Select access groups (optional)" />
+                    <AccessGroupSelector placeholder={t("common.selectAccessGroupsoptional")} />
                   </Form.Item>
                   <Form.Item
                     label={
@@ -1441,10 +1422,10 @@ const Teams: React.FC<TeamProps> = ({
                       onChange={(values: string[]) => form.setFieldValue("allowed_vector_store_ids", values)}
                       value={form.getFieldValue("allowed_vector_store_ids")}
                       accessToken={accessToken || ""}
-                      placeholder="Select vector stores (optional)"
+                      placeholder={t("common.selectVectorStores")}
                     />
                   </Form.Item>
-                  <Form.Item label="Allowed Pass Through Routes" name="allowed_passthrough_routes" className="mt-8">
+                  <Form.Item label={t("common.allowedPassThroughRoutes")} name="allowed_passthrough_routes" className="mt-8">
                     <Tooltip
                       title={
                         !premiumUser
@@ -1459,7 +1440,7 @@ const Teams: React.FC<TeamProps> = ({
                         onChange={(values: string[]) => form.setFieldValue("allowed_passthrough_routes", values)}
                         value={form.getFieldValue("allowed_passthrough_routes")}
                         accessToken={accessToken || ""}
-                        placeholder="Select pass through routes (optional)"
+                        placeholder={t("common.selectPassThroughRoutesoptional")}
                         disabled={!premiumUser || !isProxyAdminRole(userRole || "")}
                       />
                     </Tooltip>
@@ -1469,14 +1450,14 @@ const Teams: React.FC<TeamProps> = ({
 
               <Accordion className="mt-8 mb-8">
                 <AccordionHeader>
-                  <b>MCP Settings</b>
+                  <b>{t("common.mcpSettings")}</b>
                 </AccordionHeader>
                 <AccordionBody>
                   <Form.Item
                     label={
                       <span>
                         Allowed MCP Servers{" "}
-                        <Tooltip title="Select which MCP servers or access groups this team can access">
+                        <Tooltip title={t("common.selectWhichMcpServersOrAccessGroupsThisTeamCanAccess")}>
                           <InfoCircleOutlined style={{ marginLeft: "4px" }} />
                         </Tooltip>
                       </span>
@@ -1489,7 +1470,7 @@ const Teams: React.FC<TeamProps> = ({
                       onChange={(val: any) => form.setFieldValue("allowed_mcp_servers_and_groups", val)}
                       value={form.getFieldValue("allowed_mcp_servers_and_groups")}
                       accessToken={accessToken || ""}
-                      placeholder="Select MCP servers or access groups (optional)"
+                      placeholder={t("common.selectMcpServersOrAccessGroupsoptional")}
                     />
                   </Form.Item>
 
@@ -1521,14 +1502,14 @@ const Teams: React.FC<TeamProps> = ({
 
               <Accordion className="mt-8 mb-8">
                 <AccordionHeader>
-                  <b>Agent Settings</b>
+                  <b>{t("common.agentSettings")}</b>
                 </AccordionHeader>
                 <AccordionBody>
                   <Form.Item
                     label={
                       <span>
                         Allowed Agents{" "}
-                        <Tooltip title="Select which agents or access groups this team can access">
+                        <Tooltip title={t("common.selectWhichAgentsOrAccessGroupsThisTeamCanAccess")}>
                           <InfoCircleOutlined style={{ marginLeft: "4px" }} />
                         </Tooltip>
                       </span>
@@ -1541,7 +1522,7 @@ const Teams: React.FC<TeamProps> = ({
                       onChange={(val: any) => form.setFieldValue("allowed_agents_and_groups", val)}
                       value={form.getFieldValue("allowed_agents_and_groups")}
                       accessToken={accessToken || ""}
-                      placeholder="Select agents or access groups (optional)"
+                      placeholder={t("common.selectAgentsOrAccessGroupsoptional")}
                     />
                   </Form.Item>
                 </AccordionBody>
@@ -1549,7 +1530,7 @@ const Teams: React.FC<TeamProps> = ({
 
               <Accordion className="mt-8 mb-8">
                 <AccordionHeader>
-                  <b>Search Tool Settings</b>
+                  <b>{t("common.searchToolSettings")}</b>
                 </AccordionHeader>
                 <AccordionBody>
                   <Form.Item
@@ -1577,7 +1558,7 @@ const Teams: React.FC<TeamProps> = ({
 
               <Accordion className="mt-8 mb-8">
                 <AccordionHeader>
-                  <b>Logging Settings</b>
+                  <b>{t("common.loggingSettings")}</b>
                 </AccordionHeader>
                 <AccordionBody>
                   <div className="mt-4">
@@ -1592,7 +1573,7 @@ const Teams: React.FC<TeamProps> = ({
 
               <Accordion key={`router-settings-accordion-${routerSettingsKey}`} className="mt-8 mb-8">
                 <AccordionHeader>
-                  <b>Router Settings</b>
+                  <b>{t("common.routerSettings")}</b>
                 </AccordionHeader>
                 <AccordionBody>
                   <div className="mt-4 w-full">
@@ -1611,7 +1592,7 @@ const Teams: React.FC<TeamProps> = ({
 
               <Accordion className="mt-8 mb-8">
                 <AccordionHeader>
-                  <b>Model Aliases</b>
+                  <b>{t("common.modelAliases")}</b>
                 </AccordionHeader>
                 <AccordionBody>
                   <div className="mt-4">

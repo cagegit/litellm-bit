@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { Button } from "antd";
 import MessageManager from "@/components/molecules/message_manager";
+import { useTranslations } from "@/i18n";
 
 interface CreatedKeyDisplayProps {
   apiKey: string;
@@ -12,6 +13,8 @@ interface CreatedKeyDisplayProps {
  * Used on the Virtual Keys page and in the Add Agent wizard.
  */
 const CreatedKeyDisplay: React.FC<CreatedKeyDisplayProps> = ({ apiKey }) => {
+  const { t } = useTranslations("common");
+
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {

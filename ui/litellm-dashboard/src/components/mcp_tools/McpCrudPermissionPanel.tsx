@@ -14,6 +14,7 @@ import { Checkbox } from "antd";
 import { Text } from "@tremor/react";
 import { ChevronDownIcon, ChevronRightIcon } from "lucide-react";
 import { CrudOp, MCPToolEntry, CRUD_GROUP_META, groupToolsByCrud } from "../../utils/mcpToolCrudClassification";
+import { useTranslations } from "@/i18n";
 
 interface McpCrudPermissionPanelProps {
   /** List of tools available on this MCP server. */
@@ -69,6 +70,8 @@ const McpCrudPermissionPanel: React.FC<McpCrudPermissionPanelProps> = ({
   readOnly = false,
   searchFilter = "",
 }) => {
+  const { t } = useTranslations("mcp");
+
   const [collapsed, setCollapsed] = useState<Record<CrudOp, boolean>>({
     read: false,
     create: false,

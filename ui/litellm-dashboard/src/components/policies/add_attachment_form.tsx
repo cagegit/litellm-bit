@@ -7,6 +7,7 @@ import NotificationsManager from "../molecules/notifications_manager";
 import useAuthorized from "@/app/(dashboard)/hooks/useAuthorized";
 import { buildAttachmentData } from "./build_attachment_data";
 import ImpactPreviewAlert from "./impact_preview_alert";
+import { useTranslations } from "@/i18n";
 
 const { Text } = Typography;
 
@@ -27,6 +28,8 @@ const AddAttachmentForm: React.FC<AddAttachmentFormProps> = ({
   policies,
   createAttachment,
 }) => {
+  const { t } = useTranslations("settings");
+
   const [form] = Form.useForm();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [scopeType, setScopeType] = useState<"global" | "specific">("global");
@@ -186,7 +189,7 @@ const AddAttachmentForm: React.FC<AddAttachmentFormProps> = ({
   }));
 
   return (
-    <Modal title="Create Policy Attachment" open={visible} onCancel={handleClose} footer={null} width={600}>
+    <Modal title={t("settings.createPolicyAttachment")} open={visible} onCancel={handleClose} footer={null} width={600}>
       <Form
         form={form}
         layout="vertical"
@@ -196,12 +199,12 @@ const AddAttachmentForm: React.FC<AddAttachmentFormProps> = ({
       >
         <Form.Item
           name="policy_names"
-          label="Policies"
-          rules={[{ required: true, message: "Please select at least one policy" }]}
+          label={t("settings.policies")}
+          rules={[{ required: true, message: t("settings.pleaseSelectAtLeastOnePolicy") }]}
         >
           <Select
             mode="multiple"
-            placeholder="Select policies to attach"
+            placeholder={t("settings.selectPoliciesToAttach")}
             options={policyOptions}
             showSearch
             filterOption={(input, option) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase())}
@@ -210,13 +213,13 @@ const AddAttachmentForm: React.FC<AddAttachmentFormProps> = ({
         </Form.Item>
 
         <Divider orientation="left">
-          <Text strong>Scope</Text>
+          <Text strong>{t("settings.scope")}</Text>
         </Divider>
 
-        <Form.Item label="Scope Type">
+        <Form.Item label={t("settings.scopeType")}>
           <Radio.Group value={scopeType} onChange={(e) => setScopeType(e.target.value)}>
-            <Radio value="specific">Specific (teams, keys, models, or tags)</Radio>
-            <Radio value="global">Global (applies to all requests)</Radio>
+            <Radio value="specific">{t("settings.specificteamsKeysModelsOrTags")}</Radio>
+            <Radio value="global">{t("settings.globalappliesToAllRequests")}</Radio>
           </Radio.Group>
         </Form.Item>
 
@@ -224,7 +227,7 @@ const AddAttachmentForm: React.FC<AddAttachmentFormProps> = ({
           <>
             <Form.Item
               name="teams"
-              label="Teams"
+              label={t("settings.teams")}
               tooltip="Select team aliases or enter custom patterns. Supports wildcards (e.g., healthcare-*)"
             >
               <Select
@@ -244,7 +247,7 @@ const AddAttachmentForm: React.FC<AddAttachmentFormProps> = ({
 
             <Form.Item
               name="keys"
-              label="Keys"
+              label={t("settings.keys")}
               tooltip="Select key aliases or enter custom patterns. Supports wildcards (e.g., dev-*)"
             >
               <Select
@@ -264,7 +267,7 @@ const AddAttachmentForm: React.FC<AddAttachmentFormProps> = ({
 
             <Form.Item
               name="models"
-              label="Models"
+              label={t("settings.models")}
               tooltip="Model names this attachment applies to. Supports wildcards (e.g., gpt-4*). Leave empty to apply to all models."
             >
               <Select
@@ -286,7 +289,7 @@ const AddAttachmentForm: React.FC<AddAttachmentFormProps> = ({
 
             <Form.Item
               name="tags"
-              label="Tags"
+              label={t("settings.tags")}
               tooltip="Match against tags set in key or team metadata. Use exact values (e.g., healthcare) or wildcard patterns (e.g., health-*) where * matches any suffix."
               extra={
                 <Text type="secondary" style={{ fontSize: 12 }}>

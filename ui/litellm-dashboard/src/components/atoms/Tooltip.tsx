@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import { QuestionCircleOutlined } from "@ant-design/icons";
+import { useTranslations } from "@/i18n";
 
 interface TooltipProps {
   content: React.ReactNode;
@@ -9,6 +10,8 @@ interface TooltipProps {
 }
 
 export const Tooltip: React.FC<TooltipProps> = ({ content, children, width = "auto", className = "" }) => {
+  const { t } = useTranslations("common");
+
   const [showTooltip, setShowTooltip] = useState(false);
   const [tooltipPosition, setTooltipPosition] = useState<"top" | "bottom">("top");
   const tooltipRef = useRef<HTMLDivElement>(null);

@@ -3,6 +3,7 @@ import { Input } from "antd";
 import debounce from "lodash/debounce";
 import { LucideIcon } from "lucide-react";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useTranslations } from "@/i18n";
 
 interface FilterInputProps {
   placeholder?: string;
@@ -16,6 +17,8 @@ interface FilterInputProps {
 const DEBOUNCE_DELAY = 300;
 
 export const FilterInput: React.FC<FilterInputProps> = ({ placeholder, value, onChange, icon: Icon, className }) => {
+  const { t } = useTranslations("common");
+
   const [localValue, setLocalValue] = useState(value);
 
   useEffect(() => {

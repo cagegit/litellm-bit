@@ -2,6 +2,7 @@ import React from "react";
 import { Card, Typography, Select, Table, Tag, Collapse, Button } from "antd";
 import { DeleteOutlined, PlusOutlined, FileTextOutlined } from "@ant-design/icons";
 import { getCategoryYaml } from "../../networking";
+import { useTranslations } from "@/i18n";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
@@ -42,6 +43,8 @@ const ContentCategoryConfiguration: React.FC<ContentCategoryConfigurationProps> 
   pendingSelection,
   onPendingSelectionChange,
 }) => {
+  const { t } = useTranslations("settings");
+
   // Use controlled state if parent provides it, otherwise use local state
   const [localSelectedCategoryName, setLocalSelectedCategoryName] = React.useState<string>("");
   const selectedCategoryName = pendingSelection !== undefined ? pendingSelection : localSelectedCategoryName;
@@ -193,10 +196,10 @@ const ContentCategoryConfiguration: React.FC<ContentCategoryConfigurationProps> 
           style={{ width: "100%" }}
         >
           <Option value="BLOCK">
-            <Tag color="red">BLOCK</Tag>
+            <Tag color="red">{t("settings.block1")}</Tag>
           </Option>
           <Option value="MASK">
-            <Tag color="orange">MASK</Tag>
+            <Tag color="orange">{t("settings.mask1")}</Tag>
           </Option>
         </Select>
       ),
@@ -212,9 +215,9 @@ const ContentCategoryConfiguration: React.FC<ContentCategoryConfigurationProps> 
           onChange={(value) => onCategoryUpdate(record.id, "severity_threshold", value)}
           style={{ width: "100%" }}
         >
-          <Option value="low">Low</Option>
-          <Option value="medium">Medium</Option>
-          <Option value="high">High</Option>
+          <Option value="low">{t("settings.low")}</Option>
+          <Option value="medium">{t("settings.medium")}</Option>
+          <Option value="high">{t("settings.high")}</Option>
         </Select>
       ),
     },
@@ -252,7 +255,7 @@ const ContentCategoryConfiguration: React.FC<ContentCategoryConfigurationProps> 
     >
       <div style={{ marginBottom: 16, display: "flex", gap: 8 }}>
         <Select
-          placeholder="Select a content category"
+          placeholder={t("settings.selectAContentCategory")}
           value={selectedCategoryName || undefined}
           onChange={setSelectedCategoryName}
           style={{ flex: 1 }}
@@ -296,7 +299,7 @@ const ContentCategoryConfiguration: React.FC<ContentCategoryConfigurationProps> 
             )}
           </div>
           {loadingPreviewYaml ? (
-            <div style={{ padding: "16px", textAlign: "center", color: "#888" }}>Loading content...</div>
+            <div style={{ padding: "16px", textAlign: "center", color: "#888" }}>{t("settings.loadingContent")}</div>
           ) : previewYaml ? (
             <pre
               style={{
@@ -360,7 +363,7 @@ const ContentCategoryConfiguration: React.FC<ContentCategoryConfigurationProps> 
                     </div>
                   ),
                   children: loadingYaml[category.category] ? (
-                    <div style={{ padding: "16px", textAlign: "center", color: "#888" }}>Loading content...</div>
+                    <div style={{ padding: "16px", textAlign: "center", color: "#888" }}>{t("settings.loadingContent")}</div>
                   ) : categoryYaml[category.category] ? (
                     <pre
                       style={{

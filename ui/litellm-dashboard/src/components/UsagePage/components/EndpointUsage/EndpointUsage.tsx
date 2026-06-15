@@ -3,6 +3,7 @@ import EndpointUsageBarChart from "./components/EndpointUsageBarChart";
 import EndpointUsageLineChart from "./components/EndpointUsageLineChart";
 import EndpointUsageTable from "./components/EndpointUsageTable";
 import { DailyData, MetricWithMetadata } from "../../types";
+import { useTranslations } from "@/i18n";
 
 interface EndpointUsageProps {
   userSpendData?: {
@@ -12,6 +13,8 @@ interface EndpointUsageProps {
 }
 
 const EndpointUsage: React.FC<EndpointUsageProps> = ({ userSpendData }) => {
+  const { t } = useTranslations("common");
+
   // Aggregate endpoints data from all days
   const endpointData = useMemo(() => {
     const aggregatedEndpoints: Record<string, MetricWithMetadata> = {};

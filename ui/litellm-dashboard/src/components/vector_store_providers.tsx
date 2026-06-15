@@ -1,3 +1,4 @@
+import { useTranslations } from "@/i18n";
 export enum VectorStoreProviders {
   Bedrock = "Amazon Bedrock",
   S3Vectors = "Amazon S3 Vectors",

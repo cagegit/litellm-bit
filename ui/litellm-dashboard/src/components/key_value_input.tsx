@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Space } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { TextInput } from "@tremor/react";
+import { useTranslations } from "@/i18n";
 
 interface KeyValueInputProps {
   value?: Record<string, string>;
@@ -9,6 +10,7 @@ interface KeyValueInputProps {
 }
 
 const KeyValueInput: React.FC<KeyValueInputProps> = ({ value = {}, onChange }) => {
+  const { t } = useTranslations("common");
   const [pairs, setPairs] = useState<[string, string][]>(Object.entries(value));
 
   const handleAdd = () => {
@@ -32,9 +34,13 @@ const KeyValueInput: React.FC<KeyValueInputProps> = ({ value = {}, onChange }) =
     <div>
       {pairs.map(([key, val], index) => (
         <Space key={index} style={{ display: "flex", marginBottom: 8 }} align="center">
-          <TextInput placeholder="Header Name" value={key} onChange={(e) => handleChange(index, e.target.value, val)} />
           <TextInput
-            placeholder="Header Value"
+            placeholder={t("headerName")}
+            value={key}
+            onChange={(e) => handleChange(index, e.target.value, val)}
+          />
+          <TextInput
+            placeholder={t("headerValue")}
             value={val}
             onChange={(e) => handleChange(index, key, e.target.value)}
           />
@@ -44,7 +50,7 @@ const KeyValueInput: React.FC<KeyValueInputProps> = ({ value = {}, onChange }) =
         </Space>
       ))}
       <Button type="dashed" onClick={handleAdd} icon={<PlusOutlined />}>
-        Add Header
+        {t("addHeader")}
       </Button>
     </div>
   );

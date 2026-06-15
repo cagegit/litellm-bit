@@ -1,4 +1,5 @@
 import { useTeams } from "@/app/(dashboard)/hooks/teams/useTeams";
+import { useTranslations } from "@/i18n";
 import { createTeamAliasMap } from "@/utils/teamUtils";
 import { Button, Modal, Skeleton } from "antd";
 import React, { useMemo, useState } from "react";
@@ -18,13 +19,14 @@ const EntityUsageExportModal: React.FC<EntityUsageExportModalProps> = ({
   selectedFilters,
   customTitle,
 }) => {
+  const { t } = useTranslations("billing");
   const [exportFormat, setExportFormat] = useState<ExportFormat>("csv");
   const [exportScope, setExportScope] = useState<ExportScope>("daily");
   const [isExporting, setIsExporting] = useState(false);
   const { data: teams, isLoading: isLoadingTeams } = useTeams();
 
   const entityLabel = entityType.charAt(0).toUpperCase() + entityType.slice(1);
-  const modalTitle = customTitle || `Export ${entityLabel} Usage`;
+  const modalTitle = customTitle || t("exportTitle", { entityLabel });
 
   // Cache team alias map using useMemo
   const teamAliasMap = useMemo(() => createTeamAliasMap(teams), [teams]);
@@ -34,15 +36,15 @@ const EntityUsageExportModal: React.FC<EntityUsageExportModalProps> = ({
     try {
       if (formatToUse === "csv") {
         handleExportCSV(spendData, exportScope, entityLabel, entityType, teamAliasMap);
-        NotificationsManager.success(`${entityLabel} usage data exported successfully as CSV`);
+        NotificationsManager.success(t("exportedSuccessfullyCSV", { entityLabel }));
       } else {
         handleExportJSON(spendData, exportScope, entityLabel, entityType, dateRange, selectedFilters, teamAliasMap);
-        NotificationsManager.success(`${entityLabel} usage data exported successfully as JSON`);
+        NotificationsManager.success(t("exportedSuccessfullyJSON", { entityLabel }));
       }
       onClose();
     } catch (error) {
       console.error("Error exporting data:", error);
-      NotificationsManager.fromBackend("Failed to export data");
+      NotificationsManager.fromBackend(t("failedToExport"));
     } finally {
       setIsExporting(false);
     }
@@ -74,7 +76,7 @@ const EntityUsageExportModal: React.FC<EntityUsageExportModalProps> = ({
         ) : (
           <div className="flex items-center justify-end gap-2 pt-4 border-t">
             <Button variant="outlined" onClick={onClose} disabled={isExporting}>
-              Cancel
+              {t("cancel")}
             </Button>
             <Button
               onClick={() => handleExport()}
@@ -82,7 +84,7 @@ const EntityUsageExportModal: React.FC<EntityUsageExportModalProps> = ({
               disabled={isExporting || isLoadingTeams}
               type="primary"
             >
-              {isExporting ? "Exporting..." : `Export ${exportFormat.toUpperCase()}`}
+              {isExporting ? t("exporting") : t("exportButton", { format: exportFormat.toUpperCase() })}
             </Button>
           </div>
         )}

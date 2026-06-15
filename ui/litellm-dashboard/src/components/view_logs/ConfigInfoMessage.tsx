@@ -1,10 +1,13 @@
 import React from "react";
+import { useTranslations } from "@/i18n";
 
 interface ConfigInfoMessageProps {
   show: boolean;
 }
 
 export const ConfigInfoMessage: React.FC<ConfigInfoMessageProps> = ({ show }) => {
+  const { t } = useTranslations("logs");
+
   if (!show) return null;
 
   return (

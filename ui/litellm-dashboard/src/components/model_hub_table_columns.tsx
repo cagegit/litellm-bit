@@ -2,6 +2,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Button, Badge, Text } from "@tremor/react";
 import { Tooltip, Tag } from "antd";
 import { CopyOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import { useTranslations } from "@/i18n";
 
 interface ModelHubData {
   model_group: string;
@@ -22,6 +23,8 @@ interface ModelHubData {
 }
 
 const formatCapabilityName = (key: string) => {
+  const { t } = useTranslations("common");
+
   return key
     .replace(/^supports_/, "")
     .split("_")
@@ -53,6 +56,7 @@ export const modelHubColumns = (
   copyToClipboard: (text: string) => void,
   publicPage: boolean = false,
 ): ColumnDef<ModelHubData>[] => {
+  const { t } = useTranslations("common");
   const allColumns: ColumnDef<ModelHubData>[] = [
     {
       header: "Public Model Name",
@@ -66,7 +70,7 @@ export const modelHubColumns = (
           <div className="space-y-1">
             <div className="flex items-center space-x-2">
               <Text className="font-medium text-sm">{model.model_group}</Text>
-              <Tooltip title="Copy model name">
+              <Tooltip title={t("common.copyModelName")}>
                 <CopyOutlined
                   onClick={() => copyToClipboard(model.model_group)}
                   className="cursor-pointer text-gray-500 hover:text-blue-500 text-xs"
@@ -234,8 +238,8 @@ export const modelHubColumns = (
 
         return (
           <Button size="xs" variant="secondary" onClick={() => showModal(model)} icon={InfoCircleOutlined}>
-            <span className="hidden lg:inline">Details</span>
-            <span className="lg:hidden">Info</span>
+            <span className="hidden lg:inline">{t("common.details")}</span>
+            <span className="lg:hidden">{t("common.info")}</span>
           </Button>
         );
       },

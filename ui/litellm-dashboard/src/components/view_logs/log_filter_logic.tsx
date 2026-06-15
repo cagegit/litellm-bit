@@ -6,6 +6,7 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { fetchAllTeams } from "../../components/key_team_helpers/filter_helpers";
 import { defaultPageSize } from "../constants";
 import type { LogEntry, LogsSortField } from "./columns";
+import { useTranslations } from "@/i18n";
 
 export interface PaginatedResponse {
   data: LogEntry[];
@@ -111,6 +112,8 @@ export function useLogFilterLogic({
   const [debouncedFilters, setDebouncedFilters] = useDebouncedValue(filters, 300);
 
   // Live values for dropdown keys, debounced for text keys.
+  const { t } = useTranslations("logs");
+
   const effectiveFilters = useMemo(() => {
     const merged = { ...filters };
     for (const k of TEXT_FILTER_KEYS) {

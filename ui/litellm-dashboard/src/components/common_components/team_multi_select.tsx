@@ -4,6 +4,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { useDebouncedState } from "@tanstack/react-pacer/debouncer";
 import { useInfiniteTeams } from "@/app/(dashboard)/hooks/teams/useTeams";
 import { Team } from "../key_team_helpers/key_list";
+import { useTranslations } from "@/i18n";
 
 const { Text } = Typography;
 
@@ -25,8 +26,10 @@ const TeamMultiSelect: React.FC<TeamMultiSelectProps> = ({
   disabled,
   organizationId,
   pageSize = 20,
-  placeholder = "Search teams by alias...",
+  placeholder: placeholderProp,
 }) => {
+  const { t } = useTranslations("common");
+  const placeholder = placeholderProp ?? t("searchTeams");
   const [searchInput, setSearchInput] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useDebouncedState("", {
     wait: DEBOUNCE_MS,
@@ -79,7 +82,7 @@ const TeamMultiSelect: React.FC<TeamMultiSelectProps> = ({
       searchValue={searchInput}
       onPopupScroll={handlePopupScroll}
       loading={isLoading}
-      notFoundContent={isLoading ? <LoadingOutlined spin /> : "No teams found"}
+      notFoundContent={isLoading ? <LoadingOutlined spin /> : t("noTeamsFound")}
       style={{ width: "100%" }}
       popupRender={(menu) => (
         <>

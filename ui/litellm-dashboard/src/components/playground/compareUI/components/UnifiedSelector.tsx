@@ -4,6 +4,7 @@
  */
 
 import { Select, Spin } from "antd";
+import { useTranslations } from "@/i18n";
 import { SelectorOption, EndpointConfig } from "../endpoint_config";
 
 interface UnifiedSelectorProps {
@@ -15,10 +16,11 @@ interface UnifiedSelectorProps {
 }
 
 export function UnifiedSelector({ value, options, loading, config, onChange }: UnifiedSelectorProps) {
+  const { t } = useTranslations("playground");
   return (
     <Select
       value={value || undefined}
-      placeholder={loading ? `Loading ${config.selectorLabel.toLowerCase()}s...` : config.selectorPlaceholder}
+      placeholder={loading ? `${t("loading")} ${config.selectorLabel.toLowerCase()}s...` : config.selectorPlaceholder}
       onChange={onChange}
       loading={loading}
       showSearch
@@ -31,7 +33,7 @@ export function UnifiedSelector({ value, options, loading, config, onChange }: U
             <Spin size="small" />
           </div>
         ) : (
-          `No ${config.selectorLabel.toLowerCase()}s available`
+          `${t("no")} ${config.selectorLabel.toLowerCase()}s ${t("available")}`
         )
       }
     />

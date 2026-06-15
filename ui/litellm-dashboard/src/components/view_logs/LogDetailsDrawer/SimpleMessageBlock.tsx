@@ -6,6 +6,7 @@
 import { Typography } from "antd";
 import { ToolCall } from "./prettyMessagesTypes";
 import { SimpleToolCallBlock } from "./SimpleToolCallBlock";
+import { useTranslations } from "@/i18n";
 
 const { Text } = Typography;
 
@@ -17,6 +18,8 @@ interface SimpleMessageBlockProps {
 }
 
 export function SimpleMessageBlock({ label, content, toolCalls, isCompact = false }: SimpleMessageBlockProps) {
+  const { t } = useTranslations("logs");
+
   // Don't show "null" for empty content
   const displayContent = content && content !== "null" && content.length > 0 ? content : null;
   const hasToolCalls = toolCalls && toolCalls.length > 0;

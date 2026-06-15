@@ -10,6 +10,7 @@ import {
 } from "@heroicons/react/outline";
 import { Tooltip } from "antd";
 import BaseActionButton from "../BaseActionButton";
+import { useTranslations } from "@/i18n";
 
 export interface TableIconActionButtonProps {
   onClick: () => void;
@@ -44,6 +45,8 @@ export default function TableIconActionButton({
   dataTestId,
   variant,
 }: TableIconActionButtonProps) {
+  const { t } = useTranslations("common");
+
   const { icon, className } = TableIconActionButtonMap[variant];
   return (
     <Tooltip title={disabled ? disabledTooltipText : tooltipText}>

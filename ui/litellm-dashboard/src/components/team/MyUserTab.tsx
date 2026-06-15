@@ -3,6 +3,7 @@ import { formatNumberWithCommas } from "@/utils/dataUtils";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import { Card, Col, Row, Space, Tag, Tooltip, Typography } from "antd";
 import React from "react";
+import { useTranslations } from "@/i18n";
 import { useMyTeamMember } from "./useMyTeamMember";
 
 interface MyUserTabProps {
@@ -23,18 +24,19 @@ const formatNumber = (value: number | null | undefined, digits = 4): string => {
   return formatNumberWithCommas(value, digits);
 };
 
-const formatRateLimit = (value: number | null | undefined): string => {
-  if (value === null || value === undefined) return "Unlimited";
+const formatRateLimit = (value: number | null | undefined, t: (key: string) => string): string => {
+  if (value === null || value === undefined) return t("unlimited");
   return formatNumberWithCommas(value, 0);
 };
 
 export default function MyUserTab({ teamId }: MyUserTabProps) {
   const { data, isLoading, error } = useMyTeamMember(teamId);
+  const { t } = useTranslations("users");
 
   if (isLoading) {
     return (
       <Card>
-        <Typography.Text type="secondary">Loading your membership info…</Typography.Text>
+        <Typography.Text type="secondary">{t("loadingMembership")}</Typography.Text>
       </Card>
     );
   }
@@ -43,7 +45,7 @@ export default function MyUserTab({ teamId }: MyUserTabProps) {
     return (
       <Card>
         <Typography.Text type="danger">
-          {error instanceof Error ? error.message : "Failed to load your membership info for this team."}
+          {error instanceof Error ? error.message : t("failedToLoadMembership")}
         </Typography.Text>
       </Card>
     );
@@ -52,9 +54,7 @@ export default function MyUserTab({ teamId }: MyUserTabProps) {
   if (!data) {
     return (
       <Card>
-        <Typography.Text type="secondary">
-          No membership info available for the current user in this team.
-        </Typography.Text>
+        <Typography.Text type="secondary">{t("noMembershipInfo")}</Typography.Text>
       </Card>
     );
   }
@@ -73,7 +73,7 @@ export default function MyUserTab({ teamId }: MyUserTabProps) {
       <Card>
         <Row gutter={[24, 16]}>
           <Col xs={24} sm={12} md={8}>
-            <Typography.Text type="secondary">User</Typography.Text>
+            <Typography.Text type="secondary">{t("user")}</Typography.Text>
             <div style={{ marginTop: 4 }}>
               <Typography.Text strong>{data.user_email || data.user_id}</Typography.Text>
             </div>
@@ -82,7 +82,7 @@ export default function MyUserTab({ teamId }: MyUserTabProps) {
             </Typography.Text>
           </Col>
           <Col xs={24} sm={12} md={8}>
-            <Typography.Text type="secondary">Team Role</Typography.Text>
+            <Typography.Text type="secondary">{t("teamRole")}</Typography.Text>
             <div style={{ marginTop: 4 }}>
               <Tag color={data.role === "admin" ? "blue" : "default"}>{data.role || "user"}</Tag>
             </div>
@@ -93,21 +93,20 @@ export default function MyUserTab({ teamId }: MyUserTabProps) {
       <Row gutter={[16, 16]}>
         <Col xs={24} md={12}>
           <Card>
-            {labelWithTooltip(
-              "Current Cycle Spend (USD)",
-              "Spend for the current budget cycle. Resets to $0 when the budget window rolls over.",
-            )}
+            {labelWithTooltip(t("currentCycleSpend"), t("cycleSpendTooltip"))}
             <div style={{ marginTop: 8 }}>
               <Typography.Title level={3} style={{ margin: 0 }}>
                 ${formatNumber(spend, 4)}
               </Typography.Title>
               <Typography.Text type="secondary">
-                of {maxBudget === null ? "Unlimited" : `$${formatNumber(maxBudget, 4)}`}
+                of {maxBudget === null ? t("unlimited") : `$${formatNumber(maxBudget, 4)}`}
               </Typography.Text>
             </div>
             {budgetReset && (
               <div style={{ marginTop: 4 }}>
-                <Typography.Text type="secondary">Resets {budgetReset}</Typography.Text>
+                <Typography.Text type="secondary">
+                  {t("resets")} {budgetReset}
+                </Typography.Text>
               </div>
             )}
           </Card>
@@ -115,18 +114,22 @@ export default function MyUserTab({ teamId }: MyUserTabProps) {
 
         <Col xs={24} md={12}>
           <Card>
-            {labelWithTooltip("Rate Limits", "Your per-member rate limits within this team.")}
+            {labelWithTooltip(t("rateLimits"), t("rateLimitsTooltip"))}
             <div style={{ marginTop: 8 }}>
-              <Typography.Text>TPM: {formatRateLimit(tpmLimit)}</Typography.Text>
+              <Typography.Text>
+                {t("tpm")}: {formatRateLimit(tpmLimit, t)}
+              </Typography.Text>
               <br />
-              <Typography.Text>RPM: {formatRateLimit(rpmLimit)}</Typography.Text>
+              <Typography.Text>
+                {t("rpm")}: {formatRateLimit(rpmLimit, t)}
+              </Typography.Text>
             </div>
           </Card>
         </Col>
 
         <Col xs={24} md={12}>
           <Card>
-            {labelWithTooltip("Total Spend (USD)", "Cumulative spend across all budget cycles within this team.")}
+            {labelWithTooltip(t("totalSpend"), t("totalSpendTooltip"))}
             <div style={{ marginTop: 8 }}>
               <Typography.Title level={4} style={{ margin: 0 }}>
                 ${formatNumber(totalSpend, 4)}
@@ -137,7 +140,7 @@ export default function MyUserTab({ teamId }: MyUserTabProps) {
 
         <Col xs={24} md={12}>
           <Card>
-            {labelWithTooltip("Model Scope", "Models you can access within this team.")}
+            {labelWithTooltip(t("modelScope"), t("modelScopeTooltip"))}
             <div style={{ marginTop: 8 }}>
               {allowedModels && allowedModels.length > 0 ? (
                 <Space wrap>
@@ -146,7 +149,7 @@ export default function MyUserTab({ teamId }: MyUserTabProps) {
                   ))}
                 </Space>
               ) : (
-                <Typography.Text>All Team Models</Typography.Text>
+                <Typography.Text>{t("allTeamModels")}</Typography.Text>
               )}
             </div>
           </Card>

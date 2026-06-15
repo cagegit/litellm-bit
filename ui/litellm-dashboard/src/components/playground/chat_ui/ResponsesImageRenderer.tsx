@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslations } from "@/i18n";
 import { MessageType } from "./types";
 import { shouldShowAttachedImage } from "./ResponsesImageUtils";
 import { FilePdfOutlined } from "@ant-design/icons";
@@ -8,6 +9,7 @@ interface ResponsesImageRendererProps {
 }
 
 const ResponsesImageRenderer: React.FC<ResponsesImageRendererProps> = ({ message }) => {
+  const { t } = useTranslations("playground");
   if (!shouldShowAttachedImage(message)) {
     return null;
   }
@@ -23,7 +25,7 @@ const ResponsesImageRenderer: React.FC<ResponsesImageRendererProps> = ({ message
       ) : (
         <img
           src={message.imagePreviewUrl}
-          alt="User uploaded image"
+          alt={t("userUploadedImage")}
           className="max-w-64 rounded-md border border-gray-200 shadow-sm"
           style={{ maxHeight: "200px" }}
         />

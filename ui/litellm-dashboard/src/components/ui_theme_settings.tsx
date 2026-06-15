@@ -3,6 +3,7 @@ import { Card, Title, Text, TextInput, Button } from "@tremor/react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { getProxyBaseUrl, getGlobalLitellmHeaderName } from "@/components/networking";
 import NotificationsManager from "./molecules/notifications_manager";
+import { useTranslations } from "@/i18n";
 
 interface UIThemeSettingsProps {
   userID: string | null;
@@ -11,6 +12,8 @@ interface UIThemeSettingsProps {
 }
 
 const UIThemeSettings: React.FC<UIThemeSettingsProps> = ({ userID, userRole, accessToken }) => {
+  const { t } = useTranslations("common");
+
   const { logoUrl, setLogoUrl, faviconUrl, setFaviconUrl } = useTheme();
   const [logoUrlInput, setLogoUrlInput] = useState<string>("");
   const [faviconUrlInput, setFaviconUrlInput] = useState<string>("");
@@ -113,13 +116,13 @@ const UIThemeSettings: React.FC<UIThemeSettingsProps> = ({ userID, userRole, acc
   return (
     <div className="w-full mx-auto max-w-4xl px-6 py-8">
       <div className="mb-8">
-        <Title className="text-2xl font-bold mb-2">UI Theme Customization</Title>
-        <Text className="text-gray-600">Customize your LiteLLM admin dashboard with a custom logo and favicon.</Text>
+        <Title className="text-2xl font-bold mb-2">{t("common.uiThemeCustomization")}</Title>
+        <Text className="text-gray-600">{t("common.customizeYourLitellmAdminDashboardWithACustomLogoAndFavicon")}</Text>
       </div>
       <Card className="shadow-sm p-6">
         <div className="space-y-6">
           <div>
-            <Text className="text-sm font-medium text-gray-700 mb-2 block">Custom Logo URL</Text>
+            <Text className="text-sm font-medium text-gray-700 mb-2 block">{t("common.customLogoUrl")}</Text>
             <TextInput
               placeholder="https://example.com/logo.png"
               value={logoUrlInput}
@@ -134,7 +137,7 @@ const UIThemeSettings: React.FC<UIThemeSettingsProps> = ({ userID, userRole, acc
             </Text>
           </div>
           <div>
-            <Text className="text-sm font-medium text-gray-700 mb-2 block">Custom Favicon URL</Text>
+            <Text className="text-sm font-medium text-gray-700 mb-2 block">{t("common.customFaviconUrl")}</Text>
             <TextInput
               placeholder="https://example.com/favicon.ico"
               value={faviconUrlInput}

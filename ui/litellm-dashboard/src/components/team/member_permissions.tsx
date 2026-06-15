@@ -5,6 +5,7 @@ import { Button, Checkbox, Empty } from "antd";
 import React, { useEffect, useState } from "react";
 import NotificationsManager from "../molecules/notifications_manager";
 import { getPermissionInfo } from "./permission_definitions";
+import { useTranslations } from "@/i18n";
 
 interface MemberPermissionsProps {
   teamId: string;
@@ -13,6 +14,8 @@ interface MemberPermissionsProps {
 }
 
 const MemberPermissions: React.FC<MemberPermissionsProps> = ({ teamId, accessToken, canEditTeam }) => {
+  const { t } = useTranslations("team");
+
   const [permissions, setPermissions] = useState<string[]>([]);
   const [selectedPermissions, setSelectedPermissions] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
@@ -69,7 +72,7 @@ const MemberPermissions: React.FC<MemberPermissionsProps> = ({ teamId, accessTok
   };
 
   if (loading) {
-    return <div className="p-6 text-center">Loading permissions...</div>;
+    return <div className="p-6 text-center">{t("team.loadingPermissions")}</div>;
   }
 
   const hasPermissions = permissions.length > 0;
@@ -77,7 +80,7 @@ const MemberPermissions: React.FC<MemberPermissionsProps> = ({ teamId, accessTok
   return (
     <Card className="bg-white shadow-md rounded-md p-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b pb-4 mb-6">
-        <Title className="mb-2 sm:mb-0">Member Permissions</Title>
+        <Title className="mb-2 sm:mb-0">{t("team.memberPermissions")}</Title>
         {canEditTeam && hasChanges && (
           <div className="flex gap-3">
             <Button icon={<ReloadOutlined />} onClick={handleReset}>
@@ -90,16 +93,16 @@ const MemberPermissions: React.FC<MemberPermissionsProps> = ({ teamId, accessTok
         )}
       </div>
 
-      <Text className="mb-6 text-gray-600">Control what team members can do when they are not team admins.</Text>
+      <Text className="mb-6 text-gray-600">{t("team.controlWhatTeamMembersCanDoWhenTheyAreNotTeamAdmins")}</Text>
 
       {hasPermissions ? (
         <div className="overflow-x-auto">
           <Table className=" min-w-full">
             <TableHead>
               <TableRow>
-                <TableHeaderCell>Method</TableHeaderCell>
-                <TableHeaderCell>Endpoint</TableHeaderCell>
-                <TableHeaderCell>Description</TableHeaderCell>
+                <TableHeaderCell>{t("team.method")}</TableHeaderCell>
+                <TableHeaderCell>{t("team.endpoint")}</TableHeaderCell>
+                <TableHeaderCell>{t("team.description")}</TableHeaderCell>
                 <TableHeaderCell className="sticky right-0 bg-white shadow-[-4px_0_4px_-4px_rgba(0,0,0,0.1)] text-center">
                   Allow Access
                 </TableHeaderCell>
@@ -138,7 +141,7 @@ const MemberPermissions: React.FC<MemberPermissionsProps> = ({ teamId, accessTok
         </div>
       ) : (
         <div className="py-12">
-          <Empty description="No permissions available" />
+          <Empty description={t("team.noPermissionsAvailable")} />
         </div>
       )}
     </Card>

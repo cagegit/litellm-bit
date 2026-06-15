@@ -3,6 +3,7 @@ import { Switch, Tooltip } from "antd";
 import MessageManager from "@/components/molecules/message_manager";
 import { CodeOutlined, InfoCircleOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 import { Text } from "@tremor/react";
+import { useTranslations } from "@/i18n";
 
 interface CodeInterpreterToolProps {
   accessToken: string;
@@ -34,6 +35,8 @@ const CodeInterpreterTool: React.FC<CodeInterpreterToolProps> = ({
   selectedModel,
   disabled = false,
 }) => {
+  const { t } = useTranslations("playground");
+
   const isOpenAI = isOpenAIModel(selectedModel);
   const isDisabled = disabled || !isOpenAI;
 
@@ -50,7 +53,7 @@ const CodeInterpreterTool: React.FC<CodeInterpreterToolProps> = ({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <CodeOutlined className="text-blue-500" />
-          <Text className="font-medium text-gray-700">Code Interpreter</Text>
+          <Text className="font-medium text-gray-700">{t("playground.codeInterpreter")}</Text>
           <Tooltip title="Run Python code to generate files, charts, and analyze data. Container is created automatically.">
             <InfoCircleOutlined className="text-gray-400 text-xs" />
           </Tooltip>
@@ -69,7 +72,7 @@ const CodeInterpreterTool: React.FC<CodeInterpreterToolProps> = ({
           <div className="flex items-start gap-2">
             <ExclamationCircleOutlined className="text-amber-500 mt-0.5" />
             <div className="text-xs text-gray-600">
-              <span>Code Interpreter is currently only supported for OpenAI models. </span>
+              <span>{t("playground.codeInterpreterIsCurrentlyOnlySupportedForOpenaiModels")}</span>
               <a
                 href={GITHUB_FEATURE_REQUEST_URL}
                 target="_blank"

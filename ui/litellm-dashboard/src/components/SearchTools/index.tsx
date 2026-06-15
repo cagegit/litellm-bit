@@ -1,3 +1,4 @@
+import { useTranslations } from "@/i18n";
 export { default as SearchTools } from "./SearchTools";
 export { SearchToolView } from "./SearchToolView";
 export { default as SearchConnectionTest } from "./SearchConnectionTest";

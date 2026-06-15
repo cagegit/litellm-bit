@@ -1,3 +1,6 @@
+"use client";
+
+import { useTranslations } from "@/i18n";
 import { useState } from "react";
 import { Button } from "antd";
 import { Eye, EyeOff } from "lucide-react";
@@ -9,6 +12,7 @@ export default function RedactableField({
   defaultHidden?: boolean;
   value: string | null;
 }) {
+  const { t } = useTranslations("settings");
   const [isHidden, setIsHidden] = useState(defaultHidden);
 
   return (
@@ -21,7 +25,7 @@ export default function RedactableField({
             value
           )
         ) : (
-          <span className="text-gray-400 italic">Not configured</span>
+          <span className="text-gray-400 italic">{t("notConfigured")}</span>
         )}
       </span>
       {value && (

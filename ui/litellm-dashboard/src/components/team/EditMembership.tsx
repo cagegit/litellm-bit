@@ -3,6 +3,7 @@ import { Button as AntButton, Form, Modal, Select } from "antd";
 import React, { useEffect, useState } from "react";
 import NumericalInput from "../shared/numerical_input";
 import BudgetDurationDropdown from "../common_components/budget_duration_dropdown";
+import { useTranslations } from "@/i18n";
 
 interface BaseMember {
   user_email?: string;
@@ -48,6 +49,7 @@ const MemberModal = <T extends BaseMember>({
   mode,
   config,
 }: MemberModalProps<T>) => {
+  const { t } = useTranslations("team");
   const [form] = Form.useForm();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -175,10 +177,10 @@ const MemberModal = <T extends BaseMember>({
       <Form form={form} onFinish={handleSubmit} labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} labelAlign="left">
         {config.showEmail && (
           <Form.Item
-            label="Email"
+            label={t("team.email")}
             name="user_email"
             className="mb-4"
-            rules={[{ type: "email", message: "Please enter a valid email!" }]}
+            rules={[{ type: "email", message: t("team.pleaseEnterAValidEmail") }]}
           >
             <TextInput placeholder="user@example.com" />
           </Form.Item>
@@ -186,12 +188,12 @@ const MemberModal = <T extends BaseMember>({
 
         {config.showEmail && config.showUserId && (
           <div className="text-center mb-4">
-            <Text>OR</Text>
+            <Text>{t("team.or")}</Text>
           </div>
         )}
 
         {config.showUserId && (
-          <Form.Item label="User ID" name="user_id" className="mb-4">
+          <Form.Item label={t("team.userId")} name="user_id" className="mb-4">
             <TextInput placeholder="user_123" />
           </Form.Item>
         )}
@@ -199,7 +201,7 @@ const MemberModal = <T extends BaseMember>({
         <Form.Item
           label={
             <div className="flex items-center gap-2">
-              <span>Role</span>
+              <span>{t("team.role")}</span>
               {mode === "edit" && initialData && (
                 <span className="text-gray-500 text-sm">(Current: {getRoleLabel(initialData.role)})</span>
               )}
@@ -207,7 +209,7 @@ const MemberModal = <T extends BaseMember>({
           }
           name="role"
           className="mb-4"
-          rules={[{ required: true, message: "Please select a role!" }]}
+          rules={[{ required: true, message: t("team.pleaseSelectARole") }]}
         >
           <Select>
             {mode === "edit" && initialData

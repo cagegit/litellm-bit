@@ -1,4 +1,5 @@
 import { RobotOutlined, UserOutlined } from "@ant-design/icons";
+import { useTranslations } from "@/i18n";
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
@@ -38,6 +39,7 @@ function ChatMessageBubble({
   codeInterpreterResult,
   accessToken,
 }: ChatMessageBubbleProps) {
+  const { t } = useTranslations("playground");
   const isUser = message.role === "user";
 
   return (
@@ -114,7 +116,7 @@ function ChatMessageBubble({
           {message.isImage ? (
             <img
               src={typeof message.content === "string" ? message.content : ""}
-              alt="Generated image"
+              alt={t("generatedImage")}
               className="max-w-full rounded-md border border-gray-200 shadow-sm"
               style={{ maxHeight: "500px" }}
             />
@@ -172,7 +174,7 @@ function ChatMessageBubble({
                 <div className="mt-3">
                   <img
                     src={message.image.url}
-                    alt="Generated image"
+                    alt={t("generatedImage")}
                     className="max-w-full rounded-md border border-gray-200 shadow-sm"
                     style={{ maxHeight: "500px" }}
                   />

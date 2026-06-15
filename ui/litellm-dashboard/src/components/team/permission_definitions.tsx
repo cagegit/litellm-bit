@@ -1,3 +1,5 @@
+import { useTranslations } from "@/i18n";
+
 export interface PermissionInfo {
   method: string;
   endpoint: string;
@@ -6,24 +8,23 @@ export interface PermissionInfo {
 }
 
 /**
- * Map of permission endpoint patterns to their descriptions
+ * Returns translated permission descriptions
  */
-export const PERMISSION_DESCRIPTIONS: Record<string, string> = {
-  "/key/generate": "Member can generate a virtual key for this team",
-  "/key/service-account/generate":
-    "Member can generate a service account key (not belonging to any user) for this team",
-  "/key/update": "Member can update a virtual key belonging to this team",
-  "/key/delete": "Member can delete a virtual key belonging to this team",
-  "/key/info": "Member can get info about a virtual key belonging to this team",
-  "/key/regenerate": "Member can regenerate a virtual key belonging to this team",
-  "/key/{key_id}/regenerate": "Member can regenerate a virtual key belonging to this team",
-  "/key/list": "Member can list virtual keys belonging to this team",
-  "/key/block": "Member can block a virtual key belonging to this team",
-  "/key/unblock": "Member can unblock a virtual key belonging to this team",
-  "/key/access_group_assignment": "Member can assign access groups to virtual keys for this team",
-  "/team/daily/activity": "Member can view all team usage data (not just their own)",
-  "/spend/logs": "Member can view spend logs for the entire team (not just their own)",
-};
+export const getPermissionDescriptions = (t: (key: string) => string): Record<string, string> => ({
+  "/key/generate": t("keyGenerate"),
+  "/key/service-account/generate": t("serviceAccountGenerate"),
+  "/key/update": t("keyUpdate"),
+  "/key/delete": t("keyDelete"),
+  "/key/info": t("keyInfo"),
+  "/key/regenerate": t("keyRegenerate"),
+  "/key/{key_id}/regenerate": t("keyRegenerate"),
+  "/key/list": t("keyList"),
+  "/key/block": t("keyBlock"),
+  "/key/unblock": t("keyUnblock"),
+  "/key/access_group_assignment": t("accessGroupAssignment"),
+  "/team/daily/activity": t("teamDailyActivity"),
+  "/spend/logs": t("spendLogs"),
+});
 
 /**
  * Determines the HTTP method for a given permission endpoint
@@ -42,17 +43,19 @@ export const getMethodForEndpoint = (endpoint: string): string => {
 
 /**
  * Parses a permission string into a structured PermissionInfo object
+ * @param t - Optional translation function. If provided, descriptions will be translated.
  */
-export const getPermissionInfo = (permission: string): PermissionInfo => {
+export const getPermissionInfo = (permission: string, t?: (key: string) => string): PermissionInfo => {
   const method = getMethodForEndpoint(permission);
   const endpoint = permission;
+  const descriptions = t ? getPermissionDescriptions(t) : {};
 
   // Find exact match or fallback to default description
-  let description = PERMISSION_DESCRIPTIONS[permission];
+  let description = descriptions[permission] || "";
 
   // If no exact match, try to find a partial match based on patterns
   if (!description) {
-    for (const [pattern, desc] of Object.entries(PERMISSION_DESCRIPTIONS)) {
+    for (const [pattern, desc] of Object.entries(descriptions)) {
       if (permission.includes(pattern)) {
         description = desc;
         break;
@@ -62,7 +65,7 @@ export const getPermissionInfo = (permission: string): PermissionInfo => {
 
   // Fallback if no match found
   if (!description) {
-    description = `Access ${permission}`;
+    description = t ? `${t("access")} ${permission}` : `Access ${permission}`;
   }
 
   return {
@@ -71,4 +74,12 @@ export const getPermissionInfo = (permission: string): PermissionInfo => {
     description,
     route: permission,
   };
+};
+
+/**
+ * Hook version of getPermissionInfo for use in React components
+ */
+export const usePermissionInfo = (permission: string): PermissionInfo => {
+  const { t } = useTranslations("users");
+  return getPermissionInfo(permission, t);
 };

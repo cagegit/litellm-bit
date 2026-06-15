@@ -4,6 +4,7 @@ import React from "react";
 import { Form, Select, InputNumber, Input, Tooltip } from "antd";
 import { PlusOutlined, QuestionCircleOutlined } from "@ant-design/icons";
 import { Button } from "antd";
+import { useTranslations } from "@/i18n";
 
 interface LLMJudgeFieldsProps {
   availableModels: string[];
@@ -11,6 +12,8 @@ interface LLMJudgeFieldsProps {
 }
 
 const LLMJudgeFields: React.FC<LLMJudgeFieldsProps> = ({ availableModels, form }) => {
+  const { t } = useTranslations("settings");
+
   return (
     <>
       <div
@@ -24,7 +27,7 @@ const LLMJudgeFields: React.FC<LLMJudgeFieldsProps> = ({ availableModels, form }
           color: "#389e0d",
         }}
       >
-        After each LLM response, the <strong>Judge Model</strong> scores it 0–100 against your criteria. If the weighted
+        After each LLM response, the <strong>{t("settings.judgeModel")}</strong> scores it 0–100 against your criteria. If the weighted
         average falls below the threshold, the response is blocked (or logged).
       </div>
 
@@ -38,11 +41,11 @@ const LLMJudgeFields: React.FC<LLMJudgeFieldsProps> = ({ availableModels, form }
             </Tooltip>
           </span>
         }
-        rules={[{ required: true, message: "Select a judge model" }]}
+        rules={[{ required: true, message: t("settings.selectAJudgeModel") }]}
       >
         <Select
           showSearch
-          placeholder="Select a model"
+          placeholder={t("settings.selectAModel")}
           options={availableModels.map((m) => ({ label: m, value: m }))}
         />
       </Form.Item>
@@ -75,8 +78,8 @@ const LLMJudgeFields: React.FC<LLMJudgeFieldsProps> = ({ availableModels, form }
         initialValue="block"
       >
         <Select>
-          <Select.Option value="block">Block (return 422)</Select.Option>
-          <Select.Option value="log">Log only</Select.Option>
+          <Select.Option value="block">{t("settings.blockreturn422")}</Select.Option>
+          <Select.Option value="log">{t("settings.logOnly")}</Select.Option>
         </Select>
       </Form.Item>
 
@@ -107,10 +110,10 @@ const LLMJudgeFields: React.FC<LLMJudgeFieldsProps> = ({ availableModels, form }
                     <Form.Item
                       {...restField}
                       name={[name, "name"]}
-                      rules={[{ required: true, message: "Enter criterion name" }]}
+                      rules={[{ required: true, message: t("settings.enterCriterionName") }]}
                       style={{ flex: 2, marginBottom: 8 }}
                     >
-                      <Input placeholder="Criterion name (e.g. Policy accuracy)" />
+                      <Input placeholder={t("settings.criterionNameegPolicyAccuracy")} />
                     </Form.Item>
                     <Form.Item
                       {...restField}
@@ -122,7 +125,7 @@ const LLMJudgeFields: React.FC<LLMJudgeFieldsProps> = ({ availableModels, form }
                           </span>
                         </Tooltip>
                       }
-                      rules={[{ required: true, message: "Enter weight" }]}
+                      rules={[{ required: true, message: t("settings.enterWeight") }]}
                       style={{ flex: 1, marginBottom: 8 }}
                     >
                       <InputNumber min={0} max={100} addonAfter="%" style={{ width: "100%" }} placeholder="e.g. 50" />
@@ -136,10 +139,10 @@ const LLMJudgeFields: React.FC<LLMJudgeFieldsProps> = ({ availableModels, form }
                   <Form.Item
                     {...restField}
                     name={[name, "description"]}
-                    rules={[{ required: true, message: "Describe what to check" }]}
+                    rules={[{ required: true, message: t("settings.describeWhatToCheck") }]}
                     style={{ marginBottom: 8 }}
                   >
-                    <Input placeholder="What should the judge check for this criterion?" />
+                    <Input placeholder={t("settings.whatShouldTheJudgeCheckForThisCriterion")} />
                   </Form.Item>
                 </div>
               ))}

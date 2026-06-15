@@ -6,6 +6,7 @@ import { fetchAllOrganizations, fetchAllTeams } from "./filter_helpers";
 import { debounce } from "lodash";
 import { defaultPageSize } from "../constants";
 import useAuthorized from "@/app/(dashboard)/hooks/useAuthorized";
+import { useTranslations } from "@/i18n";
 
 export interface FilterState {
   "Team ID": string;
@@ -26,6 +27,8 @@ export function useFilterLogic({
   teams: Team[] | null;
   organizations: Organization[] | null;
 }) {
+  const { t } = useTranslations("users");
+
   const defaultFilters: FilterState = {
     "Team ID": "",
     "Organization ID": "",

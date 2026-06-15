@@ -1,4 +1,5 @@
 import { MCPEnvVar, MCPEnvVarScope } from "./types";
+import { useTranslations } from "@/i18n";
 
 export const extractMCPToken = (url: string): { token: string | null; baseUrl: string } => {
   try {
@@ -25,6 +26,8 @@ export const extractMCPToken = (url: string): { token: string | null; baseUrl: s
 };
 
 export const maskUrl = (url: string): string => {
+  const { t } = useTranslations("mcp");
+
   const { token, baseUrl } = extractMCPToken(url);
   if (!token) return url;
   return baseUrl + "...";

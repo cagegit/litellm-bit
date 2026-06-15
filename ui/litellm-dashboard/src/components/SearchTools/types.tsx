@@ -1,3 +1,4 @@
+import { useTranslations } from "@/i18n";
 export interface SearchToolLiteLLMParams {
   search_provider: string;
   api_key?: string;

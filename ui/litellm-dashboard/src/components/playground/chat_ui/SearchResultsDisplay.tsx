@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import { Button } from "antd";
 import { VectorStoreSearchResponse } from "./types";
 import { DatabaseOutlined, FileTextOutlined, DownOutlined, RightOutlined } from "@ant-design/icons";
+import { useTranslations } from "@/i18n";
 
 interface SearchResultsDisplayProps {
   searchResults: VectorStoreSearchResponse[];
 }
 
 export function SearchResultsDisplay({ searchResults }: SearchResultsDisplayProps) {
+  const { t } = useTranslations("playground");
+
   const [isExpanded, setIsExpanded] = useState(true);
   const [expandedResults, setExpandedResults] = useState<Record<string, boolean>>({});
 

@@ -1,4 +1,5 @@
 import moment from "moment";
+import { useTranslations } from "@/i18n";
 
 // Add this function to format the time range display
 export const getTimeRangeDisplay = (isCustomDate: boolean, startTime: string, endTime: string) => {

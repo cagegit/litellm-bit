@@ -3,6 +3,7 @@ import { Badge, Text } from "@tremor/react";
 import { Tooltip } from "antd";
 import { CopyOutlined, LinkOutlined } from "@ant-design/icons";
 import { Plugin } from "./claude_code_plugins/types";
+import { useTranslations } from "@/i18n";
 
 export const skillHubColumns = (
   showModal: (skill: Plugin) => void,

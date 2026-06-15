@@ -1,6 +1,7 @@
 import { cx } from "@/lib/cva.config";
 import { Icon } from "@tremor/react";
 import React from "react";
+import { useTranslations } from "@/i18n";
 
 interface BaseActionButtonProps {
   icon: React.ComponentType<React.ComponentProps<"svg">>;

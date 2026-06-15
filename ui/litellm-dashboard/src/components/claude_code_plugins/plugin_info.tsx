@@ -13,6 +13,7 @@ import {
   getSourceLink,
 } from "./helpers";
 import { Plugin } from "./types";
+import { useTranslations } from "@/i18n";
 
 interface PluginInfoViewProps {
   pluginId: string;
@@ -29,6 +30,8 @@ const PluginInfoView: React.FC<PluginInfoViewProps> = ({
   isAdmin,
   onPluginUpdated,
 }) => {
+  const { t } = useTranslations("claudeCodePlugins");
+
   const [plugin, setPlugin] = useState<Plugin | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isToggling, setIsToggling] = useState(false);
@@ -92,7 +95,7 @@ const PluginInfoView: React.FC<PluginInfoViewProps> = ({
   if (!plugin) {
     return (
       <div className="p-8 text-center text-gray-500">
-        <p>Plugin not found</p>
+        <p>{t("claudeCodePlugins.pluginNotFound")}</p>
         <Button className="mt-4" onClick={onClose}>
           Go Back
         </Button>
@@ -129,10 +132,10 @@ const PluginInfoView: React.FC<PluginInfoViewProps> = ({
       <Card>
         <div className="flex items-center justify-between">
           <div className="flex-1">
-            <Text className="text-gray-600 text-xs mb-2">Install Command</Text>
+            <Text className="text-gray-600 text-xs mb-2">{t("claudeCodePlugins.installCommand")}</Text>
             <div className="font-mono bg-gray-100 px-3 py-2 rounded text-sm">{installCommand}</div>
           </div>
-          <Tooltip title="Copy install command">
+          <Tooltip title={t("claudeCodePlugins.copyInstallCommand")}>
             <Button
               size="xs"
               variant="secondary"
@@ -148,11 +151,11 @@ const PluginInfoView: React.FC<PluginInfoViewProps> = ({
 
       {/* Plugin Details */}
       <Card>
-        <Title>Plugin Details</Title>
+        <Title>{t("claudeCodePlugins.pluginDetails")}</Title>
         <Grid className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
           {/* Plugin ID */}
           <div>
-            <Text className="text-gray-600 text-xs">Plugin ID</Text>
+            <Text className="text-gray-600 text-xs">{t("claudeCodePlugins.pluginId")}</Text>
             <div className="flex items-center gap-2 mt-1">
               <Text className="font-mono text-xs">{plugin.id}</Text>
               <CopyOutlined
@@ -164,19 +167,19 @@ const PluginInfoView: React.FC<PluginInfoViewProps> = ({
 
           {/* Name */}
           <div>
-            <Text className="text-gray-600 text-xs">Name</Text>
+            <Text className="text-gray-600 text-xs">{t("claudeCodePlugins.name")}</Text>
             <Text className="font-semibold mt-1">{plugin.name}</Text>
           </div>
 
           {/* Version */}
           <div>
-            <Text className="text-gray-600 text-xs">Version</Text>
+            <Text className="text-gray-600 text-xs">{t("claudeCodePlugins.version")}</Text>
             <Text className="font-semibold mt-1">{plugin.version || "N/A"}</Text>
           </div>
 
           {/* Source */}
           <div className="col-span-2">
-            <Text className="text-gray-600 text-xs">Source</Text>
+            <Text className="text-gray-600 text-xs">{t("claudeCodePlugins.source")}</Text>
             <div className="flex items-center gap-2 mt-1">
               <Text className="font-semibold">{getSourceDisplayText(plugin.source)}</Text>
               {sourceLink && (
@@ -194,14 +197,14 @@ const PluginInfoView: React.FC<PluginInfoViewProps> = ({
 
           {/* Category */}
           <div>
-            <Text className="text-gray-600 text-xs">Category</Text>
+            <Text className="text-gray-600 text-xs">{t("claudeCodePlugins.category")}</Text>
             <div className="mt-1">
               {plugin.category ? (
                 <Badge color={categoryBadgeColor} size="xs">
                   {plugin.category}
                 </Badge>
               ) : (
-                <Text className="text-gray-400">Uncategorized</Text>
+                <Text className="text-gray-400">{t("claudeCodePlugins.uncategorized")}</Text>
               )}
             </div>
           </div>
@@ -209,7 +212,7 @@ const PluginInfoView: React.FC<PluginInfoViewProps> = ({
           {/* Enabled Status */}
           {isAdmin && (
             <div className="col-span-3">
-              <Text className="text-gray-600 text-xs">Status</Text>
+              <Text className="text-gray-600 text-xs">{t("claudeCodePlugins.status")}</Text>
               <div className="flex items-center gap-3 mt-2">
                 <Switch checked={plugin.enabled} loading={isToggling} onChange={handleToggleEnabled} />
                 <Text className="text-sm">
@@ -226,7 +229,7 @@ const PluginInfoView: React.FC<PluginInfoViewProps> = ({
       {/* Description */}
       {plugin.description && (
         <Card>
-          <Title>Description</Title>
+          <Title>{t("claudeCodePlugins.description")}</Title>
           <Text className="mt-2">{plugin.description}</Text>
         </Card>
       )}
@@ -234,7 +237,7 @@ const PluginInfoView: React.FC<PluginInfoViewProps> = ({
       {/* Keywords */}
       {plugin.keywords && plugin.keywords.length > 0 && (
         <Card>
-          <Title>Keywords</Title>
+          <Title>{t("claudeCodePlugins.keywords")}</Title>
           <div className="flex flex-wrap gap-2 mt-2">
             {plugin.keywords.map((keyword, index) => (
               <Badge key={index} color="gray" size="xs">
@@ -248,17 +251,17 @@ const PluginInfoView: React.FC<PluginInfoViewProps> = ({
       {/* Author Information */}
       {plugin.author && (
         <Card>
-          <Title>Author Information</Title>
+          <Title>{t("claudeCodePlugins.authorInformation")}</Title>
           <Grid className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
             {plugin.author.name && (
               <div>
-                <Text className="text-gray-600 text-xs">Name</Text>
+                <Text className="text-gray-600 text-xs">{t("claudeCodePlugins.name")}</Text>
                 <Text className="font-semibold mt-1">{plugin.author.name}</Text>
               </div>
             )}
             {plugin.author.email && (
               <div>
-                <Text className="text-gray-600 text-xs">Email</Text>
+                <Text className="text-gray-600 text-xs">{t("claudeCodePlugins.email")}</Text>
                 <Text className="font-semibold mt-1">
                   <a href={`mailto:${plugin.author.email}`} className="text-blue-500 hover:text-blue-700">
                     {plugin.author.email}
@@ -273,7 +276,7 @@ const PluginInfoView: React.FC<PluginInfoViewProps> = ({
       {/* Additional Links */}
       {plugin.homepage && (
         <Card>
-          <Title>Homepage</Title>
+          <Title>{t("claudeCodePlugins.homepage")}</Title>
           <a
             href={plugin.homepage}
             target="_blank"
@@ -288,19 +291,19 @@ const PluginInfoView: React.FC<PluginInfoViewProps> = ({
 
       {/* Timestamps */}
       <Card>
-        <Title>Metadata</Title>
+        <Title>{t("claudeCodePlugins.metadata")}</Title>
         <Grid className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
           <div>
-            <Text className="text-gray-600 text-xs">Created At</Text>
+            <Text className="text-gray-600 text-xs">{t("claudeCodePlugins.createdAt")}</Text>
             <Text className="font-semibold mt-1">{formatDateString(plugin.created_at)}</Text>
           </div>
           <div>
-            <Text className="text-gray-600 text-xs">Updated At</Text>
+            <Text className="text-gray-600 text-xs">{t("claudeCodePlugins.updatedAt")}</Text>
             <Text className="font-semibold mt-1">{formatDateString(plugin.updated_at)}</Text>
           </div>
           {plugin.created_by && (
             <div className="col-span-2">
-              <Text className="text-gray-600 text-xs">Created By</Text>
+              <Text className="text-gray-600 text-xs">{t("claudeCodePlugins.createdBy")}</Text>
               <Text className="font-semibold mt-1">{plugin.created_by}</Text>
             </div>
           )}

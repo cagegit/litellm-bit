@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Button, Col, Row, Spin, Tabs } from "antd";
 import React, { useMemo, useState } from "react";
 import { getGuardrailsUsageDetail, getGuardrailsUsageLogs } from "@/components/networking";
+import { useTranslations } from "@/i18n";
 import { EvaluationSettingsModal } from "./EvaluationSettingsModal";
 import { LogViewer } from "./LogViewer";
 import { MetricCard } from "./MetricCard";
@@ -23,6 +24,7 @@ const statusColors: Record<string, { bg: string; text: string; dot: string }> = 
 };
 
 export function GuardrailDetail({ guardrailId, onBack, accessToken = null, startDate, endDate }: GuardrailDetailProps) {
+  const { t } = useTranslations("logs");
   const [activeTab, setActiveTab] = useState("overview");
   const [evaluationModalOpen, setEvaluationModalOpen] = useState(false);
   const [logsPage, setLogsPage] = useState(1);
@@ -100,9 +102,9 @@ export function GuardrailDetail({ guardrailId, onBack, accessToken = null, start
     return (
       <div>
         <Button type="link" icon={<ArrowLeftOutlined />} onClick={onBack} className="pl-0 mb-4">
-          Back to Overview
+          {t("backToOverview")}
         </Button>
-        <p className="text-red-600">Failed to load guardrail details.</p>
+        <p className="text-red-600">{t("failedToLoadGuardrailDetails")}</p>
       </div>
     );
   }
@@ -111,7 +113,7 @@ export function GuardrailDetail({ guardrailId, onBack, accessToken = null, start
     <div>
       <div className="mb-6">
         <Button type="link" icon={<ArrowLeftOutlined />} onClick={onBack} className="pl-0 mb-4">
-          Back to Overview
+          {t("backToOverview")}
         </Button>
 
         <div className="flex items-start justify-between">
@@ -136,7 +138,7 @@ export function GuardrailDetail({ guardrailId, onBack, accessToken = null, start
               type="default"
               icon={<SettingOutlined />}
               onClick={() => setEvaluationModalOpen(true)}
-              title="Evaluation settings"
+              title={t("evaluationSettings")}
             />
           </div>
         </div>
@@ -146,8 +148,8 @@ export function GuardrailDetail({ guardrailId, onBack, accessToken = null, start
         activeKey={activeTab}
         onChange={setActiveTab}
         items={[
-          { key: "overview", label: "Overview" },
-          { key: "logs", label: "Logs" },
+          { key: "overview", label: t("overview") },
+          { key: "logs", label: t("logs") },
         ]}
       />
 
@@ -155,22 +157,22 @@ export function GuardrailDetail({ guardrailId, onBack, accessToken = null, start
         <div className="space-y-6 mt-4">
           <Row gutter={[16, 16]}>
             <Col xs={12} md={8}>
-              <MetricCard label="Requests Evaluated" value={data.requestsEvaluated.toLocaleString()} />
+              <MetricCard label={t("requestsEvaluated")} value={data.requestsEvaluated.toLocaleString()} />
             </Col>
             <Col xs={12} md={8}>
               <MetricCard
-                label="Fail Rate"
+                label={t("failRate")}
                 value={`${data.failRate}%`}
                 valueColor={
                   data.failRate > 15 ? "text-red-600" : data.failRate > 5 ? "text-amber-600" : "text-green-600"
                 }
-                subtitle={`${Math.round((data.requestsEvaluated * data.failRate) / 100).toLocaleString()} blocked`}
+                subtitle={`${Math.round((data.requestsEvaluated * data.failRate) / 100).toLocaleString()} ${t("blocked")}`}
                 icon={data.failRate > 15 ? <WarningOutlined className="text-red-400" /> : undefined}
               />
             </Col>
             <Col xs={12} md={8}>
               <MetricCard
-                label="Avg. latency added"
+                label={t("avgLatencyAdded")}
                 value={data.avgLatency != null ? `${Math.round(data.avgLatency)}ms` : "—"}
                 valueColor={
                   data.avgLatency != null
@@ -181,7 +183,7 @@ export function GuardrailDetail({ guardrailId, onBack, accessToken = null, start
                         : "text-green-600"
                     : "text-gray-500"
                 }
-                subtitle={data.avgLatency != null ? "Per request (avg)" : "No data"}
+                subtitle={data.avgLatency != null ? t("perRequestAvg") : t("noData")}
               />
             </Col>
           </Row>

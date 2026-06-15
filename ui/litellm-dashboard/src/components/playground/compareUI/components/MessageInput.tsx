@@ -1,6 +1,7 @@
 import React from "react";
 import { Input, Button } from "antd";
 import { ArrowUpOutlined } from "@ant-design/icons";
+import { useTranslations } from "@/i18n";
 
 const { TextArea } = Input;
 
@@ -14,6 +15,8 @@ interface MessageInputProps {
 }
 
 export function MessageInput({ value, onChange, onSend, disabled, hasAttachment, uploadComponent }: MessageInputProps) {
+  const { t } = useTranslations("common");
+
   const canSend = !disabled && (value.trim().length > 0 || Boolean(hasAttachment));
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {

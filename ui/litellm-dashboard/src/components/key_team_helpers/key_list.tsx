@@ -1,6 +1,7 @@
 import { Setter } from "@/types";
 import { useEffect, useState } from "react";
 import { keyListCall, Member, Organization } from "../networking";
+import { useTranslations } from "@/i18n";
 
 export interface Team {
   team_id: string;
@@ -162,6 +163,7 @@ const useKeyList = ({
   });
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
+  const { t } = useTranslations("keys");
 
   const fetchKeys = async (params: Record<string, unknown> = {}): Promise<void> => {
     try {
@@ -192,7 +194,7 @@ const useKeyList = ({
       setKeyData(data);
       setError(null);
     } catch (err) {
-      setError(err instanceof Error ? err : new Error("An error occurred"));
+      setError(err instanceof Error ? err : new Error(t("anErrorOccurred")));
     } finally {
       setIsLoading(false);
     }

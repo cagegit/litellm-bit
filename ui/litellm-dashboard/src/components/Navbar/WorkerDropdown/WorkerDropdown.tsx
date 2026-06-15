@@ -4,12 +4,15 @@ import React from "react";
 import { Select } from "antd";
 import { CloudServerOutlined } from "@ant-design/icons";
 import { useWorker } from "@/hooks/useWorker";
+import { useTranslations } from "@/i18n";
 
 interface WorkerDropdownProps {
   onWorkerSwitch: (workerId: string) => void;
 }
 
 const WorkerDropdown: React.FC<WorkerDropdownProps> = ({ onWorkerSwitch }) => {
+  const { t } = useTranslations("common");
+
   const { isControlPlane, selectedWorker, workers } = useWorker();
 
   if (!isControlPlane || !selectedWorker) return null;

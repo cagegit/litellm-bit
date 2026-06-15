@@ -25,8 +25,10 @@ import { adminGlobalCacheActivity, cachingHealthCheckCall } from "./networking";
 // Import the new component
 import { CacheHealthTab } from "./cache_health";
 import CacheSettings from "./cache_settings";
+import { useTranslations } from "@/i18n";
 
 const formatDateWithoutTZ = (date: Date | undefined) => {
+
   if (!date) return undefined;
   return date.toISOString().split("T")[0];
 };

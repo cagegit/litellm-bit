@@ -6,6 +6,7 @@ import {
   ComplianceResponse,
   ComplianceCheckRequest,
 } from "@/components/networking";
+import { useTranslations } from "@/i18n";
 
 interface CompliancePanelProps {
   accessToken: string | null;
@@ -107,7 +108,7 @@ const ComplianceCard = ({
 
       {expanded && (
         <div className="border-t border-gray-100 px-4 py-3">
-          {loading && <p className="text-sm text-gray-500">Checking compliance...</p>}
+          {loading && <p className="text-sm text-gray-500">"Checking compliance..."</p>}
           {error && <p className="text-sm text-red-600">{error}</p>}
           {data && (
             <div className="space-y-2">
@@ -134,6 +135,8 @@ const ComplianceCard = ({
 // -- Main Component --
 
 const CompliancePanel: React.FC<CompliancePanelProps> = ({ accessToken, logEntry }) => {
+  const { t } = useTranslations("logs");
+
   const [euAiActData, setEuAiActData] = useState<ComplianceResponse | null>(null);
   const [gdprData, setGdprData] = useState<ComplianceResponse | null>(null);
   const [euAiActLoading, setEuAiActLoading] = useState(false);
@@ -169,10 +172,10 @@ const CompliancePanel: React.FC<CompliancePanelProps> = ({ accessToken, logEntry
 
   return (
     <div>
-      <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">Regulatory Compliance</h4>
+      <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">{t("logs.regulatoryCompliance")}</h4>
       <div className="space-y-3">
-        <ComplianceCard title="EU AI Act" data={euAiActData} loading={euAiActLoading} error={euAiActError} />
-        <ComplianceCard title="GDPR" data={gdprData} loading={gdprLoading} error={gdprError} />
+        <ComplianceCard title={t("logs.euAiAct")} data={euAiActData} loading={euAiActLoading} error={euAiActError} />
+        <ComplianceCard title={t("logs.gdpr")} data={gdprData} loading={gdprLoading} error={gdprError} />
       </div>
     </div>
   );

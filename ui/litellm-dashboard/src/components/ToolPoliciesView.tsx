@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { ToolDetail } from "@/components/ToolDetail";
 import { ToolPolicies } from "@/components/ToolPolicies";
+import { useTranslations } from "@/i18n";
 
 type View = { type: "overview" } | { type: "detail"; toolName: string };
 
@@ -15,6 +16,8 @@ export default function ToolPoliciesView({ accessToken, userRole }: ToolPolicies
   const [view, setView] = useState<View>({ type: "overview" });
 
   const handleSelectTool = (toolName: string) => {
+  const { t } = useTranslations("settings");
+
     setView({ type: "detail", toolName });
   };
 

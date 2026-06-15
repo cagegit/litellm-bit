@@ -1,8 +1,11 @@
 import React from "react";
 import { Form, Input } from "antd";
 import { AGENT_FORM_CONFIG } from "./agent_config";
+import { useTranslations } from "@/i18n";
 
 const CostConfigFields: React.FC = () => {
+  const { t } = useTranslations("agents");
+
   return (
     <>
       {AGENT_FORM_CONFIG.cost.fields.map((field) => (

@@ -3,6 +3,7 @@
  * Shows arrow indicator and message count
  */
 
+import { useTranslations } from "@/i18n";
 import { useState } from "react";
 import { Typography } from "antd";
 import { DownOutlined, RightOutlined } from "@ant-design/icons";
@@ -16,6 +17,7 @@ interface HistoryTreeProps {
 }
 
 export function HistoryTree({ messages }: HistoryTreeProps) {
+  const { t } = useTranslations("logs");
   const [isExpanded, setIsExpanded] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -48,7 +50,7 @@ export function HistoryTree({ messages }: HistoryTreeProps) {
           <RightOutlined style={{ fontSize: 10, color: "#8c8c8c" }} />
         )}
         <Text type="secondary" style={{ fontSize: 10, letterSpacing: "0.5px", textTransform: "uppercase" }}>
-          HISTORY ({messages.length} message{messages.length !== 1 ? "s" : ""})
+          {t("history", { count: messages.length })}
         </Text>
       </div>
 

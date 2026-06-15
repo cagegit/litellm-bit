@@ -1,5 +1,6 @@
 import NotificationManager from "@/components/molecules/notifications_manager";
 import { getGlobalLitellmHeaderName, getProxyBaseUrl } from "@/components/networking";
+import { useTranslations } from "@/i18n";
 
 export async function makeInteractionsRequest(
   input: string,

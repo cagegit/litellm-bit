@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslations } from "@/i18n";
 import { Text } from "@tremor/react";
 import VectorStorePermissions from "./permissions/VectorStorePermissions";
 import MCPServerPermissions from "./permissions/MCPServerPermissions";
@@ -37,6 +38,7 @@ export function ObjectPermissionsView({
   const agents = objectPermission?.agents || [];
   const agentAccessGroups = objectPermission?.agent_access_groups || [];
   const searchTools = objectPermission?.search_tools || [];
+  const { t } = useTranslations("common");
 
   const content = (
     <div className={variant === "card" ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" : "space-y-4"}>
@@ -50,11 +52,9 @@ export function ObjectPermissionsView({
       />
       <AgentPermissions agents={agents} agentAccessGroups={agentAccessGroups} accessToken={accessToken} />
       <div className="rounded-md border border-gray-100 p-4">
-        <Text className="text-sm font-medium text-gray-800">Search tools</Text>
+        <Text className="text-sm font-medium text-gray-800">{t("searchTools")}</Text>
         {searchTools.length === 0 ? (
-          <Text className="mt-1 block text-xs text-gray-500">
-            No restriction — all configured search tools are allowed for this team.
-          </Text>
+          <Text className="mt-1 block text-xs text-gray-500">{t("noRestriction")}</Text>
         ) : (
           <Text className="mt-1 block text-xs text-gray-700">{searchTools.join(", ")}</Text>
         )}
@@ -67,8 +67,8 @@ export function ObjectPermissionsView({
       <div className={`bg-white border border-gray-200 rounded-lg p-6 ${className}`}>
         <div className="flex items-center gap-2 mb-6">
           <div>
-            <Text className="font-semibold text-gray-900">Object Permissions</Text>
-            <Text className="text-xs text-gray-500">Access control for Vector Stores and MCP Servers</Text>
+            <Text className="font-semibold text-gray-900">{t("objectPermissions")}</Text>
+            <Text className="text-xs text-gray-500">{t("accessControlFor")}</Text>
           </div>
         </div>
         {content}
@@ -78,7 +78,7 @@ export function ObjectPermissionsView({
 
   return (
     <div className={`${className}`}>
-      <Text className="font-medium text-gray-900 mb-3">Object Permissions</Text>
+      <Text className="font-medium text-gray-900 mb-3">{t("objectPermissions")}</Text>
       {content}
     </div>
   );

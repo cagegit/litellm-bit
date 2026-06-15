@@ -1,3 +1,4 @@
+import { useTranslations } from "@/i18n";
 interface ModelNameDisplayProps {
   model: {
     model_name?: string;

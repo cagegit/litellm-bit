@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Card, Text } from "@tremor/react";
 import { Select } from "antd";
 import { PlusIcon, TrashIcon, GripVerticalIcon } from "lucide-react";
+import { useTranslations } from "@/i18n";
 import VariableTextArea from "../variable_textarea";
 import { Message } from "./types";
 
@@ -22,6 +23,7 @@ const PromptMessagesCard: React.FC<PromptMessagesCardProps> = ({
   onRemoveMessage,
   onMoveMessage,
 }) => {
+  const { t } = useTranslations("prompts");
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
 
@@ -51,10 +53,8 @@ const PromptMessagesCard: React.FC<PromptMessagesCardProps> = ({
   return (
     <Card className="p-3">
       <div className="mb-2">
-        <Text className="text-sm font-medium">Prompt messages</Text>
-        <Text className="text-gray-500 text-xs mt-1">
-          Use <code className="bg-gray-100 px-1 rounded text-xs">{"{{variable}}"}</code> syntax for template variables
-        </Text>
+        <Text className="text-sm font-medium">{t("promptMessages")}</Text>
+        <Text className="text-gray-500 text-xs mt-1">{t("useVariableSyntax")}</Text>
       </div>
       <div className="space-y-2">
         {messages.map((message, index) => (
@@ -77,9 +77,9 @@ const PromptMessagesCard: React.FC<PromptMessagesCardProps> = ({
                 size="small"
                 bordered={false}
               >
-                <Option value="user">User</Option>
-                <Option value="assistant">Assistant</Option>
-                <Option value="system">System</Option>
+                <Option value="user">{t("user")}</Option>
+                <Option value="assistant">{t("assistant")}</Option>
+                <Option value="system">{t("system")}</Option>
               </Select>
               <div className="flex items-center gap-1">
                 {messages.length > 1 && (
@@ -97,7 +97,7 @@ const PromptMessagesCard: React.FC<PromptMessagesCardProps> = ({
                 value={message.content}
                 onChange={(value) => onUpdateMessage(index, "content", value)}
                 rows={3}
-                placeholder="Enter prompt content..."
+                placeholder={t("enterPromptContent")}
               />
             </div>
           </div>
@@ -105,7 +105,7 @@ const PromptMessagesCard: React.FC<PromptMessagesCardProps> = ({
       </div>
       <button onClick={onAddMessage} className="mt-2 text-xs text-blue-600 hover:text-blue-700 flex items-center">
         <PlusIcon size={14} className="mr-1" />
-        Add message
+        {t("addMessage")}
       </button>
     </Card>
   );

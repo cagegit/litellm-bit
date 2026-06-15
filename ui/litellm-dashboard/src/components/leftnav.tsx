@@ -44,6 +44,7 @@ import NewBadge from "./common_components/NewBadge";
 import type { Organization } from "./networking";
 import UsageIndicator from "./UsageIndicator";
 import { MIGRATED_PAGES, migratedHref, legacyPageHref } from "@/utils/migratedPages";
+import { useTranslations } from "@/i18n";
 const { Sider } = Layout;
 
 // Define the props type
@@ -77,28 +78,28 @@ interface MenuGroup {
   roles?: string[];
 }
 
-// Menu groups organized by category - defined outside component for export
-const menuGroups: MenuGroup[] = [
+// Menu groups organized by category - defined as a function so i18n t() is available
+const getMenuGroups = (t: (key: string) => string): MenuGroup[] => [
   {
-    groupLabel: "AI GATEWAY",
+    groupLabel: t("aiGateway"),
     items: [
       {
         key: "api-keys",
         page: "api-keys",
-        label: "Virtual Keys",
+        label: t("virtualKeys"),
         icon: <KeyOutlined />,
       },
       {
         key: "llm-playground",
         page: "llm-playground",
-        label: "Playground",
+        label: t("playground"),
         icon: <PlayCircleOutlined />,
         roles: rolesWithWriteAccess,
       },
       {
         key: "models",
         page: "models",
-        label: "Models + Endpoints",
+        label: t("modelsEndpoints"),
         icon: <BlockOutlined />,
         // Admin Viewer can view models read-only (write actions are
         // hidden inside the page); Playground above stays write-only.
@@ -107,13 +108,13 @@ const menuGroups: MenuGroup[] = [
       {
         key: "agentic",
         page: "agentic",
-        label: "Agentic",
+        label: t("agentic"),
         icon: <RobotOutlined />,
         children: [
           {
             key: "agents",
             page: "agents",
-            label: "Agents",
+            label: t("agents"),
             icon: <RobotOutlined />,
             // Admin Viewer can view agents read-only (write actions are
             // hidden inside the page); Playground above stays write-only.
@@ -122,13 +123,13 @@ const menuGroups: MenuGroup[] = [
           {
             key: "workflows",
             page: "workflows",
-            label: "Workflow Runs",
+            label: t("workflowRuns"),
             icon: <ApartmentOutlined />,
           },
           {
             key: "memory",
             page: "memory",
-            label: "Memory",
+            label: t("memory"),
             icon: <BookOutlined />,
           },
         ],
@@ -136,51 +137,51 @@ const menuGroups: MenuGroup[] = [
       {
         key: "mcp-servers",
         page: "mcp-servers",
-        label: "MCP Servers",
+        label: t("mcpServers"),
         icon: <ToolOutlined />,
       },
       {
         key: "skills",
         page: "skills",
-        label: "Skills",
+        label: t("skills"),
         icon: <ApiOutlined />,
         roles: all_admin_roles,
       },
       {
         key: "guardrails",
         page: "guardrails",
-        label: "Guardrails",
+        label: t("guardrails"),
         icon: <SafetyOutlined />,
       },
       {
         key: "policies",
         page: "policies",
-        label: <span className="flex items-center gap-4">Policies</span>,
+        label: <span className="flex items-center gap-4">{t("policies")}</span>,
         icon: <AuditOutlined />,
         roles: all_admin_roles,
       },
       {
         key: "tools",
         page: "tools",
-        label: "Tools",
+        label: t("tools"),
         icon: <ToolOutlined />,
         children: [
           {
             key: "search-tools",
             page: "search-tools",
-            label: "Search Tools",
+            label: t("searchTools"),
             icon: <SearchOutlined />,
           },
           {
             key: "vector-stores",
             page: "vector-stores",
-            label: "Vector Stores",
+            label: t("vectorStores"),
             icon: <DatabaseOutlined />,
           },
           {
             key: "tool-policies",
             page: "tool-policies",
-            label: "Tool Policies",
+            label: t("toolPolicies"),
             icon: <SafetyOutlined />,
           },
         ],
@@ -188,37 +189,37 @@ const menuGroups: MenuGroup[] = [
     ],
   },
   {
-    groupLabel: "OBSERVABILITY",
+    groupLabel: t("observability"),
     items: [
       {
         key: "new_usage",
         page: "new_usage",
         icon: <BarChartOutlined />,
         roles: [...all_admin_roles, ...internalUserRoles],
-        label: "Usage",
+        label: t("usage"),
       },
       {
         key: "logs",
         page: "logs",
-        label: "Logs",
+        label: t("logs"),
         icon: <LineChartOutlined />,
       },
       {
         key: "guardrails-monitor",
         page: "guardrails-monitor",
-        label: "Guardrails Monitor",
+        label: t("guardrailsMonitor"),
         icon: <SafetyOutlined />,
         roles: [...all_admin_roles, ...internalUserRoles],
       },
     ],
   },
   {
-    groupLabel: "ACCESS CONTROL",
+    groupLabel: t("accessControl"),
     items: [
       {
         key: "teams",
         page: "teams",
-        label: "Teams",
+        label: t("teams"),
         icon: <TeamOutlined />,
       },
       {
@@ -226,7 +227,7 @@ const menuGroups: MenuGroup[] = [
         page: "projects",
         label: (
           <span className="flex items-center gap-2">
-            Projects <NewBadge />
+            {t("projects")} <NewBadge />
           </span>
         ),
         icon: <FolderOutlined />,
@@ -235,94 +236,94 @@ const menuGroups: MenuGroup[] = [
       {
         key: "users",
         page: "users",
-        label: "Internal Users",
+        label: t("internalUsers"),
         icon: <UserOutlined />,
         roles: all_admin_roles,
       },
       {
         key: "organizations",
         page: "organizations",
-        label: "Organizations",
+        label: t("organizations"),
         icon: <BankOutlined />,
         roles: all_admin_roles,
       },
       {
         key: "access-groups",
         page: "access-groups",
-        label: "Access Groups",
+        label: t("accessGroups"),
         icon: <BlockOutlined />,
         roles: all_admin_roles,
       },
       {
         key: "budgets",
         page: "budgets",
-        label: "Budgets",
+        label: t("budgets"),
         icon: <CreditCardOutlined />,
         roles: all_admin_roles,
       },
     ],
   },
   {
-    groupLabel: "DEVELOPER TOOLS",
+    groupLabel: t("developerTools"),
     items: [
       {
         key: "api_ref",
         page: "api_ref",
-        label: "API Reference",
+        label: t("apiReference"),
         icon: <ApiOutlined />,
       },
       {
         key: "model-hub-table",
         page: "model-hub-table",
-        label: "AI Hub",
+        label: t("aiHub"),
         icon: <AppstoreOutlined />,
       },
 
       {
         key: "learning-resources",
         page: "learning-resources",
-        label: "Learning Resources",
+        label: t("learningResources"),
         icon: <BookOutlined />,
         external_url: "https://models.litellm.ai/cookbook",
       },
       {
         key: "experimental",
         page: "experimental",
-        label: "Experimental",
+        label: t("experimental"),
         icon: <ExperimentOutlined />,
         children: [
           {
             key: "caching",
             page: "caching",
-            label: "Caching",
+            label: t("caching"),
             icon: <DatabaseOutlined />,
             roles: all_admin_roles,
           },
           {
             key: "prompts",
             page: "prompts",
-            label: "Prompts",
+            label: t("prompts"),
             icon: <FileTextOutlined />,
             roles: all_admin_roles,
           },
           {
             key: "transform-request",
             page: "transform-request",
-            label: "API Playground",
+            label: t("apiPlayground"),
             icon: <ApiOutlined />,
             roles: [...all_admin_roles, ...internalUserRoles],
           },
           {
             key: "tag-management",
             page: "tag-management",
-            label: "Tag Management",
+            label: t("tagManagement"),
             icon: <TagsOutlined />,
             roles: all_admin_roles,
           },
           {
             key: "4",
             page: "usage",
-            label: "Old Usage",
+            label: t("oldUsage"),
             icon: <BarChartOutlined />,
           },
         ],
@@ -330,7 +331,7 @@ const menuGroups: MenuGroup[] = [
     ],
   },
   {
-    groupLabel: "SETTINGS",
+    groupLabel: t("settingsGroup"),
     roles: all_admin_roles,
     items: [
       {
@@ -338,7 +339,7 @@ const menuGroups: MenuGroup[] = [
         page: "settings",
         label: (
           <span className="flex items-center gap-2">
-            Settings <NewBadge />
+            {t("settings")} <NewBadge />
           </span>
         ),
         icon: <SettingOutlined />,
@@ -347,14 +348,14 @@ const menuGroups: MenuGroup[] = [
           {
             key: "router-settings",
             page: "router-settings",
-            label: "Router Settings",
+            label: t("routerSettings"),
             icon: <SettingOutlined />,
             roles: all_admin_roles,
           },
           {
             key: "logging-and-alerts",
             page: "logging-and-alerts",
-            label: "Logging & Alerts",
+            label: t("loggingAlerts"),
             icon: <SettingOutlined />,
             roles: all_admin_roles,
           },
@@ -363,7 +364,7 @@ const menuGroups: MenuGroup[] = [
             page: "admin-panel",
             label: (
               <span className="flex items-center gap-2">
-                Admin Settings{" "}
+                {t("adminSettings")}{" "}
                 <NewBadge dot>
                   <span />
                 </NewBadge>
@@ -375,14 +376,14 @@ const menuGroups: MenuGroup[] = [
           {
             key: "cost-tracking",
             page: "cost-tracking",
-            label: "Cost Tracking",
+            label: t("costTracking"),
             icon: <BarChartOutlined />,
             roles: all_admin_roles,
           },
           {
             key: "ui-theme",
             page: "ui-theme",
-            label: "UI Theme",
+            label: t("uiTheme"),
             icon: <BgColorsOutlined />,
             roles: all_admin_roles,
           },
@@ -404,6 +405,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   allowVectorStoresForTeamAdmins,
 }) => {
   const { userId, accessToken, userRole } = useAuthorized();
+  const { t } = useTranslations("common");
   const { data: organizations } = useOrganizations();
   const { data: teams } = useTeams();
 
@@ -537,7 +539,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   const buildMenuItems = (): MenuProps["items"] => {
     const items: MenuProps["items"] = [];
 
-    menuGroups.forEach((group) => {
+    getMenuGroups(t).forEach((group) => {
       // Check if group has role restriction
       if (group.roles && !group.roles.includes(userRole)) {
         return;
@@ -598,7 +600,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   // Find selected menu key
   const findMenuItemKey = (page: string): string => {
-    for (const group of menuGroups) {
+    for (const group of getMenuGroups(t)) {
       for (const item of group.items) {
         if (item.page === page) return item.key;
         if (item.children) {
@@ -666,5 +668,5 @@ const Sidebar: React.FC<SidebarProps> = ({
 
 export default Sidebar;
 
-// Also export menuGroups for advanced use cases
-export { menuGroups };
+// Also export getMenuGroups for advanced use cases
+export { getMenuGroups };

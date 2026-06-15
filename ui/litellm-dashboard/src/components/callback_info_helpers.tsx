@@ -1,3 +1,4 @@
+import { useTranslations } from "@/i18n";
 interface CallbackConfig {
   id: string;
   displayName: string;

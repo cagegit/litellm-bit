@@ -11,6 +11,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { Policy } from "./types";
+import { useTranslations } from "@/i18n";
 
 /** One row per policy name; primaryPolicy is used for display and for Edit (FlowBuilder loads all versions) */
 interface PolicyRow {
@@ -55,6 +56,8 @@ const PolicyTable: React.FC<PolicyTableProps> = ({
   onViewClick,
   isAdmin = false,
 }) => {
+  const { t } = useTranslations("settings");
+
   const [sorting, setSorting] = useState<SortingState>([{ id: "policy_name", desc: false }]);
 
   const rows = useMemo(() => groupPoliciesByName(policies), [policies]);
@@ -218,7 +221,7 @@ const PolicyTable: React.FC<PolicyTableProps> = ({
           <div className="flex space-x-2">
             {isAdmin && (
               <>
-                <Tooltip title="Edit policy">
+                <Tooltip title={t("settings.editPolicy")}>
                   <Icon
                     icon={PencilIcon}
                     size="sm"
@@ -226,7 +229,7 @@ const PolicyTable: React.FC<PolicyTableProps> = ({
                     className="cursor-pointer hover:text-blue-500"
                   />
                 </Tooltip>
-                <Tooltip title="Delete policy">
+                <Tooltip title={t("settings.deletePolicy")}>
                   <Icon
                     icon={TrashIcon}
                     size="sm"
@@ -298,7 +301,7 @@ const PolicyTable: React.FC<PolicyTableProps> = ({
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-8 text-center">
                   <div className="text-center text-gray-500">
-                    <p>Loading...</p>
+                    <p>{t("settings.loading")}</p>
                   </div>
                 </TableCell>
               </TableRow>
@@ -323,7 +326,7 @@ const PolicyTable: React.FC<PolicyTableProps> = ({
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-8 text-center">
                   <div className="text-center text-gray-500">
-                    <p>No policies found</p>
+                    <p>{t("settings.noPoliciesFound")}</p>
                   </div>
                 </TableCell>
               </TableRow>

@@ -2,6 +2,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Button, Badge, Text } from "@tremor/react";
 import { Tooltip, Tag } from "antd";
 import { CopyOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import { useTranslations } from "@/i18n";
 
 export interface MCPServerData {
   server_id: string;

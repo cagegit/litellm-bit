@@ -1,3 +1,4 @@
+import { useTranslations } from "@/i18n";
 /**
  * Extracts a user-friendly error message from various error formats
  * @param {any} error - The error object or message

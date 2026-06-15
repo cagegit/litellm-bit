@@ -6,6 +6,7 @@ import React from "react";
 import type { Team } from "../key_team_helpers/key_list";
 import { type CredentialItem } from "../networking";
 import { Providers } from "../provider_info_helpers";
+import { useTranslations } from "@/i18n";
 import AddAutoRouterTab from "./add_auto_router_tab";
 import AddModelForm from "./AddModelForm";
 import { handleAddAutoRouterSubmit } from "./handle_add_auto_router_submit";
@@ -43,6 +44,7 @@ const AddModelTab: React.FC<AddModelTabProps> = ({
   accessToken,
   userRole,
 }) => {
+  const { t } = useTranslations("models");
   // Create separate form instance for auto router
   const [autoRouterForm] = Form.useForm();
 
@@ -61,8 +63,8 @@ const AddModelTab: React.FC<AddModelTabProps> = ({
     <>
       <TabGroup className="w-full">
         <TabList className="mb-4">
-          <Tab>Add Model</Tab>
-          <Tab>Add Auto Router</Tab>
+          <Tab>{t("addModel")}</Tab>
+          <Tab>{t("addAutoRouter")}</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>

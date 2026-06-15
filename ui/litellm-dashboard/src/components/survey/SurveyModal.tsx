@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { X, MessageSquare, ArrowRight, ArrowLeft } from "lucide-react";
 import { Button, Input, Radio, Space, Progress, Checkbox } from "antd";
+import { useTranslations } from "@/i18n";
 
 interface SurveyModalProps {
   isOpen: boolean;

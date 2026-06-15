@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Input, Tooltip } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
+import { useTranslations } from "@/i18n";
 
 interface StdioConfigurationProps {
   isVisible: boolean;
@@ -12,6 +13,8 @@ interface StdioConfigurationProps {
 }
 
 const StdioConfiguration: React.FC<StdioConfigurationProps> = ({ isVisible, required = true }) => {
+  const { t } = useTranslations("mcp");
+
   if (!isVisible) return null;
 
   return (
@@ -26,7 +29,7 @@ const StdioConfiguration: React.FC<StdioConfigurationProps> = ({ isVisible, requ
       }
       name="stdio_config"
       rules={[
-        ...(required ? [{ required: true, message: "Please enter stdio configuration" }] : []),
+        ...(required ? [{ required: true, message: t("mcp.pleaseEnterStdioConfiguration") }] : []),
         {
           validator: (_, value) => {
             if (!value) return Promise.resolve();

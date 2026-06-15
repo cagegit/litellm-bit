@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "@/i18n";
 import { formatNumberWithCommas } from "@/utils/dataUtils";
 import { ChevronDownIcon, ChevronUpIcon, SwitchVerticalIcon } from "@heroicons/react/outline";
 import {
@@ -22,6 +23,7 @@ interface DeletedTeamsTableProps {
 }
 
 export function DeletedTeamsTable({ teams, isLoading, isFetching }: DeletedTeamsTableProps) {
+  const { t } = useTranslations("organization");
   const [sorting, setSorting] = useState<SortingState>([
     {
       id: "deleted_at",
@@ -33,7 +35,7 @@ export function DeletedTeamsTable({ teams, isLoading, isFetching }: DeletedTeams
     {
       id: "team_alias",
       accessorKey: "team_alias",
-      header: "Team Name",
+      header: t("teamName"),
       size: 150,
       maxSize: 200,
       cell: (info) => {
@@ -48,7 +50,7 @@ export function DeletedTeamsTable({ teams, isLoading, isFetching }: DeletedTeams
     {
       id: "team_id",
       accessorKey: "team_id",
-      header: "Team ID",
+      header: t("teamId"),
       size: 150,
       maxSize: 250,
       cell: (info) => {
@@ -63,7 +65,7 @@ export function DeletedTeamsTable({ teams, isLoading, isFetching }: DeletedTeams
     {
       id: "created_at",
       accessorKey: "created_at",
-      header: "Created",
+      header: t("created"),
       size: 120,
       maxSize: 140,
       cell: (info) => {
@@ -76,7 +78,7 @@ export function DeletedTeamsTable({ teams, isLoading, isFetching }: DeletedTeams
     {
       id: "spend",
       accessorKey: "spend",
-      header: "Spend (USD)",
+      header: t("spendUSD"),
       size: 100,
       maxSize: 140,
       cell: (info) => {
@@ -89,14 +91,14 @@ export function DeletedTeamsTable({ teams, isLoading, isFetching }: DeletedTeams
     {
       id: "max_budget",
       accessorKey: "max_budget",
-      header: "Budget (USD)",
+      header: t("budgetUSD"),
       size: 110,
       maxSize: 150,
       cell: (info) => {
         const maxBudget = info.getValue() as number | null;
         return (
           <span className="block max-w-[150px]">
-            {maxBudget === null || maxBudget === undefined ? "No limit" : `$${formatNumberWithCommas(maxBudget)}`}
+            {maxBudget === null || maxBudget === undefined ? t("noLimit") : `$${formatNumberWithCommas(maxBudget)}`}
           </span>
         );
       },
@@ -104,7 +106,7 @@ export function DeletedTeamsTable({ teams, isLoading, isFetching }: DeletedTeams
     {
       id: "models",
       accessorKey: "models",
-      header: "Models",
+      header: t("models"),
       size: 200,
       maxSize: 300,
       cell: (info) => {
@@ -112,7 +114,7 @@ export function DeletedTeamsTable({ teams, isLoading, isFetching }: DeletedTeams
         if (!Array.isArray(models) || models.length === 0) {
           return (
             <Badge size={"xs"} color="red">
-              <Text>All Proxy Models</Text>
+              <Text>{t("allProxyModels")}</Text>
             </Badge>
           );
         }
@@ -121,7 +123,7 @@ export function DeletedTeamsTable({ teams, isLoading, isFetching }: DeletedTeams
             {models.slice(0, 3).map((model: string, index: number) =>
               model === "all-proxy-models" ? (
                 <Badge key={index} size={"xs"} color="red">
-                  <Text>All Proxy Models</Text>
+                  <Text>{t("allProxyModels")}</Text>
                 </Badge>
               ) : (
                 <Badge key={index} size={"xs"} color="blue">
@@ -134,7 +136,7 @@ export function DeletedTeamsTable({ teams, isLoading, isFetching }: DeletedTeams
             {models.length > 3 && (
               <Badge size={"xs"} color="gray">
                 <Text>
-                  +{models.length - 3} {models.length - 3 === 1 ? "more model" : "more models"}
+                  +{models.length - 3} {models.length - 3 === 1 ? t("moreModel") : t("moreModels")}
                 </Text>
               </Badge>
             )}
@@ -145,7 +147,7 @@ export function DeletedTeamsTable({ teams, isLoading, isFetching }: DeletedTeams
     {
       id: "organization_id",
       accessorKey: "organization_id",
-      header: "Organization",
+      header: t("organization"),
       size: 150,
       maxSize: 200,
       cell: (info) => {
@@ -160,7 +162,7 @@ export function DeletedTeamsTable({ teams, isLoading, isFetching }: DeletedTeams
     {
       id: "deleted_at",
       accessorKey: "deleted_at",
-      header: "Deleted At",
+      header: t("deletedAt"),
       size: 120,
       maxSize: 140,
       cell: (info) => {
@@ -171,7 +173,7 @@ export function DeletedTeamsTable({ teams, isLoading, isFetching }: DeletedTeams
     {
       id: "deleted_by",
       accessorKey: "deleted_by",
-      header: "Deleted By",
+      header: t("deletedBy"),
       size: 120,
       maxSize: 180,
       cell: (info) => {
@@ -205,10 +207,10 @@ export function DeletedTeamsTable({ teams, isLoading, isFetching }: DeletedTeams
       <div className="border-b py-4 flex-1 overflow-hidden">
         <div className="flex items-center justify-between w-full mb-4">
           {isLoading || isFetching ? (
-            <span className="inline-flex text-sm text-gray-700">Loading...</span>
+            <span className="inline-flex text-sm text-gray-700">{t("loading")}</span>
           ) : (
             <span className="inline-flex text-sm text-gray-700">
-              Showing {teams.length} {teams.length === 1 ? "team" : "teams"}
+              {t("showing")} {teams.length} {teams.length === 1 ? t("team") : t("teams")}
             </span>
           )}
         </div>
@@ -288,7 +290,7 @@ export function DeletedTeamsTable({ teams, isLoading, isFetching }: DeletedTeams
                     <TableRow>
                       <TableCell colSpan={columns.length} className="h-8 text-center">
                         <div className="text-center text-gray-500">
-                          <p>🚅 Loading teams...</p>
+                          <p>{t("loadingTeams")}</p>
                         </div>
                       </TableCell>
                     </TableRow>
@@ -315,7 +317,7 @@ export function DeletedTeamsTable({ teams, isLoading, isFetching }: DeletedTeams
                     <TableRow>
                       <TableCell colSpan={columns.length} className="h-8 text-center">
                         <div className="text-center text-gray-500">
-                          <p>No deleted teams found</p>
+                          <p>{t("noDeletedTeamsFound")}</p>
                         </div>
                       </TableCell>
                     </TableRow>

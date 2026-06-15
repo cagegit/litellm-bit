@@ -2,6 +2,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Button, Badge, Text } from "@tremor/react";
 import { Tooltip, Tag } from "antd";
 import { CopyOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import { useTranslations } from "@/i18n";
 
 export interface AgentHubData {
   agent_id?: string;
@@ -33,9 +34,11 @@ export const getAgentHubTableColumns = (
   copyToClipboard: (text: string) => void,
   publicPage: boolean = false,
 ): ColumnDef<AgentHubData>[] => {
+  const { t } = useTranslations("aiHub");
+
   const allColumns: ColumnDef<AgentHubData>[] = [
     {
-      header: "Agent Name",
+      header: t("agent_name"),
       accessorKey: "name",
       enableSorting: true,
       sortingFn: "alphanumeric",
@@ -46,7 +49,7 @@ export const getAgentHubTableColumns = (
           <div className="space-y-1">
             <div className="flex items-center space-x-2">
               <Text className="font-medium text-sm">{agent.name}</Text>
-              <Tooltip title="Copy agent name">
+              <Tooltip title={t("copy_agent_name")}>
                 <CopyOutlined
                   onClick={() => copyToClipboard(agent.name)}
                   className="cursor-pointer text-gray-500 hover:text-blue-500 text-xs"
@@ -62,7 +65,7 @@ export const getAgentHubTableColumns = (
       },
     },
     {
-      header: "Description",
+      header: t("description"),
       accessorKey: "description",
       enableSorting: true,
       sortingFn: "alphanumeric",
@@ -76,7 +79,7 @@ export const getAgentHubTableColumns = (
       },
     },
     {
-      header: "Version",
+      header: t("version"),
       accessorKey: "version",
       enableSorting: true,
       sortingFn: "alphanumeric",
@@ -94,7 +97,7 @@ export const getAgentHubTableColumns = (
       },
     },
     {
-      header: "Protocol",
+      header: t("protocol"),
       accessorKey: "protocolVersion",
       enableSorting: true,
       sortingFn: "alphanumeric",
@@ -108,7 +111,7 @@ export const getAgentHubTableColumns = (
       },
     },
     {
-      header: "Skills",
+      header: t("skills"),
       accessorKey: "skills",
       enableSorting: false,
       cell: ({ row }) => {
@@ -117,9 +120,7 @@ export const getAgentHubTableColumns = (
 
         return (
           <div className="space-y-1">
-            <Text className="text-xs font-medium">
-              {skills.length} skill{skills.length !== 1 ? "s" : ""}
-            </Text>
+            <Text className="text-xs font-medium">{t("skills_count", { count: skills.length })}</Text>
             {skills.length > 0 && (
               <div className="flex flex-wrap gap-1">
                 {skills.slice(0, 2).map((skill) => (
@@ -135,7 +136,7 @@ export const getAgentHubTableColumns = (
       },
     },
     {
-      header: "Capabilities",
+      header: t("capabilities"),
       accessorKey: "capabilities",
       enableSorting: false,
       cell: ({ row }) => {
@@ -161,7 +162,7 @@ export const getAgentHubTableColumns = (
       },
     },
     {
-      header: "I/O Modes",
+      header: t("io_modes"),
       accessorKey: "defaultInputModes",
       enableSorting: false,
       cell: ({ row }) => {
@@ -172,10 +173,12 @@ export const getAgentHubTableColumns = (
         return (
           <div className="space-y-1">
             <Text className="text-xs">
-              <span className="font-medium">In:</span> {inputModes.join(", ") || "-"}
+              <span className="font-medium">{t("input_label")} </span>
+              {inputModes.join(", ") || "-"}
             </Text>
             <Text className="text-xs">
-              <span className="font-medium">Out:</span> {outputModes.join(", ") || "-"}
+              <span className="font-medium">{t("output_label")} </span>
+              {outputModes.join(", ") || "-"}
             </Text>
           </div>
         );
@@ -185,7 +188,7 @@ export const getAgentHubTableColumns = (
       },
     },
     {
-      header: "Public",
+      header: t("public"),
       accessorKey: "is_public",
       enableSorting: true,
       sortingFn: (rowA, rowB) => {
@@ -198,11 +201,11 @@ export const getAgentHubTableColumns = (
 
         return agent.is_public === true ? (
           <Badge color="green" size="xs">
-            Yes
+            {t("yes")}
           </Badge>
         ) : (
           <Badge color="gray" size="xs">
-            No
+            {t("no")}
           </Badge>
         );
       },
@@ -211,7 +214,7 @@ export const getAgentHubTableColumns = (
       },
     },
     {
-      header: "Details",
+      header: t("details"),
       id: "details",
       enableSorting: false,
       cell: ({ row }) => {
@@ -219,8 +222,8 @@ export const getAgentHubTableColumns = (
 
         return (
           <Button size="xs" variant="secondary" onClick={() => showModal(agent)} icon={InfoCircleOutlined}>
-            <span className="hidden lg:inline">Details</span>
-            <span className="lg:hidden">Info</span>
+            <span className="hidden lg:inline">{t("details")}</span>
+            <span className="lg:hidden">{t("info")}</span>
           </Button>
         );
       },

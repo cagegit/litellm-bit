@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTranslations } from "@/i18n";
 import {
   Card,
   Text,
@@ -37,6 +38,7 @@ const TagInfoView: React.FC<TagInfoViewProps> = ({ tagId, onClose, accessToken, 
   const [isEditing, setIsEditing] = useState<boolean>(editTag);
   const [userModels, setUserModels] = useState<string[]>([]);
   const [copiedStates, setCopiedStates] = useState<Record<string, boolean>>({});
+  const { t } = useTranslations("tagManagement");
 
   const copyToClipboard = async (text: string | null | undefined, key: string) => {
     const success = await utilCopyToClipboard(text);
@@ -67,7 +69,7 @@ const TagInfoView: React.FC<TagInfoViewProps> = ({ tagId, onClose, accessToken, 
       }
     } catch (error) {
       console.error("Error fetching tag details:", error);
-      NotificationsManager.fromBackend("Error fetching tag details: " + error);
+      NotificationsManager.fromBackend(t("errorFetchingTagDetails", { error: String(error) }));
     }
   };
 
@@ -95,17 +97,17 @@ const TagInfoView: React.FC<TagInfoViewProps> = ({ tagId, onClose, accessToken, 
         rpm_limit: values.rpm_limit,
         budget_duration: values.budget_duration,
       });
-      NotificationsManager.success("Tag updated successfully");
+      NotificationsManager.success(t("tagUpdatedSuccessfully"));
       setIsEditing(false);
       fetchTagDetails();
     } catch (error) {
       console.error("Error updating tag:", error);
-      NotificationsManager.fromBackend("Error updating tag: " + error);
+      NotificationsManager.fromBackend(t("errorUpdatingTag", { error: String(error) }));
     }
   };
 
   if (!tagDetails) {
-    return <div>Loading...</div>;
+    return <div>{t("loading")}</div>;
   }
 
   return (
@@ -113,10 +115,10 @@ const TagInfoView: React.FC<TagInfoViewProps> = ({ tagId, onClose, accessToken, 
       <div className="flex justify-between items-center mb-6">
         <div>
           <Button onClick={onClose} className="mb-4">
-            ← Back to Tags
+            {t("backToTags")}
           </Button>
           <div className="flex items-center gap-2">
-            <Text className="font-medium">Tag Name:</Text>
+            <Text className="font-medium">{t("tagName")}:</Text>
             <span className="font-mono px-2 py-1 bg-gray-100 rounded text-sm border border-gray-200">
               {tagDetails.name}
             </span>
@@ -132,34 +134,34 @@ const TagInfoView: React.FC<TagInfoViewProps> = ({ tagId, onClose, accessToken, 
               }`}
             />
           </div>
-          <Text className="text-gray-500">{tagDetails.description || "No description"}</Text>
+          <Text className="text-gray-500">{tagDetails.description || t("noDescription")}</Text>
         </div>
-        {is_admin && !isEditing && <Button onClick={() => setIsEditing(true)}>Edit Tag</Button>}
+        {is_admin && !isEditing && <Button onClick={() => setIsEditing(true)}>{t("editTag")}</Button>}
       </div>
 
       {isEditing ? (
         <Card>
           <Form form={form} onFinish={handleSave} layout="vertical" initialValues={tagDetails}>
-            <Form.Item label="Tag Name" name="name" rules={[{ required: true, message: "Please input a tag name" }]}>
+            <Form.Item label={t("tagName")} name="name" rules={[{ required: true, message: t("pleaseInputTagName") }]}>
               <Input className="rounded-md border-gray-300" />
             </Form.Item>
 
-            <Form.Item label="Description" name="description">
+            <Form.Item label={t("description")} name="description">
               <Input.TextArea rows={4} />
             </Form.Item>
 
             <Form.Item
               label={
                 <span>
-                  Allowed Models
-                  <Tooltip title="Select which models are allowed to process this type of data">
+                  {t("allowedModels")}
+                  <Tooltip title={t("allowedModelsTooltip")}>
                     <InfoCircleOutlined style={{ marginLeft: "4px" }} />
                   </Tooltip>
                 </span>
               }
               name="models"
             >
-              <Select2 mode="multiple" placeholder="Select Models">
+              <Select2 mode="multiple" placeholder={t("selectModels")}>
                 {userModels.map((modelId) => (
                   <Select2.Option key={modelId} value={modelId}>
                     {getModelDisplayName(modelId)}
@@ -170,14 +172,14 @@ const TagInfoView: React.FC<TagInfoViewProps> = ({ tagId, onClose, accessToken, 
 
             <Accordion className="mt-4 mb-4">
               <AccordionHeader>
-                <TremorTitle className="m-0">Budget & Rate Limits</TremorTitle>
+                <TremorTitle className="m-0">{t("budgetAndRateLimits")}</TremorTitle>
               </AccordionHeader>
               <AccordionBody>
                 <Form.Item
                   label={
                     <span>
-                      Max Budget (USD){" "}
-                      <Tooltip title="Maximum amount in USD this tag can spend">
+                      {t("maxBudgetUsd")}{" "}
+                      <Tooltip title={t("maxBudgetTooltip")}>
                         <InfoCircleOutlined style={{ marginLeft: "4px" }} />
                       </Tooltip>
                     </span>
@@ -190,8 +192,8 @@ const TagInfoView: React.FC<TagInfoViewProps> = ({ tagId, onClose, accessToken, 
                 <Form.Item
                   label={
                     <span>
-                      Reset Budget{" "}
-                      <Tooltip title="How often the budget should reset">
+                      {t("resetBudget")}{" "}
+                      <Tooltip title={t("resetBudgetTooltip")}>
                         <InfoCircleOutlined style={{ marginLeft: "4px" }} />
                       </Tooltip>
                     </span>
@@ -203,14 +205,14 @@ const TagInfoView: React.FC<TagInfoViewProps> = ({ tagId, onClose, accessToken, 
 
                 <div className="mt-4 p-3 bg-gray-50 rounded-md border border-gray-200">
                   <p className="text-sm text-gray-600">
-                    TPM/RPM limits for tags are not currently supported. If you need this feature, please{" "}
+                    {t("tpmRpmNotSupported")}{" "}
                     <a
                       href="https://github.com/BerriAI/litellm/issues/new"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-600 hover:text-blue-800 underline"
                     >
-                      create a GitHub issue
+                      {t("createGithubIssue")}
                     </a>
                     .
                   </p>
@@ -219,44 +221,46 @@ const TagInfoView: React.FC<TagInfoViewProps> = ({ tagId, onClose, accessToken, 
             </Accordion>
 
             <div className="flex justify-end space-x-2">
-              <Button onClick={() => setIsEditing(false)}>Cancel</Button>
-              <Button type="submit">Save Changes</Button>
+              <Button onClick={() => setIsEditing(false)}>{t("cancel")}</Button>
+              <Button type="submit">{t("saveChanges")}</Button>
             </div>
           </Form>
         </Card>
       ) : (
         <div className="space-y-6">
           <Card>
-            <Title>Tag Details</Title>
+            <Title>{t("tagDetails")}</Title>
             <div className="space-y-4 mt-4">
               <div>
-                <Text className="font-medium">Name</Text>
+                <Text className="font-medium">{t("name")}</Text>
                 <Text>{tagDetails.name}</Text>
               </div>
               <div>
-                <Text className="font-medium">Description</Text>
+                <Text className="font-medium">{t("description")}</Text>
                 <Text>{tagDetails.description || "-"}</Text>
               </div>
               <div>
-                <Text className="font-medium">Allowed Models</Text>
+                <Text className="font-medium">{t("allowedModels")}</Text>
                 <div className="flex flex-wrap gap-2 mt-2">
                   {!tagDetails.models || tagDetails.models.length === 0 ? (
-                    <Badge color="red">All Models</Badge>
+                    <Badge color="red">{t("allModels")}</Badge>
                   ) : (
                     tagDetails.models.map((modelId) => (
                       <Badge key={modelId} color="blue">
-                        <Tooltip title={`ID: ${modelId}`}>{tagDetails.model_info?.[modelId] || modelId}</Tooltip>
+                        <Tooltip title={t("idWithValue", { id: modelId })}>
+                          {tagDetails.model_info?.[modelId] || modelId}
+                        </Tooltip>
                       </Badge>
                     ))
                   )}
                 </div>
               </div>
               <div>
-                <Text className="font-medium">Created</Text>
+                <Text className="font-medium">{t("created")}</Text>
                 <Text>{tagDetails.created_at ? new Date(tagDetails.created_at).toLocaleString() : "-"}</Text>
               </div>
               <div>
-                <Text className="font-medium">Last Updated</Text>
+                <Text className="font-medium">{t("lastUpdated")}</Text>
                 <Text>{tagDetails.updated_at ? new Date(tagDetails.updated_at).toLocaleString() : "-"}</Text>
               </div>
             </div>
@@ -264,32 +268,32 @@ const TagInfoView: React.FC<TagInfoViewProps> = ({ tagId, onClose, accessToken, 
 
           {tagDetails.litellm_budget_table && (
             <Card>
-              <Title>Budget & Rate Limits</Title>
+              <Title>{t("budgetAndRateLimits")}</Title>
               <div className="space-y-4 mt-4">
                 {tagDetails.litellm_budget_table.max_budget !== undefined &&
                   tagDetails.litellm_budget_table.max_budget !== null && (
                     <div>
-                      <Text className="font-medium">Max Budget</Text>
+                      <Text className="font-medium">{t("maxBudget")}</Text>
                       <Text>${tagDetails.litellm_budget_table.max_budget}</Text>
                     </div>
                   )}
                 {tagDetails.litellm_budget_table.budget_duration && (
                   <div>
-                    <Text className="font-medium">Budget Duration</Text>
+                    <Text className="font-medium">{t("budgetDuration")}</Text>
                     <Text>{tagDetails.litellm_budget_table.budget_duration}</Text>
                   </div>
                 )}
                 {tagDetails.litellm_budget_table.tpm_limit !== undefined &&
                   tagDetails.litellm_budget_table.tpm_limit !== null && (
                     <div>
-                      <Text className="font-medium">TPM Limit</Text>
+                      <Text className="font-medium">{t("tpmLimit")}</Text>
                       <Text>{tagDetails.litellm_budget_table.tpm_limit.toLocaleString()}</Text>
                     </div>
                   )}
                 {tagDetails.litellm_budget_table.rpm_limit !== undefined &&
                   tagDetails.litellm_budget_table.rpm_limit !== null && (
                     <div>
-                      <Text className="font-medium">RPM Limit</Text>
+                      <Text className="font-medium">{t("rpmLimit")}</Text>
                       <Text>{tagDetails.litellm_budget_table.rpm_limit.toLocaleString()}</Text>
                     </div>
                   )}

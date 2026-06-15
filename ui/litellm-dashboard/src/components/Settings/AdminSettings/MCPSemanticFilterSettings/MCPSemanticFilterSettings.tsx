@@ -24,6 +24,7 @@ import { useEffect, useState } from "react";
 import { fetchAvailableModels, ModelGroup } from "@/components/playground/llm_calls/fetch_models";
 import MCPSemanticFilterTestPanel from "./MCPSemanticFilterTestPanel";
 import { getCurlCommand, runSemanticFilterTest, TestResult } from "./semanticFilterTestUtils";
+import { useTranslations } from "@/i18n";
 
 interface MCPSemanticFilterSettingsProps {
   accessToken: string | null;

@@ -3,6 +3,7 @@ import { Select, Skeleton } from "antd";
 import { TeamOutlined } from "@ant-design/icons";
 import { Text } from "@tremor/react";
 import { useAccessGroups, AccessGroupResponse } from "@/app/(dashboard)/hooks/accessGroups/useAccessGroups";
+import { useTranslations } from "@/i18n";
 
 export interface AccessGroupSelectorProps {
   value?: string[];
@@ -28,14 +29,17 @@ export interface AccessGroupSelectorProps {
 const AccessGroupSelector: React.FC<AccessGroupSelectorProps> = ({
   value,
   onChange,
-  placeholder = "Select access groups",
+  placeholder: placeholderProp,
   disabled = false,
   style,
   className,
   showLabel = false,
-  labelText = "Access Group",
+  labelText: labelTextProp,
   allowClear = true,
 }) => {
+  const { t } = useTranslations("common");
+  const placeholder = placeholderProp ?? t("selectAccessGroups");
+  const labelText = labelTextProp ?? t("accessGroup");
   const { data: accessGroups, isLoading, isError } = useAccessGroups();
 
   // ── Loading skeleton ─────────────────────────────────────────────────────
@@ -84,7 +88,7 @@ const AccessGroupSelector: React.FC<AccessGroupSelectorProps> = ({
         style={{ width: "100%", ...style }}
         className={`rounded-md ${className ?? ""}`}
         notFoundContent={
-          isError ? <span className="text-red-500">Failed to load access groups</span> : "No access groups found"
+          isError ? <span className="text-red-500">{t("failedToLoadAccessGroups")}</span> : t("noAccessGroupsFound")
         }
         filterOption={(input, option) => {
           const searchText = options.find((opt) => opt.value === option?.value)?.searchText ?? "";

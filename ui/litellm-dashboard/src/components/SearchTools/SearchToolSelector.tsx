@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Select } from "antd";
+import { useTranslations } from "@/i18n";
 import { fetchSearchTools } from "../networking";
 
 export interface SearchToolSelectorProps {
@@ -19,6 +20,7 @@ const SearchToolSelector: React.FC<SearchToolSelectorProps> = ({
   placeholder = "Select search tools (optional)",
   disabled = false,
 }) => {
+  const { t } = useTranslations("mcp");
   const [options, setOptions] = useState<{ label: string; value: string }[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -54,7 +56,7 @@ const SearchToolSelector: React.FC<SearchToolSelectorProps> = ({
       allowClear
       showSearch
       optionFilterProp="label"
-      placeholder={placeholder}
+      placeholder={placeholder ?? t("selectSearchToolsOptional")}
       onChange={onChange}
       value={value}
       loading={loading}

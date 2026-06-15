@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ArrowLeftOutlined, CopyOutlined, CheckOutlined, LinkOutlined } from "@ant-design/icons";
 import { formatInstallCommand } from "./helpers";
 import { Plugin } from "./types";
+import { useTranslations } from "@/i18n";
 
 interface SkillDetailProps {
   skill: Plugin;
@@ -12,6 +13,8 @@ interface SkillDetailProps {
 }
 
 const SkillDetail: React.FC<SkillDetailProps> = ({ skill, onBack }) => {
+  const { t } = useTranslations("claudeCodePlugins");
+
   const [activeTab, setActiveTab] = useState("overview");
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
@@ -61,7 +64,7 @@ const SkillDetail: React.FC<SkillDetailProps> = ({ skill, onBack }) => {
         }}
       >
         <ArrowLeftOutlined style={{ fontSize: 11 }} />
-        <span>Skills</span>
+        <span>{t("claudeCodePlugins.skills")}</span>
       </div>
 
       {/* Header */}
@@ -100,8 +103,8 @@ const SkillDetail: React.FC<SkillDetailProps> = ({ skill, onBack }) => {
         <div style={{ display: "flex", gap: 64 }}>
           {/* Left column */}
           <div style={{ flex: 1, minWidth: 0 }}>
-            <h2 style={{ fontSize: 18, fontWeight: 400, color: "#202124", margin: "0 0 4px 0" }}>Skill Details</h2>
-            <p style={{ fontSize: 13, color: "#5f6368", margin: "0 0 16px 0" }}>Metadata registered with this skill</p>
+            <h2 style={{ fontSize: 18, fontWeight: 400, color: "#202124", margin: "0 0 4px 0" }}>{t("claudeCodePlugins.skillDetails")}</h2>
+            <p style={{ fontSize: 13, color: "#5f6368", margin: "0 0 16px 0" }}>{t("claudeCodePlugins.metadataRegisteredWithThisSkill")}</p>
             <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14 }}>
               <thead>
                 <tr style={{ borderBottom: "1px solid #dadce0" }}>
@@ -127,7 +130,7 @@ const SkillDetail: React.FC<SkillDetailProps> = ({ skill, onBack }) => {
           {/* Right sidebar */}
           <div style={{ width: 240, flexShrink: 0 }}>
             <div style={{ marginBottom: 24 }}>
-              <div style={{ fontSize: 12, color: "#5f6368", marginBottom: 4 }}>Status</div>
+              <div style={{ fontSize: 12, color: "#5f6368", marginBottom: 4 }}>{t("claudeCodePlugins.status")}</div>
               <span
                 style={{
                   fontSize: 12,
@@ -144,7 +147,7 @@ const SkillDetail: React.FC<SkillDetailProps> = ({ skill, onBack }) => {
 
             {sourceUrl && (
               <div style={{ marginBottom: 24 }}>
-                <div style={{ fontSize: 12, color: "#5f6368", marginBottom: 4 }}>Source</div>
+                <div style={{ fontSize: 12, color: "#5f6368", marginBottom: 4 }}>{t("claudeCodePlugins.source")}</div>
                 <a
                   href={sourceUrl}
                   target="_blank"
@@ -166,7 +169,7 @@ const SkillDetail: React.FC<SkillDetailProps> = ({ skill, onBack }) => {
 
             {skill.keywords && skill.keywords.length > 0 && (
               <div style={{ marginBottom: 24 }}>
-                <div style={{ fontSize: 12, color: "#5f6368", marginBottom: 8 }}>Tags</div>
+                <div style={{ fontSize: 12, color: "#5f6368", marginBottom: 8 }}>{t("claudeCodePlugins.tags")}</div>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
                   {skill.keywords.map((kw) => (
                     <span
@@ -188,7 +191,7 @@ const SkillDetail: React.FC<SkillDetailProps> = ({ skill, onBack }) => {
             )}
 
             <div>
-              <div style={{ fontSize: 12, color: "#5f6368", marginBottom: 4 }}>Skill ID</div>
+              <div style={{ fontSize: 12, color: "#5f6368", marginBottom: 4 }}>{t("claudeCodePlugins.skillId")}</div>
               <div style={{ fontSize: 12, fontFamily: "monospace", color: "#3c4043", wordBreak: "break-all" }}>
                 {skill.id}
               </div>
@@ -200,7 +203,7 @@ const SkillDetail: React.FC<SkillDetailProps> = ({ skill, onBack }) => {
       {/* How to Use tab */}
       {activeTab === "usage" && (
         <div style={{ maxWidth: 640 }}>
-          <h2 style={{ fontSize: 18, fontWeight: 400, color: "#202124", margin: "0 0 8px 0" }}>Using this skill</h2>
+          <h2 style={{ fontSize: 18, fontWeight: 400, color: "#202124", margin: "0 0 8px 0" }}>{t("claudeCodePlugins.usingThisSkill")}</h2>
           <p style={{ fontSize: 14, color: "#5f6368", margin: "0 0 24px 0", lineHeight: 1.6 }}>
             Once your proxy is set as a marketplace, enable this skill in Claude Code with one command:
           </p>
@@ -224,7 +227,7 @@ const SkillDetail: React.FC<SkillDetailProps> = ({ skill, onBack }) => {
                 borderBottom: "1px solid #dadce0",
               }}
             >
-              <span style={{ fontSize: 13, color: "#3c4043", fontWeight: 500 }}>Run in Claude Code</span>
+              <span style={{ fontSize: 13, color: "#3c4043", fontWeight: 500 }}>{t("claudeCodePlugins.runInClaudeCode")}</span>
               <button
                 onClick={() => copyToClipboard(installCommand, "install")}
                 style={{

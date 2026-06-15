@@ -1,10 +1,11 @@
 import * as React from "react";
+import { useTranslations } from "@/i18n";
 
 interface TimeCellProps {
   utcTime: string;
 }
 
-const getLocalTime = (utcTime: string): string => {
+const getLocalTime = (utcTime: string, errorMessage: string): string => {
   try {
     const date = new Date(utcTime);
     return date
@@ -19,11 +20,12 @@ const getLocalTime = (utcTime: string): string => {
       })
       .replace(",", "");
   } catch (e) {
-    return "Error converting time";
+    return errorMessage;
   }
 };
 
 export const TimeCell: React.FC<TimeCellProps> = ({ utcTime }) => {
+  const { t } = useTranslations("logs");
   return (
     <span
       style={{
@@ -32,7 +34,7 @@ export const TimeCell: React.FC<TimeCellProps> = ({ utcTime }) => {
         display: "inline-block",
       }}
     >
-      {getLocalTime(utcTime)}
+      {getLocalTime(utcTime, t("errorConvertingTime"))}
     </span>
   );
 };

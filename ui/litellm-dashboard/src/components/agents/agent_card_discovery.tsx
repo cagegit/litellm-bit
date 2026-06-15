@@ -35,6 +35,7 @@ export interface DiscoveredAgentCardSelection {
 
 export type { DiscoveryRequestPlan } from "./agent_discovery_utils";
 import type { DiscoveryRequestPlan } from "./agent_discovery_utils";
+import { useTranslations } from "@/i18n";
 
 interface AgentCardDiscoveryProps {
   accessToken: string | null;
@@ -61,6 +62,8 @@ const AgentCardDiscovery: React.FC<AgentCardDiscoveryProps> = ({
   discoveryRequest,
   savedAgentCard,
 }) => {
+  const { t } = useTranslations("agents");
+
   // When the parent drives discovery, ``manualUrl`` is unused — the URL
   // comes from ``discoveryRequest.url`` directly. When the parent hasn't
   // supplied a plan, the admin types into this field manually.
@@ -239,7 +242,7 @@ const AgentCardDiscovery: React.FC<AgentCardDiscoveryProps> = ({
     <div className="border border-gray-200 rounded-lg p-4 bg-gray-50 mb-4">
       <div className="flex items-center gap-2 mb-2">
         <LinkOutlined className="text-indigo-600" />
-        <Text strong>Discover from agent URL</Text>
+        <Text strong>{t("agents.discoverFromAgentUrl")}</Text>
         <Tooltip title="LiteLLM will fetch /.well-known/agent-card.json from this URL and let you pick which skills and capabilities to expose through the proxy.">
           <InfoCircleOutlined className="text-gray-400" />
         </Tooltip>
@@ -251,7 +254,7 @@ const AgentCardDiscovery: React.FC<AgentCardDiscoveryProps> = ({
           </Paragraph>
           <div className="bg-white border border-gray-200 rounded px-3 py-2 mb-3 font-mono text-xs text-gray-700 break-all">
             {discoveryRequest!.display_url || effectiveUrl || (
-              <span className="text-gray-400 italic">Fill in the fields above first</span>
+              <span className="text-gray-400 italic">{t("agents.fillInTheFieldsAboveFirst")}</span>
             )}
           </div>
           <div className="flex justify-end">
@@ -317,7 +320,7 @@ const AgentCardDiscovery: React.FC<AgentCardDiscoveryProps> = ({
           <div className="flex items-center justify-between mb-3">
             <Space>
               <CheckCircleTwoTone twoToneColor="#52c41a" />
-              <Text strong>Upstream card loaded</Text>
+              <Text strong>{t("agents.upstreamCardLoaded")}</Text>
               {card.version && <Tag color="blue">v{card.version}</Tag>}
               {card.provider?.organization && <Tag color="purple">{card.provider.organization}</Tag>}
             </Space>
@@ -325,16 +328,16 @@ const AgentCardDiscovery: React.FC<AgentCardDiscoveryProps> = ({
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
             <div>
-              <label className="text-xs font-medium text-gray-600 block mb-1">Name (shown to API clients)</label>
-              <Input value={editedName} onChange={(e) => setEditedName(e.target.value)} placeholder="Agent name" />
+              <label className="text-xs font-medium text-gray-600 block mb-1">{t("agents.nameshownToApiClients")}</label>
+              <Input value={editedName} onChange={(e) => setEditedName(e.target.value)} placeholder={t("agents.agentName1")} />
             </div>
             <div>
-              <label className="text-xs font-medium text-gray-600 block mb-1">Description</label>
+              <label className="text-xs font-medium text-gray-600 block mb-1">{t("agents.description")}</label>
               <Input.TextArea
                 value={editedDescription}
                 onChange={(e) => setEditedDescription(e.target.value)}
                 rows={2}
-                placeholder="What this agent does"
+                placeholder={t("agents.whatThisAgentDoes")}
               />
             </div>
           </div>
@@ -344,7 +347,7 @@ const AgentCardDiscovery: React.FC<AgentCardDiscoveryProps> = ({
               key="skills"
               header={
                 <Space>
-                  <Text strong>Skills</Text>
+                  <Text strong>{t("agents.skills")}</Text>
                   <Tag>
                     {selectedSkillCount} / {skillCount} selected
                   </Tag>
@@ -352,7 +355,7 @@ const AgentCardDiscovery: React.FC<AgentCardDiscoveryProps> = ({
               }
             >
               {skillCount === 0 ? (
-                <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Upstream card has no skills" />
+                <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={t("agents.upstreamCardHasNoSkills")} />
               ) : (
                 <div className="space-y-2">
                   {(card.skills ?? []).map((skill, idx) => {
@@ -396,7 +399,7 @@ const AgentCardDiscovery: React.FC<AgentCardDiscoveryProps> = ({
               key="capabilities"
               header={
                 <Space>
-                  <Text strong>Capabilities</Text>
+                  <Text strong>{t("agents.capabilities")}</Text>
                   <Tooltip title="Only capabilities LiteLLM can faithfully proxy today are listed. Others (push notifications, extensions) are coming soon.">
                     <InfoCircleOutlined className="text-gray-400" />
                   </Tooltip>

@@ -2,6 +2,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { Card, Tab, TabGroup, TabList, TabPanel, TabPanels, Text } from "@tremor/react";
 import { Input } from "antd";
 import React, { useEffect, useMemo, useState } from "react";
+import { useTranslations } from "@/i18n";
 import { extractCategories, filterPluginsByCategory, filterPluginsBySearch } from "../claude_code_plugins/helpers";
 import { MarketplaceResponse } from "../claude_code_plugins/types";
 import { ModelDataTable } from "../model_dashboard/table";

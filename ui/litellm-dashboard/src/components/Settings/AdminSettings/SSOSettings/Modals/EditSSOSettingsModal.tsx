@@ -8,6 +8,7 @@ import { parseErrorMessage } from "@/components/shared/errorUtils";
 import { processSSOSettingsPayload } from "../utils";
 import { useSSOSettings } from "@/app/(dashboard)/hooks/sso/useSSOSettings";
 import { useEditSSOSettings } from "@/app/(dashboard)/hooks/sso/useEditSSOSettings";
+import { useTranslations } from "@/i18n";
 
 interface EditSSOSettingsModalProps {
   isVisible: boolean;
@@ -16,6 +17,8 @@ interface EditSSOSettingsModalProps {
 }
 
 const EditSSOSettingsModal: React.FC<EditSSOSettingsModalProps> = ({ isVisible, onCancel, onSuccess }) => {
+  const { t } = useTranslations("common");
+
   const [form] = Form.useForm();
 
   // Use react-query hooks for SSO settings
@@ -124,7 +127,7 @@ const EditSSOSettingsModal: React.FC<EditSSOSettingsModalProps> = ({ isVisible, 
 
   return (
     <Modal
-      title="Edit SSO Settings"
+      title={t("common.editSsoSettings")}
       open={isVisible}
       width={800}
       footer={

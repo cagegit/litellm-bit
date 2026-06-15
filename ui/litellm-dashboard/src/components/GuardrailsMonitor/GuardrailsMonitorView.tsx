@@ -4,6 +4,7 @@ import { formatDate } from "@/components/networking";
 import AdvancedDatePicker from "@/components/shared/advanced_date_picker";
 import { GuardrailDetail } from "./GuardrailDetail";
 import { GuardrailsOverview } from "./GuardrailsOverview";
+import { useTranslations } from "@/i18n";
 
 type View = { type: "overview" } | { type: "detail"; guardrailId: string };
 
@@ -34,6 +35,8 @@ export default function GuardrailsMonitorView({ accessToken = null }: Guardrails
   }, []);
 
   const handleSelectGuardrail = (id: string) => {
+  const { t } = useTranslations("settings");
+
     setView({ type: "detail", guardrailId: id });
   };
 

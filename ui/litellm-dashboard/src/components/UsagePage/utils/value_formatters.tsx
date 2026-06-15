@@ -1,4 +1,7 @@
+import { useTranslations } from "@/i18n";
 export function valueFormatter(number: number) {
+  const { t } = useTranslations("billing");
+
   if (number >= 1000000) {
     return (number / 1000000).toFixed(2) + "M";
   }

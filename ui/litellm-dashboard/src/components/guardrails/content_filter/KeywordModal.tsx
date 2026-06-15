@@ -1,5 +1,6 @@
 import React from "react";
 import { Typography, Select, Modal, Space, Button, Input } from "antd";
+import { useTranslations } from "@/i18n";
 
 const { Text } = Typography;
 const { Option } = Select;
@@ -27,13 +28,14 @@ const KeywordModal: React.FC<KeywordModalProps> = ({
   onAdd,
   onCancel,
 }) => {
+  const { t } = useTranslations("common");
   return (
-    <Modal title="Add blocked keyword" open={visible} onCancel={onCancel} footer={null} width={800}>
+    <Modal title={t("addBlockedKeyword")} open={visible} onCancel={onCancel} footer={null} width={800}>
       <Space direction="vertical" style={{ width: "100%" }} size="large">
         <div>
-          <Text strong>Keyword</Text>
+          <Text strong>{t("keyword")}</Text>
           <Input
-            placeholder="Enter sensitive keyword or phrase"
+            placeholder={t("enterSensitiveKeyword")}
             value={keyword}
             onChange={(e) => onKeywordChange(e.target.value)}
             style={{ marginTop: 8 }}
@@ -41,20 +43,20 @@ const KeywordModal: React.FC<KeywordModalProps> = ({
         </div>
 
         <div>
-          <Text strong>Action</Text>
+          <Text strong>{t("action")}</Text>
           <Text type="secondary" style={{ display: "block", marginTop: 4, marginBottom: 8 }}>
-            Choose what action the guardrail should take when this keyword is detected
+            {t("chooseActionDescription")}
           </Text>
           <Select value={action} onChange={onActionChange} style={{ width: "100%" }}>
-            <Option value="BLOCK">Block</Option>
-            <Option value="MASK">Mask</Option>
+            <Option value="BLOCK">{t("block")}</Option>
+            <Option value="MASK">{t("mask")}</Option>
           </Select>
         </div>
 
         <div>
-          <Text strong>Description (optional)</Text>
+          <Text strong>{t("descriptionOptional")}</Text>
           <Input.TextArea
-            placeholder="Explain why this keyword is sensitive"
+            placeholder={t("explainKeywordSensitivity")}
             value={description}
             onChange={(e) => onDescriptionChange(e.target.value)}
             rows={3}
@@ -64,9 +66,9 @@ const KeywordModal: React.FC<KeywordModalProps> = ({
       </Space>
 
       <div style={{ display: "flex", justifyContent: "flex-end", gap: "8px", marginTop: "24px" }}>
-        <Button onClick={onCancel}>Cancel</Button>
+        <Button onClick={onCancel}>{t("cancel")}</Button>
         <Button type="primary" onClick={onAdd}>
-          Add
+          {t("add")}
         </Button>
       </div>
     </Modal>

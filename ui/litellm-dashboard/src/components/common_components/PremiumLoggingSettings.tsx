@@ -1,6 +1,7 @@
 import React from "react";
 import { Text } from "@tremor/react";
 import LoggingSettings from "../team/LoggingSettings";
+import { useTranslations } from "@/i18n";
 
 interface PremiumLoggingSettingsProps {
   value: any[];
@@ -17,6 +18,8 @@ export function PremiumLoggingSettings({
   disabledCallbacks = [],
   onDisabledCallbacksChange,
 }: PremiumLoggingSettingsProps) {
+  const { t } = useTranslations("common");
+
   if (!premiumUser) {
     return (
       <div>

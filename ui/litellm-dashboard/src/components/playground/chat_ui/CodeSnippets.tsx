@@ -448,6 +448,7 @@ def create_file(image_path):
 	# In a real implementation, this would upload the file to OpenAI
 	# For this example, we'll just return a placeholder ID
 	return f"file_{os.path.basename(image_path).replace('.', '_')}"
+import { useTranslations } from "@/i18n";
 
 # The prompt entered by the user
 prompt = "${safePrompt}"

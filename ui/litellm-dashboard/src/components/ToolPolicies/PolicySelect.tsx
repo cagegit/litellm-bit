@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Select } from "antd";
+import { useTranslations } from "@/i18n";
 
 export const INPUT_POLICY_OPTIONS = [
   { value: "untrusted", label: "untrusted", color: "#92400e", bg: "#fef3c7", border: "#fcd34d" },

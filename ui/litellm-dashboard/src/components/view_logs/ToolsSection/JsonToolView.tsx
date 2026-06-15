@@ -3,12 +3,15 @@
  */
 
 import { ParsedTool } from "./types";
+import { useTranslations } from "@/i18n";
 
 interface JsonToolViewProps {
   tool: ParsedTool;
 }
 
 export function JsonToolView({ tool }: JsonToolViewProps) {
+  const { t } = useTranslations("logs");
+
   // Reconstruct the original tool definition
   const toolJson = {
     type: "function",

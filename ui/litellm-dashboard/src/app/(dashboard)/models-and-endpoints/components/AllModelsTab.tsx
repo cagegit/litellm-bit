@@ -1,3 +1,4 @@
+import { useTranslations } from "@/i18n";
 import { useModelCostMap } from "@/app/(dashboard)/hooks/models/useModelCostMap";
 import { useTeams } from "@/app/(dashboard)/hooks/teams/useTeams";
 import useAuthorized from "@/app/(dashboard)/hooks/useAuthorized";
@@ -39,6 +40,7 @@ const AllModelsTab = ({
   setSelectedTeamId,
 }: AllModelsTabProps) => {
   const { data: modelCostMapData, isLoading: isLoadingModelCostMap } = useModelCostMap();
+  const { t } = useTranslations("models");
   const { accessToken, userId, userRole, premiumUser } = useAuthorized();
   const { data: teams, isLoading: isLoadingTeams } = useTeams();
   const queryClient = useQueryClient();
@@ -540,6 +542,7 @@ const AllModelsTab = ({
 
             <AllModelsDataTable
               columns={columns(
+                t,
                 userRole,
                 userId,
                 premiumUser,

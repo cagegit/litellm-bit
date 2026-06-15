@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, Badge } from "@tremor/react";
 import { RefreshIcon, ClockIcon } from "@heroicons/react/outline";
+import { useTranslations } from "@/i18n";
 
 interface AutoRotationViewProps {
   autoRotate?: boolean;
@@ -21,6 +22,8 @@ const AutoRotationView: React.FC<AutoRotationViewProps> = ({
   variant = "card",
   className = "",
 }) => {
+  const { t } = useTranslations("common");
+
   const formatTimestamp = (timestamp: string | Date) => {
     const date = new Date(timestamp);
     const dateStr = date.toLocaleDateString("en-US", {
@@ -42,7 +45,7 @@ const AutoRotationView: React.FC<AutoRotationViewProps> = ({
       <div className="space-y-3">
         <div className="flex items-center gap-2">
           <RefreshIcon className="h-4 w-4 text-blue-600" />
-          <Text className="font-semibold text-gray-900">Auto-Rotation</Text>
+          <Text className="font-semibold text-gray-900">{t("common.autoRotation")}</Text>
           <Badge color={autoRotate ? "green" : "gray"} size="xs">
             {autoRotate ? "Enabled" : "Disabled"}
           </Badge>
@@ -63,7 +66,7 @@ const AutoRotationView: React.FC<AutoRotationViewProps> = ({
             <div className="flex items-center gap-2 p-3 bg-gray-50 border border-gray-200 rounded-md">
               <ClockIcon className="w-4 h-4 text-gray-500" />
               <div className="flex-1">
-                <Text className="font-medium text-gray-700">Last Rotation</Text>
+                <Text className="font-medium text-gray-700">{t("common.lastRotation")}</Text>
                 <Text className="text-sm text-gray-600">{formatTimestamp(lastRotationAt)}</Text>
               </div>
             </div>
@@ -74,7 +77,7 @@ const AutoRotationView: React.FC<AutoRotationViewProps> = ({
             <div className="flex items-center gap-2 p-3 bg-gray-50 border border-gray-200 rounded-md">
               <ClockIcon className="w-4 h-4 text-gray-500" />
               <div className="flex-1">
-                <Text className="font-medium text-gray-700">Next Scheduled Rotation</Text>
+                <Text className="font-medium text-gray-700">{t("common.nextScheduledRotation")}</Text>
                 <Text className="text-sm text-gray-600">{formatTimestamp(nextRotationAt || keyRotationAt || "")}</Text>
               </div>
             </div>
@@ -84,7 +87,7 @@ const AutoRotationView: React.FC<AutoRotationViewProps> = ({
           {autoRotate && !lastRotationAt && !keyRotationAt && !nextRotationAt && (
             <div className="flex items-center gap-2 p-3 bg-gray-50 border border-gray-100 rounded-md">
               <ClockIcon className="w-4 h-4 text-gray-500" />
-              <Text className="text-gray-600">No rotation history available</Text>
+              <Text className="text-gray-600">{t("common.noRotationHistoryAvailable")}</Text>
             </div>
           )}
         </div>
@@ -94,7 +97,7 @@ const AutoRotationView: React.FC<AutoRotationViewProps> = ({
       {!autoRotate && !lastRotationAt && !keyRotationAt && !nextRotationAt && (
         <div className="flex items-center gap-2 p-3 bg-gray-50 border border-gray-100 rounded-md">
           <RefreshIcon className="w-4 h-4 text-gray-400" />
-          <Text className="text-gray-600">Auto-rotation is not enabled for this key</Text>
+          <Text className="text-gray-600">{t("common.autoRotationIsNotEnabledForThisKey")}</Text>
         </div>
       )}
     </div>
@@ -105,8 +108,8 @@ const AutoRotationView: React.FC<AutoRotationViewProps> = ({
       <div className={`bg-white border border-gray-200 rounded-lg p-6 ${className}`}>
         <div className="flex items-center gap-2 mb-6">
           <div>
-            <Text className="font-semibold text-gray-900">Auto-Rotation</Text>
-            <Text className="text-xs text-gray-500">Automatic key rotation settings and status for this key</Text>
+            <Text className="font-semibold text-gray-900">{t("common.autoRotation")}</Text>
+            <Text className="text-xs text-gray-500">{t("common.automaticKeyRotationSettingsAndStatusForThisKey")}</Text>
           </div>
         </div>
         {content}
@@ -116,7 +119,7 @@ const AutoRotationView: React.FC<AutoRotationViewProps> = ({
 
   return (
     <div className={`${className}`}>
-      <Text className="font-medium text-gray-900 mb-3">Auto-Rotation</Text>
+      <Text className="font-medium text-gray-900 mb-3">{t("common.autoRotation")}</Text>
       {content}
     </div>
   );

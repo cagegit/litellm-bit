@@ -1,5 +1,6 @@
 import React from "react";
 import CacheFieldRenderer from "./CacheFieldRenderer";
+import { useTranslations } from "@/i18n";
 
 interface CacheFieldGroupProps {
   title: string;
@@ -16,6 +17,8 @@ const CacheFieldGroup: React.FC<CacheFieldGroupProps> = ({
   redisType,
   gridCols = "grid-cols-1 gap-6 sm:grid-cols-2",
 }) => {
+  const { t } = useTranslations("settings");
+
   const shouldShowField = (field: any): boolean => {
     // Show field if it applies to all types (redis_type is null/undefined) or to current selected type
     if (field.redis_type === null || field.redis_type === undefined) {

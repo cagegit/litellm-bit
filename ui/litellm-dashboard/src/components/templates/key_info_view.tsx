@@ -23,6 +23,7 @@ import ObjectPermissionsView from "../object_permissions_view";
 import { RegenerateKeyModal } from "../organisms/RegenerateKeyModal";
 import { parseErrorMessage } from "../shared/errorUtils";
 import { KeyEditView } from "./key_edit_view";
+import { useTranslations } from "@/i18n";
 
 interface KeyInfoViewProps {
   keyId: string;
@@ -63,6 +64,8 @@ export default function KeyInfoView({
   onDelete,
   backButtonText = "Back to Keys",
 }: KeyInfoViewProps) {
+  const { t } = useTranslations("settings");
+
   const { accessToken, userId: userID, userRole, premiumUser } = useAuthorized();
   const canEditGuardrails = premiumUser || (userRole != null && rolesWithWriteAccess.includes(userRole));
   const { teams: teamsData } = useTeams();

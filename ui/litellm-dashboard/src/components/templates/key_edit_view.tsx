@@ -27,6 +27,7 @@ import NumericalInput from "../shared/numerical_input";
 import { Tag } from "../tag_management/types";
 import EditLoggingSettings from "../team/EditLoggingSettings";
 import VectorStoreSelector from "../vector_store_management/VectorStoreSelector";
+import { useTranslations } from "@/i18n";
 
 interface KeyEditViewProps {
   keyData: KeyResponse;
@@ -88,6 +89,8 @@ export function KeyEditView({
   userRole,
   premiumUser = false,
 }: KeyEditViewProps) {
+  const { t } = useTranslations("settings");
+
   const canEditGuardrails = premiumUser || (userRole != null && rolesWithWriteAccess.includes(userRole));
   const [form] = Form.useForm();
   const [promptsList, setPromptsList] = useState<string[]>([]);

@@ -12,6 +12,8 @@ import {
 
 import { Table, TableHead, TableHeaderCell, TableBody, TableRow, TableCell } from "@tremor/react";
 
+import { useTranslations } from "@/i18n";
+
 interface DataTableProps<TData, TValue> {
   data: TData[];
   columns: ColumnDef<TData, TValue>[];
@@ -36,10 +38,11 @@ export function DataTable<TData, TValue>({
   renderChildRows,
   getRowCanExpand,
   isLoading = false,
-  loadingMessage = "🚅 Loading logs...",
-  noDataMessage = "No logs found",
+  loadingMessage,
+  noDataMessage,
   enableSorting = false,
 }: DataTableProps<TData, TValue>) {
+  const { t } = useTranslations("logs");
   const supportsExpansion = !!(renderSubComponent || renderChildRows) && !!getRowCanExpand;
   const [sorting, setSorting] = useState<SortingState>([]);
 
@@ -100,7 +103,7 @@ export function DataTable<TData, TValue>({
             <TableRow>
               <TableCell colSpan={columns.length} className="h-8 text-center">
                 <div className="text-center text-gray-500">
-                  <p>{loadingMessage}</p>
+                  <p>{loadingMessage ?? t("loadingLogs")}</p>
                 </div>
               </TableCell>
             </TableRow>
@@ -135,7 +138,7 @@ export function DataTable<TData, TValue>({
             <TableRow>
               <TableCell colSpan={columns.length} className="h-8 text-center">
                 <div className="text-center text-gray-500">
-                  <p>{noDataMessage}</p>
+                  <p>{noDataMessage ?? t("noData")}</p>
                 </div>
               </TableCell>
             </TableRow>

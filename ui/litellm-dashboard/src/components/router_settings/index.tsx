@@ -1,5 +1,6 @@
 import { Button } from "antd";
 import React, { useEffect, useState } from "react";
+import { useTranslations } from "@/i18n";
 import NotificationsManager from "../molecules/notifications_manager";
 import { getCallbacksCall, getRouterSettingsCall, setCallbacksCall } from "../networking";
 import RouterSettingsForm, { RouterSettingsFormValue } from "./RouterSettingsForm";
@@ -17,6 +18,7 @@ interface routingStrategyArgs {
 }
 
 const RouterSettings: React.FC<RouterSettingsProps> = ({ accessToken, userRole, userID, modelData }) => {
+  const { t } = useTranslations("settings");
   const [formValue, setFormValue] = useState<RouterSettingsFormValue>({
     routerSettings: {},
     selectedStrategy: null,
@@ -169,10 +171,10 @@ const RouterSettings: React.FC<RouterSettingsProps> = ({ accessToken, userRole, 
     try {
       setCallbacksCall(accessToken, payload);
     } catch (error) {
-      NotificationsManager.fromBackend("Failed to update router settings: " + error);
+      NotificationsManager.fromBackend(t("failedToUpdateRouterSettings") + error);
     }
 
-    NotificationsManager.success("router settings updated successfully");
+    NotificationsManager.success(t("changesSaved"));
   };
 
   if (!accessToken) {
@@ -191,9 +193,9 @@ const RouterSettings: React.FC<RouterSettingsProps> = ({ accessToken, userRole, 
 
       {/* Actions - Sticky at bottom */}
       <div className="border-t border-gray-200 pt-6 flex justify-end gap-3">
-        <Button onClick={() => window.location.reload()}>Reset</Button>
+        <Button onClick={() => window.location.reload()}>{t("reset")}</Button>
         <Button type="primary" onClick={handleSaveChanges}>
-          Save Changes
+          {t("saveChanges")}
         </Button>
       </div>
     </div>

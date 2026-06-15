@@ -2,6 +2,7 @@ import { CloseOutlined, PlayCircleOutlined } from "@ant-design/icons";
 import { Button, Modal, Select, Input } from "antd";
 import React, { useEffect, useState } from "react";
 import { fetchAvailableModels, type ModelGroup } from "@/components/playground/llm_calls/fetch_models";
+import { useTranslations } from "@/i18n";
 
 const DEFAULT_PROMPT = `Evaluate whether this guardrail's decision was correct.
 Analyze the user input, the guardrail action taken, and determine if it was appropriate.
@@ -37,6 +38,7 @@ export function EvaluationSettingsModal({
   accessToken,
   onRunEvaluation,
 }: EvaluationSettingsModalProps) {
+  const { t } = useTranslations("logs");
   const [prompt, setPrompt] = useState(DEFAULT_PROMPT);
   const [schema, setSchema] = useState(DEFAULT_SCHEMA);
   const [model, setModel] = useState<string | null>(null);
@@ -80,7 +82,7 @@ export function EvaluationSettingsModal({
 
   return (
     <Modal
-      title="Evaluation Settings"
+      title={t("evaluationSettings")}
       open={open}
       onCancel={onClose}
       width={640}
@@ -90,16 +92,16 @@ export function EvaluationSettingsModal({
     >
       <p className="text-sm text-gray-500 mb-4">
         {guardrailName
-          ? `Configure AI evaluation for ${guardrailName}`
-          : "Configure AI evaluation for re-running on logs"}
+          ? t("configureAiEvaluationFor", { name: guardrailName })
+          : t("configureAiEvaluationForRerunning")}
       </p>
 
       <div className="space-y-4">
         <div>
           <div className="flex items-center justify-between mb-1.5">
-            <label className="text-sm font-medium text-gray-700">Evaluation Prompt</label>
+            <label className="text-sm font-medium text-gray-700">{t("evaluationPrompt")}</label>
             <button type="button" onClick={handleResetPrompt} className="text-xs text-indigo-600 hover:text-indigo-700">
-              Reset to default
+              {t("resetToDefault")}
             </button>
           </div>
           <Input.TextArea
@@ -108,14 +110,12 @@ export function EvaluationSettingsModal({
             rows={6}
             className="font-mono text-sm"
           />
-          <p className="text-xs text-gray-400 mt-1">
-            System prompt sent to the evaluation model. Output is structured via response_format.
-          </p>
+          <p className="text-xs text-gray-400 mt-1">{t("systemPromptDescription")}</p>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1.5">Response Schema</label>
-          <p className="text-xs text-gray-400 mb-1">response_format: json_schema</p>
+          <label className="block text-sm font-medium text-gray-700 mb-1.5">{t("responseSchema")}</label>
+          <p className="text-xs text-gray-400 mb-1">{t("responseFormatDescription")}</p>
           <Input.TextArea
             value={schema}
             onChange={(e) => setSchema(e.target.value)}
@@ -125,9 +125,9 @@ export function EvaluationSettingsModal({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1.5">Model</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1.5">{t("model")}</label>
           <Select
-            placeholder={loadingModels ? "Loading models…" : "Select a model"}
+            placeholder={loadingModels ? t("loadingModels") : t("selectAModel")}
             value={model ?? undefined}
             onChange={setModel}
             options={modelSelectOptions}
@@ -135,15 +135,15 @@ export function EvaluationSettingsModal({
             showSearch
             optionFilterProp="label"
             loading={loadingModels}
-            notFoundContent={!accessToken ? "Sign in to see models" : "No models available"}
+            notFoundContent={!accessToken ? t("signInToSeeModels") : t("noModelsAvailable")}
           />
         </div>
       </div>
 
       <div className="flex items-center justify-end gap-2 mt-6 pt-4 border-t border-gray-100">
-        <Button onClick={onClose}>Cancel</Button>
+        <Button onClick={onClose}>{t("cancel")}</Button>
         <Button type="primary" icon={<PlayCircleOutlined />} onClick={handleRun} disabled={!model}>
-          Run Evaluation
+          {t("runEvaluation")}
         </Button>
       </div>
     </Modal>

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Modal, Tooltip, Form, Select, Input, Switch, Collapse } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import { Button, TextInput } from "@tremor/react";
+import { useTranslations } from "@/i18n";
 import { createMCPServer, registerMCPServer, storeMCPOAuthUserCredential } from "../networking";
 import { setToken } from "@/utils/mcpTokenStore";
 import {
@@ -69,6 +70,7 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
   prefillData,
   onBackToDiscovery,
 }) => {
+  const { t } = useTranslations("mcp");
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
   const [costConfig, setCostConfig] = useState<MCPServerCostInfo>({});
@@ -182,9 +184,7 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
 
         form.setFieldsValue({ credentials });
 
-        NotificationsManager.success(
-          "OAuth authorization successful! Please click 'Create MCP Server' to save the configuration.",
-        );
+        NotificationsManager.success(t("oauthAuthorizationSuccessful"));
       }
     },
     onBeforeRedirect: persistCreateUiState,
@@ -371,7 +371,7 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
 
           console.log("Parsed stdio config:", stdioFields);
         } catch (error) {
-          NotificationsManager.fromBackend("Invalid JSON in stdio configuration");
+          NotificationsManager.fromBackend(t("invalidJsonStdio"));
           return;
         }
       }
@@ -387,7 +387,7 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
         try {
           tokenValidation = JSON.parse(rawTokenValidationJson);
         } catch {
-          NotificationsManager.fromBackend("Invalid JSON in Token Validation Rules");
+          NotificationsManager.fromBackend(t("invalidJsonTokenValidation"));
           setIsLoading(false);
           return;
         }
@@ -466,9 +466,7 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
           }
         }
 
-        NotificationsManager.success(
-          isAdmin ? "MCP Server created successfully" : "MCP Server submitted for admin review",
-        );
+        NotificationsManager.success(isAdmin ? t("mcpServerCreated") : t("mcpServerSubmitted"));
         form.resetFields();
         setCostConfig({});
         clearTools();
@@ -482,7 +480,7 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
     } catch (error) {
       const reason = error instanceof Error ? error.message : String(error);
       NotificationsManager.fromBackend(
-        isAdmin ? `Error creating MCP Server: ${reason}` : `Error submitting MCP Server: ${reason}`,
+        isAdmin ? t("errorCreatingMcpServer", { reason }) : t("errorSubmittingMcpServer", { reason }),
       );
     } finally {
       setIsLoading(false);
@@ -536,7 +534,7 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
             <span className="font-medium">{searchValue}</span>
-            <span className="text-gray-400 text-xs ml-1">create new group</span>
+            <span className="text-gray-400 text-xs ml-1">{t("createNewGroup")}</span>
           </div>
         ),
       });
@@ -579,7 +577,7 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
           )}
           <img
             src={mcpLogoImg}
-            alt="MCP Logo"
+            alt={t("mcpLogo")}
             className="w-8 h-8 object-contain"
             style={{
               height: "20px",
@@ -587,9 +585,7 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
               objectFit: "contain",
             }}
           />
-          <h2 className="text-xl font-semibold text-gray-900">
-            {isAdmin ? "Add New MCP Server" : "Submit MCP Server for Review"}
-          </h2>
+          <h2 className="text-xl font-semibold text-gray-900">{isAdmin ? t("addNewMCP") : t("submitMCPForReview")}</h2>
         </div>
       }
       open={isModalVisible}
@@ -613,28 +609,27 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
         >
           {!isAdmin && (
             <div className="rounded-md bg-blue-50 border border-blue-200 px-4 py-3 text-sm text-blue-800">
-              Your submission will be sent for admin review before it becomes active. Note: the request must be made
-              with a team-scoped API key.
+              {t("submissionReviewNotice")}
             </div>
           )}
           <div className="grid grid-cols-1 gap-6">
             <Form.Item
               label={
                 <span className="text-sm font-medium text-gray-700 flex items-center">
-                  MCP Server Name
-                  <Tooltip title="Best practice: Use a descriptive name that indicates the server's purpose (e.g., 'GitHub_MCP', 'Email_Service'). Cannot contain spaces or hyphens; use underscores instead. Names must comply with SEP-986 and will be rejected if invalid (https://modelcontextprotocol.io/specification/2025-11-25/server/tools#tool-names).">
+                  {t("mcpServerName")}
+                  <Tooltip title={t("mcpServerNameTooltip")}>
                     <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                   </Tooltip>
                 </span>
               }
               name="server_name"
               rules={[
-                { required: false, message: "Please enter a server name" },
+                { required: false, message: t("pleaseEnterServerName") },
                 { validator: (_, value) => validateMCPServerName(value) },
               ]}
             >
               <TextInput
-                placeholder="e.g., GitHub_MCP, Zapier_MCP, etc."
+                placeholder={t("mcpServerNamePlaceholder")}
                 className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
               />
             </Form.Item>
@@ -642,8 +637,8 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
             <Form.Item
               label={
                 <span className="text-sm font-medium text-gray-700 flex items-center">
-                  Alias
-                  <Tooltip title="A short, unique identifier for this server. Defaults to the server name if not provided. Cannot contain spaces or hyphens; use underscores instead.">
+                  {t("alias")}
+                  <Tooltip title={t("aliasTooltip")}>
                     <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                   </Tooltip>
                 </span>
@@ -652,24 +647,24 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
               rules={[{ required: false }, { validator: (_, value) => validateMCPServerName(value) }]}
             >
               <TextInput
-                placeholder="e.g., GitHub_MCP, Zapier_MCP, etc."
+                placeholder={t("mcpServerNamePlaceholder")}
                 className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                 onChange={() => setAliasManuallyEdited(true)}
               />
             </Form.Item>
 
             <Form.Item
-              label={<span className="text-sm font-medium text-gray-700">Description</span>}
+              label={<span className="text-sm font-medium text-gray-700">{t("description")}</span>}
               name="description"
               rules={[
                 {
                   required: false,
-                  message: "Please enter a server description",
+                  message: t("pleaseEnterDescription"),
                 },
               ]}
             >
               <TextInput
-                placeholder="Brief description of what this server does"
+                placeholder={t("descriptionPlaceholder")}
                 className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
               />
             </Form.Item>
@@ -677,46 +672,46 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
             <MCPLogoSelector value={logoUrl} onChange={setLogoUrl} />
 
             <Form.Item
-              label={<span className="text-sm font-medium text-gray-700">GitHub / Source URL</span>}
+              label={<span className="text-sm font-medium text-gray-700">{t("githubSourceUrl")}</span>}
               name="source_url"
             >
               <TextInput
-                placeholder="https://github.com/org/mcp-server"
+                placeholder={t("githubUrlPlaceholder")}
                 className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
               />
             </Form.Item>
 
             <Form.Item
-              label={<span className="text-sm font-medium text-gray-700">Transport Type</span>}
+              label={<span className="text-sm font-medium text-gray-700">{t("transportType")}</span>}
               name="transport"
-              rules={[{ required: true, message: "Please select a transport type" }]}
+              rules={[{ required: true, message: t("pleaseSelectTransport") }]}
             >
               <Select
-                placeholder="Select transport"
+                placeholder={t("selectTransport")}
                 className="rounded-lg"
                 size="large"
                 onChange={handleTransportChange}
                 value={transportType}
               >
-                <Select.Option value="http">Streamable HTTP (Recommended)</Select.Option>
-                <Select.Option value="sse">Server-Sent Events (SSE)</Select.Option>
-                <Select.Option value="stdio">Standard Input/Output (stdio)</Select.Option>
-                <Select.Option value={TRANSPORT.OPENAPI}>OpenAPI Spec</Select.Option>
+                <Select.Option value="http">{t("streamableHttp")}</Select.Option>
+                <Select.Option value="sse">{t("serverSentEvents")}</Select.Option>
+                <Select.Option value="stdio">{t("stdioTransport")}</Select.Option>
+                <Select.Option value={TRANSPORT.OPENAPI}>{t("openapiSpec")}</Select.Option>
               </Select>
             </Form.Item>
 
             {/* URL field - only show for HTTP and SSE */}
             {(transportType === "http" || transportType === "sse") && (
               <Form.Item
-                label={<span className="text-sm font-medium text-gray-700">MCP Server URL</span>}
+                label={<span className="text-sm font-medium text-gray-700">{t("mcpServerUrl")}</span>}
                 name="url"
                 rules={[
-                  { required: true, message: "Please enter a server URL" },
+                  { required: true, message: t("pleaseEnterUrl") },
                   { validator: (_, value) => validateMCPServerUrl(value) },
                 ]}
               >
                 <Input
-                  placeholder="https://your-mcp-server.com"
+                  placeholder={t("serverUrlPlaceholder")}
                   className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                 />
               </Form.Item>
@@ -740,8 +735,8 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
                 <Form.Item
                   label={
                     <span className="text-sm font-medium text-gray-700 flex items-center gap-2">
-                      BYOK (Bring Your Own Key)
-                      <Tooltip title="When enabled, each user provides their own API key for this service. Keys are stored per-user and never shared.">
+                      {t("byok")}
+                      <Tooltip title={t("byokTooltip")}>
                         <InfoCircleOutlined className="text-blue-400 hover:text-blue-600 cursor-help" />
                       </Tooltip>
                     </span>
@@ -764,32 +759,29 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
                           <div className="mb-4 p-3 bg-blue-50 rounded-lg text-sm text-blue-700 flex items-start gap-2">
                             <InfoCircleOutlined className="mt-0.5 flex-shrink-0" />
                             <span>
-                              User keys will be sent as:{" "}
+                              {t("userKeysSentAs")}{" "}
                               <code className="font-mono bg-blue-100 px-1 rounded">
-                                {getFieldValue("auth_type") === "bearer_token" && "Authorization: Bearer {key}"}
-                                {getFieldValue("auth_type") === "token" && "Authorization: token {key}"}
-                                {getFieldValue("auth_type") === "api_key" && "x-api-key: {key}"}
-                                {getFieldValue("auth_type") === "basic" && "Authorization: Basic {key}"}
-                                {getFieldValue("auth_type") === "authorization" && "Authorization: {key}"}
+                                {getFieldValue("auth_type") === "bearer_token" && t("authFormatBearerToken")}
+                                {getFieldValue("auth_type") === "token" && t("authFormatToken")}
+                                {getFieldValue("auth_type") === "api_key" && t("authFormatApiKey")}
+                                {getFieldValue("auth_type") === "basic" && t("authFormatBasic")}
+                                {getFieldValue("auth_type") === "authorization" && t("authFormatAuthorization")}
                               </code>
-                              {!getFieldValue("auth_type") && "Set Authentication Type below to specify the format."}
+                              {!getFieldValue("auth_type") && t("setAuthTypeForFormat")}
                             </span>
                           </div>
                         )}
                         {!getFieldValue("auth_type") && (
                           <div className="mb-4 p-3 bg-yellow-50 rounded-lg text-sm text-yellow-700 flex items-start gap-2">
                             <InfoCircleOutlined className="mt-0.5 flex-shrink-0" />
-                            <span>
-                              Set the <strong>Authentication Type</strong> below to specify how user keys are sent
-                              (e.g., Bearer Token, API Key header).
-                            </span>
+                            <span dangerouslySetInnerHTML={{ __html: t("setAuthTypeWarning") }} />
                           </div>
                         )}
                         <Form.Item
                           label={
                             <span className="text-sm font-medium text-gray-700">
-                              Access Description
-                              <Tooltip title="List of permissions shown to users in the connection modal (e.g. 'Create and manage Jira issues')">
+                              {t("accessDescription")}
+                              <Tooltip title={t("accessDescriptionTooltip")}>
                                 <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                               </Tooltip>
                             </span>
@@ -798,7 +790,7 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
                         >
                           <Select
                             mode="tags"
-                            placeholder="Add access description items (press Enter after each)"
+                            placeholder={t("addAccessDescription")}
                             className="w-full"
                             tokenSeparators={[","]}
                           />
@@ -807,15 +799,15 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
                         <Form.Item
                           label={
                             <span className="text-sm font-medium text-gray-700">
-                              API Key Help URL
-                              <Tooltip title="Optional link shown to users to help them find their API key">
+                              {t("apiKeyHelpUrl")}
+                              <Tooltip title={t("apiKeyHelpUrlTooltip")}>
                                 <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                               </Tooltip>
                             </span>
                           }
                           name="byok_api_key_help_url"
                         >
-                          <Input placeholder="https://docs.example.com/api-keys" />
+                          <Input placeholder={t("apiKeyHelpUrlPlaceholder")} />
                         </Form.Item>
                       </>
                     ) : null
@@ -832,18 +824,18 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
                 items={[
                   {
                     key: "auth",
-                    label: <span className="text-sm font-semibold text-gray-700">Authentication</span>,
+                    label: <span className="text-sm font-semibold text-gray-700">{t("authentication")}</span>,
                     children: (
                       <>
-                        <Form.Item name="auth_type" rules={[{ required: true, message: "Please select an auth type" }]}>
-                          <Select placeholder="Select auth type" className="rounded-lg" size="large">
-                            <Select.Option value="none">None</Select.Option>
-                            <Select.Option value="api_key">API Key</Select.Option>
-                            <Select.Option value="bearer_token">Bearer Token</Select.Option>
-                            <Select.Option value="token">Token</Select.Option>
-                            <Select.Option value="basic">Basic Auth</Select.Option>
-                            <Select.Option value="oauth2">OAuth</Select.Option>
-                            <Select.Option value="aws_sigv4">AWS SigV4 (Bedrock AgentCore MCPs)</Select.Option>
+                        <Form.Item name="auth_type" rules={[{ required: true, message: t("pleaseSelectAuthType") }]}>
+                          <Select placeholder={t("selectAuthType")} className="rounded-lg" size="large">
+                            <Select.Option value="none">{t("authTypeNone")}</Select.Option>
+                            <Select.Option value="api_key">{t("authTypeApiKey")}</Select.Option>
+                            <Select.Option value="bearer_token">{t("authTypeBearerToken")}</Select.Option>
+                            <Select.Option value="token">{t("authTypeToken")}</Select.Option>
+                            <Select.Option value="basic">{t("authTypeBasic")}</Select.Option>
+                            <Select.Option value="oauth2">{t("authTypeOAuth")}</Select.Option>
+                            <Select.Option value="aws_sigv4">{t("authTypeAwsSigV4")}</Select.Option>
                           </Select>
                         </Form.Item>
 
@@ -851,8 +843,8 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
                           <Form.Item
                             label={
                               <span className="text-sm font-medium text-gray-700 flex items-center">
-                                Authentication Value
-                                <Tooltip title="Token, password, or header value to send with each request for the selected auth type.">
+                                {t("authenticationValue")}
+                                <Tooltip title={t("authValueTooltip")}>
                                   <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                                 </Tooltip>
                               </span>
@@ -862,14 +854,14 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
                               {
                                 validator: (_, value) =>
                                   value && typeof value === "string" && value.trim() === ""
-                                    ? Promise.reject(new Error("Authentication value cannot be empty whitespace"))
+                                    ? Promise.reject(new Error(t("authValueCannotBeWhitespace")))
                                     : Promise.resolve(),
                               },
                             ]}
                           >
                             <TextInput
                               type="password"
-                              placeholder="Enter token or secret"
+                              placeholder={t("enterTokenOrSecret")}
                               className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                             />
                           </Form.Item>
@@ -898,38 +890,38 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
             {transportType !== "stdio" && transportType !== "" && isAwsSigV4AuthType && (
               <>
                 <p className="text-sm text-gray-500 mb-2">
-                  For MCP servers hosted on AWS Bedrock AgentCore.{" "}
+                  {t("awsSigV4Description")}{" "}
                   <a
                     href="https://docs.litellm.ai/docs/mcp_aws_sigv4"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-blue-500 hover:text-blue-700"
                   >
-                    View docs &rarr;
+                    {t("viewDocs")} &rarr;
                   </a>
                 </p>
                 <Form.Item
                   label={
                     <span className="text-sm font-medium text-gray-700 flex items-center">
-                      AWS Region
-                      <Tooltip title="AWS region for SigV4 signing (e.g., us-east-1)">
+                      {t("awsRegion")}
+                      <Tooltip title={t("awsRegionTooltip")}>
                         <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                       </Tooltip>
                     </span>
                   }
                   name={["credentials", "aws_region_name"]}
-                  rules={[{ required: true, message: "AWS region is required for SigV4 auth" }]}
+                  rules={[{ required: true, message: t("awsRegionRequired") }]}
                 >
                   <Input
-                    placeholder="us-east-1"
+                    placeholder={t("awsRegionPlaceholder")}
                     className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                   />
                 </Form.Item>
                 <Form.Item
                   label={
                     <span className="text-sm font-medium text-gray-700 flex items-center">
-                      AWS Service Name
-                      <Tooltip title="AWS service name for SigV4 signing. Defaults to 'bedrock-agentcore'.">
+                      {t("awsServiceName")}
+                      <Tooltip title={t("awsServiceNameTooltip")}>
                         <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                       </Tooltip>
                     </span>
@@ -937,15 +929,15 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
                   name={["credentials", "aws_service_name"]}
                 >
                   <Input
-                    placeholder="bedrock-agentcore"
+                    placeholder={t("awsServiceNamePlaceholder")}
                     className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                   />
                 </Form.Item>
                 <Form.Item
                   label={
                     <span className="text-sm font-medium text-gray-700 flex items-center">
-                      AWS Access Key ID
-                      <Tooltip title="Optional. If not provided, falls back to the boto3 credential chain (IAM role, env vars, etc.).">
+                      {t("awsAccessKeyId")}
+                      <Tooltip title={t("awsAccessKeyIdTooltip")}>
                         <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                       </Tooltip>
                     </span>
@@ -957,9 +949,7 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
                       validator(_, value) {
                         const secretKey = getFieldValue(["credentials", "aws_secret_access_key"]);
                         if (secretKey && !value) {
-                          return Promise.reject(
-                            new Error("Access Key ID is required when Secret Access Key is provided"),
-                          );
+                          return Promise.reject(new Error(t("awsAccessKeyIdRequired")));
                         }
                         return Promise.resolve();
                       },
@@ -967,15 +957,15 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
                   ]}
                 >
                   <Input.Password
-                    placeholder="AKIA... (optional — uses IAM role if blank)"
+                    placeholder={t("awsAccessKeyIdPlaceholder")}
                     className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                   />
                 </Form.Item>
                 <Form.Item
                   label={
                     <span className="text-sm font-medium text-gray-700 flex items-center">
-                      AWS Secret Access Key
-                      <Tooltip title="Optional. Required if AWS Access Key ID is provided.">
+                      {t("awsSecretAccessKey")}
+                      <Tooltip title={t("awsSecretAccessKeyTooltip")}>
                         <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                       </Tooltip>
                     </span>
@@ -987,9 +977,7 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
                       validator(_, value) {
                         const accessKeyId = getFieldValue(["credentials", "aws_access_key_id"]);
                         if (accessKeyId && !value) {
-                          return Promise.reject(
-                            new Error("Secret Access Key is required when Access Key ID is provided"),
-                          );
+                          return Promise.reject(new Error(t("awsSecretAccessKeyRequired")));
                         }
                         return Promise.resolve();
                       },
@@ -997,15 +985,15 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
                   ]}
                 >
                   <Input.Password
-                    placeholder="Enter secret key (optional — uses IAM role if blank)"
+                    placeholder={t("awsSecretAccessKeyPlaceholder")}
                     className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                   />
                 </Form.Item>
                 <Form.Item
                   label={
                     <span className="text-sm font-medium text-gray-700 flex items-center">
-                      AWS Session Token
-                      <Tooltip title="Optional. Only needed for temporary STS credentials.">
+                      {t("awsSessionToken")}
+                      <Tooltip title={t("awsSessionTokenTooltip")}>
                         <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                       </Tooltip>
                     </span>
@@ -1013,15 +1001,15 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
                   name={["credentials", "aws_session_token"]}
                 >
                   <Input.Password
-                    placeholder="Enter session token (optional)"
+                    placeholder={t("awsSessionTokenPlaceholder")}
                     className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                   />
                 </Form.Item>
                 <Form.Item
                   label={
                     <span className="text-sm font-medium text-gray-700 flex items-center">
-                      AWS Role ARN
-                      <Tooltip title="Optional. IAM role ARN to assume via STS before signing. If set, LiteLLM calls sts:AssumeRole to get temporary credentials. Uses ambient credentials (IAM role, env vars) as the source identity unless explicit keys are also provided.">
+                      {t("awsRoleArn")}
+                      <Tooltip title={t("awsRoleArnTooltip")}>
                         <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                       </Tooltip>
                     </span>
@@ -1029,15 +1017,15 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
                   name={["credentials", "aws_role_name"]}
                 >
                   <Input
-                    placeholder="arn:aws:iam::123456789012:role/MyRole (optional)"
+                    placeholder={t("awsRoleArnPlaceholder")}
                     className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                   />
                 </Form.Item>
                 <Form.Item
                   label={
                     <span className="text-sm font-medium text-gray-700 flex items-center">
-                      AWS Session Name
-                      <Tooltip title="Optional. Session name for the AssumeRole call — appears in CloudTrail logs. Auto-generated if omitted.">
+                      {t("awsSessionName")}
+                      <Tooltip title={t("awsSessionNameTooltip")}>
                         <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
                       </Tooltip>
                     </span>
@@ -1045,7 +1033,7 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
                   name={["credentials", "aws_session_name"]}
                 >
                   <Input
-                    placeholder="litellm-prod (optional, auto-generated if blank)"
+                    placeholder={t("awsSessionNamePlaceholder")}
                     className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                   />
                 </Form.Item>
@@ -1119,10 +1107,10 @@ const CreateMCPServer: React.FC<CreateMCPServerProps> = ({
 
           <div className="flex items-center justify-end space-x-3 pt-6 border-t border-gray-100">
             <Button variant="secondary" onClick={handleCancel}>
-              Cancel
+              {t("cancel")}
             </Button>
             <Button variant="primary" loading={isLoading}>
-              {isLoading ? "Creating..." : "Add MCP Server"}
+              {isLoading ? t("creating") : t("addMcpServer")}
             </Button>
           </div>
         </Form>

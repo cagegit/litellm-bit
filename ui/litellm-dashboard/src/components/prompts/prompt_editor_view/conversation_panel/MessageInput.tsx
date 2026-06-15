@@ -2,6 +2,7 @@ import React from "react";
 import { ArrowUpOutlined } from "@ant-design/icons";
 import { Button as TremorButton } from "@tremor/react";
 import { Input } from "antd";
+import { useTranslations } from "@/i18n";
 
 const { TextArea } = Input;
 
@@ -24,6 +25,8 @@ const MessageInput: React.FC<MessageInputProps> = ({
   onKeyDown,
   onCancel,
 }) => {
+  const { t } = useTranslations("prompts");
+
   return (
     <div className="flex items-center gap-2">
       <div className="flex items-center flex-1 bg-white border border-gray-300 rounded-xl px-3 py-1 min-h-[44px]">

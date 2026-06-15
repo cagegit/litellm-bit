@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslations } from "@/i18n";
 
 export interface ContentFilterDetection {
   type: "pattern" | "blocked_word" | "category_keyword";
@@ -34,6 +35,8 @@ interface SectionProps {
 }
 
 const Section: React.FC<SectionProps> = ({ title, count, defaultOpen = true, children }) => {
+  const { t } = useTranslations("logs");
+
   const [open, setOpen] = useState(defaultOpen);
   return (
     <div className="border rounded-lg overflow-hidden">
@@ -74,13 +77,14 @@ const KV: React.FC<KVProps> = ({ label, children, mono }) => (
 );
 
 const ContentFilterDetails: React.FC<ContentFilterDetailsProps> = ({ response }) => {
+  const { t } = useTranslations("logs");
   // Handle case where response is a string (error message) or null
   if (!response || typeof response === "string") {
     if (typeof response === "string" && response) {
       return (
         <div className="bg-white rounded-lg border border-red-200 p-4">
           <div className="text-red-800">
-            <h5 className="font-medium mb-2">Error</h5>
+            <h5 className="font-medium mb-2">"Error"</h5>
             <p className="text-sm">{response}</p>
           </div>
         </div>
@@ -95,7 +99,7 @@ const ContentFilterDetails: React.FC<ContentFilterDetailsProps> = ({ response })
   if (detections.length === 0) {
     return (
       <div className="bg-white rounded-lg border border-gray-200 p-4">
-        <div className="text-gray-600 text-sm">No detections found</div>
+        <div className="text-gray-600 text-sm">{t("logs.noDetectionsFound")}</div>
       </div>
     );
   }
@@ -143,7 +147,7 @@ const ContentFilterDetails: React.FC<ContentFilterDetailsProps> = ({ response })
 
       {/* Patterns Section */}
       {patterns.length > 0 && (
-        <Section title="Patterns Matched" count={patterns.length} defaultOpen={true}>
+        <Section title={t("logs.patternsMatched")} count={patterns.length} defaultOpen={true}>
           <div className="space-y-2">
             {patterns.map((detection, idx) => (
               <div key={idx} className="p-3 bg-gray-50 rounded-md">
@@ -163,7 +167,7 @@ const ContentFilterDetails: React.FC<ContentFilterDetailsProps> = ({ response })
 
       {/* Blocked Words Section */}
       {blockedWords.length > 0 && (
-        <Section title="Blocked Words Detected" count={blockedWords.length} defaultOpen={true}>
+        <Section title={t("logs.blockedWordsDetected")} count={blockedWords.length} defaultOpen={true}>
           <div className="space-y-2">
             {blockedWords.map((detection, idx) => (
               <div key={idx} className="p-3 bg-gray-50 rounded-md">
@@ -186,7 +190,7 @@ const ContentFilterDetails: React.FC<ContentFilterDetailsProps> = ({ response })
 
       {/* Category Keywords Section */}
       {categoryKeywords.length > 0 && (
-        <Section title="Category Keywords Detected" count={categoryKeywords.length} defaultOpen={true}>
+        <Section title={t("logs.categoryKeywordsDetected")} count={categoryKeywords.length} defaultOpen={true}>
           <div className="space-y-2">
             {categoryKeywords.map((detection, idx) => (
               <div key={idx} className="p-3 bg-gray-50 rounded-md">
@@ -216,7 +220,7 @@ const ContentFilterDetails: React.FC<ContentFilterDetailsProps> = ({ response })
       )}
 
       {/* Raw JSON (for debugging) */}
-      <Section title="Raw Detection Data" defaultOpen={false}>
+      <Section title={t("logs.rawDetectionData")} defaultOpen={false}>
         <pre className="bg-gray-50 rounded p-3 text-xs overflow-x-auto">{JSON.stringify(detections, null, 2)}</pre>
       </Section>
     </div>

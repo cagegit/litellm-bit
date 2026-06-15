@@ -4,6 +4,7 @@ import { TokenUsage } from "../chat_ui/ResponseMetrics";
 import { VectorStoreSearchResponse } from "../chat_ui/types";
 import { getProxyBaseUrl } from "@/components/networking";
 import { MCPServer, MCPToolset, type MCPEvent } from "../../mcp_tools/types";
+import { useTranslations } from "@/i18n";
 
 export async function makeOpenAIChatCompletionRequest(
   chatHistory: { role: string; content: string | any[] }[],

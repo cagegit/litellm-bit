@@ -4,6 +4,7 @@ import { Icon, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow
 import { Tooltip, Typography } from "antd";
 import openai from "openai";
 import React, { useEffect, useState } from "react";
+import { useTranslations } from "@/i18n";
 import DeleteResourceModal from "../../../common_components/DeleteResourceModal";
 import { ProviderLogo } from "../../../molecules/models/ProviderLogo";
 import NotificationsManager from "../../../molecules/notifications_manager";
@@ -116,6 +117,7 @@ async function testFallbackModelResponse(selectedModel: string, accessToken: str
 }
 
 const Fallbacks: React.FC<FallbacksProps> = ({ accessToken, userRole, userID, modelData }) => {
+  const { t } = useTranslations("settings");
   const [routerSettings, setRouterSettings] = useState<{ [key: string]: any }>({});
   const [isDeleting, setIsDeleting] = useState(false);
   const [fallbackToDelete, setFallbackToDelete] = useState<FallbackEntry | null>(null);
@@ -252,16 +254,16 @@ const Fallbacks: React.FC<FallbacksProps> = ({ accessToken, userRole, userID, mo
       {!hasFallbacks ? (
         <div className="rounded-lg border border-gray-200 bg-gray-50 px-4 py-6 text-center">
           <Typography.Text type="secondary">
-            No fallbacks configured. Add fallbacks to automatically try another model when the primary fails.
+            t("noFallbacksConfigured")
           </Typography.Text>
         </div>
       ) : (
         <Table>
           <TableHead>
             <TableRow>
-              <TableHeaderCell>Model Name</TableHeaderCell>
-              <TableHeaderCell>Fallbacks</TableHeaderCell>
-              <TableHeaderCell>Actions</TableHeaderCell>
+              <TableHeaderCell>{t("modelName")}</TableHeaderCell>
+              <TableHeaderCell>{t("fallbacks")}</TableHeaderCell>
+              <TableHeaderCell>{t("actions")}</TableHeaderCell>
             </TableRow>
           </TableHead>
 
@@ -276,7 +278,7 @@ const Fallbacks: React.FC<FallbacksProps> = ({ accessToken, userRole, userID, mo
                   <TableCell className="align-top">
                     {canModify && (
                       <>
-                        <Tooltip title="Test fallback">
+                        <Tooltip title={t("testFallback")}>
                           <Icon
                             icon={PlayIcon}
                             size="sm"
@@ -284,7 +286,7 @@ const Fallbacks: React.FC<FallbacksProps> = ({ accessToken, userRole, userID, mo
                             className="cursor-pointer hover:text-blue-600"
                           />
                         </Tooltip>
-                        <Tooltip title="Delete fallback">
+                        <Tooltip title={t("deleteFallback")}>
                           <span
                             data-testid="delete-fallback-button"
                             role="button"
@@ -307,12 +309,12 @@ const Fallbacks: React.FC<FallbacksProps> = ({ accessToken, userRole, userID, mo
       )}
       <DeleteResourceModal
         isOpen={isDeleteModalOpen}
-        title="Delete Fallback?"
-        message="Are you sure you want to delete this fallback? This action cannot be undone."
-        resourceInformationTitle="Fallback Information"
+        title={t("deleteFallbackConfirm")}
+        message={t("deleteFallbackMessage")}
+        resourceInformationTitle={t("fallbackInfo")}
         resourceInformation={[
           {
-            label: "Model Name",
+            label: t("modelName"),
             value: fallbackToDelete ? Object.keys(fallbackToDelete)[0] : "",
             code: true,
           },

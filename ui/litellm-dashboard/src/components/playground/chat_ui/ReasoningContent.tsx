@@ -4,12 +4,15 @@ import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { coy } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { DownOutlined, RightOutlined, BulbOutlined } from "@ant-design/icons";
+import { useTranslations } from "@/i18n";
 
 interface ReasoningContentProps {
   reasoningContent: string;
 }
 
 const ReasoningContent: React.FC<ReasoningContentProps> = ({ reasoningContent }) => {
+  const { t } = useTranslations("playground");
+
   const [isExpanded, setIsExpanded] = useState(true);
 
   if (!reasoningContent) return null;

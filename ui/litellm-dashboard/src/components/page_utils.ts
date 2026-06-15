@@ -2,7 +2,8 @@
  * Utility functions for working with navigation pages
  */
 
-import { menuGroups } from "./leftnav";
+import { getMenuGroups } from "./leftnav";
+const menuGroups = getMenuGroups((key: string, ..._args: unknown[]) => key);
 import { pageDescriptions, PageMetadata } from "./page_metadata";
 import { internalUserRoles } from "@/utils/roles";
 

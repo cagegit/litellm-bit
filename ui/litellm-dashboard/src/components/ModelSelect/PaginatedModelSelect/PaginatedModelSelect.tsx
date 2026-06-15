@@ -3,6 +3,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { useDebouncedState } from "@tanstack/react-pacer/debouncer";
 import { Select, Space, Typography } from "antd";
 import { useMemo, useState, type UIEvent } from "react";
+import { useTranslations } from "@/i18n";
 
 const { Text } = Typography;
 
@@ -22,12 +23,14 @@ const DEBOUNCE_MS = 300;
 export const PaginatedModelSelect = ({
   value,
   onChange,
-  placeholder = "Select a model",
+  placeholder,
   style,
   pageSize = 50,
   allowClear = true,
   disabled = false,
 }: PaginatedModelSelectProps) => {
+  const { t } = useTranslations("models");
+  placeholder = placeholder ?? t("selectModel");
   const [searchInput, setSearchInput] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useDebouncedState("", {
     wait: DEBOUNCE_MS,
@@ -73,16 +76,16 @@ export const PaginatedModelSelect = ({
         {modelName ? (
           <Space direction="vertical">
             <Space direction="horizontal">
-              <Text strong>Model name:</Text>
+              <Text strong>{t("modelName")}</Text>
               <Text ellipsis>{modelName}</Text>
             </Space>
             <Text ellipsis type="secondary">
-              Model ID: {modelId}
+              {t("modelId")} {modelId}
             </Text>
           </Space>
         ) : (
           <Text ellipsis type="secondary">
-            Model ID: {modelId}
+            {t("modelId")} {modelId}
           </Text>
         )}
       </>
@@ -122,7 +125,7 @@ export const PaginatedModelSelect = ({
       searchValue={searchInput}
       onPopupScroll={handlePopupScroll}
       loading={isLoading}
-      notFoundContent={isLoading ? <LoadingOutlined spin /> : "No models found"}
+      notFoundContent={isLoading ? <LoadingOutlined spin /> : t("noModelsFound")}
       options={options}
       optionRender={optionRender}
       popupRender={(menu) => (

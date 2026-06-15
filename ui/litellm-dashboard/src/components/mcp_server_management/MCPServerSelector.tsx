@@ -3,6 +3,7 @@ import { useMCPServers } from "@/app/(dashboard)/hooks/mcpServers/useMCPServers"
 import { useMCPToolsets } from "@/app/(dashboard)/hooks/mcpServers/useMCPToolsets";
 import { Select } from "antd";
 import React from "react";
+import { useTranslations } from "@/i18n";
 
 interface MCPServerSelectorProps {
   onChange: (selected: { servers: string[]; accessGroups: string[]; toolsets: string[] }) => void;
@@ -25,10 +26,11 @@ const MCPServerSelector: React.FC<MCPServerSelectorProps> = ({
   value,
   className,
   accessToken,
-  placeholder = "Select MCP servers",
+  placeholder,
   disabled = false,
   teamId,
 }) => {
+  const { t } = useTranslations("mcp");
   const { data: mcpServers = [], isLoading: serversLoading } = useMCPServers(teamId);
   const { data: accessGroups = [], isLoading: groupsLoading } = useMCPAccessGroups();
   const { data: toolsets = [], isLoading: toolsetsLoading } = useMCPToolsets();
@@ -43,19 +45,19 @@ const MCPServerSelector: React.FC<MCPServerSelectorProps> = ({
       label: group,
       value: group,
       type: "accessGroup" as const,
-      searchText: `${group} Access Group`,
+      searchText: `${group} ${t("accessGroup")}`,
     })),
     ...mcpServers.map((server) => ({
       label: `${server.server_name || server.server_id} (${server.server_id})`,
       value: server.server_id,
       type: "server" as const,
-      searchText: `${server.server_name || server.server_id} ${server.server_id} MCP Server`,
+      searchText: `${server.server_name || server.server_id} ${server.server_id} ${t("mcpServer")}`,
     })),
     ...toolsets.map((toolset) => ({
       label: toolset.toolset_name,
       value: `${TOOLSET_PREFIX}${toolset.toolset_id}`,
       type: "toolset" as const,
-      searchText: `${toolset.toolset_name} ${toolset.toolset_id} Toolset`,
+      searchText: `${toolset.toolset_name} ${toolset.toolset_id} ${t("toolset")}`,
     })),
   ];
 
@@ -92,7 +94,7 @@ const MCPServerSelector: React.FC<MCPServerSelectorProps> = ({
     <div>
       <Select
         mode="multiple"
-        placeholder={placeholder}
+        placeholder={placeholder || t("selectMCPServers")}
         onChange={handleChange}
         value={selectedValues}
         loading={loading}

@@ -11,6 +11,7 @@ import {
   MessageOutlined,
 } from "@ant-design/icons";
 import dayjs from "dayjs";
+import { useTranslations } from "@/i18n";
 import { Conversation } from "./types";
 
 const { Text } = Typography;
@@ -71,6 +72,7 @@ interface ConversationRowProps {
 }
 
 const ConversationRow: React.FC<ConversationRowProps> = ({ conv, isActive, onSelect, onDelete, onRename }) => {
+  const { t } = useTranslations("chat");
   const [editing, setEditing] = useState(false);
   const [editValue, setEditValue] = useState(conv.title);
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -181,7 +183,7 @@ const ConversationRow: React.FC<ConversationRowProps> = ({ conv, isActive, onSel
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <Tooltip title="Rename">
+            <Tooltip title={t("rename")}>
               <Button
                 type="text"
                 size="small"
@@ -191,13 +193,13 @@ const ConversationRow: React.FC<ConversationRowProps> = ({ conv, isActive, onSel
               />
             </Tooltip>
             <Popconfirm
-              title="Delete this conversation?"
+              title={t("deleteThisConversation")}
               onConfirm={() => onDelete(conv.id)}
-              okText="Delete"
-              cancelText="Cancel"
+              okText={t("delete")}
+              cancelText={t("cancel")}
               okButtonProps={{ danger: true }}
             >
-              <Tooltip title="Delete">
+              <Tooltip title={t("delete")}>
                 <Button
                   type="text"
                   size="small"
@@ -224,6 +226,7 @@ interface SearchModalProps {
 }
 
 const SearchModal: React.FC<SearchModalProps> = ({ open, conversations, onSelect, onClose }) => {
+  const { t } = useTranslations("chat");
   const [query, setQuery] = useState("");
 
   useEffect(() => {
@@ -251,7 +254,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ open, conversations, onSelect
       <Input
         autoFocus
         prefix={<SearchOutlined style={{ color: "#bbb" }} />}
-        placeholder="Search conversations…"
+        placeholder={t("searchConversations")}
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         style={{ marginBottom: 12 }}
@@ -260,7 +263,7 @@ const SearchModal: React.FC<SearchModalProps> = ({ open, conversations, onSelect
 
       <div style={{ maxHeight: 320, overflowY: "auto" }}>
         {filtered.length === 0 ? (
-          <div style={{ textAlign: "center", padding: "24px 0", color: "#999" }}>No conversations found</div>
+          <div style={{ textAlign: "center", padding: "24px 0", color: "#999" }}>{t("noConversationsFound")}</div>
         ) : (
           filtered.map((conv) => {
             const truncated = conv.title.length > 55 ? conv.title.slice(0, 55) + "…" : conv.title;
@@ -308,6 +311,7 @@ const ConversationList: React.FC<Props> = ({
   onNewChat,
   onRename,
 }) => {
+  const { t } = useTranslations("chat");
   const [searchModalOpen, setSearchModalOpen] = useState(false);
 
   // Cmd+K / Ctrl+K listener
@@ -345,12 +349,9 @@ const ConversationList: React.FC<Props> = ({
       >
         {/* Top: New Chat button */}
         <div style={{ padding: "12px 10px 8px" }}>
-          <Tooltip
-            title="Chats are saved locally in this browser. All requests are logged in Spend → Logs."
-            placement="right"
-          >
+          <Tooltip title={t("chatsSavedLocally")} placement="right">
             <Button type="primary" icon={<PlusOutlined />} onClick={onNewChat} style={{ width: "100%" }}>
-              New Chat
+              {t("newChat")}
             </Button>
           </Tooltip>
         </div>
@@ -373,9 +374,9 @@ const ConversationList: React.FC<Props> = ({
                 padding: "0 12px",
               }}
             >
-              No conversations yet.
+              {t("noConversationsYet")}
               <br />
-              Start a new chat above.
+              {t("startANewChatAbove")}
             </div>
           ) : (
             grouped.map(({ group, items }) => (
@@ -390,7 +391,13 @@ const ConversationList: React.FC<Props> = ({
                     padding: "8px 8px 4px",
                   }}
                 >
-                  {group}
+                  {group === "Today"
+                    ? t("today")
+                    : group === "Yesterday"
+                      ? t("yesterday")
+                      : group === "Last 7 Days"
+                        ? t("last7Days")
+                        : t("older")}
                 </div>
                 {items.map((conv) => (
                   <ConversationRow
@@ -431,7 +438,7 @@ const ConversationList: React.FC<Props> = ({
               textOverflow: "ellipsis",
             }}
           >
-            My Account
+            {t("myAccount")}
           </Text>
         </div>
       </div>

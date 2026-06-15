@@ -1,5 +1,6 @@
 import React from "react";
 import { Select } from "antd";
+import { useTranslations } from "@/i18n";
 import type { ExportFormat } from "./types";
 
 interface ExportFormatSelectorProps {
@@ -8,9 +9,10 @@ interface ExportFormatSelectorProps {
 }
 
 const ExportFormatSelector: React.FC<ExportFormatSelectorProps> = ({ value, onChange }) => {
+  const { t } = useTranslations("billing");
   return (
     <div>
-      <label className="text-sm font-medium text-gray-700 block mb-2">Format</label>
+      <label className="text-sm font-medium text-gray-700 block mb-2">{t("format")}</label>
       <Select
         value={value}
         onChange={onChange}
@@ -18,11 +20,11 @@ const ExportFormatSelector: React.FC<ExportFormatSelectorProps> = ({ value, onCh
         options={[
           {
             value: "csv",
-            label: "CSV (Excel, Google Sheets)",
+            label: t("csvExcelGoogleSheets"),
           },
           {
             value: "json",
-            label: "JSON (includes metadata)",
+            label: t("jsonIncludesMetadata"),
           },
         ]}
       />

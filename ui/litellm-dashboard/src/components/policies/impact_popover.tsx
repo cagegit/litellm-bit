@@ -4,6 +4,7 @@ import { EyeIcon } from "@heroicons/react/outline";
 import { Tooltip, Tag, Popover, Spin } from "antd";
 import { PolicyAttachment } from "./types";
 import { estimateAttachmentImpactCall } from "../networking";
+import { useTranslations } from "@/i18n";
 
 const ImpactPopover: React.FC<{ attachment: PolicyAttachment; accessToken: string | null }> = ({
   attachment,
@@ -12,6 +13,7 @@ const ImpactPopover: React.FC<{ attachment: PolicyAttachment; accessToken: strin
   const [impact, setImpact] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const { t } = useTranslations("common");
 
   const loadImpact = async () => {
     if (loaded || loading || !accessToken) return;
@@ -36,21 +38,22 @@ const ImpactPopover: React.FC<{ attachment: PolicyAttachment; accessToken: strin
 
   const content = loading ? (
     <div className="p-2 text-center">
-      <Spin size="small" /> Loading...
+      <Spin size="small" /> {t("loading")}
     </div>
   ) : impact ? (
     <div className="text-xs" style={{ maxWidth: 280 }}>
       {impact.affected_keys_count === -1 ? (
-        <p className="font-medium text-amber-600">Global scope — affects all keys and teams</p>
+        <p className="font-medium text-amber-600">{t("globalScope")}</p>
       ) : (
         <>
           <p className="mb-1">
-            <strong>{impact.affected_keys_count}</strong> key{impact.affected_keys_count !== 1 ? "s" : ""},{" "}
-            <strong>{impact.affected_teams_count}</strong> team{impact.affected_teams_count !== 1 ? "s" : ""} affected
+            <strong>{impact.affected_keys_count}</strong> {t("keys", { count: impact.affected_keys_count })},{" "}
+            <strong>{impact.affected_teams_count}</strong> {t("teams", { count: impact.affected_teams_count })}{" "}
+            {t("affected")}
           </p>
           {impact.sample_keys.length > 0 && (
             <div className="mb-1">
-              <span className="text-gray-500">Keys: </span>
+              <span className="text-gray-500">{t("keysLabel")}</span>
               {impact.sample_keys.map((k: string) => (
                 <Tag key={k} style={{ fontSize: 10, margin: 1 }}>
                   {k}
@@ -60,7 +63,7 @@ const ImpactPopover: React.FC<{ attachment: PolicyAttachment; accessToken: strin
           )}
           {impact.sample_teams.length > 0 && (
             <div>
-              <span className="text-gray-500">Teams: </span>
+              <span className="text-gray-500">{t("teamsLabel")}</span>
               {impact.sample_teams.map((t: string) => (
                 <Tag key={t} style={{ fontSize: 10, margin: 1 }}>
                   {t}
@@ -69,25 +72,25 @@ const ImpactPopover: React.FC<{ attachment: PolicyAttachment; accessToken: strin
             </div>
           )}
           {impact.affected_keys_count === 0 && impact.affected_teams_count === 0 && (
-            <p className="text-gray-400">No keys or teams currently affected</p>
+            <p className="text-gray-400">{t("noKeysOrTeamsAffected")}</p>
           )}
         </>
       )}
     </div>
   ) : (
-    <p className="text-xs text-gray-400">Click to load</p>
+    <p className="text-xs text-gray-400">{t("clickToLoad")}</p>
   );
 
   return (
     <Popover
       content={content}
-      title="Blast Radius"
+      title={t("blastRadius")}
       trigger="click"
       onOpenChange={(open) => {
         if (open) loadImpact();
       }}
     >
-      <Tooltip title="View blast radius">
+      <Tooltip title={t("viewBlastRadius")}>
         <Icon icon={EyeIcon} size="sm" className="cursor-pointer hover:text-blue-500" />
       </Tooltip>
     </Popover>

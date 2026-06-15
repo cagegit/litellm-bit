@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Dropdown, MenuProps } from "antd";
 import { SwitchVerticalIcon, ChevronUpIcon, ChevronDownIcon, XIcon } from "@heroicons/react/outline";
+import { useTranslations } from "@/i18n";
 
 export type SortState = "asc" | "desc" | false;
 
@@ -21,6 +22,8 @@ interface TableHeaderSortDropdownProps {
 }
 
 export const TableHeaderSortDropdown: React.FC<TableHeaderSortDropdownProps> = ({ sortState, onSortChange }) => {
+  const { t } = useTranslations("common");
+
   const handleMenuClick: MenuProps["onClick"] = ({ key }) => {
     if (key === "asc") {
       onSortChange("asc");

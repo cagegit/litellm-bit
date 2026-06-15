@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { getProviderLogoAndName } from "../../provider_info_helpers";
+import { useTranslations } from "@/i18n";
 
 interface ProviderLogoProps {
   provider: string;
@@ -7,6 +8,8 @@ interface ProviderLogoProps {
 }
 
 export const ProviderLogo: React.FC<ProviderLogoProps> = ({ provider, className = "w-4 h-4" }) => {
+  const { t } = useTranslations("models");
+
   const [hasError, setHasError] = useState(false);
   const { logo } = getProviderLogoAndName(provider);
 

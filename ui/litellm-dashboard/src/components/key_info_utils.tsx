@@ -1,3 +1,4 @@
+import { useTranslations } from "@/i18n";
 /**
  * Utility functions for handling key information and metadata
  */

@@ -14,6 +14,7 @@ import {
 } from "@tanstack/react-table";
 import { getProviderLogoAndName } from "@/components/provider_info_helpers";
 import { extractModel, getProviderFromModelHub } from "./prompt_utils";
+import { useTranslations } from "@/i18n";
 
 interface PromptTableProps {
   promptsList: PromptSpec[];
@@ -38,6 +39,8 @@ const PromptTable: React.FC<PromptTableProps> = ({
   accessToken,
   isAdmin,
 }) => {
+  const { t } = useTranslations("prompts");
+
   const [sorting, setSorting] = useState<SortingState>([{ id: "created_at", desc: true }]);
   const [modelHubData, setModelHubData] = useState<Map<string, ModelGroupInfo>>(new Map());
 

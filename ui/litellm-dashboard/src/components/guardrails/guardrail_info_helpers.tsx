@@ -1,3 +1,4 @@
+import { useTranslations } from "@/i18n";
 // Legacy enum - keeping for backward compatibility
 export enum GuardrailProviders {
   PresidioPII = "Presidio PII",

@@ -10,6 +10,7 @@ import {
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { coy } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { getProxyBaseUrl, getGlobalLitellmHeaderName } from "@/components/networking";
+import { useTranslations } from "@/i18n";
 
 interface ContainerFileCitation {
   type: "container_file_citation";
@@ -33,6 +34,8 @@ const CodeInterpreterOutput: React.FC<CodeInterpreterOutputProps> = ({
   annotations = [],
   accessToken,
 }) => {
+  const { t } = useTranslations("playground");
+
   const [imageUrls, setImageUrls] = useState<Record<string, string>>({});
   const [loadingImages, setLoadingImages] = useState<Record<string, boolean>>({});
   const proxyBaseUrl = getProxyBaseUrl();
@@ -173,7 +176,7 @@ const CodeInterpreterOutput: React.FC<CodeInterpreterOutputProps> = ({
           {loadingImages[annotation.file_id] ? (
             <div className="flex items-center justify-center p-8 bg-gray-50">
               <Spin indicator={<LoadingOutlined spin />} />
-              <span className="ml-2 text-sm text-gray-500">Loading image...</span>
+              <span className="ml-2 text-sm text-gray-500">{t("playground.loadingImage")}</span>
             </div>
           ) : imageUrls[annotation.file_id] ? (
             <div>
@@ -197,7 +200,7 @@ const CodeInterpreterOutput: React.FC<CodeInterpreterOutputProps> = ({
             </div>
           ) : (
             <div className="flex items-center justify-center p-4 bg-gray-50">
-              <span className="text-sm text-gray-400">Image not available</span>
+              <span className="text-sm text-gray-400">{t("playground.imageNotAvailable")}</span>
             </div>
           )}
         </div>

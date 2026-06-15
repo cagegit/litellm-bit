@@ -1,6 +1,7 @@
 import React from "react";
 import { Typography, Collapse } from "antd";
 import type { MCPEvent } from "../../mcp_tools/types";
+import { useTranslations } from "@/i18n";
 
 const { Text } = Typography;
 const { Panel } = Collapse;
@@ -11,6 +12,8 @@ interface MCPEventsDisplayProps {
 }
 
 const MCPEventsDisplay: React.FC<MCPEventsDisplayProps> = ({ events, className }) => {
+  const { t } = useTranslations("playground");
+
   console.log("MCPEventsDisplay: Received events:", events);
 
   if (!events || events.length === 0) {
@@ -173,7 +176,7 @@ const MCPEventsDisplay: React.FC<MCPEventsDisplayProps> = ({ events, className }
         >
           {/* List Tools Panel */}
           {toolsEvent && (
-            <Panel header="List tools" key="list-tools">
+            <Panel header={t("playground.listTools")} key="list-tools">
               <div>
                 {toolsEvent.item?.tools?.map((tool, index) => (
                   <div key={index} className="tool-item">
@@ -190,7 +193,7 @@ const MCPEventsDisplay: React.FC<MCPEventsDisplayProps> = ({ events, className }
               <div>
                 {/* Request section */}
                 <div className="mcp-section">
-                  <div className="mcp-section-header">Request</div>
+                  <div className="mcp-section-header">{t("playground.request")}</div>
                   <div className="mcp-code-block">
                     {callEvent.item?.arguments && (
                       <pre className="mcp-json">
@@ -216,7 +219,7 @@ const MCPEventsDisplay: React.FC<MCPEventsDisplayProps> = ({ events, className }
                 {/* Response section */}
                 {callEvent.item?.output && (
                   <div className="mcp-section">
-                    <div className="mcp-section-header">Response</div>
+                    <div className="mcp-section-header">{t("playground.response")}</div>
                     <div className="mcp-response-content">{callEvent.item.output}</div>
                   </div>
                 )}

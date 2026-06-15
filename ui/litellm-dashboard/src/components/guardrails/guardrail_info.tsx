@@ -5,6 +5,7 @@ import {
   updateGuardrailCall,
 } from "@/components/networking";
 import { copyToClipboard as utilCopyToClipboard } from "@/utils/dataUtils";
+import { useTranslations } from "@/i18n";
 import { CodeOutlined, EyeInvisibleOutlined, InfoCircleOutlined, StopOutlined } from "@ant-design/icons";
 import { ArrowLeftIcon } from "@heroicons/react/outline";
 import { Badge, Card, Grid, Tab, TabGroup, TabList, TabPanel, TabPanels, Text, Title } from "@tremor/react";
@@ -51,6 +52,7 @@ interface ProviderParamsResponse {
 }
 
 const GuardrailInfoView: React.FC<GuardrailInfoProps> = ({ guardrailId, onClose, accessToken, isAdmin }) => {
+  const { t } = useTranslations("common");
   const [guardrailData, setGuardrailData] = useState<any>(null);
   const [guardrailProviderSpecificParams, setGuardrailProviderSpecificParams] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -162,7 +164,7 @@ const GuardrailInfoView: React.FC<GuardrailInfoProps> = ({ guardrailId, onClose,
         setSelectedPiiActions({});
       }
     } catch (error) {
-      NotificationsManager.fromBackend("Failed to load guardrail information");
+      NotificationsManager.fromBackend(t("failedToLoadGuardrailInfo"));
       console.error("Error fetching guardrail info:", error);
     } finally {
       setLoading(false);
@@ -447,28 +449,28 @@ const GuardrailInfoView: React.FC<GuardrailInfoProps> = ({ guardrailId, onClose,
 
       // Only proceed with update if there are actual changes
       if (Object.keys(updateData).length === 0) {
-        NotificationsManager.info("No changes detected");
+        NotificationsManager.info(t("noChangesDetected"));
         setIsEditing(false);
         return;
       }
 
       await updateGuardrailCall(accessToken, guardrailId, updateData);
-      NotificationsManager.success("Guardrail updated successfully");
+      NotificationsManager.success(t("guardrailUpdatedSuccessfully"));
       setHasUnsavedContentFilterChanges(false);
       fetchGuardrailInfo();
       setIsEditing(false);
     } catch (error) {
       console.error("Error updating guardrail:", error);
-      NotificationsManager.fromBackend("Failed to update guardrail");
+      NotificationsManager.fromBackend(t("failedToUpdateGuardrail"));
     }
   };
 
   if (loading) {
-    return <div className="p-4">Loading...</div>;
+    return <div className="p-4">{t("loading")}</div>;
   }
 
   if (!guardrailData) {
-    return <div className="p-4">Guardrail not found</div>;
+    return <div className="p-4">{t("guardrailNotFound")}</div>;
   }
 
   // Format date helper function
@@ -497,9 +499,9 @@ const GuardrailInfoView: React.FC<GuardrailInfoProps> = ({ guardrailId, onClose,
     <div className="p-4">
       <div>
         <Button type="text" icon={<ArrowLeftIcon className="w-4 h-4" />} onClick={onClose} className="mb-4">
-          Back to Guardrails
+          {t("backToGuardrails")}
         </Button>
-        <Title>{guardrailData.guardrail_name || "Unnamed Guardrail"}</Title>
+        <Title>{guardrailData.guardrail_name || t("unnamedGuardrail")}</Title>
         <div className="flex items-center cursor-pointer">
           <Text className="text-gray-500 font-mono">{guardrailData.guardrail_id}</Text>
 
@@ -519,8 +521,8 @@ const GuardrailInfoView: React.FC<GuardrailInfoProps> = ({ guardrailId, onClose,
 
       <TabGroup>
         <TabList className="mb-4">
-          <Tab key="overview">Overview</Tab>
-          {isAdmin ? <Tab key="settings">Settings</Tab> : <></>}
+          <Tab key="overview">{t("overview")}</Tab>
+          {isAdmin ? <Tab key="settings">{t("settings")}</Tab> : <></>}
         </TabList>
 
         <TabPanels>
@@ -528,12 +530,12 @@ const GuardrailInfoView: React.FC<GuardrailInfoProps> = ({ guardrailId, onClose,
           <TabPanel>
             <Grid numItems={1} numItemsSm={2} numItemsLg={3} className="gap-6">
               <Card>
-                <Text>Provider</Text>
+                <Text>{t("provider")}</Text>
                 <div className="mt-2 flex items-center space-x-2">
                   {logo && (
                     <img
                       src={logo}
-                      alt={`${displayName} logo`}
+                      alt={t("providerLogoAlt", { name: displayName })}
                       className="w-6 h-6"
                       onError={(e) => {
                         // Hide broken image
@@ -546,20 +548,22 @@ const GuardrailInfoView: React.FC<GuardrailInfoProps> = ({ guardrailId, onClose,
               </Card>
 
               <Card>
-                <Text>Mode</Text>
+                <Text>{t("mode")}</Text>
                 <div className="mt-2">
                   <Title>{guardrailData.litellm_params?.mode || "-"}</Title>
                   <Badge color={guardrailData.litellm_params?.default_on ? "green" : "gray"}>
-                    {guardrailData.litellm_params?.default_on ? "Default On" : "Default Off"}
+                    {guardrailData.litellm_params?.default_on ? t("defaultOn") : t("defaultOff")}
                   </Badge>
                 </div>
               </Card>
 
               <Card>
-                <Text>Created At</Text>
+                <Text>{t("createdAt")}</Text>
                 <div className="mt-2">
                   <Title>{formatDate(guardrailData.created_at)}</Title>
-                  <Text>Last Updated: {formatDate(guardrailData.updated_at)}</Text>
+                  <Text>
+                    {t("updatedAt")}: {formatDate(guardrailData.updated_at)}
+                  </Text>
                 </div>
               </Card>
             </Grid>
@@ -568,9 +572,11 @@ const GuardrailInfoView: React.FC<GuardrailInfoProps> = ({ guardrailId, onClose,
               Object.keys(guardrailData.litellm_params.pii_entities_config).length > 0 && (
                 <Card className="mt-6">
                   <div className="flex justify-between items-center">
-                    <Text className="font-medium">PII Protection</Text>
+                    <Text className="font-medium">{t("piiProtection")}</Text>
                     <Badge color="blue">
-                      {Object.keys(guardrailData.litellm_params.pii_entities_config).length} PII entities configured
+                      {t("piiEntitiesConfigured", {
+                        count: Object.keys(guardrailData.litellm_params.pii_entities_config).length,
+                      })}
                     </Badge>
                   </div>
                 </Card>
@@ -579,11 +585,11 @@ const GuardrailInfoView: React.FC<GuardrailInfoProps> = ({ guardrailId, onClose,
             {guardrailData.litellm_params?.pii_entities_config &&
               Object.keys(guardrailData.litellm_params.pii_entities_config).length > 0 && (
                 <Card className="mt-6">
-                  <Text className="mb-4 text-lg font-semibold">PII Entity Configuration</Text>
+                  <Text className="mb-4 text-lg font-semibold">{t("piiEntityConfiguration")}</Text>
                   <div className="border rounded-lg overflow-hidden shadow-sm">
                     <div className="bg-gray-50 px-5 py-3 border-b flex">
-                      <Text className="flex-1 font-semibold text-gray-700">Entity Type</Text>
-                      <Text className="flex-1 font-semibold text-gray-700">Configuration</Text>
+                      <Text className="flex-1 font-semibold text-gray-700">{t("entityType")}</Text>
+                      <Text className="flex-1 font-semibold text-gray-700">{t("configuration")}</Text>
                     </div>
                     <div className="max-h-[400px] overflow-y-auto">
                       {Object.entries(guardrailData.litellm_params?.pii_entities_config).map(([key, value]) => (
@@ -618,11 +624,11 @@ const GuardrailInfoView: React.FC<GuardrailInfoProps> = ({ guardrailId, onClose,
                 <div className="flex justify-between items-center mb-4">
                   <div className="flex items-center gap-2">
                     <CodeOutlined className="text-blue-500" />
-                    <Text className="font-medium text-lg">Custom Code</Text>
+                    <Text className="font-medium text-lg">{t("customCode")}</Text>
                   </div>
                   {isAdmin && !isConfigGuardrail && (
                     <Button size="small" icon={<CodeOutlined />} onClick={() => setCustomCodeModalVisible(true)}>
-                      Edit Code
+                      {t("editCode")}
                     </Button>
                   )}
                 </div>
@@ -651,9 +657,9 @@ const GuardrailInfoView: React.FC<GuardrailInfoProps> = ({ guardrailId, onClose,
             <TabPanel>
               <Card>
                 <div className="flex justify-between items-center mb-4">
-                  <Title>Guardrail Settings</Title>
+                  <Title>{t("guardrailSettings")}</Title>
                   {isConfigGuardrail && (
-                    <Tooltip title="Guardrail is defined in the config file and cannot be edited.">
+                    <Tooltip title={t("configGuardrailCannotEdit")}>
                       <InfoCircleOutlined />
                     </Tooltip>
                   )}
@@ -661,10 +667,10 @@ const GuardrailInfoView: React.FC<GuardrailInfoProps> = ({ guardrailId, onClose,
                     !isConfigGuardrail &&
                     (guardrailData.litellm_params?.guardrail === "custom_code" ? (
                       <Button icon={<CodeOutlined />} onClick={() => setCustomCodeModalVisible(true)}>
-                        Edit Code
+                        {t("editCode")}
                       </Button>
                     ) : (
-                      <Button onClick={() => setIsEditing(true)}>Edit Settings</Button>
+                      <Button onClick={() => setIsEditing(true)}>{t("editSettings")}</Button>
                     ))}
                 </div>
 
@@ -697,47 +703,47 @@ const GuardrailInfoView: React.FC<GuardrailInfoProps> = ({ guardrailId, onClose,
                     layout="vertical"
                   >
                     <Form.Item
-                      label="Guardrail Name"
+                      label={t("guardrailName")}
                       name="guardrail_name"
-                      rules={[{ required: true, message: "Please input a guardrail name" }]}
+                      rules={[{ required: true, message: t("pleaseInputGuardrailName") }]}
                     >
-                      <Input placeholder="Enter guardrail name" />
+                      <Input placeholder={t("enterGuardrailName")} />
                     </Form.Item>
 
-                    <Form.Item label="Default On" name="default_on">
+                    <Form.Item label={t("defaultOn")} name="default_on">
                       <Select>
-                        <Select.Option value={true}>Yes</Select.Option>
-                        <Select.Option value={false}>No</Select.Option>
+                        <Select.Option value={true}>{t("yes")}</Select.Option>
+                        <Select.Option value={false}>{t("no")}</Select.Option>
                       </Select>
                     </Form.Item>
 
                     <Form.Item
-                      label="Skip system messages in guardrail"
+                      label={t("skipSystemMessages")}
                       name="skip_system_message_choice"
-                      tooltip="Unified guardrails: omit role: system from guardrail input (LLM still gets full messages). Use global default follows litellm_settings.skip_system_message_in_guardrail."
+                      tooltip={t("skipSystemMessagesTooltip")}
                     >
                       <Select>
-                        <Select.Option value="inherit">Use global default</Select.Option>
-                        <Select.Option value="yes">Yes — exclude from guardrail scan</Select.Option>
-                        <Select.Option value="no">No — always include in scan</Select.Option>
+                        <Select.Option value="inherit">{t("useGlobalDefault")}</Select.Option>
+                        <Select.Option value="yes">{t("yesExcludeFromScan")}</Select.Option>
+                        <Select.Option value="no">{t("noAlwaysIncludeInScan")}</Select.Option>
                       </Select>
                     </Form.Item>
 
                     <Form.Item
-                      label="Skip tool messages in guardrail"
+                      label={t("skipToolMessages")}
                       name="skip_tool_message_choice"
-                      tooltip="Unified guardrails: omit role: tool from guardrail input (LLM still gets full messages). Use global default follows litellm_settings.skip_tool_message_in_guardrail."
+                      tooltip={t("skipToolMessagesTooltip")}
                     >
                       <Select>
-                        <Select.Option value="inherit">Use global default</Select.Option>
-                        <Select.Option value="yes">Yes — exclude from guardrail scan</Select.Option>
-                        <Select.Option value="no">No — always include in scan</Select.Option>
+                        <Select.Option value="inherit">{t("useGlobalDefault")}</Select.Option>
+                        <Select.Option value="yes">{t("yesExcludeFromScan")}</Select.Option>
+                        <Select.Option value="no">{t("noAlwaysIncludeInScan")}</Select.Option>
                       </Select>
                     </Form.Item>
 
                     {guardrailData.litellm_params?.guardrail === "presidio" && (
                       <>
-                        <Divider orientation="left">PII Protection</Divider>
+                        <Divider orientation="left">{t("piiProtection")}</Divider>
                         <div className="mb-6">
                           {guardrailSettings && (
                             <PiiConfiguration
@@ -764,7 +770,7 @@ const GuardrailInfoView: React.FC<GuardrailInfoProps> = ({ guardrailId, onClose,
                     />
 
                     {(guardrailData.litellm_params?.guardrail === "tool_permission" ||
-                      guardrailProviderSpecificParams) && <Divider orientation="left">Provider Settings</Divider>}
+                      guardrailProviderSpecificParams) && <Divider orientation="left">{t("providerSettings")}</Divider>}
 
                     {guardrailData.litellm_params?.guardrail === "tool_permission" ? (
                       <ToolPermissionRulesEditor value={toolPermissionConfig} onChange={setToolPermissionConfig} />
@@ -806,8 +812,8 @@ const GuardrailInfoView: React.FC<GuardrailInfoProps> = ({ guardrailId, onClose,
                       </>
                     )}
 
-                    <Divider orientation="left">Advanced Settings</Divider>
-                    <Form.Item label="Guardrail Information" name="guardrail_info">
+                    <Divider orientation="left">{t("advancedSettings")}</Divider>
+                    <Form.Item label={t("guardrailInformation")} name="guardrail_info">
                       <Input.TextArea rows={5} />
                     </Form.Item>
 
@@ -819,57 +825,58 @@ const GuardrailInfoView: React.FC<GuardrailInfoProps> = ({ guardrailId, onClose,
                           resetToolPermissionEditor();
                         }}
                       >
-                        Cancel
+                        {t("cancel")}
                       </Button>
                       <Button type="primary" htmlType="submit">
-                        Save Changes
+                        {t("saveChanges")}
                       </Button>
                     </div>
                   </Form>
                 ) : (
                   <div className="space-y-4">
                     <div>
-                      <Text className="font-medium">Guardrail ID</Text>
+                      <Text className="font-medium">{t("guardrailId")}</Text>
                       <div className="font-mono">{guardrailData.guardrail_id}</div>
                     </div>
                     <div>
-                      <Text className="font-medium">Guardrail Name</Text>
-                      <div>{guardrailData.guardrail_name || "Unnamed Guardrail"}</div>
+                      <Text className="font-medium">{t("guardrailName")}</Text>
+                      <div>{guardrailData.guardrail_name || t("unnamedGuardrail")}</div>
                     </div>
                     <div>
-                      <Text className="font-medium">Provider</Text>
+                      <Text className="font-medium">{t("provider")}</Text>
                       <div>{displayName}</div>
                     </div>
                     <div>
-                      <Text className="font-medium">Mode</Text>
+                      <Text className="font-medium">{t("mode")}</Text>
                       <div>{guardrailData.litellm_params?.mode || "-"}</div>
                     </div>
                     <div>
-                      <Text className="font-medium">Default On</Text>
+                      <Text className="font-medium">{t("defaultOn")}</Text>
                       <Badge color={guardrailData.litellm_params?.default_on ? "green" : "gray"}>
-                        {guardrailData.litellm_params?.default_on ? "Yes" : "No"}
+                        {guardrailData.litellm_params?.default_on ? t("yes") : t("no")}
                       </Badge>
                     </div>
 
                     {guardrailData.litellm_params?.pii_entities_config &&
                       Object.keys(guardrailData.litellm_params.pii_entities_config).length > 0 && (
                         <div>
-                          <Text className="font-medium">PII Protection</Text>
+                          <Text className="font-medium">{t("piiProtection")}</Text>
                           <div className="mt-2">
                             <Badge color="blue">
-                              {Object.keys(guardrailData.litellm_params.pii_entities_config).length} PII entities
-                              configured
+                              {t("piiEntitiesConfigured", {
+                                count: Object.keys(guardrailData.litellm_params.pii_entities_config).length,
+                              })}
                             </Badge>
                           </div>
                         </div>
                       )}
 
                     <div>
-                      <Text className="font-medium">Created At</Text>
+                      <Text className="font-medium">{t("createdAt")}</Text>
                       <div>{formatDate(guardrailData.created_at)}</div>
                     </div>
                     <div>
-                      <Text className="font-medium">Last Updated</Text>
+                      <Text className="font-medium">{t("updatedAt")}</Text>
                       <div>{formatDate(guardrailData.updated_at)}</div>
                     </div>
 

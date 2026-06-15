@@ -10,6 +10,7 @@ import PatternTable from "./PatternTable";
 import KeywordTable from "./KeywordTable";
 import ContentCategoryConfiguration from "./ContentCategoryConfiguration";
 import CompetitorIntentConfiguration, { CompetitorIntentConfig } from "./CompetitorIntentConfiguration";
+import { useTranslations } from "@/i18n";
 
 const { Title, Text } = Typography;
 
@@ -102,6 +103,8 @@ const ContentFilterConfiguration: React.FC<ContentFilterConfigurationProps> = ({
   competitorIntentConfig = null,
   onCompetitorIntentChange,
 }) => {
+  const { t } = useTranslations("settings");
+
   const [patternModalVisible, setPatternModalVisible] = useState(false);
   const [keywordModalVisible, setKeywordModalVisible] = useState(false);
   const [customPatternModalVisible, setCustomPatternModalVisible] = useState(false);

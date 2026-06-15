@@ -3,8 +3,10 @@ import { Form, Table } from "antd";
 import { TextInput } from "@tremor/react";
 import { Tooltip } from "../atoms/index";
 import { Providers } from "../provider_info_helpers";
+import { useTranslations } from "@/i18n";
 
 const ConditionalPublicModelName: React.FC = () => {
+  const { t } = useTranslations("models");
   const form = Form.useFormInstance();
   const [tableKey, setTableKey] = useState(0); // Add a key to force table re-render
 
@@ -95,30 +97,32 @@ const ConditionalPublicModelName: React.FC = () => {
 
   const publicNameTooltipContent = (
     <>
-      <div className="mb-2 font-normal">The name you specify in your API calls to LiteLLM Proxy</div>
+      <div className="mb-2 font-normal">{t("publicModelNameTooltip")}</div>
       <div className="mb-2 font-normal">
-        <strong>Example:</strong> If you name your public model{" "}
-        <code className="bg-gray-700 px-1 py-0.5 rounded text-xs">example-name</code>, and choose{" "}
-        <code className="bg-gray-700 px-1 py-0.5 rounded text-xs">openai/qwen-plus-latest</code> as the LiteLLM model
+        <strong>{t("example")}:</strong> {t("ifYouNameYourPublicModel")}{" "}
+        <code className="bg-gray-700 px-1 py-0.5 rounded text-xs">example-name</code>
+        {t("andChoose")} <code className="bg-gray-700 px-1 py-0.5 rounded text-xs">openai/qwen-plus-latest</code>
+        {t("asTheLiteLLMModel")}
       </div>
       <div className="mb-2 font-normal">
-        <strong>Usage:</strong> You make an API call to the LiteLLM proxy with{" "}
+        <strong>{t("usage")}:</strong> {t("youMakeAnApiCallWith")}{" "}
         <code className="bg-gray-700 px-1 py-0.5 rounded text-xs">model = &quot;example-name&quot;</code>
       </div>
       <div className="font-normal">
-        <strong>Result:</strong> LiteLLM sends{" "}
-        <code className="bg-gray-700 px-1 py-0.5 rounded text-xs">qwen-plus-latest</code> to the provider
+        <strong>{t("result")}:</strong> {t("litellmSends")}{" "}
+        <code className="bg-gray-700 px-1 py-0.5 rounded text-xs">qwen-plus-latest</code>
+        {t("toTheProvider")}
       </div>
     </>
   );
 
-  const liteLLMModelTooltipContent = <div>The model name LiteLLM will send to the LLM API</div>;
+  const liteLLMModelTooltipContent = <div>{t("liteLLMModelNameTooltip")}</div>;
 
   const columns = [
     {
       title: (
         <span className="flex items-center">
-          Public Model Name
+          {t("publicModelName")}
           <Tooltip content={publicNameTooltipContent} width="500px" />
         </span>
       ),
@@ -163,7 +167,7 @@ const ConditionalPublicModelName: React.FC = () => {
     {
       title: (
         <span className="flex items-center">
-          LiteLLM Model Name
+          {t("liteLLMModelName")}
           <Tooltip content={liteLLMModelTooltipContent} width="360px" />
         </span>
       ),
@@ -175,9 +179,9 @@ const ConditionalPublicModelName: React.FC = () => {
   return (
     <>
       <Form.Item
-        label="Model Mappings"
+        label={t("modelMappings")}
         name="model_mappings"
-        tooltip="Map public model names to LiteLLM model names for load balancing"
+        tooltip={t("modelMappingsTooltip")}
         labelCol={{ span: 10 }}
         wrapperCol={{ span: 16 }}
         labelAlign="left"
@@ -186,14 +190,14 @@ const ConditionalPublicModelName: React.FC = () => {
             required: true,
             validator: async (_, value) => {
               if (!value || value.length === 0) {
-                throw new Error("At least one model mapping is required");
+                throw new Error(t("atLeastOneMappingRequired"));
               }
               // Check if all mappings have valid public names
               const invalidMappings = value.filter(
                 (mapping: any) => !mapping.public_name || mapping.public_name.trim() === "",
               );
               if (invalidMappings.length > 0) {
-                throw new Error("All model mappings must have valid public names");
+                throw new Error(t("allMappingsMustHaveValidNames"));
               }
             },
           },

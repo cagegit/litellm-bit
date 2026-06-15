@@ -17,6 +17,8 @@ import { NAV_PRODUCT_LINK_CLASS } from "./Navbar/navProductLinkClass";
 import { NotificationsBell } from "./Navbar/NotificationsBell/NotificationsBell";
 import UserDropdown from "./Navbar/UserDropdown/UserDropdown";
 import WorkerDropdown from "./Navbar/WorkerDropdown/WorkerDropdown";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { useTranslations } from "@/i18n";
 
 interface NavbarProps {
   proxySettings: any;
@@ -44,6 +46,7 @@ const Navbar: React.FC<NavbarProps> = ({
   const hideCommunityLinks = useDisableShowPrompts();
   const { isControlPlane, selectedWorker } = useWorker();
   const showWorkerSwitch = isControlPlane && selectedWorker !== null;
+  const { t } = useTranslations("navbar");
 
   const imageUrl = logoUrl || `${baseUrl}/get_image`;
 
@@ -89,7 +92,7 @@ const Navbar: React.FC<NavbarProps> = ({
               <button
                 onClick={onToggleSidebar}
                 className="mr-2 flex h-9 w-9 items-center justify-center rounded-md text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900"
-                title={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+                title={sidebarCollapsed ? t("sidebar.expand") : t("sidebar.collapse")}
               >
                 <span className="text-lg">{sidebarCollapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}</span>
               </button>
@@ -150,7 +153,7 @@ const Navbar: React.FC<NavbarProps> = ({
                 rel="noopener noreferrer"
                 className={NAV_PRODUCT_LINK_CLASS}
               >
-                Docs
+                {t("documentation")}
                 {/* Layout parity with Blog chevron — intentional single-level link */}
                 <DownOutlined className="pointer-events-none text-[10px] opacity-0" aria-hidden />
               </a>
@@ -162,6 +165,8 @@ const Navbar: React.FC<NavbarProps> = ({
                 <CommunityEngagementButtons />
               </div>
             )}
+
+            <LanguageSwitcher />
 
             {!isPublicPage && (
               <div className="flex shrink-0 items-center border-l border-gray-200 pl-4">

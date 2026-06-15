@@ -22,6 +22,7 @@ import {
 import { Tooltip } from "antd";
 import React from "react";
 import { Tag } from "./types";
+import { useTranslations } from "@/i18n";
 
 interface TagTableProps {
   data: Tag[];
@@ -34,6 +35,8 @@ const DYNAMIC_SPEND_TAG_DESCRIPTION =
   "This is just a spend tag that was passed dynamically in a request. It does not control any LLM models.";
 
 const TagTable: React.FC<TagTableProps> = ({ data, onEdit, onDelete, onSelectTag }) => {
+  const { t } = useTranslations("tagManagement");
+
   const [sorting, setSorting] = React.useState<SortingState>([{ id: "created_at", desc: true }]);
 
   const columns: ColumnDef<Tag>[] = [
@@ -118,16 +121,16 @@ const TagTable: React.FC<TagTableProps> = ({ data, onEdit, onDelete, onSelectTag
         return (
           <div className="flex space-x-2">
             {isDynamicSpendTag ? (
-              <Tooltip title="Dynamically generated spend tags cannot be edited">
+              <Tooltip title={t("tagManagement.dynamicallyGeneratedSpendTagsCannotBeEdited")}>
                 <Icon
                   icon={PencilAltIcon}
                   size="sm"
                   className="opacity-50 cursor-not-allowed"
-                  aria-label="Edit tag (disabled)"
+                  aria-label={t("tagManagement.editTagdisabled")}
                 />
               </Tooltip>
             ) : (
-              <Tooltip title="Edit tag">
+              <Tooltip title={t("tagManagement.editTag")}>
                 <Icon
                   icon={PencilAltIcon}
                   size="sm"
@@ -137,16 +140,16 @@ const TagTable: React.FC<TagTableProps> = ({ data, onEdit, onDelete, onSelectTag
               </Tooltip>
             )}
             {isDynamicSpendTag ? (
-              <Tooltip title="Dynamically generated spend tags cannot be deleted">
+              <Tooltip title={t("tagManagement.dynamicallyGeneratedSpendTagsCannotBeDeleted")}>
                 <Icon
                   icon={TrashIcon}
                   size="sm"
                   className="opacity-50 cursor-not-allowed"
-                  aria-label="Delete tag (disabled)"
+                  aria-label={t("tagManagement.deleteTagdisabled")}
                 />
               </Tooltip>
             ) : (
-              <Tooltip title="Delete tag">
+              <Tooltip title={t("tagManagement.deleteTag1")}>
                 <Icon
                   icon={TrashIcon}
                   size="sm"
@@ -232,7 +235,7 @@ const TagTable: React.FC<TagTableProps> = ({ data, onEdit, onDelete, onSelectTag
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-8 text-center">
                   <div className="text-center text-gray-500">
-                    <p>No tags found</p>
+                    <p>{t("tagManagement.noTagsFound")}</p>
                   </div>
                 </TableCell>
               </TableRow>

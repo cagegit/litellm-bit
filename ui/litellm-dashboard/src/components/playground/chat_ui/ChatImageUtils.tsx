@@ -1,4 +1,5 @@
 import { MessageType } from "./types";
+import { useTranslations } from "@/i18n";
 
 export interface ChatMultimodalContent {
   type: "text" | "image_url";

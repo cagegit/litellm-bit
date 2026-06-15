@@ -1,6 +1,7 @@
 import NotificationManager from "../molecules/notifications_manager";
 import { Model, modelCreateCall } from "../networking";
 import { provider_map } from "../provider_info_helpers";
+import { useTranslations } from "@/i18n";
 
 export const prepareModelAddRequest = async (formValues: Record<string, any>, accessToken: string, form: any) => {
   try {

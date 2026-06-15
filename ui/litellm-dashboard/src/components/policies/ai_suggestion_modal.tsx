@@ -9,6 +9,7 @@ import {
   RightOutlined,
 } from "@ant-design/icons";
 import { suggestPolicyTemplates, modelHubCall, testPolicyTemplate, enrichPolicyTemplateStream } from "../networking";
+import { useTranslations } from "@/i18n";
 
 const { TextArea } = Input;
 const { Text } = Typography;
@@ -59,6 +60,8 @@ const AiSuggestionModal: React.FC<AiSuggestionModalProps> = ({
   accessToken,
   allTemplates,
 }) => {
+  const { t } = useTranslations("settings");
+
   const [attackExamples, setAttackExamples] = useState<string[]>([""]);
   const [description, setDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);

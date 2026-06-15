@@ -1,5 +1,6 @@
 import { Typography, Tooltip } from "antd";
 import { DEFAULT_MAX_WIDTH, FONT_FAMILY_MONO, FONT_SIZE_SMALL } from "./constants";
+import { useTranslations } from "@/i18n";
 
 const { Text } = Typography;
 
@@ -13,6 +14,8 @@ interface TruncatedValueProps {
  * Useful for displaying long IDs, URLs, or other text that may overflow.
  */
 export function TruncatedValue({ value, maxWidth = DEFAULT_MAX_WIDTH }: TruncatedValueProps) {
+  const { t } = useTranslations("logs");
+
   if (!value) return <Text type="secondary">-</Text>;
 
   return (

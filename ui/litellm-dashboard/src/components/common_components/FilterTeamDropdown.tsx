@@ -1,6 +1,7 @@
 import React from "react";
 import TeamDropdown from "./team_dropdown";
 import type { FilterOptionCustomComponentProps } from "../molecules/filter";
+import { useTranslations } from "@/i18n";
 
 const FilterTeamDropdown: React.FC<FilterOptionCustomComponentProps> = ({ value, onChange }) => (
   <TeamDropdown value={value} onChange={onChange} />

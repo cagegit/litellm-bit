@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslations } from "@/i18n";
 import { Form, Select, Tooltip } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
 
@@ -30,6 +31,7 @@ export const RateLimitTypeFormItem: React.FC<RateLimitTypeFormItemProps> = ({
   form,
   onChange,
 }) => {
+  const { t } = useTranslations("common");
   const limitTypeUpper = type.toUpperCase();
   const limitTypeLower = type.toLowerCase();
 
@@ -42,13 +44,13 @@ export const RateLimitTypeFormItem: React.FC<RateLimitTypeFormItemProps> = ({
     }
   };
 
-  const tooltipTitle = `Select 'guaranteed_throughput' to prevent overallocating ${limitTypeUpper} limit when the key belongs to a Team with specific ${limitTypeUpper} limits.`;
+  const tooltipTitle = t("rateLimitTypeTooltip", { type: limitTypeUpper });
 
   return (
     <Form.Item
       label={
         <span>
-          {limitTypeUpper} Rate Limit Type{" "}
+          {t("rateLimitType", { type: limitTypeUpper })}{" "}
           <Tooltip title={tooltipTitle}>
             <InfoCircleOutlined style={{ marginLeft: "4px" }} />
           </Tooltip>
@@ -60,46 +62,43 @@ export const RateLimitTypeFormItem: React.FC<RateLimitTypeFormItemProps> = ({
     >
       <Select
         defaultValue={showDetailedDescriptions ? "default" : undefined}
-        placeholder="Select rate limit type"
+        placeholder={t("selectRateLimitType")}
         style={{ width: "100%" }}
         optionLabelProp={showDetailedDescriptions ? "label" : undefined}
         onChange={handleChange}
       >
         {showDetailedDescriptions ? (
           <>
-            <Option value="best_effort_throughput" label="Default">
+            <Option value="best_effort_throughput" label={t("defaultOption")}>
               <div style={{ padding: "4px 0" }}>
-                <div style={{ fontWeight: 500 }}>Default</div>
+                <div style={{ fontWeight: 500 }}>{t("defaultOption")}</div>
                 <div style={{ fontSize: "11px", color: "#6b7280", marginTop: "2px" }}>
-                  Best effort throughput - no error if we&apos;re overallocating {limitTypeLower} (Team/Key Limits
-                  checked at runtime).
+                  {t("bestEffortDescription", { type: limitTypeLower })}
                 </div>
               </div>
             </Option>
-            <Option value="guaranteed_throughput" label="Guaranteed throughput">
+            <Option value="guaranteed_throughput" label={t("guaranteedThroughput")}>
               <div style={{ padding: "4px 0" }}>
-                <div style={{ fontWeight: 500 }}>Guaranteed throughput</div>
+                <div style={{ fontWeight: 500 }}>{t("guaranteedThroughput")}</div>
                 <div style={{ fontSize: "11px", color: "#6b7280", marginTop: "2px" }}>
-                  Guaranteed throughput - raise an error if we&apos;re overallocating {limitTypeLower} (also checks
-                  model-specific limits)
+                  {t("guaranteedDescription", { type: limitTypeLower })}
                 </div>
               </div>
             </Option>
-            <Option value="dynamic" label="Dynamic">
+            <Option value="dynamic" label={t("dynamic")}>
               <div style={{ padding: "4px 0" }}>
-                <div style={{ fontWeight: 500 }}>Dynamic</div>
+                <div style={{ fontWeight: 500 }}>{t("dynamic")}</div>
                 <div style={{ fontSize: "11px", color: "#6b7280", marginTop: "2px" }}>
-                  If the key has a set {limitTypeUpper} (e.g. 2 {limitTypeUpper}) and there are no 429 errors, it can
-                  dynamically exceed the limit when the model being called is not erroring.
+                  {t("dynamicDescription", { type: limitTypeUpper })}
                 </div>
               </div>
             </Option>
           </>
         ) : (
           <>
-            <Option value="best_effort_throughput">Best effort throughput</Option>
-            <Option value="guaranteed_throughput">Guaranteed throughput</Option>
-            <Option value="dynamic">Dynamic</Option>
+            <Option value="best_effort_throughput">{t("bestEffort")}</Option>
+            <Option value="guaranteed_throughput">{t("guaranteedThroughput")}</Option>
+            <Option value="dynamic">{t("dynamic")}</Option>
           </>
         )}
       </Select>

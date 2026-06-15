@@ -1,5 +1,6 @@
 import { message as staticMessage } from "antd";
 import type { MessageInstance } from "antd/es/message/interface";
+import { useTranslations } from "@/i18n";
 
 let messageInstance: MessageInstance | null = null;
 

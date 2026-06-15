@@ -4,6 +4,7 @@ import { SwitchVerticalIcon, ChevronUpIcon, ChevronDownIcon, TrashIcon } from "@
 import { Tooltip } from "antd";
 import { CopyOutlined } from "@ant-design/icons";
 import { Agent } from "./types";
+import { useTranslations } from "@/i18n";
 import {
   ColumnDef,
   flexRender,
@@ -32,6 +33,8 @@ const AgentTable: React.FC<AgentTableProps> = ({
   isAdmin,
   onAgentClick,
 }) => {
+  const { t } = useTranslations("agents");
+
   const [sorting, setSorting] = useState<SortingState>([{ id: "created_at", desc: true }]);
 
   const formatDate = (dateString?: string) => {
@@ -63,7 +66,7 @@ const AgentTable: React.FC<AgentTableProps> = ({
                 {name}
               </Button>
             </Tooltip>
-            <Tooltip title="Copy Agent ID">
+            <Tooltip title={t("agents.copyAgentId")}>
               <CopyOutlined
                 onClick={(e) => {
                   e.stopPropagation();
@@ -107,7 +110,7 @@ const AgentTable: React.FC<AgentTableProps> = ({
 
               return (
                 <div className="flex items-center gap-1">
-                  <Tooltip title="Delete agent">
+                  <Tooltip title={t("agents.deleteAgent1")}>
                     <Button
                       size="xs"
                       variant="light"
@@ -178,7 +181,7 @@ const AgentTable: React.FC<AgentTableProps> = ({
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-8 text-center">
                   <div className="text-center text-gray-500">
-                    <p>Loading...</p>
+                    <p>{t("agents.loading")}</p>
                   </div>
                 </TableCell>
               </TableRow>
@@ -196,7 +199,7 @@ const AgentTable: React.FC<AgentTableProps> = ({
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-8 text-center">
                   <div className="text-center text-gray-500">
-                    <p>No agents found. Create one to get started.</p>
+                    <p>{t("agents.noAgentsFoundCreate")}</p>
                   </div>
                 </TableCell>
               </TableRow>

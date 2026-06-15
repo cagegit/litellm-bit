@@ -1,5 +1,6 @@
 import React, { useCallback, useState, useRef } from "react";
 import { DateRangePicker, DateRangePickerValue, Text } from "@tremor/react";
+import { useTranslations } from "@/i18n";
 
 interface UsageDatePickerProps {
   value: DateRangePickerValue;
@@ -15,10 +16,12 @@ interface UsageDatePickerProps {
 const UsageDatePicker: React.FC<UsageDatePickerProps> = ({
   value,
   onValueChange,
-  label = "Select Time Range",
+  label,
   className = "",
   showTimeRange = true,
 }) => {
+  const { t } = useTranslations("common");
+  const resolvedLabel = label ?? t("selectTimeRange");
   const [showSelectedFeedback, setShowSelectedFeedback] = useState(false);
   const datePickerRef = useRef<HTMLDivElement>(null);
 
@@ -110,7 +113,7 @@ const UsageDatePicker: React.FC<UsageDatePickerProps> = ({
 
   return (
     <div className={className}>
-      {label && <Text className="mb-2">{label}</Text>}
+      {resolvedLabel && <Text className="mb-2">{resolvedLabel}</Text>}
 
       {/* Container with relative positioning for absolute placement */}
       <div className="relative w-fit">
@@ -119,7 +122,7 @@ const UsageDatePicker: React.FC<UsageDatePickerProps> = ({
             enableSelect={true}
             value={value}
             onValueChange={handleDateChange} // Only triggers on actual selection
-            placeholder="Select date range"
+            placeholder={t("selectDateRange")}
             enableClear={false}
             style={{ zIndex: 100 }}
           />
@@ -139,7 +142,7 @@ const UsageDatePicker: React.FC<UsageDatePickerProps> = ({
               <div className="w-3 h-3 bg-green-500 text-white rounded-full flex items-center justify-center text-xs">
                 ✓
               </div>
-              <span className="text-xs">Selected</span>
+              <span className="text-xs">{t("selected")}</span>
             </div>
           </div>
         )}

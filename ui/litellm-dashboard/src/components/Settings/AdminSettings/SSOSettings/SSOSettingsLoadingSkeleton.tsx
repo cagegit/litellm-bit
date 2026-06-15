@@ -1,10 +1,12 @@
 "use client";
 
+import { useTranslations } from "@/i18n";
 import { Card, Descriptions, Skeleton, Space, Typography } from "antd";
 import { Shield } from "lucide-react";
 
 const { Title, Text } = Typography;
 export default function SSOSettingsLoadingSkeleton() {
+  const { t } = useTranslations("settings");
   const descriptionsConfig = {
     column: {
       xxl: 1,
@@ -24,8 +26,8 @@ export default function SSOSettingsLoadingSkeleton() {
           <div className="flex items-center gap-3">
             <Shield className="w-6 h-6 text-gray-400" />
             <div>
-              <Title level={3}>SSO Configuration</Title>
-              <Text type="secondary">Manage Single Sign-On authentication settings</Text>
+              <Title level={3}>{t("ssoConfiguration")}</Title>
+              <Text type="secondary">{t("manageSSOSettings")}</Text>
             </div>
           </div>
 

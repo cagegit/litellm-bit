@@ -3,12 +3,14 @@ import { Button } from "@tremor/react";
 import { DownloadOutlined, FilePdfOutlined, FileExcelOutlined } from "@ant-design/icons";
 import { MultiModelResult } from "./types";
 import { exportMultiToPDF, exportMultiToCSV } from "./multi_export_utils";
+import { useTranslations } from "@/i18n";
 
 interface MultiExportDropdownProps {
   multiResult: MultiModelResult;
 }
 
 const MultiExportDropdown: React.FC<MultiExportDropdownProps> = ({ multiResult }) => {
+  const { t } = useTranslations("billing");
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -37,7 +39,7 @@ const MultiExportDropdown: React.FC<MultiExportDropdownProps> = ({ multiResult }
   return (
     <div className="relative inline-block" ref={menuRef}>
       <Button size="xs" variant="secondary" icon={DownloadOutlined} onClick={() => setIsOpen(!isOpen)}>
-        Export
+        {t("export")}
       </Button>
 
       {isOpen && (
@@ -50,7 +52,7 @@ const MultiExportDropdown: React.FC<MultiExportDropdownProps> = ({ multiResult }
             }}
           >
             <FilePdfOutlined className="mr-3 text-red-500" />
-            Export as PDF
+            {t("exportAsPdf")}
           </button>
           <button
             className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
@@ -60,7 +62,7 @@ const MultiExportDropdown: React.FC<MultiExportDropdownProps> = ({ multiResult }
             }}
           >
             <FileExcelOutlined className="mr-3 text-green-600" />
-            Export as CSV
+            {t("exportAsCsv")}
           </button>
         </div>
       )}

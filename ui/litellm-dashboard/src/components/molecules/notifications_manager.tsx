@@ -3,6 +3,7 @@ import { notification as staticNotification } from "antd";
 import type { NotificationInstance } from "antd/es/notification/interface";
 import { parseErrorMessage } from "../shared/errorUtils";
 import { ArgsProps } from "antd/es/notification";
+import { useTranslations } from "@/i18n";
 
 let notificationInstance: NotificationInstance | null = null;
 

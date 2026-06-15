@@ -6,6 +6,7 @@ import { Guardrail } from "../guardrails/types";
 import { getResolvedGuardrails, modelAvailableCall } from "../networking";
 import NotificationsManager from "../molecules/notifications_manager";
 import useAuthorized from "@/app/(dashboard)/hooks/useAuthorized";
+import { useTranslations } from "@/i18n";
 
 const { Text } = Typography;
 const { Option } = Select;
@@ -159,6 +160,8 @@ const AddPolicyForm: React.FC<AddPolicyFormProps> = ({
   createPolicy,
   updatePolicy,
 }) => {
+  const { t } = useTranslations("settings");
+
   const [form] = Form.useForm();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [resolvedGuardrails, setResolvedGuardrails] = useState<string[]>([]);

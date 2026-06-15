@@ -44,6 +44,7 @@ import { valueFormatterSpend } from "../../utils/value_formatters";
 import EndpointUsage from "../EndpointUsage/EndpointUsage";
 import TopKeyView from "./TopKeyView";
 import TopModelView from "./TopModelView";
+import { useTranslations } from "@/i18n";
 
 interface EntityMetrics {
   metrics: {
@@ -101,6 +102,8 @@ const ENTITY_FETCH_FNS: Record<EntityType, (...args: any[]) => Promise<any>> = {
 };
 
 const EntityUsage: React.FC<EntityUsageProps> = ({ accessToken, entityType, entityId, entityList, dateValue }) => {
+  const { t } = useTranslations("common");
+
   const { teams } = useTeams();
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [topKeysLimit, setTopKeysLimit] = useState<number>(5);
@@ -471,7 +474,7 @@ const EntityUsage: React.FC<EntityUsageProps> = ({ accessToken, entityType, enti
       )}
       {entityType === "team" && (
         <div className="mb-4">
-          <Text className="mb-2">Filter by team</Text>
+          <Text className="mb-2">{t("common.filterByTeam")}</Text>
           <TeamMultiSelect value={selectedTags} onChange={setSelectedTags} />
         </div>
       )}
@@ -490,11 +493,11 @@ const EntityUsage: React.FC<EntityUsageProps> = ({ accessToken, entityType, enti
       />
       <TabGroup>
         <TabList variant="solid" className="mt-1">
-          <Tab>Cost</Tab>
+          <Tab>{t("common.cost")}</Tab>
           <Tab>{entityType === "agent" ? "Request / Token Consumption" : "Model Activity"}</Tab>
-          {entityType === "team" ? <Tab>Agent Activity</Tab> : <></>}
-          <Tab>Key Activity</Tab>
-          <Tab>Endpoint Activity</Tab>
+          {entityType === "team" ? <Tab>{t("common.agentActivity")}</Tab> : <></>}
+          <Tab>{t("common.keyActivity")}</Tab>
+          <Tab>{t("common.endpointActivity")}</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
@@ -505,31 +508,31 @@ const EntityUsage: React.FC<EntityUsageProps> = ({ accessToken, entityType, enti
                   <Title>{capitalizedEntityLabel} Spend Overview</Title>
                   <Grid numItems={5} className="gap-4 mt-4">
                     <Card>
-                      <Title>Total Spend</Title>
+                      <Title>{t("common.totalSpend")}</Title>
                       <Text className="text-2xl font-bold mt-2">
                         ${formatNumberWithCommas(spendData.metadata.total_spend, 2)}
                       </Text>
                     </Card>
                     <Card>
-                      <Title>Total Requests</Title>
+                      <Title>{t("common.totalRequests")}</Title>
                       <Text className="text-2xl font-bold mt-2">
                         {spendData.metadata.total_api_requests.toLocaleString()}
                       </Text>
                     </Card>
                     <Card>
-                      <Title>Successful Requests</Title>
+                      <Title>{t("common.successfulRequests")}</Title>
                       <Text className="text-2xl font-bold mt-2 text-green-600">
                         {spendData.metadata.total_successful_requests.toLocaleString()}
                       </Text>
                     </Card>
                     <Card>
-                      <Title>Failed Requests</Title>
+                      <Title>{t("common.failedRequests")}</Title>
                       <Text className="text-2xl font-bold mt-2 text-red-600">
                         {spendData.metadata.total_failed_requests.toLocaleString()}
                       </Text>
                     </Card>
                     <Card>
-                      <Title>Total Tokens</Title>
+                      <Title>{t("common.totalTokens")}</Title>
                       <Text className="text-2xl font-bold mt-2">
                         {spendData.metadata.total_tokens.toLocaleString()}
                       </Text>
@@ -541,7 +544,7 @@ const EntityUsage: React.FC<EntityUsageProps> = ({ accessToken, entityType, enti
               {/* Daily Spend Chart */}
               <Col numColSpan={2}>
                 <Card>
-                  <Title>Daily Spend</Title>
+                  <Title>{t("common.dailySpend")}</Title>
                   <BarChart
                     data={[...spendData.results].sort(
                       (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
@@ -602,7 +605,7 @@ const EntityUsage: React.FC<EntityUsageProps> = ({ accessToken, entityType, enti
                   <div className="flex flex-col space-y-4">
                     <div className="flex flex-col space-y-2">
                       <Title>Spend Per {capitalizedEntityLabel}</Title>
-                      <Subtitle className="text-xs">Showing Top 5 by Spend</Subtitle>
+                      <Subtitle className="text-xs">{t("common.showingTop5BySpend")}</Subtitle>
                       <div className="flex items-center text-sm text-gray-500">
                         <span>Get Started by Tracking cost per {capitalizedEntityLabel} </span>
                         <a
@@ -649,10 +652,10 @@ const EntityUsage: React.FC<EntityUsageProps> = ({ accessToken, entityType, enti
                             <TableHead>
                               <TableRow>
                                 <TableHeaderCell>{capitalizedEntityLabel}</TableHeaderCell>
-                                <TableHeaderCell>Spend</TableHeaderCell>
-                                <TableHeaderCell className="text-green-600">Successful</TableHeaderCell>
-                                <TableHeaderCell className="text-red-600">Failed</TableHeaderCell>
-                                <TableHeaderCell>Tokens</TableHeaderCell>
+                                <TableHeaderCell>{t("common.spend")}</TableHeaderCell>
+                                <TableHeaderCell className="text-green-600">{t("common.successful")}</TableHeaderCell>
+                                <TableHeaderCell className="text-red-600">{t("common.failed")}</TableHeaderCell>
+                                <TableHeaderCell>{t("common.tokens")}</TableHeaderCell>
                               </TableRow>
                             </TableHead>
                             <TableBody>
@@ -683,7 +686,7 @@ const EntityUsage: React.FC<EntityUsageProps> = ({ accessToken, entityType, enti
               {/* Top API Keys */}
               <Col numColSpan={1}>
                 <Card>
-                  <Title>Top Virtual Keys</Title>
+                  <Title>{t("common.topVirtualKeys")}</Title>
                   <TopKeyView
                     topKeys={getTopAPIKeys()}
                     teams={null}
@@ -710,7 +713,7 @@ const EntityUsage: React.FC<EntityUsageProps> = ({ accessToken, entityType, enti
               {entityType === "team" && (
                 <Col numColSpan={2}>
                   <Card>
-                    <Title>Top Agents Driving Spend</Title>
+                    <Title>{t("common.topAgentsDrivingSpend")}</Title>
                     <TopModelView
                       topModels={getTopAgents()}
                       topModelsLimit={topAgentsLimit}
@@ -724,7 +727,7 @@ const EntityUsage: React.FC<EntityUsageProps> = ({ accessToken, entityType, enti
               <Col numColSpan={2}>
                 <Card>
                   <div className="flex flex-col space-y-4">
-                    <Title>Provider Usage</Title>
+                    <Title>{t("common.providerUsage")}</Title>
                     <Grid numItems={2}>
                       <Col numColSpan={1}>
                         <DonutChart
@@ -740,11 +743,11 @@ const EntityUsage: React.FC<EntityUsageProps> = ({ accessToken, entityType, enti
                         <Table>
                           <TableHead>
                             <TableRow>
-                              <TableHeaderCell>Provider</TableHeaderCell>
-                              <TableHeaderCell>Spend</TableHeaderCell>
-                              <TableHeaderCell className="text-green-600">Successful</TableHeaderCell>
-                              <TableHeaderCell className="text-red-600">Failed</TableHeaderCell>
-                              <TableHeaderCell>Tokens</TableHeaderCell>
+                              <TableHeaderCell>{t("common.provider")}</TableHeaderCell>
+                              <TableHeaderCell>{t("common.spend")}</TableHeaderCell>
+                              <TableHeaderCell className="text-green-600">{t("common.successful")}</TableHeaderCell>
+                              <TableHeaderCell className="text-red-600">{t("common.failed")}</TableHeaderCell>
+                              <TableHeaderCell>{t("common.tokens")}</TableHeaderCell>
                             </TableRow>
                           </TableHead>
                           <TableBody>

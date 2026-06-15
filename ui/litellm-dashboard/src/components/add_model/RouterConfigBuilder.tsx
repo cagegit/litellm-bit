@@ -15,6 +15,7 @@ import {
 } from "antd";
 import React, { useEffect, useState } from "react";
 import { ModelGroup } from "../playground/llm_calls/fetch_models";
+import { useTranslations } from "@/i18n";
 
 const { Text } = Typography;
 
@@ -48,6 +49,7 @@ interface RouterConfigBuilderProps {
 }
 
 const RouterConfigBuilder: React.FC<RouterConfigBuilderProps> = ({ modelInfo, value, onChange }) => {
+  const { t } = useTranslations("models");
   const [routes, setRoutes] = useState<Route[]>([]);
   const [showJsonPreview, setShowJsonPreview] = useState<boolean>(false);
   const [expandedRoutes, setExpandedRoutes] = useState<string[]>([]);
@@ -156,21 +158,21 @@ const RouterConfigBuilder: React.FC<RouterConfigBuilderProps> = ({ modelInfo, va
       <Flex justify="space-between" align="center" gap="middle" style={{ width: "100%", marginBottom: 24 }}>
         <Space align="center">
           <Typography.Title level={4} style={{ margin: 0 }}>
-            Routes Configuration
+            {t("routesConfiguration")}
           </Typography.Title>
-          <Tooltip title="Configure routing logic to automatically select the best model based on user input patterns">
+          <Tooltip title={t("routesConfigurationTooltip")}>
             <InfoCircleOutlined className="text-gray-400" />
           </Tooltip>
         </Space>
         <Button type="primary" icon={<PlusOutlined />} onClick={addRoute} className="bg-blue-600 hover:bg-blue-700">
-          Add Route
+          {t("addRoute")}
         </Button>
       </Flex>
 
       {/* Routes */}
       {routes.length === 0 ? (
         <Card>
-          <Empty description='No routes configured. Click "Add Route" to get started.' />
+          <Empty description={t("noRoutesConfigured")} />
         </Card>
       ) : (
         <Collapse
@@ -181,7 +183,7 @@ const RouterConfigBuilder: React.FC<RouterConfigBuilderProps> = ({ modelInfo, va
             key: route.id,
             label: (
               <Text style={{ fontSize: 16 }}>
-                Route {index + 1}: {route.model || "Unnamed"}
+                {t("route")} {index + 1}: {route.model || t("unnamed")}
               </Text>
             ),
             extra: (
@@ -200,11 +202,11 @@ const RouterConfigBuilder: React.FC<RouterConfigBuilderProps> = ({ modelInfo, va
               <Card key={route.id}>
                 {/* Model Selection */}
                 <div className="mb-4 w-full">
-                  <Text className="text-sm font-medium mb-2 block">Model</Text>
+                  <Text className="text-sm font-medium mb-2 block">{t("model")}</Text>
                   <AntdSelect
                     value={route.model}
                     onChange={(value) => updateRoute(route.id, "model", value)}
-                    placeholder="Select model"
+                    placeholder={t("selectModel")}
                     showSearch
                     style={{ width: "100%" }}
                     options={modelOptions}
@@ -213,11 +215,11 @@ const RouterConfigBuilder: React.FC<RouterConfigBuilderProps> = ({ modelInfo, va
 
                 {/* Description */}
                 <div className="mb-4 w-full">
-                  <Text className="text-sm font-medium mb-2 block">Description</Text>
+                  <Text className="text-sm font-medium mb-2 block">{t("description")}</Text>
                   <TextArea
                     value={route.description}
                     onChange={(e) => updateRoute(route.id, "description", e.target.value)}
-                    placeholder="Describe when this route should be used..."
+                    placeholder={t("describeRouteUsage")}
                     rows={2}
                     style={{ width: "100%" }}
                   />
@@ -226,8 +228,8 @@ const RouterConfigBuilder: React.FC<RouterConfigBuilderProps> = ({ modelInfo, va
                 {/* Score Threshold */}
                 <div className="mb-4 w-full">
                   <div className="flex items-center gap-2 mb-2">
-                    <Text className="text-sm font-medium">Score Threshold</Text>
-                    <Tooltip title="Minimum similarity score to route to this model (0-1)">
+                    <Text className="text-sm font-medium">{t("scoreThreshold")}</Text>
+                    <Tooltip title={t("scoreThresholdTooltip")}>
                       <InfoCircleOutlined className="text-gray-400" />
                     </Tooltip>
                   </div>
@@ -245,19 +247,17 @@ const RouterConfigBuilder: React.FC<RouterConfigBuilderProps> = ({ modelInfo, va
                 {/* Example Utterances */}
                 <div className="w-full">
                   <div className="flex items-center gap-2 mb-2">
-                    <Text className="text-sm font-medium">Example Utterances</Text>
-                    <Tooltip title="Training examples for this route. Type an utterance and press Enter to add it.">
+                    <Text className="text-sm font-medium">{t("exampleUtterances")}</Text>
+                    <Tooltip title={t("exampleUtterancesTooltip")}>
                       <InfoCircleOutlined className="text-gray-400" />
                     </Tooltip>
                   </div>
-                  <Text className="text-xs text-gray-500 mb-2">
-                    Type an utterance and press Enter to add it. You can also paste multiple lines.
-                  </Text>
+                  <Text className="text-xs text-gray-500 mb-2">{t("typeUtteranceAndPressEnter")}</Text>
                   <AntdSelect
                     mode="tags"
                     value={route.utterances}
                     onChange={(utterances) => updateRoute(route.id, "utterances", utterances)}
-                    placeholder="Type an utterance and press Enter..."
+                    placeholder={t("typeUtterancePlaceholder")}
                     style={{ width: "100%" }}
                     tokenSeparators={["\n"]}
                     maxTagCount="responsive"
@@ -273,9 +273,9 @@ const RouterConfigBuilder: React.FC<RouterConfigBuilderProps> = ({ modelInfo, va
       {/* JSON Preview */}
       <Divider />
       <div className="flex justify-between items-center mb-4 w-full">
-        <Text className="text-lg font-semibold">JSON Preview</Text>
+        <Text className="text-lg font-semibold">{t("jsonPreview")}</Text>
         <Button type="link" onClick={() => setShowJsonPreview(!showJsonPreview)} className="text-blue-600 p-0">
-          {showJsonPreview ? "Hide" : "Show"}
+          {showJsonPreview ? t("hide") : t("show")}
         </Button>
       </div>
 

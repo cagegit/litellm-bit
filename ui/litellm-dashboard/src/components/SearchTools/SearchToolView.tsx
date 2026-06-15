@@ -1,6 +1,7 @@
 import { copyToClipboard as utilCopyToClipboard } from "@/utils/dataUtils";
 import { ArrowLeftIcon } from "@heroicons/react/outline";
 import { Button, Card, Grid, Text, Title } from "@tremor/react";
+import { useTranslations } from "@/i18n";
 import { Button as AntdButton } from "antd";
 import { CheckIcon, CopyIcon } from "lucide-react";
 import React, { useState } from "react";
@@ -22,6 +23,7 @@ export const SearchToolView: React.FC<SearchToolViewProps> = ({
   accessToken,
   availableProviders,
 }) => {
+  const { t } = useTranslations("mcp");
   const [copiedStates, setCopiedStates] = useState<Record<string, boolean>>({});
 
   const copyToClipboard = async (text: string | null | undefined, key: string) => {
@@ -79,30 +81,30 @@ export const SearchToolView: React.FC<SearchToolViewProps> = ({
 
       <Grid numItems={1} numItemsSm={2} numItemsLg={3} className="gap-6">
         <Card>
-          <Text>Provider</Text>
+          <Text>{t("provider")}</Text>
           <div className="mt-2">
             <Title>{getProviderDisplayName(searchTool.litellm_params.search_provider)}</Title>
           </div>
         </Card>
 
         <Card>
-          <Text>API Key</Text>
+          <Text>{t("apiKey")}</Text>
           <div className="mt-2">
-            <Text>{searchTool.litellm_params.api_key ? "****" : "Not set"}</Text>
+            <Text>{searchTool.litellm_params.api_key ? "****" : t("notSet")}</Text>
           </div>
         </Card>
 
         <Card>
-          <Text>Created At</Text>
+          <Text>{t("createdAt")}</Text>
           <div className="mt-2">
-            <Text>{searchTool.created_at ? new Date(searchTool.created_at).toLocaleString() : "Unknown"}</Text>
+            <Text>{searchTool.created_at ? new Date(searchTool.created_at).toLocaleString() : t("unknown")}</Text>
           </div>
         </Card>
       </Grid>
 
       {searchTool.search_tool_info?.description && (
         <Card className="mt-6">
-          <Text>Description</Text>
+          <Text>{t("description")}</Text>
           <div className="mt-2">
             <Text>{searchTool.search_tool_info.description}</Text>
           </div>

@@ -3,6 +3,7 @@
 import React, { Suspense, useEffect, useState } from "react";
 import Navbar from "@/components/navbar";
 import { ThemeProvider } from "@/contexts/ThemeContext";
+import { useTranslations } from "@/i18n";
 import SidebarProvider from "@/app/(dashboard)/components/SidebarProvider";
 import useAuthorized from "@/app/(dashboard)/hooks/useAuthorized";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
@@ -54,10 +55,15 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+function DashboardContent({ children }: { children: React.ReactNode }) {
+  const { t } = useTranslations("layout");
   return (
-    <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen">{t("loading")}</div>}>
       <LayoutContent>{children}</LayoutContent>
     </Suspense>
   );
+}
+
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return <DashboardContent>{children}</DashboardContent>;
 }

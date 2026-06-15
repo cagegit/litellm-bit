@@ -1,3 +1,4 @@
+import { useTranslations } from "@/i18n";
 export enum Providers {
   A2A_Agent = "A2A Agent",
   AI21 = "Ai21",

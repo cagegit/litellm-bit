@@ -1,5 +1,6 @@
 import React from "react";
 import { Typography, Select, Modal, Space, Button, Input } from "antd";
+import { useTranslations } from "@/i18n";
 
 const { Text } = Typography;
 const { Option } = Select;
@@ -27,11 +28,13 @@ const CustomPatternModal: React.FC<CustomPatternModalProps> = ({
   onAdd,
   onCancel,
 }) => {
+  const { t } = useTranslations("settings");
+
   return (
-    <Modal title="Add custom regex pattern" open={visible} onCancel={onCancel} footer={null} width={800}>
+    <Modal title={t("settings.addCustomRegexPattern")} open={visible} onCancel={onCancel} footer={null} width={800}>
       <Space direction="vertical" style={{ width: "100%" }} size="large">
         <div>
-          <Text strong>Pattern name</Text>
+          <Text strong>{t("settings.patternName")}</Text>
           <Input
             placeholder="e.g., internal_id, employee_code"
             value={patternName}
@@ -41,7 +44,7 @@ const CustomPatternModal: React.FC<CustomPatternModalProps> = ({
         </div>
 
         <div>
-          <Text strong>Regex pattern</Text>
+          <Text strong>{t("settings.regexPattern")}</Text>
           <Input
             placeholder="e.g., ID-[0-9]{6}"
             value={patternRegex}
@@ -54,19 +57,19 @@ const CustomPatternModal: React.FC<CustomPatternModalProps> = ({
         </div>
 
         <div>
-          <Text strong>Action</Text>
+          <Text strong>{t("settings.action")}</Text>
           <Text type="secondary" style={{ display: "block", marginTop: 4, marginBottom: 8 }}>
             Choose what action the guardrail should take when this pattern is detected
           </Text>
           <Select value={patternAction} onChange={onActionChange} style={{ width: "100%" }}>
-            <Option value="BLOCK">Block</Option>
-            <Option value="MASK">Mask</Option>
+            <Option value="BLOCK">{t("settings.block")}</Option>
+            <Option value="MASK">{t("settings.mask")}</Option>
           </Select>
         </div>
       </Space>
 
       <div style={{ display: "flex", justifyContent: "flex-end", gap: "8px", marginTop: "24px" }}>
-        <Button onClick={onCancel}>Cancel</Button>
+        <Button onClick={onCancel}>{t("settings.cancel")}</Button>
         <Button type="primary" onClick={onAdd}>
           Add
         </Button>

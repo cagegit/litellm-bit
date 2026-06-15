@@ -21,6 +21,7 @@ import { ArrowLeftIcon, DollarSignIcon, EditIcon, KeyIcon, UsersIcon } from "luc
 import { useMemo, useState } from "react";
 import DefaultProxyAdminTag from "../common_components/DefaultProxyAdminTag";
 import { EditProjectModal } from "./ProjectModals/EditProjectModal";
+import { useTranslations } from "@/i18n";
 
 const { Title, Text } = Typography;
 const { Content } = Layout;
@@ -41,6 +42,7 @@ interface ProjectDetailProps {
 }
 
 export function ProjectDetail({ projectId, onBack }: ProjectDetailProps) {
+  const { t } = useTranslations("common");
   const { data: project, isLoading } = useProjectDetails(projectId);
   const { data: teamData } = useTeam(project?.team_id ?? undefined);
   // teamInfoCall returns { team_id, team_info: {...}, keys, team_memberships }
@@ -86,7 +88,7 @@ export function ProjectDetail({ projectId, onBack }: ProjectDetailProps) {
         }}
       >
         <Button icon={<ArrowLeftIcon size={16} />} onClick={onBack} type="text" style={{ marginBottom: 16 }} />
-        <Empty description="Project not found" />
+        <Empty description={t("projectNotFound")} />
       </Content>
     );
   }
@@ -109,37 +111,37 @@ export function ProjectDetail({ projectId, onBack }: ProjectDetailProps) {
               <Title level={2} style={{ margin: 0 }}>
                 {project.project_alias ?? project.project_id}
               </Title>
-              <Tag color={project.blocked ? "red" : "green"}>{project.blocked ? "Blocked" : "Active"}</Tag>
+              <Tag color={project.blocked ? "red" : "green"}>{project.blocked ? t("blocked") : t("active")}</Tag>
             </Flex>
             <Text type="secondary">
-              ID: <Text copyable>{project.project_id}</Text>
+              {t("id")}: <Text copyable>{project.project_id}</Text>
             </Text>
           </div>
         </div>
         <Button type="primary" icon={<EditIcon size={16} />} onClick={() => setIsEditModalVisible(true)}>
-          Edit Project
+          {t("editProject")}
         </Button>
       </div>
 
       {/* Project Details */}
       <Row style={{ marginBottom: 24 }}>
         <Card>
-          <Descriptions title="Project Details" column={1}>
-            <Descriptions.Item label="Description">{project.description || "\u2014"}</Descriptions.Item>
-            <Descriptions.Item label="Created">
+          <Descriptions title={t("projectDetails")} column={1}>
+            <Descriptions.Item label={t("description")}>{project.description || "\u2014"}</Descriptions.Item>
+            <Descriptions.Item label={t("createdAt")}>
               {new Date(project.created_at).toLocaleString()}
               {project.created_by && (
                 <Text>
-                  &nbsp;{"by"}&nbsp;
+                  &nbsp;{t("by")}&nbsp;
                   <DefaultProxyAdminTag userId={project.created_by} />
                 </Text>
               )}
             </Descriptions.Item>
-            <Descriptions.Item label="Last Updated">
+            <Descriptions.Item label={t("updatedAt")}>
               {new Date(project.updated_at).toLocaleString()}
               {project.updated_by && (
                 <Text>
-                  &nbsp;{"by"}&nbsp;
+                  &nbsp;{t("by")}&nbsp;
                   <DefaultProxyAdminTag userId={project.updated_by} />
                 </Text>
               )}
@@ -155,7 +157,7 @@ export function ProjectDetail({ projectId, onBack }: ProjectDetailProps) {
             title={
               <Flex align="center" gap={8}>
                 <DollarSignIcon size={16} />
-                Budget
+                {t("budget")}
               </Flex>
             }
             style={{ height: "100%" }}
@@ -166,13 +168,15 @@ export function ProjectDetail({ projectId, onBack }: ProjectDetailProps) {
                   ${spend.toFixed(2)}
                 </Text>
                 <br />
-                <Text type="secondary">{hasLimit ? `of $${maxBudget.toFixed(2)} budget` : "No budget limit"}</Text>
+                <Text type="secondary">
+                  {hasLimit ? t("ofBudget", { amount: maxBudget.toFixed(2) }) : t("noBudgetLimit")}
+                </Text>
               </div>
               {hasLimit && (
                 <div>
                   <Progress percent={Math.round(spendPercent * 10) / 10} strokeColor={spendColor} showInfo={false} />
                   <Text type="secondary" style={{ fontSize: 12 }}>
-                    {(Math.round(spendPercent * 10) / 10).toFixed(1)}% utilized
+                    {t("percentUtilized", { percent: (Math.round(spendPercent * 10) / 10).toFixed(1) })}
                   </Text>
                 </div>
               )}
@@ -180,7 +184,7 @@ export function ProjectDetail({ projectId, onBack }: ProjectDetailProps) {
           </Card>
         </Col>
         <Col xs={24} lg={16}>
-          <Card title="Spend by Model" style={{ height: "100%" }}>
+          <Card title={t("spendByModel")} style={{ height: "100%" }}>
             {modelSpendData.length > 0 ? (
               <BarChart
                 data={modelSpendData}
@@ -194,7 +198,7 @@ export function ProjectDetail({ projectId, onBack }: ProjectDetailProps) {
                 style={{ height: Math.max(modelSpendData.length * 40, 120) }}
               />
             ) : (
-              <Empty description="No model spend recorded yet" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+              <Empty description={t("noModelSpend")} image={Empty.PRESENTED_IMAGE_SIMPLE} />
             )}
           </Card>
         </Col>
@@ -207,12 +211,12 @@ export function ProjectDetail({ projectId, onBack }: ProjectDetailProps) {
             title={
               <Flex align="center" gap={8}>
                 <KeyIcon size={16} />
-                Keys
+                {t("keys")}
               </Flex>
             }
             style={{ height: "100%" }}
           >
-            <Empty description="No keys to display" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+            <Empty description={t("noKeysToDisplay")} image={Empty.PRESENTED_IMAGE_SIMPLE} />
           </Card>
         </Col>
         <Col xs={24} lg={12}>
@@ -220,7 +224,7 @@ export function ProjectDetail({ projectId, onBack }: ProjectDetailProps) {
             title={
               <Flex align="center" gap={8}>
                 <UsersIcon size={16} />
-                Team
+                {t("team")}
               </Flex>
             }
             style={{ height: "100%" }}
@@ -242,7 +246,7 @@ export function ProjectDetail({ projectId, onBack }: ProjectDetailProps) {
                       </Text>
                       <br />
                       <Text type="secondary" style={{ fontSize: 12 }}>
-                        ID:{" "}
+                        {t("id")}:{" "}
                         <Text copyable style={{ fontSize: 12 }}>
                           {teamInfo.team_id}
                         </Text>
@@ -252,7 +256,7 @@ export function ProjectDetail({ projectId, onBack }: ProjectDetailProps) {
                     {/* Models */}
                     <div>
                       <Text type="secondary" style={{ fontSize: 12, display: "block", marginBottom: 4 }}>
-                        Models
+                        {t("models")}
                       </Text>
                       {(teamInfo.models?.length ?? 0) > 0 ? (
                         <Flex wrap="wrap" gap={4} style={{ maxHeight: 60, overflow: "hidden" }}>
@@ -263,7 +267,7 @@ export function ProjectDetail({ projectId, onBack }: ProjectDetailProps) {
                           ))}
                         </Flex>
                       ) : (
-                        <Text type="secondary">All models</Text>
+                        <Text type="secondary">{t("allModels")}</Text>
                       )}
                     </div>
 
@@ -271,7 +275,7 @@ export function ProjectDetail({ projectId, onBack }: ProjectDetailProps) {
                     <div>
                       <Flex justify="space-between" align="center" style={{ marginBottom: 2 }}>
                         <Text type="secondary" style={{ fontSize: 12 }}>
-                          Spend
+                          {t("spend")}
                         </Text>
                         <Text style={{ fontSize: 12 }}>
                           ${teamSpend.toFixed(2)}
@@ -283,7 +287,7 @@ export function ProjectDetail({ projectId, onBack }: ProjectDetailProps) {
                           ) : (
                             <Text type="secondary" style={{ fontSize: 12 }}>
                               {" "}
-                              (Unlimited)
+                              ({t("unlimited")})
                             </Text>
                           )}
                         </Text>
@@ -301,7 +305,7 @@ export function ProjectDetail({ projectId, onBack }: ProjectDetailProps) {
                     {/* Members */}
                     <Flex justify="space-between">
                       <Text type="secondary" style={{ fontSize: 12 }}>
-                        Members
+                        {t("members")}
                       </Text>
                       <Text style={{ fontSize: 12 }}>{teamInfo.members_with_roles?.length ?? 0}</Text>
                     </Flex>
@@ -313,7 +317,7 @@ export function ProjectDetail({ projectId, onBack }: ProjectDetailProps) {
                 <Spin indicator={<LoadingOutlined spin />} size="small" />
               </Flex>
             ) : (
-              <Empty description="No team assigned" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+              <Empty description={t("noTeamAssigned")} image={Empty.PRESENTED_IMAGE_SIMPLE} />
             )}
           </Card>
         </Col>

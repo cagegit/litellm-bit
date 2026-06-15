@@ -4,6 +4,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { getProxyBaseUrl, getGlobalLitellmHeaderName } from "../../networking";
 import { A2ATaskMetadata } from "../chat_ui/types";
+import { useTranslations } from "@/i18n";
 
 interface A2AMessagePart {
   kind: "text";

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import ProviderSpecificFields from "../add_model/provider_specific_fields";
 import { CredentialItem } from "../networking";
 import { Providers, providerLogoMap } from "../provider_info_helpers";
+import { useTranslations } from "@/i18n";
 const { Link } = Typography;
 
 interface EditCredentialsModalProps {
@@ -24,6 +25,7 @@ export default function EditCredentialsModal({
 }: EditCredentialsModalProps) {
   const [form] = Form.useForm();
   const [selectedProvider, setSelectedProvider] = useState<Providers>(Providers.Anthropic);
+  const { t } = useTranslations("models");
 
   const handleSubmit = (values: any) => {
     const filteredValues = Object.entries(values).reduce((acc, [key, value]) => {
@@ -58,7 +60,7 @@ export default function EditCredentialsModal({
 
   return (
     <Modal
-      title="Edit Credential"
+      title={t("editCredential")}
       open={open}
       onCancel={() => {
         onCancel();
@@ -71,23 +73,23 @@ export default function EditCredentialsModal({
       <Form form={form} onFinish={handleSubmit} layout="vertical">
         {/* Credential Name */}
         <Form.Item
-          label="Credential Name:"
+          label={t("credentialName")}
           name="credential_name"
-          rules={[{ required: true, message: "Credential name is required" }]}
+          rules={[{ required: true, message: t("credentialNameRequired") }]}
           initialValue={existingCredential?.credential_name}
         >
           <TextInput
-            placeholder="Enter a friendly name for these credentials"
+            placeholder={t("enterFriendlyName")}
             disabled={existingCredential?.credential_name ? true : false}
           />
         </Form.Item>
 
         {/* Provider Selection */}
         <Form.Item
-          rules={[{ required: true, message: "Required" }]}
-          label="Provider:"
+          rules={[{ required: true, message: t("required") }]}
+          label={t("provider")}
           name="custom_llm_provider"
-          tooltip="Helper to auto-populate provider specific fields"
+          tooltip={t("helperAutoPopulate")}
         >
           <AntdSelect
             showSearch
@@ -101,7 +103,7 @@ export default function EditCredentialsModal({
                 <div className="flex items-center space-x-2">
                   <img
                     src={providerLogoMap[providerDisplayName]}
-                    alt={`${providerEnum} logo`}
+                    alt={`${providerEnum} ${t("logo")}`}
                     className="w-5 h-5"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
@@ -126,8 +128,8 @@ export default function EditCredentialsModal({
 
         {/* Modal Footer */}
         <div className="flex justify-between items-center">
-          <Tooltip title="Get help on our github">
-            <Link href="https://github.com/BerriAI/litellm/issues">Need Help?</Link>
+          <Tooltip title={t("getHelp")}>
+            <Link href="https://github.com/BerriAI/litellm/issues">{t("needHelp")}</Link>
           </Tooltip>
 
           <div>
@@ -138,9 +140,9 @@ export default function EditCredentialsModal({
               }}
               style={{ marginRight: 10 }}
             >
-              Cancel
+              {t("cancel")}
             </Button>
-            <Button htmlType="submit">{"Update Credential"}</Button>
+            <Button htmlType="submit">{t("updateCredential")}</Button>
           </div>
         </div>
       </Form>

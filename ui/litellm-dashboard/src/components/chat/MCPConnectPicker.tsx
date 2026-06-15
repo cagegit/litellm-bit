@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Switch, Spin } from "antd";
+import { useTranslations } from "@/i18n";
 import MessageManager from "@/components/molecules/message_manager";
 import { fetchMCPServers, listMCPTools } from "../networking";
 import { MCPServer } from "../mcp_tools/types";
@@ -11,6 +12,7 @@ interface Props {
 }
 
 const MCPConnectPicker: React.FC<Props> = ({ accessToken, selectedServers, onChange }) => {
+  const { t } = useTranslations("chat");
   const [servers, setServers] = useState<MCPServer[]>([]);
   const [loadingServers, setLoadingServers] = useState(true);
   // Track which individual servers are being toggled on (verifying tools)

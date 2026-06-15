@@ -36,6 +36,7 @@ import KeyInfoView from "../templates/key_info_view";
 import { useQuery } from "@tanstack/react-query";
 import { fetchTeamFilterOptions } from "../key_team_helpers/filter_helpers";
 import useAuthorized from "@/app/(dashboard)/hooks/useAuthorized";
+import { useTranslations } from "@/i18n";
 
 interface TeamVirtualKeysTableProps {
   teamId: string;
@@ -48,6 +49,8 @@ interface TeamVirtualKeysTableProps {
  * Displays all virtual keys belonging to the team with same format and styling.
  */
 export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVirtualKeysTableProps) {
+  const { t } = useTranslations("team");
+
   const { accessToken } = useAuthorized();
   const [selectedKey, setSelectedKey] = useState<KeyResponse | null>(null);
   const [sorting, setSorting] = useState<SortingState>([{ id: "created_at", desc: true }]);
@@ -468,7 +471,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
                 <div className="flex flex-col">
                   {models.length === 0 ? (
                     <Badge size="xs" className="mb-1" color="red">
-                      <Text>All Proxy Models</Text>
+                      <Text>{t("team.allProxyModels")}</Text>
                     </Badge>
                   ) : (
                     <>
@@ -492,7 +495,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
                           {models.slice(0, 3).map((model, index) =>
                             model === "all-proxy-models" ? (
                               <Badge key={index} size="xs" color="red">
-                                <Text>All Proxy Models</Text>
+                                <Text>{t("team.allProxyModels")}</Text>
                               </Badge>
                             ) : (
                               <Badge key={index} size="xs" color="blue">
@@ -516,7 +519,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
                               {models.slice(3).map((model, index) =>
                                 model === "all-proxy-models" ? (
                                   <Badge key={index + 3} size="xs" color="red">
-                                    <Text>All Proxy Models</Text>
+                                    <Text>{t("team.allProxyModels")}</Text>
                                   </Badge>
                                 ) : (
                                   <Badge key={index + 3} size="xs" color="blue">
@@ -730,7 +733,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
                       <TableRow>
                         <TableCell colSpan={columns.length} className="h-8 text-center">
                           <div className="text-center text-gray-500">
-                            <p>Loading keys...</p>
+                            <p>{t("team.loadingKeys")}</p>
                           </div>
                         </TableCell>
                       </TableRow>
@@ -763,7 +766,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
                       <TableRow>
                         <TableCell colSpan={columns.length} className="h-8 text-center">
                           <div className="text-center text-gray-500">
-                            <p>No keys found</p>
+                            <p>{t("team.noKeysFound")}</p>
                           </div>
                         </TableCell>
                       </TableRow>

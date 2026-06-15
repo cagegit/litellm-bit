@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Card, Typography, Select, Switch, Form, Space, InputNumber } from "antd";
 import { getMajorAirlines } from "../../networking";
+import { useTranslations } from "@/i18n";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
@@ -51,6 +52,8 @@ const CompetitorIntentConfiguration: React.FC<CompetitorIntentConfigurationProps
   onChange,
   accessToken,
 }) => {
+  const { t } = useTranslations("settings");
+
   const effectiveConfig = config ?? DEFAULT_CONFIG;
   const [airlineOptions, setAirlineOptions] = useState<MajorAirline[]>([]);
   const [loadingAirlines, setLoadingAirlines] = useState(false);

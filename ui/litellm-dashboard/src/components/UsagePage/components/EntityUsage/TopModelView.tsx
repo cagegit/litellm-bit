@@ -3,6 +3,7 @@ import { Segmented } from "antd";
 import { useState } from "react";
 import { formatNumberWithCommas } from "../../../../utils/dataUtils";
 import { DataTable } from "../../../view_logs/table";
+import { useTranslations } from "@/i18n";
 
 interface TopModel {
   key: string;

@@ -2,6 +2,7 @@ import React from "react";
 import { TextInput, Button } from "@tremor/react";
 import { Select as AntdSelect, Form, Tooltip, Radio } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
+import { useTranslations } from "@/i18n";
 import { Providers, provider_map, providerLogoMap } from "../provider_info_helpers";
 import { MarginConfig } from "./types";
 import { handleImageError } from "./provider_display_helpers";

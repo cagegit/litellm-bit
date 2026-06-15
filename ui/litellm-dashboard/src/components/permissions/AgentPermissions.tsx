@@ -3,6 +3,7 @@ import { Text, Badge } from "@tremor/react";
 import { UserGroupIcon } from "@heroicons/react/outline";
 import { Tooltip } from "antd";
 import { getAgentsList } from "../networking";
+import { useTranslations } from "@/i18n";
 
 interface Agent {
   agent_id: string;
@@ -18,6 +19,8 @@ interface AgentPermissionsProps {
 }
 
 export function AgentPermissions({ agents, agentAccessGroups = [], accessToken }: AgentPermissionsProps) {
+  const { t } = useTranslations("permissions");
+
   const [agentDetails, setAgentDetails] = useState<Agent[]>([]);
 
   // Fetch agent details when component mounts
@@ -58,7 +61,7 @@ export function AgentPermissions({ agents, agentAccessGroups = [], accessToken }
     <div className="space-y-3">
       <div className="flex items-center gap-2">
         <UserGroupIcon className="h-4 w-4 text-purple-600" />
-        <Text className="font-semibold text-gray-900">Agents</Text>
+        <Text className="font-semibold text-gray-900">{t("permissions.agents")}</Text>
         <Badge color="purple" size="xs">
           {totalCount}
         </Badge>
@@ -96,7 +99,7 @@ export function AgentPermissions({ agents, agentAccessGroups = [], accessToken }
       ) : (
         <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-50 border border-gray-200">
           <UserGroupIcon className="h-4 w-4 text-gray-400" />
-          <Text className="text-gray-500 text-sm">No agents or access groups configured</Text>
+          <Text className="text-gray-500 text-sm">{t("permissions.noAgentsOrAccessGroupsConfigured")}</Text>
         </div>
       )}
     </div>

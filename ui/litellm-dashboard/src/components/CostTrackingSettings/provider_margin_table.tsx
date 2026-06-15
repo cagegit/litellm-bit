@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { TextInput, Icon, Text } from "@tremor/react";
+import { useTranslations } from "@/i18n";
 import { TrashIcon, PencilAltIcon, CheckIcon, XIcon } from "@heroicons/react/outline";
 import { SimpleTable } from "../common_components/simple_table";
 import { MarginConfig } from "./types";
@@ -21,6 +22,7 @@ const ProviderMarginTable: React.FC<ProviderMarginTableProps> = ({
   onMarginChange,
   onRemoveProvider,
 }) => {
+  const { t } = useTranslations("billing");
   const [editingProvider, setEditingProvider] = useState<string | null>(null);
   const [editPercentage, setEditPercentage] = useState<string>("");
   const [editFixedAmount, setEditFixedAmount] = useState<string>("");
@@ -106,12 +108,12 @@ const ProviderMarginTable: React.FC<ProviderMarginTableProps> = ({
       data={data}
       columns={[
         {
-          header: "Provider",
+          header: t("provider"),
           cell: (row) => {
             if (row.provider === "global") {
               return (
                 <div className="flex items-center space-x-2">
-                  <span className="font-medium">Global (All Providers)</span>
+                  <span className="font-medium">{t("globalAllProviders")}</span>
                 </div>
               );
             }
@@ -121,7 +123,7 @@ const ProviderMarginTable: React.FC<ProviderMarginTableProps> = ({
                 {logo && (
                   <img
                     src={logo}
-                    alt={`${displayName} logo`}
+                    alt={t("providerLogoAlt", { name: displayName })}
                     className="w-5 h-5"
                     onError={(e) => handleImageError(e, displayName)}
                   />
@@ -132,7 +134,7 @@ const ProviderMarginTable: React.FC<ProviderMarginTableProps> = ({
           },
         },
         {
-          header: "Margin",
+          header: t("margin"),
           cell: (row) => (
             <div className="flex items-center gap-2">
               {editingProvider === row.provider ? (
@@ -141,7 +143,7 @@ const ProviderMarginTable: React.FC<ProviderMarginTableProps> = ({
                     <TextInput
                       value={editPercentage}
                       onValueChange={setEditPercentage}
-                      placeholder="10"
+                      placeholder={t("percentagePlaceholder")}
                       className="w-20"
                       autoFocus
                     />
@@ -151,7 +153,7 @@ const ProviderMarginTable: React.FC<ProviderMarginTableProps> = ({
                     <TextInput
                       value={editFixedAmount}
                       onValueChange={setEditFixedAmount}
-                      placeholder="0.001"
+                      placeholder={t("fixedAmountPlaceholder")}
                       className="w-24"
                     />
                   </div>
@@ -184,7 +186,7 @@ const ProviderMarginTable: React.FC<ProviderMarginTableProps> = ({
           width: "350px",
         },
         {
-          header: "Actions",
+          header: t("actions"),
           cell: (row) => {
             const displayName = row.provider === "global" ? "Global" : getProviderDisplayInfo(row.provider).displayName;
             return (
@@ -200,7 +202,7 @@ const ProviderMarginTable: React.FC<ProviderMarginTableProps> = ({
         },
       ]}
       getRowKey={(row) => row.provider}
-      emptyMessage="No provider margins configured"
+      emptyMessage={t("noProviderMargins")}
     />
   );
 };

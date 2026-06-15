@@ -1,5 +1,6 @@
 import type { CustomTooltipProps } from "@tremor/react";
 import { SpendMetrics } from "../UsagePage/types";
+import { useTranslations } from "@/i18n";
 
 interface ChartDataPoint {
   date: string;
@@ -17,6 +18,7 @@ const colorNameToHex: { [key: string]: string } = {
 };
 
 export const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
+  const { t } = useTranslations("common");
   if (active && payload && payload.length) {
     const formatCategoryName = (name: string): string => {
       return name
@@ -50,7 +52,7 @@ export const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) =>
               ? isSpend
                 ? `$${rawValue.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
                 : rawValue.toLocaleString()
-              : "N/A";
+              : t("notApplicable");
 
           const colorName = item.color as keyof typeof colorNameToHex;
           const hexColor = colorNameToHex[colorName] || item.color;

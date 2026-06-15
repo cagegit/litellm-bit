@@ -1,5 +1,6 @@
 import { PromptSpec } from "@/components/networking";
 import { getVersionNumber } from "./prompt_editor_view/utils";
+import { useTranslations } from "@/i18n";
 
 interface ModelGroupInfo {
   model_group: string;

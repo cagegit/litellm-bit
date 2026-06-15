@@ -8,6 +8,7 @@ import { parseMessages } from "./prettyMessagesUtils";
 import { InputCard } from "./InputCard";
 import { OutputCard } from "./OutputCard";
 import { isRealtimeResponse, RealtimePrettyView } from "./RealtimePrettyView";
+import { useTranslations } from "@/i18n";
 
 interface PrettyMessagesViewProps {
   request: any;
@@ -21,6 +22,8 @@ interface PrettyMessagesViewProps {
 }
 
 export function PrettyMessagesView({ request, response, metrics }: PrettyMessagesViewProps) {
+  const { t } = useTranslations("logs");
+
   if (isRealtimeResponse(response)) {
     return <RealtimePrettyView response={response} metrics={metrics} />;
   }

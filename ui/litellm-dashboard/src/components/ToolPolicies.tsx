@@ -10,6 +10,7 @@ import FilterComponent, { FilterOption } from "./molecules/filter";
 import { MetricCard } from "./GuardrailsMonitor/MetricCard";
 import { PolicySelect, INPUT_POLICY_OPTIONS, OUTPUT_POLICY_OPTIONS } from "./ToolPolicies/PolicySelect";
 import { fetchToolsList, updateToolPolicy, ToolRow } from "./networking";
+import { useTranslations } from "@/i18n";
 
 function getUTCDateKey(date: Date): string {
   return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, "0")}-${String(date.getUTCDate()).padStart(2, "0")}`;
@@ -49,6 +50,8 @@ interface ToolPoliciesProps {
 }
 
 export const ToolPolicies: React.FC<ToolPoliciesProps> = ({ accessToken, onSelectTool }) => {
+  const { t } = useTranslations("settings");
+
   const [tools, setTools] = useState<ToolRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [isFetching, setIsFetching] = useState(false);
@@ -257,11 +260,11 @@ export const ToolPolicies: React.FC<ToolPoliciesProps> = ({ accessToken, onSelec
 
   return (
     <div className="w-full">
-      <h1 className="text-2xl font-semibold text-gray-900 mb-6">Tool Policies</h1>
+      <h1 className="text-2xl font-semibold text-gray-900 mb-6">{t("settings.toolPolicies")}</h1>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <MetricCard
-          label="New Today"
+          label={t("settings.newToday")}
           value={newToday}
           valueColor="text-green-600"
           subtitle={trendSubtitle}
@@ -271,18 +274,18 @@ export const ToolPolicies: React.FC<ToolPoliciesProps> = ({ accessToken, onSelec
             </svg>
           }
         />
-        <MetricCard label="Total Tools Discovered" value={totalTools} />
+        <MetricCard label={t("settings.totalToolsDiscovered")} value={totalTools} />
         <MetricCard
-          label="Blocked Tools"
+          label={t("settings.blockedTools")}
           value={blockedCount}
           valueColor={blockedCount > 0 ? "text-red-600" : undefined}
         />
-        <MetricCard label="Active Teams" value={activeTeamsCount > 0 ? activeTeamsCount : "—"} />
+        <MetricCard label={t("settings.activeTeams")} value={activeTeamsCount > 0 ? activeTeamsCount : "—"} />
       </div>
 
       {needsReviewTools.length > 0 && (
         <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
-          <h2 className="text-sm font-semibold text-amber-900 mb-1">Needs Review</h2>
+          <h2 className="text-sm font-semibold text-amber-900 mb-1">{t("settings.needsReview")}</h2>
           <p className="text-sm text-amber-800 mb-3">
             {needsReviewTools.length} new tool{needsReviewTools.length !== 1 ? "s" : ""} discovered that require policy
             decisions.
@@ -316,7 +319,7 @@ export const ToolPolicies: React.FC<ToolPoliciesProps> = ({ accessToken, onSelec
               <div className="relative w-64">
                 <input
                   type="text"
-                  placeholder="Search by Tool Name"
+                  placeholder={t("settings.searchByToolName")}
                   className="w-full px-3 py-2 pl-8 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   value={searchTerm}
                   onChange={(e) => {
@@ -340,7 +343,7 @@ export const ToolPolicies: React.FC<ToolPoliciesProps> = ({ accessToken, onSelec
               </div>
 
               <div className="flex items-center gap-2">
-                <span className="text-sm font-medium text-gray-900">Live Tail</span>
+                <span className="text-sm font-medium text-gray-900">{t("settings.liveTail")}</span>
                 <Switch checked={isLiveTail} onChange={setIsLiveTail} />
               </div>
 
@@ -405,7 +408,7 @@ export const ToolPolicies: React.FC<ToolPoliciesProps> = ({ accessToken, onSelec
 
         {isLiveTail && (
           <div className="bg-green-50 border-b border-green-100 px-6 py-2 flex items-center justify-between">
-            <span className="text-sm text-green-700">Auto-refreshing every 15 seconds</span>
+            <span className="text-sm text-green-700">{t("settings.autoRefreshingEvery15Seconds")}</span>
             <button onClick={() => setIsLiveTail(false)} className="text-xs text-green-600 underline">
               Stop
             </button>
@@ -420,28 +423,28 @@ export const ToolPolicies: React.FC<ToolPoliciesProps> = ({ accessToken, onSelec
           <TableHead>
             <TableRow>
               <TableHeaderCell className="py-1 h-8">
-                <SortHeader label="Discovered" field="created_at" />
+                <SortHeader label={t("settings.discovered")} field="created_at" />
               </TableHeaderCell>
               <TableHeaderCell className="py-1 h-8">
-                <SortHeader label="Tool Name" field="tool_name" />
+                <SortHeader label={t("settings.toolName")} field="tool_name" />
               </TableHeaderCell>
               <TableHeaderCell className="py-1 h-8">
-                <SortHeader label="Input Policy" field="input_policy" />
+                <SortHeader label={t("settings.inputPolicy")} field="input_policy" />
               </TableHeaderCell>
               <TableHeaderCell className="py-1 h-8">
-                <SortHeader label="Output Policy" field="output_policy" />
+                <SortHeader label={t("settings.outputPolicy")} field="output_policy" />
               </TableHeaderCell>
               <TableHeaderCell className="py-1 h-8">
                 <SortHeader label="# Calls" field="call_count" />
               </TableHeaderCell>
               <TableHeaderCell className="py-1 h-8">
-                <SortHeader label="Team Name" field="team_id" />
+                <SortHeader label={t("settings.teamName")} field="team_id" />
               </TableHeaderCell>
-              <TableHeaderCell className="py-1 h-8">Key Hash</TableHeaderCell>
+              <TableHeaderCell className="py-1 h-8">{t("settings.keyHash")}</TableHeaderCell>
               <TableHeaderCell className="py-1 h-8">
-                <SortHeader label="Key Name" field="key_alias" />
+                <SortHeader label={t("settings.keyName")} field="key_alias" />
               </TableHeaderCell>
-              <TableHeaderCell className="py-1 h-8">User Agent</TableHeaderCell>
+              <TableHeaderCell className="py-1 h-8">{t("settings.userAgent")}</TableHeaderCell>
             </TableRow>
           </TableHead>
           <TableBody>

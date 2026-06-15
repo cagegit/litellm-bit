@@ -1,6 +1,7 @@
 import React from "react";
 import { Select, Typography } from "antd";
 import { Organization } from "../networking";
+import { useTranslations } from "@/i18n";
 
 const { Text } = Typography;
 
@@ -21,10 +22,11 @@ const OrganizationDropdown: React.FC<OrganizationDropdownProps> = ({
   loading,
   style,
 }) => {
+  const { t } = useTranslations("common");
   return (
     <Select
       showSearch
-      placeholder="All Organizations"
+      placeholder={t("allOrganizations")}
       value={value}
       onChange={onChange}
       disabled={disabled}

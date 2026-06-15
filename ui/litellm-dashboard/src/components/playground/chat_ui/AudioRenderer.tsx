@@ -1,11 +1,14 @@
 import React from "react";
 import { MessageType } from "./types";
+import { useTranslations } from "@/i18n";
 
 interface AudioRendererProps {
   message: MessageType;
 }
 
 const AudioRenderer: React.FC<AudioRendererProps> = ({ message }) => {
+  const { t } = useTranslations("playground");
+
   // Check if this message contains audio
   if (!message.isAudio || typeof message.content !== "string") {
     return null;

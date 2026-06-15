@@ -6,6 +6,7 @@ import BedrockGuardrailDetails, {
 } from "@/components/view_logs/GuardrailViewer/BedrockGuardrailDetails";
 import ContentFilterDetails from "./ContentFilterDetails";
 import CompliancePanel from "./CompliancePanel";
+import { useTranslations } from "@/i18n";
 
 // ── Interfaces ──────────────────────────────────────────────────────────────
 
@@ -331,6 +332,8 @@ interface TimelineEntry {
 }
 
 const RequestLifecycle = ({ entries }: { entries: GuardrailInformation[] }) => {
+  const { t } = useTranslations("logs");
+
   const sorted = useMemo(() => [...entries].sort((a, b) => (a.start_time ?? 0) - (b.start_time ?? 0)), [entries]);
 
   const timeline = useMemo(() => {

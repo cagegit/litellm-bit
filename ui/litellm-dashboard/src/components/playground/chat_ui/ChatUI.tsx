@@ -77,6 +77,7 @@ import { A2ATaskMetadata, MessageType } from "./types";
 import { useCodeInterpreter } from "./useCodeInterpreter";
 import { useChatHistory } from "./useChatHistory";
 import { getSecureItem, setSecureItem } from "@/utils/secureStorage";
+import { useTranslations } from "@/i18n";
 
 const { TextArea } = Input;
 const { Dragger } = Upload;
@@ -109,6 +110,8 @@ const ChatUI: React.FC<ChatUIProps> = ({
   simplified = false,
   fixedModel,
 }) => {
+  const { t } = useTranslations("playground");
+
   const [mcpServers, setMCPServers] = useState<MCPServer[]>([]);
   const [mcpToolsets, setMCPToolsets] = useState<MCPToolset[]>([]);
   const [isToolsetsInfoModalVisible, setIsToolsetsInfoModalVisible] = useState(false);
@@ -1002,8 +1005,8 @@ const ChatUI: React.FC<ChatUIProps> = ({
     const { Title, Paragraph } = Typography;
     return (
       <div>
-        <Title level={1}>Access Denied</Title>
-        <Paragraph>Ask your proxy admin for access to test models</Paragraph>
+        <Title level={1}>{t("playground.accessDenied")}</Title>
+        <Paragraph>{t("playground.askYourProxyAdminForAccessToTestModels")}</Paragraph>
       </div>
     );
   }
@@ -1037,7 +1040,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
           {/* Left Sidebar with Controls - hidden in simplified mode */}
           {!simplified && (
             <div className="w-1/4 p-4 bg-gray-50 overflow-y-auto">
-              <Title className="text-xl font-semibold mb-6 mt-2">Configurations</Title>
+              <Title className="text-xl font-semibold mb-6 mt-2">{t("playground.configurations")}</Title>
               <div className="space-y-4">
                 <div>
                   <Text className="font-medium block mb-2 text-gray-700 flex items-center">
@@ -1059,7 +1062,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
                   {apiKeySource === "custom" && (
                     <TextInput
                       className="mt-2"
-                      placeholder="Enter custom Virtual Key"
+                      placeholder={t("playground.enterCustomVirtualKey")}
                       type="password"
                       onValueChange={setApiKey}
                       value={apiKey}
@@ -1191,7 +1194,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
                               onMockTestFallbacksChange={setMockTestFallbacks}
                             />
                           }
-                          title="Model Settings"
+                          title={t("playground.modelSettings")}
                           trigger="click"
                           placement="right"
                         >
@@ -1200,12 +1203,12 @@ const ChatUI: React.FC<ChatUIProps> = ({
                             size="small"
                             icon={<SettingOutlined />}
                             className="text-gray-500 hover:text-gray-700"
-                            aria-label="Model Settings"
+                            aria-label={t("playground.modelSettings")}
                             data-testid="model-settings-button"
                           />
                         </Popover>
                       ) : (
-                        <Tooltip title="Advanced parameters are only supported for chat models currently">
+                        <Tooltip title={t("playground.advancedParametersAreOnlySupportedForChatModelsCurrently")}>
                           <Button
                             type="text"
                             size="small"
@@ -1218,7 +1221,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
                     </Text>
                     <Select
                       value={selectedModel}
-                      placeholder="Select a Model"
+                      placeholder={t("playground.selectAModel")}
                       onChange={onModelChange}
                       options={[
                         { value: "custom", label: "Enter custom model", key: "custom" },
@@ -1260,7 +1263,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
                     {showCustomModelInput && (
                       <TextInput
                         className="mt-2"
-                        placeholder="Enter custom model name"
+                        placeholder={t("playground.enterCustomModelName")}
                         onValueChange={(value) => {
                           // Using setTimeout to create a simple debounce effect
                           if (customModelTimeout.current) {
@@ -1284,7 +1287,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
                     </Text>
                     <Select
                       value={selectedAgent}
-                      placeholder="Select an Agent"
+                      placeholder={t("playground.selectAnAgent")}
                       onChange={(value) => setSelectedAgent(value)}
                       options={agentInfo.map((agent) => ({
                         value: agent.agent_name,
@@ -1423,17 +1426,17 @@ const ChatUI: React.FC<ChatUIProps> = ({
                   >
                     {/* All MCP Servers option - hidden for MCP direct mode */}
                     {endpointType !== EndpointType.MCP && (
-                      <Select.Option key="__all__" value="__all__" label="All MCP Servers">
+                      <Select.Option key="__all__" value="__all__" label={t("playground.allMcpServers")}>
                         <div className="flex flex-col py-1">
-                          <span className="font-medium">All MCP Servers</span>
-                          <span className="text-xs text-gray-500 mt-1">Use all available MCP servers</span>
+                          <span className="font-medium">{t("playground.allMcpServers")}</span>
+                          <span className="text-xs text-gray-500 mt-1">{t("playground.useAllAvailableMcpServers")}</span>
                         </div>
                       </Select.Option>
                     )}
 
                     {/* Toolsets (purple badge) */}
                     {mcpToolsets.length > 0 && (
-                      <Select.OptGroup label="Toolsets">
+                      <Select.OptGroup label={t("playground.toolsets")}>
                         {mcpToolsets.map((toolset) => (
                           <Select.Option
                             key={`toolset:${toolset.toolset_id}`}
@@ -1465,7 +1468,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
 
                     {/* Individual servers */}
                     {mcpServers.length > 0 && (
-                      <Select.OptGroup label="Servers">
+                      <Select.OptGroup label={t("playground.servers")}>
                         {mcpServers.map((server) => (
                           <Select.Option
                             key={server.server_id}
@@ -1514,10 +1517,10 @@ const ChatUI: React.FC<ChatUIProps> = ({
                       }
                       return (
                         <div className="mt-3">
-                          <Text className="text-xs text-gray-600 mb-1 block">Select Tool</Text>
+                          <Text className="text-xs text-gray-600 mb-1 block">{t("playground.selectTool")}</Text>
                           <Select
                             style={{ width: "100%" }}
-                            placeholder="Select a tool to call"
+                            placeholder={t("playground.selectAToolToCall")}
                             value={selectedMCPDirectTool}
                             onChange={(value) => setSelectedMCPDirectTool(value)}
                             options={toolOptions}
@@ -1548,7 +1551,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
                                 mode="multiple"
                                 size="small"
                                 style={{ width: "100%" }}
-                                placeholder="All tools (default)"
+                                placeholder={t("playground.allToolsdefault")}
                                 value={mcpServerToolRestrictions[serverId] || []}
                                 onChange={(selectedTools) => {
                                   setMCPServerToolRestrictions((prev) => ({
@@ -1745,7 +1748,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
                   {chatHistory.length === 0 && (
                     <div className="h-full flex flex-col items-center justify-center text-gray-400">
                       <RobotOutlined style={{ fontSize: "48px", marginBottom: "16px" }} />
-                      <Text>Start a conversation, generate an image, or handle audio</Text>
+                      <Text>{t("playground.startAConversationGenerateAnImageOrHandleAudio")}</Text>
                     </div>
                   )}
 
@@ -1786,7 +1789,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
                             >
                               <RobotOutlined style={{ fontSize: "12px", color: "#4b5563" }} />
                             </div>
-                            <strong className="text-sm capitalize">Assistant</strong>
+                            <strong className="text-sm capitalize">{t("playground.assistant")}</strong>
                           </div>
                           <MCPEventsDisplay events={mcpEvents} />
                         </div>
@@ -1810,7 +1813,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
                           <p className="ant-upload-drag-icon">
                             <PictureOutlined style={{ fontSize: "24px", color: "#666" }} />
                           </p>
-                          <p className="ant-upload-text text-sm">Click or drag images to upload</p>
+                          <p className="ant-upload-text text-sm">{t("playground.clickOrDragImagesToUpload")}</p>
                           <p className="ant-upload-hint text-xs text-gray-500">
                             Support for PNG, JPG, JPEG formats. Multiple images supported.
                           </p>
@@ -1848,7 +1851,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
                           >
                             <div className="text-center">
                               <PictureOutlined style={{ fontSize: "24px", color: "#666" }} />
-                              <p className="text-xs text-gray-500 mt-1">Add more</p>
+                              <p className="text-xs text-gray-500 mt-1">{t("playground.addMore")}</p>
                             </div>
                             <input
                               id="additional-image-upload"
@@ -1879,7 +1882,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
                           <p className="ant-upload-drag-icon">
                             <SoundOutlined style={{ fontSize: "24px", color: "#666" }} />
                           </p>
-                          <p className="ant-upload-text text-sm">Click or drag audio file to upload</p>
+                          <p className="ant-upload-text text-sm">{t("playground.clickOrDragAudioFileToUpload")}</p>
                           <p className="ant-upload-hint text-xs text-gray-500">
                             Support for MP3, MP4, MPEG, MPGA, M4A, WAV, WEBM formats. Max file size: 25 MB.
                           </p>
@@ -1929,12 +1932,12 @@ const ChatUI: React.FC<ChatUIProps> = ({
                           {isLoading ? (
                             <>
                               <LoadingOutlined className="text-blue-500" spin />
-                              <span className="text-sm text-blue-700 font-medium">Running Python code...</span>
+                              <span className="text-sm text-blue-700 font-medium">{t("playground.runningPythonCode")}</span>
                             </>
                           ) : (
                             <>
                               <CodeOutlined className="text-blue-500" />
-                              <span className="text-sm text-blue-700 font-medium">Code Interpreter Active</span>
+                              <span className="text-sm text-blue-700 font-medium">{t("playground.codeInterpreterActive")}</span>
                             </>
                           )}
                         </div>
@@ -2139,7 +2142,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
         </div>
       </Card>
       <Modal
-        title="Generated Code"
+        title={t("playground.generatedCode")}
         open={isGetCodeModalVisible}
         onCancel={() => setIsGetCodeModalVisible(false)}
         footer={null}
@@ -2147,7 +2150,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
       >
         <div className="flex justify-between items-end my-4">
           <div>
-            <Text className="font-medium block mb-1 text-gray-700">SDK Type</Text>
+            <Text className="font-medium block mb-1 text-gray-700">{t("playground.sdkType")}</Text>
             <Select
               value={selectedSdk}
               onChange={(value) => setSelectedSdk(value as "openai" | "azure")}
@@ -2198,7 +2201,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
 
       {/* Toolsets info modal */}
       <Modal
-        title="How Toolsets Work"
+        title={t("playground.howToolsetsWork")}
         open={isToolsetsInfoModalVisible}
         onCancel={() => setIsToolsetsInfoModalVisible(false)}
         footer={[
@@ -2210,19 +2213,19 @@ const ChatUI: React.FC<ChatUIProps> = ({
       >
         <div className="space-y-4 py-2">
           <p className="text-gray-700">
-            <strong>Toolsets</strong> are named collections of specific tools from one or more MCP servers. Instead of
+            <strong>{t("playground.toolsets")}</strong> are named collections of specific tools from one or more MCP servers. Instead of
             exposing all tools from a server, a toolset gives an agent exactly the tools it needs.
           </p>
           <div>
             <h4 className="font-semibold text-gray-800 mb-2">How to use a toolset:</h4>
             <ol className="list-decimal list-inside space-y-2 text-gray-700">
               <li>
-                Select a <span style={{ color: "#7c3aed", fontWeight: 600 }}>Toolset</span> (purple badge) from the MCP
+                Select a <span style={{ color: "#7c3aed", fontWeight: 600 }}>{t("playground.toolset")}</span> (purple badge) from the MCP
                 Servers dropdown.
               </li>
-              <li>The tool picker will show only the tools included in that toolset.</li>
-              <li>Select a tool and fill in its parameters, then send.</li>
-              <li>The tool call is routed to the correct underlying MCP server automatically.</li>
+              <li>{t("playground.theToolPickerWillShowOnlyTheToolsIncludedInThatToolset")}</li>
+              <li>{t("playground.selectAToolAndFillInItsParametersThenSend")}</li>
+              <li>{t("playground.theToolCallIsRoutedToTheCorrectUnderlyingMcpServerAutomatically")}</li>
             </ol>
           </div>
           <div className="bg-purple-50 border border-purple-200 rounded p-3">
@@ -2235,7 +2238,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
           <div>
             <h4 className="font-semibold text-gray-800 mb-1">Creating toolsets:</h4>
             <p className="text-sm text-gray-600">
-              Admins can create and manage toolsets from the <strong>MCP</strong> page → <strong>Toolsets</strong> tab.
+              Admins can create and manage toolsets from the <strong>{t("playground.mcp")}</strong> page → <strong>{t("playground.toolsets")}</strong> tab.
               Toolsets can then be assigned to keys and teams to scope their tool access.
             </p>
           </div>

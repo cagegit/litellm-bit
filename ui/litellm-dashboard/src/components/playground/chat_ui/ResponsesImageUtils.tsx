@@ -1,4 +1,5 @@
 import { MessageType, MultimodalContent } from "./types";
+import { useTranslations } from "@/i18n";
 
 export const convertImageToBase64 = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {

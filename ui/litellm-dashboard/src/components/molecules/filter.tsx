@@ -2,6 +2,7 @@ import { FilterIcon } from "@heroicons/react/outline";
 import { Button, Input, Select } from "antd";
 import debounce from "lodash/debounce";
 import React, { useCallback, useEffect, useState } from "react";
+import { useTranslations } from "@/i18n";
 
 export interface FilterOptionCustomComponentProps {
   value?: string;
@@ -36,8 +37,9 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
   onApplyFilters,
   onResetFilters,
   initialValues = {},
-  buttonLabel = "Filters",
+  buttonLabel,
 }) => {
+  const { t } = useTranslations("common");
   const [showFilters, setShowFilters] = useState<boolean>(false);
   const [tempValues, setTempValues] = useState<FilterValues>(initialValues);
   const [searchOptionsMap, setSearchOptionsMap] = useState<{
@@ -137,9 +139,9 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
           onClick={() => setShowFilters(!showFilters)}
           className="flex items-center gap-2"
         >
-          {buttonLabel}
+          {buttonLabel || t("filter")}
         </Button>
-        <Button onClick={resetFilters}>Reset Filters</Button>
+        <Button onClick={resetFilters}>{t("resetFilters")}</Button>
       </div>
 
       {showFilters && (
@@ -152,7 +154,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                   <Select
                     showSearch
                     className="w-full"
-                    placeholder={`Search ${option.label || option.name}...`}
+                    placeholder={t("searchFor", { field: option.label || option.name })}
                     value={tempValues[option.name] || undefined}
                     onChange={(value) => handleFilterChange(option.name, value)}
                     onOpenChange={(open) => handleDropdownVisibleChange(open, option)}
@@ -169,12 +171,12 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                     loading={searchLoadingMap[option.name]}
                     options={searchOptionsMap[option.name] || []}
                     allowClear
-                    notFoundContent={searchLoadingMap[option.name] ? "Loading..." : "No results found"}
+                    notFoundContent={searchLoadingMap[option.name] ? t("loading") : t("noResults")}
                   />
                 ) : option.options ? (
                   <Select
                     className="w-full"
-                    placeholder={`Select ${option.label || option.name}...`}
+                    placeholder={t("selectFor", { field: option.label || option.name })}
                     value={tempValues[option.name] || undefined}
                     onChange={(value) => handleFilterChange(option.name, value)}
                     allowClear
@@ -192,7 +194,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                       <CustomComponent
                         value={tempValues[option.name] || undefined}
                         onChange={(value) => handleFilterChange(option.name, value ?? "")}
-                        placeholder={`Select ${option.label || option.name}...`}
+                        placeholder={t("selectFor", { field: option.label || option.name })}
                         allFilters={tempValues}
                       />
                     );
@@ -200,7 +202,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
                 ) : (
                   <Input
                     className="w-full"
-                    placeholder={`Enter ${option.label || option.name}...`}
+                    placeholder={t("enterFor", { field: option.label || option.name })}
                     value={tempValues[option.name] || ""}
                     onChange={(e) => handleFilterChange(option.name, e.target.value)}
                     allowClear

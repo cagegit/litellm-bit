@@ -12,6 +12,7 @@ import {
 } from "@tanstack/react-table";
 import { PolicyAttachment } from "./types";
 import ImpactPopover from "./impact_popover";
+import { useTranslations } from "@/i18n";
 
 interface AttachmentTableProps {
   attachments: PolicyAttachment[];
@@ -28,6 +29,8 @@ const AttachmentTable: React.FC<AttachmentTableProps> = ({
   isAdmin,
   accessToken,
 }) => {
+  const { t } = useTranslations("settings");
+
   const [sorting, setSorting] = useState<SortingState>([{ id: "created_at", desc: true }]);
 
   // Format date helper function
@@ -201,7 +204,7 @@ const AttachmentTable: React.FC<AttachmentTableProps> = ({
           <div className="flex space-x-2">
             <ImpactPopover attachment={attachment} accessToken={accessToken} />
             {isAdmin && (
-              <Tooltip title="Delete attachment">
+              <Tooltip title={t("settings.deleteAttachment")}>
                 <Icon
                   icon={TrashIcon}
                   size="sm"
@@ -270,7 +273,7 @@ const AttachmentTable: React.FC<AttachmentTableProps> = ({
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-8 text-center">
                   <div className="text-center text-gray-500">
-                    <p>Loading...</p>
+                    <p>{t("settings.loading")}</p>
                   </div>
                 </TableCell>
               </TableRow>
@@ -295,7 +298,7 @@ const AttachmentTable: React.FC<AttachmentTableProps> = ({
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-8 text-center">
                   <div className="text-center text-gray-500">
-                    <p>No attachments found</p>
+                    <p>{t("settings.noAttachmentsFound")}</p>
                   </div>
                 </TableCell>
               </TableRow>

@@ -5,12 +5,15 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { coy } from "react-syntax-highlighter/dist/esm/styles/prism";
 import ResponseMetrics from "../../../playground/chat_ui/ResponseMetrics";
 import { Message } from "./types";
+import { useTranslations } from "@/i18n";
 
 interface MessageBubbleProps {
   message: Message;
 }
 
 const MessageBubble: React.FC<MessageBubbleProps> = ({ message }) => {
+  const { t } = useTranslations("prompts");
+
   return (
     <div className={`mb-4 flex ${message.role === "user" ? "justify-end" : "justify-start"}`}>
       <div

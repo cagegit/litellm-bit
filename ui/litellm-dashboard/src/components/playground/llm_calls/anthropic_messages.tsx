@@ -3,6 +3,7 @@ import { MessageType } from "../chat_ui/types";
 import { TokenUsage } from "../chat_ui/ResponseMetrics";
 import { getProxyBaseUrl } from "@/components/networking";
 import NotificationManager from "@/components/molecules/notifications_manager";
+import { useTranslations } from "@/i18n";
 
 export async function makeAnthropicMessagesRequest(
   messages: MessageType[],

@@ -4,6 +4,7 @@ import { MCPTool, InputSchema, InputSchemaProperty } from "./types";
 import { Form, Select, Tooltip } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import NotificationsManager from "../molecules/notifications_manager";
+import { useTranslations } from "@/i18n";
 
 const isPlainObject = (value: unknown): value is Record<string, any> =>
   typeof value === "object" && value !== null && !Array.isArray(value);
@@ -90,6 +91,7 @@ function buildDefaultValue(prop?: InputSchemaProperty, overrideDefault?: any): a
 }
 
 const getInitialValueForField = (prop: InputSchemaProperty): any => {
+
   const defaultValue = buildDefaultValue(prop);
   if (prop.type === "object" || prop.type === "array") {
     const fallback = prop.type === "array" ? [] : {};

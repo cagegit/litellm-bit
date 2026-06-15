@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useRef, useState, useLayoutEffect } from "react";
 import { Tooltip, Skeleton, Popover } from "antd";
+import { useTranslations } from "@/i18n";
 import MessageManager from "@/components/molecules/message_manager";
 import {
   SettingOutlined,
@@ -133,6 +134,7 @@ const ChatPage: React.FC<ChatPageProps> = ({ accessToken, userRole, userId, user
   const searchParams = useSearchParams();
   const activeConversationId = searchParams.get("id");
   const { data: uiConfig } = useUIConfig();
+  const { t } = useTranslations("chat");
   const uiRoot =
     uiConfig?.server_root_path && uiConfig.server_root_path !== "/"
       ? uiConfig.server_root_path.replace(/\/+$/, "")
@@ -552,7 +554,7 @@ const ChatPage: React.FC<ChatPageProps> = ({ accessToken, userRole, userId, user
           autoFocus
           value={modelSearchText}
           onChange={(e) => setModelSearchText(e.target.value)}
-          placeholder="Search models..."
+          placeholder={t("searchModels")}
           style={{
             width: "100%",
             padding: "6px 10px",

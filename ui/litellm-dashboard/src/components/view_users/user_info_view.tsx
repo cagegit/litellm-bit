@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslations } from "@/i18n";
 import {
   Card,
   Text,
@@ -69,6 +70,7 @@ export default function UserInfoView({
   initialTab = 0,
   startInEditMode = false,
 }: UserInfoViewProps) {
+  const { t } = useTranslations('users');
   const [userData, setUserData] = useState<UserInfoV2Response | null>(null);
   const [teamDetails, setTeamDetails] = useState<TeamDisplayInfo[]>([]);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -318,9 +320,9 @@ export default function UserInfoView({
     return (
       <div className="p-4">
         <Button icon={ArrowLeftIcon} variant="light" onClick={onClose} className="mb-4">
-          Back to Users
+          {t('backToUsers')}
         </Button>
-        <Text>Loading user data...</Text>
+        <Text>{t('loadingUserData')}</Text>
       </div>
     );
   }
@@ -329,9 +331,9 @@ export default function UserInfoView({
     return (
       <div className="p-4">
         <Button icon={ArrowLeftIcon} variant="light" onClick={onClose} className="mb-4">
-          Back to Users
+          {t('backToUsers')}
         </Button>
-        <Text>User not found</Text>
+        <Text>{t('userNotFound')}</Text>
       </div>
     );
   }
@@ -402,7 +404,7 @@ export default function UserInfoView({
 
       <DeleteResourceModal
         isOpen={isDeleteModalOpen}
-        title="Delete User?"
+        title={t("users.deleteUserQuestion")}
         message="Are you sure you want to delete this user? This action cannot be undone."
         resourceInformationTitle="User Information"
         resourceInformation={[
@@ -424,8 +426,8 @@ export default function UserInfoView({
 
       <TabGroup defaultIndex={activeTab} onIndexChange={setActiveTab}>
         <TabList className="mb-4">
-          <Tab>Overview</Tab>
-          <Tab>Details</Tab>
+          <Tab>{t("users.overview")}</Tab>
+          <Tab>{t("users.details")}</Tab>
         </TabList>
 
         <TabPanels>
@@ -433,7 +435,7 @@ export default function UserInfoView({
           <TabPanel>
             <Grid numItems={1} numItemsSm={2} numItemsLg={3} className="gap-6">
               <Card>
-                <Text>Spend</Text>
+                <Text>{t("users.spend")}</Text>
                 <div className="mt-2">
                   <Title>${formatNumberWithCommas(userData.spend || 0, 4)}</Title>
                   <Text>
@@ -445,7 +447,7 @@ export default function UserInfoView({
 
               <Card>
                 <div className="flex justify-between items-center mb-2">
-                  <Text>Teams</Text>
+                  <Text>{t("users.teams")}</Text>
                   {isProxyAdmin && (
                     <Button icon={PlusIcon} variant="light" size="xs" onClick={handleOpenAddTeamModal}>
                       Add Team
@@ -458,8 +460,8 @@ export default function UserInfoView({
                       <Table>
                         <TableHead>
                           <TableRow>
-                            <TableHeaderCell>Team Name</TableHeaderCell>
-                            {isProxyAdmin && <TableHeaderCell className="text-right">Actions</TableHeaderCell>}
+                            <TableHeaderCell>{t("users.teamName")}</TableHeaderCell>
+                            {isProxyAdmin && <TableHeaderCell className="text-right">{t("users.actions")}</TableHeaderCell>}
                           </TableRow>
                         </TableHead>
                         <TableBody>
@@ -483,7 +485,7 @@ export default function UserInfoView({
                       </Table>
                     </div>
                   ) : (
-                    <Text>No teams</Text>
+                    <Text>{t("users.noTeams")}</Text>
                   )}
                   {!isTeamsExpanded && teamDetails.length > 20 && (
                     <Button variant="light" size="xs" className="mt-2" onClick={() => setIsTeamsExpanded(true)}>
@@ -499,12 +501,12 @@ export default function UserInfoView({
               </Card>
 
               <Card>
-                <Text>Personal Models</Text>
+                <Text>{t("users.personalModels")}</Text>
                 <div className="mt-2">
                   {userData.models?.length && userData.models?.length > 0 ? (
                     userData.models?.map((model, index) => <Text key={index}>{model}</Text>)
                   ) : (
-                    <Text>All proxy models</Text>
+                    <Text>{t("users.allProxyModels")}</Text>
                   )}
                 </div>
               </Card>
@@ -515,9 +517,9 @@ export default function UserInfoView({
           <TabPanel>
             <Card>
               <div className="flex justify-between items-center mb-4">
-                <Title>User Settings</Title>
+                <Title>{t("users.userSettings")}</Title>
                 {!isEditing && userRole && rolesWithWriteAccess.includes(userRole) && (
-                  <Button onClick={() => setIsEditing(true)}>Edit Settings</Button>
+                  <Button onClick={() => setIsEditing(true)}>{t("users.editSettings")}</Button>
                 )}
               </div>
 
@@ -536,7 +538,7 @@ export default function UserInfoView({
               ) : (
                 <div className="space-y-4">
                   <div>
-                    <Text className="font-medium">User ID</Text>
+                    <Text className="font-medium">{t("users.userId")}</Text>
                     <div className="flex items-center cursor-pointer">
                       <Text className="font-mono">{userData.user_id}</Text>
                       <AntdButton
@@ -554,32 +556,32 @@ export default function UserInfoView({
                   </div>
 
                   <div>
-                    <Text className="font-medium">Email</Text>
+                    <Text className="font-medium">{t("users.email")}</Text>
                     <Text>{userData.user_email || "Not Set"}</Text>
                   </div>
 
                   <div>
-                    <Text className="font-medium">User Alias</Text>
+                    <Text className="font-medium">{t("users.userAlias")}</Text>
                     <Text>{userData.user_alias || "Not Set"}</Text>
                   </div>
 
                   <div>
-                    <Text className="font-medium">Global Proxy Role</Text>
+                    <Text className="font-medium">{t("users.globalProxyRole")}</Text>
                     <Text>{userData.user_role || "Not Set"}</Text>
                   </div>
 
                   <div>
-                    <Text className="font-medium">Created</Text>
+                    <Text className="font-medium">{t("users.created")}</Text>
                     <Text>{userData.created_at ? new Date(userData.created_at).toLocaleString() : "Unknown"}</Text>
                   </div>
 
                   <div>
-                    <Text className="font-medium">Last Updated</Text>
+                    <Text className="font-medium">{t("users.lastUpdated")}</Text>
                     <Text>{userData.updated_at ? new Date(userData.updated_at).toLocaleString() : "Unknown"}</Text>
                   </div>
 
                   <div>
-                    <Text className="font-medium">Personal Models</Text>
+                    <Text className="font-medium">{t("users.personalModels")}</Text>
                     <div className="flex flex-wrap gap-2 mt-1">
                       {userData.models?.length && userData.models?.length > 0 ? (
                         userData.models?.map((model, index) => (
@@ -588,13 +590,13 @@ export default function UserInfoView({
                           </span>
                         ))
                       ) : (
-                        <Text>All proxy models</Text>
+                        <Text>{t("users.allProxyModels")}</Text>
                       )}
                     </div>
                   </div>
 
                   <div>
-                    <Text className="font-medium">Max Budget</Text>
+                    <Text className="font-medium">{t("users.maxBudget")}</Text>
                     <Text>
                       {userData.max_budget !== null && userData.max_budget !== undefined
                         ? `$${formatNumberWithCommas(userData.max_budget, 4)}`
@@ -603,12 +605,12 @@ export default function UserInfoView({
                   </div>
 
                   <div>
-                    <Text className="font-medium">Budget Reset</Text>
+                    <Text className="font-medium">{t("users.budgetReset")}</Text>
                     <Text>{getBudgetDurationLabel(userData.budget_duration ?? null)}</Text>
                   </div>
 
                   <div>
-                    <Text className="font-medium">Metadata</Text>
+                    <Text className="font-medium">{t("users.metadata")}</Text>
                     <pre className="bg-gray-100 p-2 rounded text-xs overflow-auto mt-1">
                       {JSON.stringify(userData.metadata || {}, null, 2)}
                     </pre>
@@ -630,7 +632,7 @@ export default function UserInfoView({
       {/* Delete Team Member Modal */}
       <DeleteResourceModal
         isOpen={isRemoveTeamModalOpen}
-        title="Remove from Team"
+        title={t("users.removeFromTeam")}
         alertMessage="Removing this user from the team will also delete any keys the user created for this team."
         message="Are you sure you want to remove this user from the team? This action cannot be undone."
         resourceInformationTitle="Team Membership"
@@ -646,7 +648,7 @@ export default function UserInfoView({
 
       {/* Add to Team Modal */}
       <Modal
-        title="Add User to Team"
+        title={t("users.addUserToTeam")}
         open={isAddTeamModalOpen}
         onCancel={() => setIsAddTeamModalOpen(false)}
         footer={null}
@@ -654,12 +656,12 @@ export default function UserInfoView({
         maskClosable={!isAddingTeam}
       >
         <Form layout="vertical" onFinish={handleAddTeamSubmit}>
-          <Form.Item label="Team" required>
+          <Form.Item label={t("users.team")} required>
             <AntdSelect
               showSearch
               value={selectedTeamId || undefined}
               onChange={setSelectedTeamId}
-              placeholder="Select a team"
+              placeholder={t("users.selectTeam")}
               filterOption={(input, option) => {
                 const team = availableTeamsForAdd.find((t) => t.team_id === option?.value);
                 if (!team) return false;
@@ -675,16 +677,16 @@ export default function UserInfoView({
             </AntdSelect>
           </Form.Item>
 
-          <Form.Item label="Member Role">
+          <Form.Item label={t("users.memberRole")}>
             <AntdSelect value={selectedRole} onChange={setSelectedRole}>
               <AntdSelect.Option value="user">
-                <Tooltip title="Can view team info, but not manage it">
+                <Tooltip title={t("users.canViewTeamInfoButNotManageIt")}>
                   <span className="font-medium">user</span>
                   <span className="ml-2 text-gray-500 text-sm">- Can view team info, but not manage it</span>
                 </Tooltip>
               </AntdSelect.Option>
               <AntdSelect.Option value="admin">
-                <Tooltip title="Can create team keys, add members, and manage settings">
+                <Tooltip title={t("users.canCreateTeamKeysAddMembersAndManageSettings")}>
                   <span className="font-medium">admin</span>
                   <span className="ml-2 text-gray-500 text-sm">
                     - Can create team keys, add members, and manage settings

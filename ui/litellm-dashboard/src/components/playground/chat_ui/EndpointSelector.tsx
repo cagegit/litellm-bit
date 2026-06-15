@@ -1,6 +1,7 @@
 import { Select } from "antd";
 import React from "react";
 import { ENDPOINT_OPTIONS } from "./chatConstants";
+import { useTranslations } from "@/i18n";
 
 interface EndpointSelectorProps {
   endpointType: string; // Accept string to avoid type conflicts
@@ -9,6 +10,8 @@ interface EndpointSelectorProps {
 }
 
 const EndpointSelector: React.FC<EndpointSelectorProps> = ({ endpointType, onEndpointChange, className }) => {
+  const { t } = useTranslations("playground");
+
   return (
     <div className={className}>
       <Select

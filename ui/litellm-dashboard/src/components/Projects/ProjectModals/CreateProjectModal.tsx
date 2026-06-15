@@ -1,4 +1,5 @@
 import { Modal, Form, Button, Typography } from "antd";
+import { useTranslations } from "@/i18n";
 import { FolderAddOutlined } from "@ant-design/icons";
 import MessageManager from "@/components/molecules/message_manager";
 import { useCreateProject, ProjectCreateParams } from "@/app/(dashboard)/hooks/projects/useCreateProject";
@@ -11,6 +12,7 @@ interface CreateProjectModalProps {
 }
 
 export function CreateProjectModal({ isOpen, onClose }: CreateProjectModalProps) {
+  const { t } = useTranslations("common");
   const [form] = Form.useForm<ProjectFormValues>();
   const createMutation = useCreateProject();
 
@@ -24,12 +26,12 @@ export function CreateProjectModal({ isOpen, onClose }: CreateProjectModalProps)
 
       createMutation.mutate(params, {
         onSuccess: () => {
-          MessageManager.success("Project created successfully");
+          MessageManager.success(t("projectCreated"));
           form.resetFields();
           onClose();
         },
         onError: (error) => {
-          MessageManager.error(error.message || "Failed to create project");
+          MessageManager.error(error.message || t("failedToCreateProject"));
         },
       });
     } catch (error) {

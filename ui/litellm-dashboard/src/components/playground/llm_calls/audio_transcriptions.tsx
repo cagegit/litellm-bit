@@ -1,6 +1,7 @@
 import openai from "openai";
 import { getProxyBaseUrl } from "@/components/networking";
 import NotificationManager from "@/components/molecules/notifications_manager";
+import { useTranslations } from "@/i18n";
 
 export async function makeOpenAIAudioTranscriptionRequest(
   audioFile: File,

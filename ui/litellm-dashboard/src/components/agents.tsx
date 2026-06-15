@@ -22,6 +22,7 @@ import { Agent, AgentKeyInfo } from "./agents/types";
 import { Team } from "./key_team_helpers/key_list";
 import { formatNumberWithCommas } from "@/utils/dataUtils";
 import TableIconActionButton from "./common_components/IconActionButton/TableIconActionButtons/TableIconActionButton";
+import { useTranslations } from "@/i18n";
 
 interface AgentsPanelProps {
   accessToken: string | null;
@@ -34,6 +35,8 @@ interface AgentsResponse {
 }
 
 const AgentsPanel: React.FC<AgentsPanelProps> = ({ accessToken, userRole, teams }) => {
+  const { t } = useTranslations("agents");
+
   const [agentsList, setAgentsList] = useState<Agent[]>([]);
   const [keyInfoMap, setKeyInfoMap] = useState<Record<string, AgentKeyInfo>>({});
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
@@ -152,7 +155,7 @@ const AgentsPanel: React.FC<AgentsPanelProps> = ({ accessToken, userRole, teams 
   return (
     <div className="w-full mx-auto flex-auto overflow-y-auto m-8 p-2">
       <div className="flex flex-col gap-2 mb-4">
-        <h1 className="text-2xl font-bold">Agents</h1>
+        <h1 className="text-2xl font-bold">{t("agents.title")}</h1>
         <p className="text-sm text-gray-600">
           List of A2A-spec agents that are available to be used in your organization. Go to AI Hub, to make agents
           public.
@@ -170,10 +173,10 @@ const AgentsPanel: React.FC<AgentsPanelProps> = ({ accessToken, userRole, teams 
               + Add New Agent
             </Button>
           )}
-          <Tooltip title="When enabled, only agents with reachable URLs are shown">
+          <Tooltip title={t("agents.whenEnabledOnlyAgentsWithReachableUrlsAreShown")}>
             <div className="flex items-center gap-2">
               <CheckCircleOutlined className={healthCheckEnabled ? "text-green-500" : "text-gray-400"} />
-              <span className="text-sm text-gray-600">Health Check</span>
+              <span className="text-sm text-gray-600">{t("agents.healthCheck")}</span>
               <Switch
                 size="small"
                 checked={healthCheckEnabled}
@@ -200,13 +203,13 @@ const AgentsPanel: React.FC<AgentsPanelProps> = ({ accessToken, userRole, teams 
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableHeaderCell>Agent Name</TableHeaderCell>
-                  <TableHeaderCell>Agent ID</TableHeaderCell>
-                  <TableHeaderCell>Spend (USD)</TableHeaderCell>
-                  <TableHeaderCell>Model</TableHeaderCell>
-                  <TableHeaderCell>Created</TableHeaderCell>
-                  <TableHeaderCell>Status</TableHeaderCell>
-                  {isAdmin && <TableHeaderCell>Actions</TableHeaderCell>}
+                  <TableHeaderCell>{t("agents.agentName")}</TableHeaderCell>
+                  <TableHeaderCell>{t("agents.agentId")}</TableHeaderCell>
+                  <TableHeaderCell>{t("agents.spendusd")}</TableHeaderCell>
+                  <TableHeaderCell>{t("agents.model")}</TableHeaderCell>
+                  <TableHeaderCell>{t("agents.created")}</TableHeaderCell>
+                  <TableHeaderCell>{t("agents.status")}</TableHeaderCell>
+                  {isAdmin && <TableHeaderCell>{t("agents.actions")}</TableHeaderCell>}
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -249,9 +252,9 @@ const AgentsPanel: React.FC<AgentsPanelProps> = ({ accessToken, userRole, teams 
                       </TableCell>
                       <TableCell>
                         {keyInfoMap[agent.agent_id]?.has_key ? (
-                          <Badge color="green">Active</Badge>
+                          <Badge color="green">{t("agents.active")}</Badge>
                         ) : (
-                          <Badge color="yellow">Needs Setup</Badge>
+                          <Badge color="yellow">{t("agents.needsSetup")}</Badge>
                         )}
                       </TableCell>
                       {isAdmin && (
@@ -281,16 +284,16 @@ const AgentsPanel: React.FC<AgentsPanelProps> = ({ accessToken, userRole, teams 
 
       {agentToDelete && (
         <Modal
-          title="Delete Agent"
+          title={t("agents.deleteAgent")}
           open={agentToDelete !== null}
           onOk={handleDeleteConfirm}
           onCancel={handleDeleteCancel}
           confirmLoading={isDeleting}
-          okText="Delete"
+          okText={t("agents.delete")}
           okButtonProps={{ danger: true }}
         >
           <p>Are you sure you want to delete agent: {agentToDelete.name}?</p>
-          <p>This action cannot be undone.</p>
+          <p>{t("agents.thisActionCannotBeUndone")}</p>
         </Modal>
       )}
     </div>

@@ -11,6 +11,7 @@ import {
   handleCodeInterpreterCall,
   handleCodeInterpreterOutput,
 } from "./code_interpreter_handler";
+import { useTranslations } from "@/i18n";
 
 export type { CodeInterpreterResult } from "./code_interpreter_handler";
 

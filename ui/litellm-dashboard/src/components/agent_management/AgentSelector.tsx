@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Select } from "antd";
 import { getAgentsList } from "../networking";
+import { useTranslations } from "@/i18n";
 
 interface Agent {
   agent_id: string;
@@ -26,9 +27,12 @@ const AgentSelector: React.FC<AgentSelectorProps> = ({
   value,
   className,
   accessToken,
-  placeholder = "Select agents",
+  placeholder: placeholderProp,
   disabled = false,
 }) => {
+  const { t } = useTranslations("agents");
+
+  const placeholder = placeholderProp ?? t("selectAgents");
   const [agents, setAgents] = useState<Agent[]>([]);
   const [accessGroups, setAccessGroups] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
@@ -126,7 +130,7 @@ const AgentSelector: React.FC<AgentSelectorProps> = ({
                   opacity: 0.8,
                 }}
               >
-                {opt.isAccessGroup ? "Access Group" : "Agent"}
+                {opt.isAccessGroup ? t("accessGroup") : t("agent")}
               </span>
             </div>
           </Select.Option>

@@ -1,3 +1,4 @@
+import { useTranslations } from "@/i18n";
 // Define the available test modes
 export const TEST_MODES = [
   { value: "chat", label: "Chat - /chat/completions" },

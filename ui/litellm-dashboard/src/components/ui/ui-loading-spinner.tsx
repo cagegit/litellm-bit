@@ -1,10 +1,13 @@
 import React, { useId } from "react";
 import { useSafeLayoutEffect } from "@/hooks/use-safe-layout-effect";
 import { cx } from "@/lib/cva.config";
+import { useTranslations } from "@/i18n";
 
 type LoadingSpinnerProps = React.SVGProps<SVGSVGElement>;
 
 export function UiLoadingSpinner({ className = "", ...props }: LoadingSpinnerProps) {
+  const { t } = useTranslations("common");
+
   const id = useId();
 
   useSafeLayoutEffect(() => {

@@ -4,6 +4,7 @@ import { WarningOutlined, InfoCircleOutlined, CopyOutlined } from "@ant-design/i
 import { testConnectionRequest } from "../networking";
 import { prepareModelAddRequest } from "./handle_add_model_submit";
 import NotificationsManager from "../molecules/notifications_manager";
+import { useTranslations } from "@/i18n";
 const { Text } = Typography;
 
 interface ModelConnectionTestProps {
@@ -23,6 +24,8 @@ const ModelConnectionTest: React.FC<ModelConnectionTestProps> = ({
   onClose,
   onTestComplete,
 }) => {
+  const { t } = useTranslations("models");
+
   const [error, setError] = React.useState<Error | string | null>(null);
   const [rawRequest, setRawRequest] = React.useState<any>(null);
   const [rawResponse, setRawResponse] = React.useState<any>(null);

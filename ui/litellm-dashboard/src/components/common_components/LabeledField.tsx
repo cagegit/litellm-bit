@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslations } from "@/i18n";
 import { Typography, Space } from "antd";
 import DefaultProxyAdminTag from "./DefaultProxyAdminTag";
 
@@ -21,9 +22,10 @@ export default function LabeledField({
   copyable = false,
   defaultUserIdCheck = false,
 }: LabeledFieldProps) {
+  const { t } = useTranslations("common");
   const isEmpty = !value;
   const isDefaultUser = defaultUserIdCheck && value === "default_user_id";
-  const displayValue = isEmpty ? "-" : value;
+  const displayValue = isEmpty ? t("noData") : value;
   const isCopyable = copyable && !isEmpty && !isDefaultUser;
 
   const valueEl = isDefaultUser ? (
@@ -31,7 +33,7 @@ export default function LabeledField({
   ) : (
     <Text
       strong
-      copyable={isCopyable ? { tooltips: [`Copy ${label}`, "Copied!"] } : false}
+      copyable={isCopyable ? { tooltips: [t("copy", { label }), t("copied")] } : false}
       ellipsis={truncate}
       style={truncate ? { maxWidth: 160, display: "block" } : undefined}
     >

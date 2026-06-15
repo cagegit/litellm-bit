@@ -7,6 +7,7 @@ import { Typography, Tag } from "antd";
 import { ToolOutlined, RightOutlined, DownOutlined } from "@ant-design/icons";
 import { ParsedTool } from "./types";
 import { ToolExpandedContent } from "./ToolExpandedContent";
+import { useTranslations } from "@/i18n";
 
 const { Text } = Typography;
 
@@ -15,6 +16,8 @@ interface ToolItemProps {
 }
 
 export function ToolItem({ tool }: ToolItemProps) {
+  const { t } = useTranslations("logs");
+
   const [expanded, setExpanded] = useState(false);
 
   return (

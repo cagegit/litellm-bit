@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useTranslations } from "@/i18n";
 import { Button, Drawer } from "antd";
 import { CheckOutlined, CopyOutlined, LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { Bot, Sparkles, Wrench } from "lucide-react";
@@ -39,6 +40,7 @@ interface TraceEventRowProps {
 }
 
 function TraceEventRow({ row, isSelected, onClick }: TraceEventRowProps) {
+  const { t } = useTranslations("logs");
   const isMcp = MCP_CALL_TYPES.includes(row.call_type);
   const isAgent = AGENT_CALL_TYPES.includes(row.call_type);
   const durationValue =
@@ -69,7 +71,10 @@ function TraceEventRow({ row, isSelected, onClick }: TraceEventRowProps) {
         </span>
       </div>
       <div className="text-[10px] text-slate-500 mt-0 flex items-center gap-1.5 font-mono">
-        <span>{durationValue}s</span>
+        <span>
+          {durationValue}
+          {t("seconds")}
+        </span>
         {row.spend ? (
           <>
             <span>·</span>
@@ -79,7 +84,9 @@ function TraceEventRow({ row, isSelected, onClick }: TraceEventRowProps) {
         {row.total_tokens ? (
           <>
             <span>·</span>
-            <span>{row.total_tokens} tok</span>
+            <span>
+              {row.total_tokens} {t("tok")}
+            </span>
           </>
         ) : null}
       </div>
@@ -108,6 +115,7 @@ export function LogDetailsDrawer({
   startTime,
 }: LogDetailsDrawerProps) {
   const isSessionMode = Boolean(sessionId);
+  const { t } = useTranslations("logs");
   const [selectedSessionRequestId, setSelectedSessionRequestId] = useState<string | null>(null);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [copiedLeftPanelId, setCopiedLeftPanelId] = useState(false);
@@ -203,9 +211,9 @@ export function LogDetailsDrawer({
   const metadata = currentLog?.metadata || {};
 
   // Status display values
-  const statusLabel = metadata.status === "failure" ? "Failure" : "Success";
+  const statusLabel = metadata.status === "failure" ? t("failure") : t("success");
   const statusColor = metadata.status === "failure" ? ("error" as const) : ("success" as const);
-  const environment = metadata?.user_api_key_team_alias || "default";
+  const environment = metadata?.user_api_key_team_alias || t("default");
 
   const totalSessionCost = sessionLogs.reduce((sum, row) => sum + (row.spend || 0), 0);
   const sessionStart =
@@ -259,7 +267,7 @@ export function LogDetailsDrawer({
             icon={<LeftOutlined />}
             onClick={() => setIsSidebarCollapsed(true)}
             className="absolute top-2 left-2 z-20 !bg-white !border !border-slate-200 !rounded-md"
-            aria-label="Collapse trace sidebar"
+            aria-label={t("collapseTraceSidebar")}
           />
         ) : (
           <Button
@@ -268,7 +276,7 @@ export function LogDetailsDrawer({
             icon={<RightOutlined />}
             onClick={() => setIsSidebarCollapsed(false)}
             className="absolute top-2 left-2 z-20 !bg-white !border !border-slate-200 !rounded-md"
-            aria-label="Expand trace sidebar"
+            aria-label={t("expandTraceSidebar")}
           />
         )}
         {!isSidebarCollapsed && (
@@ -277,7 +285,7 @@ export function LogDetailsDrawer({
               <div className="flex items-start justify-between gap-2">
                 <div>
                   <div className="text-[10px] uppercase tracking-wide text-slate-500">
-                    {isSessionMode ? "Session" : "Trace"}
+                    {isSessionMode ? t("session") : t("trace")}
                   </div>
                   <div className="font-mono text-[12px] text-slate-900 leading-tight flex items-center gap-1">
                     <span className="truncate">{leftPanelDisplayId}</span>
@@ -285,7 +293,7 @@ export function LogDetailsDrawer({
                       type="button"
                       onClick={handleCopyLeftPanelId}
                       className="text-slate-400 hover:text-slate-600"
-                      aria-label="Copy trace id"
+                      aria-label={t("copyTraceId")}
                     >
                       {copiedLeftPanelId ? (
                         <CheckOutlined className="text-[11px]" />
@@ -297,7 +305,7 @@ export function LogDetailsDrawer({
                 </div>
               </div>
               <div className="mt-1 text-[11px] text-slate-500 font-mono">
-                {logsForList.length} req
+                {logsForList.length} {t("req")}
                 {[
                   isSessionMode
                     ? llmCount
@@ -309,12 +317,11 @@ export function LogDetailsDrawer({
                     : logsForList.filter((row) => AGENT_CALL_TYPES.includes(row.call_type)).length,
                   isSessionMode ? mcpCount : logsForList.filter((row) => MCP_CALL_TYPES.includes(row.call_type)).length,
                 ].map((count, i) => {
-                  const label = [" LLM", " Agent", " MCP"][i];
+                  const labels = [t("llm"), t("agent"), t("mcp")];
                   return count > 0 ? (
-                    <span key={label}>
+                    <span key={i}>
                       <span className="mx-1.5">·</span>
-                      {count}
-                      {label}
+                      {count} {labels[i]}
                     </span>
                   ) : null;
                 })}
@@ -323,7 +330,8 @@ export function LogDetailsDrawer({
                 {isSessionMode && (
                   <>
                     <span className="mx-1.5">·</span>
-                    {sessionDurationSeconds}s
+                    {sessionDurationSeconds}
+                    {t("seconds")}
                   </>
                 )}
               </div>

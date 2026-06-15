@@ -12,6 +12,7 @@ import {
 } from "../vector_store_providers";
 import { fetchAvailableModels, ModelGroup } from "../playground/llm_calls/fetch_models";
 import NotificationsManager from "../molecules/notifications_manager";
+import { useTranslations } from "@/i18n";
 
 interface VectorStoreFormProps {
   isVisible: boolean;
@@ -28,6 +29,8 @@ const VectorStoreForm: React.FC<VectorStoreFormProps> = ({
   accessToken,
   credentials,
 }) => {
+  const { t } = useTranslations("vectorStore");
+
   const [form] = Form.useForm();
   const [metadataJson, setMetadataJson] = useState("{}");
   const [selectedProvider, setSelectedProvider] = useState("bedrock");

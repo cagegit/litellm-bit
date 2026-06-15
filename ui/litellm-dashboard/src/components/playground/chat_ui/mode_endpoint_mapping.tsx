@@ -1,3 +1,4 @@
+import { useTranslations } from "@/i18n";
 // litellmMapping.ts
 
 // Define an enum for the modes as returned in model_info

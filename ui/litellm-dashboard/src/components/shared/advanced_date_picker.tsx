@@ -1,4 +1,5 @@
 import { CalendarOutlined, ClockCircleOutlined } from "@ant-design/icons";
+import { useTranslations } from "@/i18n";
 import { Button, DateRangePickerValue, Text } from "@tremor/react";
 import moment from "moment";
 import React, { useCallback, useEffect, useRef, useState } from "react";
@@ -17,58 +18,61 @@ interface RelativeTimeOption {
   getValue: () => { from: Date; to: Date };
 }
 
-const relativeTimeOptions: RelativeTimeOption[] = [
-  {
-    label: "Today",
-    shortLabel: "today",
-    getValue: () => ({
-      from: moment().startOf("day").toDate(),
-      to: moment().endOf("day").toDate(),
-    }),
-  },
-  {
-    label: "Last 7 days",
-    shortLabel: "7d",
-    getValue: () => ({
-      from: moment().subtract(7, "days").startOf("day").toDate(),
-      to: moment().endOf("day").toDate(),
-    }),
-  },
-  {
-    label: "Last 30 days",
-    shortLabel: "30d",
-    getValue: () => ({
-      from: moment().subtract(30, "days").startOf("day").toDate(),
-      to: moment().endOf("day").toDate(),
-    }),
-  },
-  {
-    label: "Month to date",
-    shortLabel: "MTD",
-    getValue: () => ({
-      from: moment().startOf("month").toDate(),
-      to: moment().endOf("day").toDate(),
-    }),
-  },
-  {
-    label: "Year to date",
-    shortLabel: "YTD",
-    getValue: () => ({
-      from: moment().startOf("year").toDate(),
-      to: moment().endOf("day").toDate(),
-    }),
-  },
-];
-
 /**
  * Advanced Date Range Picker with dropdown, relative times, and custom inputs
  */
 const AdvancedDatePicker: React.FC<AdvancedDatePickerProps> = ({
   value,
   onValueChange,
-  label = "Select Time Range",
+  label: labelProp,
   showTimeRange = true,
 }) => {
+  const { t } = useTranslations("common");
+  const label = labelProp ?? t("selectTimeRange");
+
+  const relativeTimeOptions: RelativeTimeOption[] = [
+    {
+      label: t("today"),
+      shortLabel: "today",
+      getValue: () => ({
+        from: moment().startOf("day").toDate(),
+        to: moment().endOf("day").toDate(),
+      }),
+    },
+    {
+      label: t("last7Days"),
+      shortLabel: "7d",
+      getValue: () => ({
+        from: moment().subtract(7, "days").startOf("day").toDate(),
+        to: moment().endOf("day").toDate(),
+      }),
+    },
+    {
+      label: t("last30Days"),
+      shortLabel: "30d",
+      getValue: () => ({
+        from: moment().subtract(30, "days").startOf("day").toDate(),
+        to: moment().endOf("day").toDate(),
+      }),
+    },
+    {
+      label: t("monthToDate"),
+      shortLabel: "MTD",
+      getValue: () => ({
+        from: moment().startOf("month").toDate(),
+        to: moment().endOf("day").toDate(),
+      }),
+    },
+    {
+      label: t("yearToDate"),
+      shortLabel: "YTD",
+      getValue: () => ({
+        from: moment().startOf("year").toDate(),
+        to: moment().endOf("day").toDate(),
+      }),
+    },
+  ];
+
   const [isOpen, setIsOpen] = useState(false);
   const [tempValue, setTempValue] = useState<DateRangePickerValue>(value);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
@@ -114,15 +118,15 @@ const AdvancedDatePicker: React.FC<AdvancedDatePickerProps> = ({
     const end = moment(endDate, "YYYY-MM-DD");
 
     if (!start.isValid() || !end.isValid()) {
-      return { isValid: false, error: "Invalid date format" };
+      return { isValid: false, error: t("invalidDateFormat") };
     }
 
     if (end.isBefore(start)) {
-      return { isValid: false, error: "End date cannot be before start date" };
+      return { isValid: false, error: t("endDateBeforeStart") };
     }
 
     return { isValid: true, error: "" };
-  }, [startDate, endDate]);
+  }, [startDate, endDate, t]);
 
   const validation = validateDateRange();
 
@@ -154,15 +158,18 @@ const AdvancedDatePicker: React.FC<AdvancedDatePickerProps> = ({
     };
   }, [isOpen]);
 
-  const formatDisplayRange = useCallback((from: Date | undefined, to: Date | undefined) => {
-    if (!from || !to) return "Select date range";
+  const formatDisplayRange = useCallback(
+    (from: Date | undefined, to: Date | undefined) => {
+      if (!from || !to) return t("selectDateRange");
 
-    const formatDateTime = (date: Date) => {
-      return moment(date).format("D MMM, HH:mm");
-    };
+      const formatDateTime = (date: Date) => {
+        return moment(date).format("D MMM, HH:mm");
+      };
 
-    return `${formatDateTime(from)} - ${formatDateTime(to)}`;
-  }, []);
+      return `${formatDateTime(from)} - ${formatDateTime(to)}`;
+    },
+    [t],
+  );
 
   // CRITICAL: Apply the same date adjustment logic as the original component
   const adjustDateRange = useCallback((newValue: DateRangePickerValue): DateRangePickerValue => {
@@ -304,7 +311,7 @@ const AdvancedDatePicker: React.FC<AdvancedDatePickerProps> = ({
               {/* Left side - Relative time options */}
               <div className="w-1/2 border-r border-gray-200">
                 <div className="p-3 border-b border-gray-200">
-                  <span className="text-sm font-semibold text-gray-900">Relative time</span>
+                  <span className="text-sm font-semibold text-gray-900">{t("relativeTime")}</span>
                 </div>
                 <div className="h-[350px] overflow-y-auto">
                   {relativeTimeOptions.map((option) => {
@@ -338,14 +345,14 @@ const AdvancedDatePicker: React.FC<AdvancedDatePickerProps> = ({
                 <div className="p-3.5 border-b border-gray-200">
                   <div className="flex items-center gap-2">
                     <CalendarOutlined className="text-gray-600" />
-                    <span className="text-sm font-semibold text-gray-900">Start and end dates</span>
+                    <span className="text-sm font-semibold text-gray-900">{t("startAndEndDates")}</span>
                   </div>
                 </div>
 
                 <div className="p-6 space-y-6 pb-20">
                   {/* Start date */}
                   <div>
-                    <label className="text-sm text-gray-700 mb-1 block">Start date</label>
+                    <label className="text-sm text-gray-700 mb-1 block">{t("startDate")}</label>
                     <input
                       type="date"
                       value={startDate}
@@ -360,7 +367,7 @@ const AdvancedDatePicker: React.FC<AdvancedDatePickerProps> = ({
 
                   {/* End date */}
                   <div>
-                    <label className="text-sm text-gray-700 mb-1 block">End date</label>
+                    <label className="text-sm text-gray-700 mb-1 block">{t("endDate")}</label>
                     <input
                       type="date"
                       value={endDate}
@@ -394,11 +401,11 @@ const AdvancedDatePicker: React.FC<AdvancedDatePickerProps> = ({
                   {tempValue.from && tempValue.to && validation.isValid && (
                     <div className="bg-blue-50 p-3 rounded-md space-y-1">
                       <div className="text-xs text-blue-800">
-                        <span className="font-medium">From:</span>{" "}
+                        <span className="font-medium">{t("from")}:</span>{" "}
                         {moment(tempValue.from).format("MMM D, YYYY [at] HH:mm:ss")}
                       </div>
                       <div className="text-xs text-blue-800">
-                        <span className="font-medium">To:</span>{" "}
+                        <span className="font-medium">{t("to")}:</span>{" "}
                         {moment(tempValue.to).format("MMM D, YYYY [at] HH:mm:ss")}
                       </div>
                     </div>
@@ -408,10 +415,10 @@ const AdvancedDatePicker: React.FC<AdvancedDatePickerProps> = ({
                 <div className="absolute bottom-4 right-4">
                   <div className="flex gap-2">
                     <Button variant="secondary" onClick={handleCancel}>
-                      Cancel
+                      {t("cancel")}
                     </Button>
                     <Button onClick={handleApply} disabled={!tempValue.from || !tempValue.to || !validation.isValid}>
-                      Apply
+                      {t("apply")}
                     </Button>
                   </div>
                 </div>

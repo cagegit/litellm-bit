@@ -5,6 +5,7 @@ import { Flex, Table, Tabs, Tag, Tooltip, Typography, Button } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { BranchesOutlined, DeleteOutlined, EditOutlined, CodeOutlined } from "@ant-design/icons";
 import type { RoutingGroup } from "./types";
+import { useTranslations } from "@/i18n";
 
 const { Text, Paragraph } = Typography;
 
@@ -94,6 +95,8 @@ const SNIPPET_BLOCK_STYLE: React.CSSProperties = {
 };
 
 const RoutingGroupSnippet: React.FC<RoutingGroupSnippetProps> = ({ group, baseUrl }) => {
+  const { t } = useTranslations("settings");
+
   const snippets = {
     curl: buildCurlSnippet(group, baseUrl),
     python: buildPythonSnippet(group, baseUrl),
@@ -130,6 +133,7 @@ const RoutingGroupSnippet: React.FC<RoutingGroupSnippetProps> = ({ group, baseUr
 };
 
 const RoutingGroupsTable: React.FC<RoutingGroupsTableProps> = ({ groups, loading, onEdit, onDelete, proxyBaseUrl }) => {
+  const { t } = useTranslations("settings");
   const [expandedRowKeys, setExpandedRowKeys] = useState<React.Key[]>([]);
   const baseUrl = resolveBaseUrl(proxyBaseUrl);
 
@@ -174,7 +178,7 @@ const RoutingGroupsTable: React.FC<RoutingGroupsTableProps> = ({ groups, loading
       align: "right",
       render: (_, group) => (
         <Flex justify="flex-end" align="center" gap={8}>
-          <Tooltip title="Edit">
+          <Tooltip title={t("settings.edit")}>
             <Button
               type="text"
               icon={<EditOutlined />}
@@ -184,7 +188,7 @@ const RoutingGroupsTable: React.FC<RoutingGroupsTableProps> = ({ groups, loading
               }}
             />
           </Tooltip>
-          <Tooltip title="Delete">
+          <Tooltip title={t("settings.delete")}>
             <Button
               type="text"
               danger
@@ -214,7 +218,7 @@ const RoutingGroupsTable: React.FC<RoutingGroupsTableProps> = ({ groups, loading
           <div className="bg-gray-50 border border-gray-200 rounded-md p-4 my-2">
             <Flex align="center" gap={8} className="mb-2">
               <CodeOutlined className="text-blue-500" />
-              <Text strong>How routing works for this group</Text>
+              <Text strong>{t("settings.howRoutingWorksForThisGroup")}</Text>
             </Flex>
             <Paragraph className="text-sm text-gray-600 mb-3">
               Callers request any model in the group by name — LiteLLM picks a deployment behind the scenes using the{" "}

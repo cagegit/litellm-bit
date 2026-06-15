@@ -12,6 +12,7 @@ import {
 import { AUTH_TYPE, MCPServer, MCPTool, handleTransport } from "../mcp_tools/types";
 import MessageManager from "@/components/molecules/message_manager";
 import { useUserMcpOAuthFlow } from "@/hooks/useUserMcpOAuthFlow";
+import { useTranslations } from "@/i18n";
 
 // ── OAuth2 connect button ─────────────────────────────────────────────────────
 // Wraps useUserMcpOAuthFlow so each server card can hold its own hook instance.
@@ -30,6 +31,7 @@ const OAuth2ConnectButton: React.FC<OAuth2ConnectButtonProps> = ({
   variant = "badge",
 }) => {
   const name = server.server_name ?? server.alias ?? server.server_id;
+  const { t } = useTranslations("chat");
   const { startOAuthFlow, status } = useUserMcpOAuthFlow({
     accessToken,
     serverId: server.server_id,
@@ -47,7 +49,7 @@ const OAuth2ConnectButton: React.FC<OAuth2ConnectButtonProps> = ({
         onClick={startOAuthFlow}
         style={{ borderRadius: 8, fontWeight: 600, height: 38, minWidth: 110 }}
       >
-        {loading ? "Connecting…" : "Connect"}
+        {loading ? t("connecting") : t("connect")}
       </Button>
     );
   }
@@ -70,7 +72,7 @@ const OAuth2ConnectButton: React.FC<OAuth2ConnectButtonProps> = ({
         whiteSpace: "nowrap",
       }}
     >
-      {loading ? "Connecting…" : "Connect"}
+      {loading ? t("connecting") : t("connect")}
     </span>
   );
 };
@@ -135,6 +137,7 @@ const MCPAppsPanel: React.FC<Props> = ({ accessToken, selectedServers, onChange 
   }, [onChange]);
 
   const nameOf = (s: MCPServer) => s.server_name ?? s.alias ?? s.server_id;
+  const { t } = useTranslations("chat");
 
   useEffect(() => {
     let cancelled = false;
@@ -228,7 +231,7 @@ const MCPAppsPanel: React.FC<Props> = ({ accessToken, selectedServers, onChange 
       const idToFetch = serverId ?? serverName;
       const result = await listMCPTools(accessToken, idToFetch);
       if (result?.error) {
-        MessageManager.warning(`Could not load tools for ${serverName}`);
+        MessageManager.warning(t("couldNotLoadTools", { serverName }));
         return;
       }
       // Use the ref so we read the most up-to-date list; guard against duplicates
@@ -237,7 +240,7 @@ const MCPAppsPanel: React.FC<Props> = ({ accessToken, selectedServers, onChange 
         onChange([...selectedServersRef.current, serverName]);
       }
     } catch {
-      MessageManager.warning(`Could not load tools for ${serverName}`);
+      MessageManager.warning(t("couldNotLoadTools", { serverName }));
     } finally {
       setTogglingOn((prev) => {
         const next = new Set(prev);
@@ -313,7 +316,7 @@ const MCPAppsPanel: React.FC<Props> = ({ accessToken, selectedServers, onChange 
           }}
         >
           <ArrowLeftOutlined style={{ fontSize: 12 }} />
-          Back
+          {t("back")}
         </button>
 
         {/* Avatar + name + connect */}
@@ -321,7 +324,7 @@ const MCPAppsPanel: React.FC<Props> = ({ accessToken, selectedServers, onChange 
           {detailServer.mcp_info?.logo_url ? (
             <img
               src={detailServer.mcp_info.logo_url}
-              alt={`${name} logo`}
+              alt={t("logoAlt", { name })}
               style={{
                 width: 64,
                 height: 64,
@@ -356,7 +359,7 @@ const MCPAppsPanel: React.FC<Props> = ({ accessToken, selectedServers, onChange 
           </div>
           <div style={{ flex: 1 }}>
             <h2 style={{ margin: "0 0 4px", fontSize: 22, fontWeight: 700, color: "#111827" }}>{name}</h2>
-            <p style={{ margin: 0, fontSize: 14, color: "#6b7280" }}>{detailServer.description ?? "MCP server"}</p>
+            <p style={{ margin: 0, fontSize: 14, color: "#6b7280" }}>{detailServer.description ?? t("mcpServer")}</p>
           </div>
           {detailServer.auth_type === AUTH_TYPE.OAUTH2 ? (
             oauthConnected.has(detailServer.server_id) ? (
@@ -378,7 +381,7 @@ const MCPAppsPanel: React.FC<Props> = ({ accessToken, selectedServers, onChange 
                 }}
                 style={{ borderRadius: 8, fontWeight: 600, height: 38, minWidth: 110 }}
               >
-                Disconnect
+                {t("disconnect")}
               </Button>
             ) : (
               <OAuth2ConnectButton
@@ -397,18 +400,18 @@ const MCPAppsPanel: React.FC<Props> = ({ accessToken, selectedServers, onChange 
               onClick={() => handleToggle(name, !isConnected, detailServer.server_id)}
               style={{ borderRadius: 8, fontWeight: 600, height: 38, minWidth: 110 }}
             >
-              {isConnected ? "Disconnect" : "Connect"}
+              {isConnected ? t("disconnect") : t("connect")}
             </Button>
           )}
         </div>
 
         {/* Info table */}
-        <h3 style={{ margin: "0 0 12px", fontSize: 15, fontWeight: 600, color: "#111827" }}>Information</h3>
+        <h3 style={{ margin: "0 0 12px", fontSize: 15, fontWeight: 600, color: "#111827" }}>{t("information")}</h3>
         <div style={{ border: "1px solid #e5e7eb", borderRadius: 10, overflow: "hidden", marginBottom: 28 }}>
           {[
-            ["Server ID", detailServer.server_id],
-            ["Transport", handleTransport(detailServer.transport, detailServer.spec_path)],
-            ["Status", isConnected ? "Connected" : "Not connected"],
+            [t("serverId"), detailServer.server_id],
+            [t("transport"), handleTransport(detailServer.transport, detailServer.spec_path)],
+            [t("status"), isConnected ? t("connected") : t("notConnected")],
           ]
             .filter(([, v]) => v)
             .map(([label, value], i, arr) => (
@@ -429,7 +432,7 @@ const MCPAppsPanel: React.FC<Props> = ({ accessToken, selectedServers, onChange 
 
         {/* Tools section */}
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
-          <h3 style={{ margin: 0, fontSize: 15, fontWeight: 600, color: "#111827" }}>Available Tools</h3>
+          <h3 style={{ margin: 0, fontSize: 15, fontWeight: 600, color: "#111827" }}>{t("availableTools")}</h3>
           {!loadingTools && (
             <span
               style={{
@@ -450,7 +453,7 @@ const MCPAppsPanel: React.FC<Props> = ({ accessToken, selectedServers, onChange 
             <Spin size="small" />
           </div>
         ) : detailTools.length === 0 ? (
-          <div style={{ color: "#9ca3af", fontSize: 13, padding: "8px 0" }}>No tools available</div>
+          <div style={{ color: "#9ca3af", fontSize: 13, padding: "8px 0" }}>{t("noToolsAvailable")}</div>
         ) : (
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {detailTools.map((tool) => (
@@ -496,7 +499,7 @@ const MCPAppsPanel: React.FC<Props> = ({ accessToken, selectedServers, onChange 
       >
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-            <h2 style={{ margin: 0, fontSize: 18, fontWeight: 600, color: "#111827" }}>MCP Servers</h2>
+            <h2 style={{ margin: 0, fontSize: 18, fontWeight: 600, color: "#111827" }}>{t("mcpServers")}</h2>
             <span
               style={{
                 fontSize: 10,
@@ -509,29 +512,27 @@ const MCPAppsPanel: React.FC<Props> = ({ accessToken, selectedServers, onChange 
                 textTransform: "uppercase",
               }}
             >
-              Beta
+              {t("beta")}
             </span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <p style={{ margin: 0, fontSize: 13, color: "#6b7280" }}>
-              Browse tools, authenticate once, use in chat — no setup needed.
-            </p>
+            <p style={{ margin: 0, fontSize: 13, color: "#6b7280" }}>{t("browseDescription")}</p>
             {loadingCounts ? (
               <span style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 12, color: "#9ca3af" }}>
                 <Spin size="small" style={{ transform: "scale(0.7)" }} />
-                Loading tools...
+                {t("loadingTools")}
               </span>
             ) : totalTools > 0 ? (
               <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 12, color: "#6b7280" }}>
                 <ToolOutlined style={{ fontSize: 11 }} />
-                {totalTools} tool{totalTools !== 1 ? "s" : ""} available
+                {t("toolsAvailable", { count: totalTools })}
               </span>
             ) : null}
           </div>
         </div>
         <Input
           prefix={<SearchOutlined style={{ color: "#9ca3af", fontSize: 13 }} />}
-          placeholder="Search servers..."
+          placeholder={t("searchServers")}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           allowClear
@@ -558,7 +559,7 @@ const MCPAppsPanel: React.FC<Props> = ({ accessToken, selectedServers, onChange 
               marginBottom: -1,
             }}
           >
-            {tab === "all" ? "All" : `Connected${connectedCount > 0 ? ` (${connectedCount})` : ""}`}
+            {tab === "all" ? t("all") : t("connected") + (connectedCount > 0 ? ` (${connectedCount})` : "")}
           </button>
         ))}
       </div>
@@ -571,10 +572,10 @@ const MCPAppsPanel: React.FC<Props> = ({ accessToken, selectedServers, onChange 
       ) : filtered.length === 0 ? (
         <div style={{ textAlign: "center", color: "#9ca3af", fontSize: 13, padding: "48px 12px" }}>
           {servers.length === 0
-            ? "No MCP servers configured. Add servers in Tools → MCP Servers."
+            ? t("noServersConfigured")
             : activeTab === "connected"
-              ? "No servers connected yet."
-              : "No servers match your search."}
+              ? t("noServersConnected")
+              : t("noServersMatch")}
         </div>
       ) : (
         <div
@@ -621,7 +622,7 @@ const MCPAppsPanel: React.FC<Props> = ({ accessToken, selectedServers, onChange 
                 {server.mcp_info?.logo_url ? (
                   <img
                     src={server.mcp_info.logo_url}
-                    alt={`${name} logo`}
+                    alt={t("logoAlt", { name })}
                     style={{
                       width: 38,
                       height: 38,
@@ -678,7 +679,7 @@ const MCPAppsPanel: React.FC<Props> = ({ accessToken, selectedServers, onChange 
                     }}
                   >
                     <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                      {server.description ?? "MCP server"}
+                      {server.description ?? t("mcpServer")}
                     </span>
                     {count !== undefined ? (
                       count > 0 ? (

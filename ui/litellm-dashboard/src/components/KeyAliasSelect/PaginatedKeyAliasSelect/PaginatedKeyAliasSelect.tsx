@@ -1,4 +1,5 @@
 import { useInfiniteKeyAliases } from "@/app/(dashboard)/hooks/keys/useKeyAliases";
+import { useTranslations } from "@/i18n";
 import { LoadingOutlined } from "@ant-design/icons";
 import { useDebouncedState } from "@tanstack/react-pacer/debouncer";
 import { Select } from "antd";
@@ -21,7 +22,7 @@ const DEBOUNCE_MS = 300;
 export const PaginatedKeyAliasSelect = ({
   value,
   onChange,
-  placeholder = "Select a key alias",
+  placeholder,
   style,
   pageSize = 50,
   allowClear = true,
@@ -32,6 +33,9 @@ export const PaginatedKeyAliasSelect = ({
   const [debouncedSearch, setDebouncedSearch] = useDebouncedState("", {
     wait: DEBOUNCE_MS,
   });
+
+  const { t } = useTranslations("common");
+  const displayPlaceholder = placeholder ?? t("selectKeyAlias");
 
   const teamId = allFilters?.["Team ID"] || undefined;
 
@@ -80,7 +84,7 @@ export const PaginatedKeyAliasSelect = ({
     <Select
       value={value || undefined}
       onChange={handleChange}
-      placeholder={placeholder}
+      placeholder={displayPlaceholder}
       style={{ width: "100%", ...style }}
       allowClear={allowClear}
       disabled={disabled}
@@ -90,7 +94,7 @@ export const PaginatedKeyAliasSelect = ({
       searchValue={searchInput}
       onPopupScroll={handlePopupScroll}
       loading={isLoading}
-      notFoundContent={isLoading ? <LoadingOutlined spin /> : "No key aliases found"}
+      notFoundContent={isLoading ? <LoadingOutlined spin /> : t("noKeyAliasesFound")}
       options={options}
       popupRender={(menu) => (
         <>

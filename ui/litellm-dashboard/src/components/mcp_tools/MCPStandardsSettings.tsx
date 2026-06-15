@@ -1,6 +1,7 @@
 "use client";
 
 import { MCPServer } from "./types";
+import { useTranslations } from "@/i18n";
 
 export interface RequiredFieldDef {
   key: string;

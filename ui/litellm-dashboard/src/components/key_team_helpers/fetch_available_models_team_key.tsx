@@ -1,4 +1,5 @@
 import { modelAvailableCall } from "../networking";
+import { useTranslations } from "@/i18n";
 
 export const fetchAvailableModelsForTeamOrKey = async (
   userID: string,

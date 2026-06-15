@@ -6,6 +6,7 @@ import { Fallbacks } from "../Settings/RouterSettings/Fallbacks/AddFallbacks";
 import { FallbackSelectionForm } from "../Settings/RouterSettings/Fallbacks/FallbackSelectionForm";
 import { FallbackGroup } from "../Settings/RouterSettings/Fallbacks/FallbackGroupConfig";
 import { fetchAvailableModels, ModelGroup } from "../playground/llm_calls/fetch_models";
+import { useTranslations } from "@/i18n";
 
 export interface RouterSettingsAccordionValue {
   router_settings: {
@@ -50,6 +51,7 @@ const RouterSettingsAccordion = forwardRef<RouterSettingsAccordionRef, RouterSet
     const [routingStrategyDescriptions, setRoutingStrategyDescriptions] = useState<{ [key: string]: string }>({});
     const isInternalUpdateRef = useRef(false);
     const lastInitializedValueRef = useRef<string | null>(null);
+    const { t } = useTranslations("common");
 
     // Convert fallbacks format to groups format
     const fallbacksToGroups = (fallbacks: Fallbacks): FallbackGroup[] => {
@@ -347,8 +349,8 @@ const RouterSettingsAccordion = forwardRef<RouterSettingsAccordionRef, RouterSet
       <div className="w-full">
         <TabGroup className="w-full">
           <TabList variant="line" defaultValue="1" className="px-8 pt-4">
-            <Tab value="1">Loadbalancing</Tab>
-            <Tab value="2">Fallbacks</Tab>
+            <Tab value="1">{t("loadbalancing")}</Tab>
+            <Tab value="2">{t("fallbacks")}</Tab>
           </TabList>
           <TabPanels className="px-8 py-6">
             <TabPanel>

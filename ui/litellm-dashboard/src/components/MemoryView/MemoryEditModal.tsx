@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Form, Input, Modal, Typography } from "antd";
+import { useTranslations } from "@/i18n";
 import type { MemoryRow } from "../networking";
 
 const { Text } = Typography;
@@ -15,6 +16,7 @@ interface MemoryEditModalProps {
 }
 
 export const MemoryEditModal: React.FC<MemoryEditModalProps> = ({ open, mode, initialRow, onClose, onSave }) => {
+  const { t } = useTranslations("memoryView");
   const [form] = Form.useForm();
   const [submitting, setSubmitting] = useState(false);
 
@@ -45,46 +47,46 @@ export const MemoryEditModal: React.FC<MemoryEditModalProps> = ({ open, mode, in
   return (
     <Modal
       open={open}
-      title={mode === "create" ? "Create memory" : `Edit ${initialRow?.key ?? ""}`}
+      title={mode === "create" ? t("createMemory") : `${t("edit")} ${initialRow?.key ?? ""}`}
       onCancel={() => {
         form.resetFields();
         onClose();
       }}
       onOk={handleOk}
-      okText={mode === "create" ? "Create" : "Save"}
+      okText={mode === "create" ? t("create") : t("save")}
       confirmLoading={submitting}
       width={640}
       destroyOnClose
     >
       <Form form={form} layout="vertical">
         <Form.Item
-          label="Key"
+          label={t("key")}
           name="key"
-          rules={[{ required: true, message: "Key is required" }]}
-          tooltip="Globally unique — two memories cannot share a key. Namespace your own keys if you need per-user isolation (e.g. user:123:notes)."
+          rules={[{ required: true, message: t("keyRequired") }]}
+          tooltip={t("keyTooltip")}
         >
-          <Input placeholder="e.g. user_role" disabled={mode === "edit"} />
+          <Input placeholder={t("keyPlaceholder")} disabled={mode === "edit"} />
         </Form.Item>
         <Form.Item
-          label="Value"
+          label={t("value")}
           name="value"
-          rules={[{ required: true, message: "Value is required" }]}
-          tooltip="Markdown/text injected into LLM context. Plain strings are fine."
+          rules={[{ required: true, message: t("valueRequired") }]}
+          tooltip={t("valueTooltip")}
         >
-          <Input.TextArea rows={8} placeholder="What the agent should remember…" />
+          <Input.TextArea rows={8} placeholder={t("valuePlaceholder")} />
         </Form.Item>
         <Form.Item
           label={
             <span>
-              Metadata <Text type="secondary">(optional JSON)</Text>
+              {t("metadata")} <Text type="secondary">{t("optionalJson")}</Text>
             </span>
           }
           name="metadata"
-          tooltip="Optional structured metadata — must be valid JSON if provided."
+          tooltip={t("metadataTooltip")}
         >
           <Input.TextArea
             rows={4}
-            placeholder='{"tags": ["example"]}'
+            placeholder={t("metadataPlaceholder")}
             style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace" }}
           />
         </Form.Item>

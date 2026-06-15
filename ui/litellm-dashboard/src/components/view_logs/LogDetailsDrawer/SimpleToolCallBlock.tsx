@@ -5,6 +5,7 @@
 
 import { Typography } from "antd";
 import { ToolCall } from "./prettyMessagesTypes";
+import { useTranslations } from "@/i18n";
 
 const { Text } = Typography;
 
@@ -14,6 +15,8 @@ interface SimpleToolCallBlockProps {
 }
 
 export function SimpleToolCallBlock({ tool, compact = false }: SimpleToolCallBlockProps) {
+  const { t } = useTranslations("logs");
+
   return (
     <div
       style={{

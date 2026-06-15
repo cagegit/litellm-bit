@@ -11,6 +11,7 @@ import {
 } from "@ant-design/icons";
 import { Badge, Select } from "antd";
 import React from "react";
+import { useTranslations } from "@/i18n";
 export type UsageOption =
   | "global"
   | "my-usage"

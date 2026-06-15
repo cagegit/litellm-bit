@@ -3,16 +3,17 @@ import { useOrganization } from "@/app/(dashboard)/hooks/organizations/useOrgani
 import { useTeam } from "@/app/(dashboard)/hooks/teams/useTeams";
 import { useCurrentUser } from "@/app/(dashboard)/hooks/users/useCurrentUser";
 import { Select, Skeleton, Tooltip, type SelectProps } from "antd";
+import { useTranslations } from "@/i18n";
 import { Organization, Team } from "../networking";
 import { splitWildcardModels } from "./modelUtils";
 
 const MODEL_SELECT_ALL_PROXY_MODELS_SPECIAL_VALUE = {
-  label: "All Proxy Models",
+  label: "all-proxy-models-label", // replaced below
   value: "all-proxy-models",
 } as const;
 
 const MODEL_SELECT_NO_DEFAULT_MODELS_SPECIAL_VALUE = {
-  label: "No Default Models",
+  label: "no-default-models-label", // replaced below
   value: "no-default-models",
 } as const;
 
@@ -51,7 +52,6 @@ const contextFilters: Record<ModelSelectProps["context"], (args: FilterContextAr
     if (options?.includeUserModels) return userModels;
     return [];
   },
-
   team: ({ allProxyModels, selectedOrganization, userModels }) => {
     if (selectedOrganization) {
       if (
@@ -62,14 +62,11 @@ const contextFilters: Record<ModelSelectProps["context"], (args: FilterContextAr
       }
       return allProxyModels.filter((model) => selectedOrganization.models.includes(model));
     }
-
     return allProxyModels ?? [];
   },
-
   organization: ({ allProxyModels }) => {
     return allProxyModels;
   },
-
   global: ({ allProxyModels }) => {
     return allProxyModels;
   },
@@ -84,14 +81,13 @@ const filterModels = (
     (model) => model.id,
   );
   if (ctx.options?.showAllProxyModelsOverride) return deduplicatedProxyModels;
-
   const filterFn = contextFilters[ctx.context];
   if (!filterFn) return [];
-
   return filterFn({ allProxyModels: deduplicatedProxyModels, ...extra, options: ctx.options });
 };
 
 export const ModelSelect = (props: ModelSelectProps) => {
+  const { t } = useTranslations("models");
   const { teamID, organizationID, options, context, dataTestId, value = [], onChange, style } = props;
   const { includeUserModels, showAllTeamModelsOption, showAllProxyModelsOverride, includeSpecialOptions } =
     options || {};
@@ -119,7 +115,6 @@ export const ModelSelect = (props: ModelSelectProps) => {
 
   const handleChange = (values: string[]) => {
     const specialValues = values.filter(isSpecialOption);
-
     let finalValues: string[];
     if (specialValues.length > 0) {
       const lastSelectedSpecial = specialValues[specialValues.length - 1];
@@ -127,7 +122,6 @@ export const ModelSelect = (props: ModelSelectProps) => {
     } else {
       finalValues = values;
     }
-
     onChange(finalValues);
   };
 
@@ -148,13 +142,13 @@ export const ModelSelect = (props: ModelSelectProps) => {
         ...(includeSpecialOptions
           ? [
               {
-                label: <span>Special Options</span>,
-                title: "Special Options",
+                label: <span>{t("specialOptions")}</span>,
+                title: t("specialOptions"),
                 options: [
                   ...(shouldShowAllProxyModels
                     ? [
                         {
-                          label: <span>All Proxy Models</span>,
+                          label: <span>{t("allProxyModels")}</span>,
                           value: MODEL_SELECT_ALL_PROXY_MODELS_SPECIAL_VALUE.value,
                           disabled:
                             value.length > 0 &&
@@ -166,7 +160,7 @@ export const ModelSelect = (props: ModelSelectProps) => {
                       ]
                     : []),
                   {
-                    label: <span>No Default Models</span>,
+                    label: <span>{t("noDefaultModels")}</span>,
                     value: MODEL_SELECT_NO_DEFAULT_MODELS_SPECIAL_VALUE.value,
                     disabled:
                       value.length > 0 &&
@@ -180,14 +174,13 @@ export const ModelSelect = (props: ModelSelectProps) => {
         ...(wildcard.length > 0
           ? [
               {
-                label: <span>Wildcard Options</span>,
-                title: "Wildcard Options",
+                label: <span>{t("wildcardOptions")}</span>,
+                title: t("wildcardOptions"),
                 options: wildcard.map((model) => {
                   const provider = model.replace("/*", "");
                   const capitalizedProvider = provider.charAt(0).toUpperCase() + provider.slice(1);
-
                   return {
-                    label: <span>{`All ${capitalizedProvider} models`}</span>,
+                    label: <span>{t("allProviderModels", { provider: capitalizedProvider })}</span>,
                     value: model,
                     disabled: hasSpecialOptionSelected,
                   };
@@ -196,8 +189,8 @@ export const ModelSelect = (props: ModelSelectProps) => {
             ]
           : []),
         {
-          label: <span>Models</span>,
-          title: "Models",
+          label: <span>{t("models")}</span>,
+          title: t("models"),
           options: regular.map((model) => ({
             label: <span>{model}</span>,
             value: model,
@@ -206,7 +199,7 @@ export const ModelSelect = (props: ModelSelectProps) => {
         },
       ]}
       mode="multiple"
-      placeholder="Select Models"
+      placeholder={t("selectModels")}
       allowClear
       maxTagCount="responsive"
       maxTagPlaceholder={(omittedValues) => (
@@ -214,7 +207,7 @@ export const ModelSelect = (props: ModelSelectProps) => {
           styles={{ root: { pointerEvents: "none" } }}
           title={omittedValues.map(({ value }) => value).join(", ")}
         >
-          <span>+{omittedValues.length} more</span>
+          <span>+{omittedValues.length} {t("more")}</span>
         </Tooltip>
       )}
     />

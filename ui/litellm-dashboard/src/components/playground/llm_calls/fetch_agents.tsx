@@ -1,6 +1,7 @@
 // fetch_agents.tsx
 
 import { getProxyBaseUrl, getGlobalLitellmHeaderName, modelInfoCall } from "../../networking";
+import { useTranslations } from "@/i18n";
 
 export interface Agent {
   agent_id: string;

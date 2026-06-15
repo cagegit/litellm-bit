@@ -14,6 +14,7 @@ import { getGuardrailLogoAndName } from "./guardrails/guardrail_info_helpers";
 import { CustomCodeModal } from "./guardrails/custom_code";
 import GuardrailGarden from "./guardrails/guardrail_garden";
 import { TeamGuardrailsTab } from "./guardrails/TeamGuardrailsTab";
+import { useTranslations } from "@/i18n";
 
 interface GuardrailsPanelProps {
   accessToken: string | null;
@@ -47,6 +48,7 @@ const GuardrailsPanel: React.FC<GuardrailsPanelProps> = ({ accessToken, userRole
   const [guardrailToDelete, setGuardrailToDelete] = useState<Guardrail | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedGuardrailId, setSelectedGuardrailId] = useState<string | null>(null);
+  const { t } = useTranslations("common");
   const isAdmin = userRole ? isAdminRole(userRole) : false;
 
   const fetchGuardrails = async () => {
@@ -108,11 +110,11 @@ const GuardrailsPanel: React.FC<GuardrailsPanelProps> = ({ accessToken, userRole
     setIsDeleting(true);
     try {
       await deleteGuardrailCall(accessToken, guardrailToDelete.guardrail_id);
-      NotificationsManager.success(`Guardrail "${guardrailToDelete.guardrail_name}" deleted successfully`);
+      NotificationsManager.success(t("guardrailDeletedSuccessfully", { name: guardrailToDelete.guardrail_name ?? "" }));
       await fetchGuardrails();
     } catch (error) {
       console.error("Error deleting guardrail:", error);
-      NotificationsManager.fromBackend("Failed to delete guardrail");
+      NotificationsManager.fromBackend(t("failedToDeleteGuardrail"));
     } finally {
       setIsDeleting(false);
       setIsDeleteModalOpen(false);
@@ -139,12 +141,12 @@ const GuardrailsPanel: React.FC<GuardrailsPanelProps> = ({ accessToken, userRole
             ? [
                 {
                   key: "garden",
-                  label: "Guardrail Garden",
+                  label: t("guardrailGarden"),
                   children: <GuardrailGarden accessToken={accessToken} onGuardrailCreated={handleSuccess} />,
                 },
                 {
                   key: "guardrails",
-                  label: "Guardrails",
+                  label: t("guardrails"),
                   children: (
                     <>
                       <div className="flex justify-between items-center mb-4">
@@ -154,13 +156,13 @@ const GuardrailsPanel: React.FC<GuardrailsPanelProps> = ({ accessToken, userRole
                               {
                                 key: "provider",
                                 icon: <PlusOutlined />,
-                                label: "Add Provider Guardrail",
+                                label: t("addProviderGuardrail"),
                                 onClick: handleAddGuardrail,
                               },
                               {
                                 key: "custom_code",
                                 icon: <CodeOutlined />,
-                                label: "Create Custom Code Guardrail",
+                                label: t("createCustomCodeGuardrail"),
                                 onClick: handleAddCustomCodeGuardrail,
                               },
                             ],
@@ -169,7 +171,7 @@ const GuardrailsPanel: React.FC<GuardrailsPanelProps> = ({ accessToken, userRole
                           disabled={!accessToken}
                         >
                           <Button disabled={!accessToken}>
-                            + Add New Guardrail <DownOutlined className="ml-2" />
+                            {t("addNewGuardrail")} <DownOutlined className="ml-2" />
                           </Button>
                         </Dropdown>
                       </div>
@@ -209,17 +211,17 @@ const GuardrailsPanel: React.FC<GuardrailsPanelProps> = ({ accessToken, userRole
 
                       <DeleteResourceModal
                         isOpen={isDeleteModalOpen}
-                        title="Delete Guardrail"
-                        message={`Are you sure you want to delete guardrail: ${guardrailToDelete?.guardrail_name}? This action cannot be undone.`}
-                        resourceInformationTitle="Guardrail Information"
+                        title={t("deleteGuardrail")}
+                        message={t("confirmDeleteGuardrail", { name: guardrailToDelete?.guardrail_name ?? "" })}
+                        resourceInformationTitle={t("guardrailInformation")}
                         resourceInformation={[
-                          { label: "Name", value: guardrailToDelete?.guardrail_name },
-                          { label: "ID", value: guardrailToDelete?.guardrail_id, code: true },
-                          { label: "Provider", value: providerDisplayName },
-                          { label: "Mode", value: guardrailToDelete?.litellm_params.mode },
+                          { label: t("name"), value: guardrailToDelete?.guardrail_name },
+                          { label: t("id"), value: guardrailToDelete?.guardrail_id, code: true },
+                          { label: t("provider"), value: providerDisplayName },
+                          { label: t("mode"), value: guardrailToDelete?.litellm_params.mode },
                           {
-                            label: "Default On",
-                            value: guardrailToDelete?.litellm_params.default_on ? "Yes" : "No",
+                            label: t("defaultOn"),
+                            value: guardrailToDelete?.litellm_params.default_on ? t("yes") : t("no"),
                           },
                         ]}
                         onCancel={handleDeleteCancel}
@@ -231,7 +233,7 @@ const GuardrailsPanel: React.FC<GuardrailsPanelProps> = ({ accessToken, userRole
                 },
                 {
                   key: "playground",
-                  label: "Test Playground",
+                  label: t("testPlayground"),
                   disabled: !accessToken,
                   children: (
                     <GuardrailTestPlayground
@@ -246,7 +248,7 @@ const GuardrailsPanel: React.FC<GuardrailsPanelProps> = ({ accessToken, userRole
             : []),
           {
             key: "submitted",
-            label: "Submitted Guardrails",
+            label: t("submittedGuardrails"),
             children: <TeamGuardrailsTab accessToken={accessToken} />,
           },
         ]}

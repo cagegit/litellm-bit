@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslations } from "@/i18n";
 import { Alert, Tag, Typography } from "antd";
 
 const { Text } = Typography;
@@ -15,34 +16,35 @@ interface ImpactPreviewAlertProps {
 }
 
 const ImpactPreviewAlert: React.FC<ImpactPreviewAlertProps> = ({ impactResult }) => {
+  const { t } = useTranslations("common");
   return (
     <Alert
       type={impactResult.affected_keys_count === -1 ? "warning" : "info"}
       showIcon
       className="mb-4"
-      message="Impact Preview"
+      message={t("impactPreview")}
       description={
         impactResult.affected_keys_count === -1 ? (
           <Text>
-            Global scope — this will affect <strong>all keys and teams</strong>.
+            {t("globalScopeLabel")} <strong>{t("allKeysAndTeams")}</strong>.
           </Text>
         ) : (
           <div>
             <Text>
-              This attachment would affect{" "}
+              {t("thisAttachmentWouldAffect")}{" "}
               <strong>
-                {impactResult.affected_keys_count} key{impactResult.affected_keys_count !== 1 ? "s" : ""}
+                {impactResult.affected_keys_count} {impactResult.affected_keys_count !== 1 ? t("keys") : t("key")}
               </strong>{" "}
-              and{" "}
+              {t("and")}{" "}
               <strong>
-                {impactResult.affected_teams_count} team{impactResult.affected_teams_count !== 1 ? "s" : ""}
+                {impactResult.affected_teams_count} {impactResult.affected_teams_count !== 1 ? t("teams") : t("team")}
               </strong>
               .
             </Text>
             {impactResult.sample_keys.length > 0 && (
               <div className="mt-1">
                 <Text type="secondary" style={{ fontSize: 12 }}>
-                  Keys:{" "}
+                  {t("keysLabel")}:{" "}
                 </Text>
                 {impactResult.sample_keys.slice(0, 5).map((k: string) => (
                   <Tag key={k} style={{ fontSize: 11 }}>
@@ -51,7 +53,7 @@ const ImpactPreviewAlert: React.FC<ImpactPreviewAlertProps> = ({ impactResult })
                 ))}
                 {impactResult.affected_keys_count > 5 && (
                   <Text type="secondary" style={{ fontSize: 11 }}>
-                    and {impactResult.affected_keys_count - 5} more...
+                    {t("andXMore", { count: impactResult.affected_keys_count - 5 })}
                   </Text>
                 )}
               </div>
@@ -59,16 +61,16 @@ const ImpactPreviewAlert: React.FC<ImpactPreviewAlertProps> = ({ impactResult })
             {impactResult.sample_teams.length > 0 && (
               <div className="mt-1">
                 <Text type="secondary" style={{ fontSize: 12 }}>
-                  Teams:{" "}
+                  {t("teamsLabel")}:{" "}
                 </Text>
-                {impactResult.sample_teams.slice(0, 5).map((t: string) => (
-                  <Tag key={t} style={{ fontSize: 11 }}>
-                    {t}
+                {impactResult.sample_teams.slice(0, 5).map((tm: string) => (
+                  <Tag key={tm} style={{ fontSize: 11 }}>
+                    {tm}
                   </Tag>
                 ))}
                 {impactResult.affected_teams_count > 5 && (
                   <Text type="secondary" style={{ fontSize: 11 }}>
-                    and {impactResult.affected_teams_count - 5} more...
+                    {t("andXMore", { count: impactResult.affected_teams_count - 5 })}
                   </Text>
                 )}
               </div>

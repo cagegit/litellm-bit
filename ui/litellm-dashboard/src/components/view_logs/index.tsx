@@ -17,6 +17,7 @@ import { LogDetailsDrawer } from "./LogDetailsDrawer";
 import { LogsTableToolbar } from "./LogsTableToolbar";
 import { DataTable } from "./table";
 import { AntDLoadingSpinner } from "../ui/AntDLoadingSpinner";
+import { useTranslations } from "@/i18n";
 
 interface SpendLogsTableProps {
   accessToken: string | null;
@@ -27,6 +28,8 @@ interface SpendLogsTableProps {
 }
 
 export default function SpendLogsTable({ accessToken, token, userRole, userID, premiumUser }: SpendLogsTableProps) {
+  const { t } = useTranslations("logs");
+
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(50);
@@ -237,15 +240,15 @@ export default function SpendLogsTable({ accessToken, token, userRole, userID, p
     <div className="w-full max-w-screen p-6 overflow-x-hidden box-border">
       <TabGroup defaultIndex={0} onIndexChange={(index) => setActiveTab(index === 0 ? "request logs" : "audit logs")}>
         <TabList>
-          <Tab>Request Logs</Tab>
-          <Tab>Audit Logs</Tab>
-          <Tab>Deleted Keys</Tab>
-          <Tab>Deleted Teams</Tab>
+          <Tab>{t('requestLogs')}</Tab>
+          <Tab>{t('auditLogs')}</Tab>
+          <Tab>{t('deletedKeys')}</Tab>
+          <Tab>{t('deletedTeams')}</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
             <div className="flex items-center justify-between mb-4">
-              <h1 className="text-xl font-semibold">Request Logs</h1>
+              <h1 className="text-xl font-semibold">{t('requestLogs')}</h1>
             </div>
             {selectedKeyInfo && selectedKeyIdInfoView && selectedKeyInfo.api_key === selectedKeyIdInfoView ? (
               <KeyInfoView
@@ -253,7 +256,7 @@ export default function SpendLogsTable({ accessToken, token, userRole, userID, p
                 keyData={selectedKeyInfo}
                 teams={allTeams ?? []}
                 onClose={() => setSelectedKeyIdInfoView(null)}
-                backButtonText="Back to Logs"
+                backButtonText={t('backToLogs')}
               />
             ) : (
               <>

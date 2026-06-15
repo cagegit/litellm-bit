@@ -1,5 +1,6 @@
 import React from "react";
 import { Upload, Tooltip } from "antd";
+import { useTranslations } from "@/i18n";
 import { PaperClipOutlined } from "@ant-design/icons";
 
 const { Dragger } = Upload;
@@ -17,6 +18,7 @@ const ChatImageUpload: React.FC<ChatImageUploadProps> = ({
   onImageUpload,
   onRemoveImage,
 }) => {
+  const { t } = useTranslations("playground");
   return (
     <>
       {/* Subtle upload button - only show when no image */}
@@ -28,7 +30,7 @@ const ChatImageUpload: React.FC<ChatImageUploadProps> = ({
           className="inline-block"
           style={{ padding: 0, border: "none", background: "none" }}
         >
-          <Tooltip title="Attach image or PDF">
+          <Tooltip title={t("attachImageOrPdf")}>
             <button
               type="button"
               className="flex items-center justify-center w-8 h-8 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-md transition-colors"

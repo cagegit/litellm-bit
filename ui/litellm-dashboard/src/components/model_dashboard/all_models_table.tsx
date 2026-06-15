@@ -16,6 +16,7 @@ import {
   TableHeaderSortDropdown,
   SortState,
 } from "../common_components/TableHeaderSortDropdown/TableHeaderSortDropdown";
+import { useTranslations } from "@/i18n";
 
 // Extend the column meta type to include className
 declare module "@tanstack/react-table" {

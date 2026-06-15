@@ -3,6 +3,7 @@ import { Table, Progress } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import { formatNumberWithCommas } from "@/utils/dataUtils";
 import { MetricWithMetadata } from "../../../types";
+import { useTranslations } from "@/i18n";
 
 interface EndpointUsageTableProps {
   endpointData: Record<string, MetricWithMetadata>;
@@ -20,6 +21,8 @@ interface EndpointRow {
 }
 
 const EndpointUsageTable: React.FC<EndpointUsageTableProps> = ({ endpointData }) => {
+  const { t } = useTranslations("common");
+
   const calculateSuccessRate = (successful: number, total: number): number => {
     if (total === 0) return 0;
     return (successful / total) * 100;

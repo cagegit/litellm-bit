@@ -3,6 +3,7 @@ import { useBlogPosts, type BlogPost } from "@/app/(dashboard)/hooks/blogPosts/u
 import { NAV_PRODUCT_LINK_CLASS } from "@/components/Navbar/navProductLinkClass";
 import { DownOutlined, LoadingOutlined } from "@ant-design/icons";
 import { Button, Dropdown, Space, Typography } from "antd";
+import { useTranslations } from "@/i18n";
 import type { MenuProps } from "antd";
 import React from "react";
 
@@ -18,6 +19,7 @@ function formatDate(dateStr: string): string {
 }
 
 export const BlogDropdown: React.FC = () => {
+  const { t } = useTranslations("navbar");
   const disableBlogPosts = useDisableBlogPosts();
 
   const { data, isLoading, isError, refetch } = useBlogPosts();
@@ -36,7 +38,7 @@ export const BlogDropdown: React.FC = () => {
         key: "error",
         label: (
           <Space>
-            <Text type="danger">Failed to load posts</Text>
+            <Text type="danger">{t("failedToLoadPosts")}</Text>
             <Button size="small" onClick={() => refetch()}>
               Retry
             </Button>
@@ -46,7 +48,7 @@ export const BlogDropdown: React.FC = () => {
       },
     ];
   } else if (!data || data.posts.length === 0) {
-    items = [{ key: "empty", label: <Text type="secondary">No posts available</Text>, disabled: true }];
+    items = [{ key: "empty", label: <Text type="secondary">{t("noPostsAvailable")}</Text>, disabled: true }];
   } else {
     items = [
       ...data.posts.slice(0, 5).map((post: BlogPost) => ({

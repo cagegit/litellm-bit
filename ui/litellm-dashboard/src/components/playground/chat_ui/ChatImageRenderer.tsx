@@ -3,12 +3,14 @@ import Image from "next/image";
 import { MessageType } from "./types";
 import { shouldShowChatAttachedImage } from "./ChatImageUtils";
 import { FilePdfOutlined } from "@ant-design/icons";
+import { useTranslations } from "@/i18n";
 
 interface ChatImageRendererProps {
   message: MessageType;
 }
 
 const ChatImageRenderer: React.FC<ChatImageRendererProps> = ({ message }) => {
+  const { t } = useTranslations("playground");
   if (!shouldShowChatAttachedImage(message)) {
     return null;
   }
@@ -24,7 +26,7 @@ const ChatImageRenderer: React.FC<ChatImageRendererProps> = ({ message }) => {
       ) : (
         <Image
           src={message.imagePreviewUrl || ""}
-          alt="User uploaded image"
+          alt={t("userUploadedImage")}
           width={256}
           height={200}
           className="max-w-64 rounded-md border border-gray-200 shadow-sm"

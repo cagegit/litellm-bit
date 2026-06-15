@@ -5,6 +5,7 @@
 
 import { useState } from "react";
 import { Typography } from "antd";
+import { useTranslations } from "@/i18n";
 import MessageManager from "@/components/molecules/message_manager";
 import { ParsedMessage } from "./prettyMessagesTypes";
 import { SectionHeader } from "./SectionHeader";
@@ -19,6 +20,7 @@ interface OutputCardProps {
 }
 
 export function OutputCard({ message, completionTokens, outputCost }: OutputCardProps) {
+  const { t } = useTranslations("logs");
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const handleCopy = () => {
@@ -26,7 +28,7 @@ export function OutputCard({ message, completionTokens, outputCost }: OutputCard
 
     const content = message.content || "";
     navigator.clipboard.writeText(content);
-    MessageManager.success("Output copied");
+    MessageManager.success(t("outputCopied"));
   };
 
   if (!message) {
@@ -56,7 +58,7 @@ export function OutputCard({ message, completionTokens, outputCost }: OutputCard
         >
           <div style={{ padding: "12px 16px" }}>
             <Text type="secondary" style={{ fontSize: 13, fontStyle: "italic" }}>
-              No response data available
+              {t("noResponseData")}
             </Text>
           </div>
         </div>
@@ -92,7 +94,7 @@ export function OutputCard({ message, completionTokens, outputCost }: OutputCard
         }}
       >
         <div style={{ padding: "12px 16px" }}>
-          <SimpleMessageBlock label="ASSISTANT" content={message.content} toolCalls={message.toolCalls} />
+          <SimpleMessageBlock label={t("assistant")} content={message.content} toolCalls={message.toolCalls} />
         </div>
       </div>
     </div>

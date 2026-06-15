@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslations } from "@/i18n";
 
 interface ErrorViewerProps {
   errorInfo: {
@@ -11,6 +12,8 @@ interface ErrorViewerProps {
 }
 
 export const ErrorViewer: React.FC<ErrorViewerProps> = ({ errorInfo }) => {
+  const { t } = useTranslations("logs");
+
   const [expandedFrames, setExpandedFrames] = React.useState<{ [key: number]: boolean }>({});
   const [allExpanded, setAllExpanded] = React.useState(false);
 

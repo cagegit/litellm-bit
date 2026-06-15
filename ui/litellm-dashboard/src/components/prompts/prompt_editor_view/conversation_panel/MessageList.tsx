@@ -4,6 +4,7 @@ import { Spin } from "antd";
 import EmptyState from "./EmptyState";
 import MessageBubble from "./MessageBubble";
 import { Message } from "./types";
+import { useTranslations } from "@/i18n";
 
 interface MessageListProps {
   messages: Message[];
@@ -13,6 +14,8 @@ interface MessageListProps {
 }
 
 const MessageList: React.FC<MessageListProps> = ({ messages, isLoading, hasVariables, messagesEndRef }) => {
+  const { t } = useTranslations("prompts");
+
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   return (

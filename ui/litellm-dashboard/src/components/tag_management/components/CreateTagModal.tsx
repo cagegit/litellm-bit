@@ -4,6 +4,7 @@ import { Form, Input, Modal, Select as Select2, Tooltip } from "antd";
 import React from "react";
 import BudgetDurationDropdown from "../../common_components/budget_duration_dropdown";
 import NumericalInput from "../../shared/numerical_input";
+import { useTranslations } from "@/i18n";
 
 interface ModelInfo {
   model_name: string;
@@ -23,6 +24,8 @@ interface CreateTagModalProps {
 }
 
 const CreateTagModal: React.FC<CreateTagModalProps> = ({ visible, onCancel, onSubmit, availableModels }) => {
+  const { t } = useTranslations("tagManagement");
+
   const [form] = Form.useForm();
 
   const handleFinish = (values: any) => {
@@ -36,13 +39,13 @@ const CreateTagModal: React.FC<CreateTagModalProps> = ({ visible, onCancel, onSu
   };
 
   return (
-    <Modal title="Create New Tag" open={visible} width={800} footer={null} onCancel={handleCancel}>
+    <Modal title={t("tagManagement.createNewTag")} open={visible} width={800} footer={null} onCancel={handleCancel}>
       <Form form={form} onFinish={handleFinish} labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} labelAlign="left">
-        <Form.Item label="Tag Name" name="tag_name" rules={[{ required: true, message: "Please input a tag name" }]}>
+        <Form.Item label={t("tagManagement.tagName")} name="tag_name" rules={[{ required: true, message: t("tagManagement.pleaseInputTagName") }]}>
           <TextInput />
         </Form.Item>
 
-        <Form.Item label="Description" name="description">
+        <Form.Item label={t("tagManagement.description")} name="description">
           <Input.TextArea rows={4} />
         </Form.Item>
 
@@ -50,14 +53,14 @@ const CreateTagModal: React.FC<CreateTagModalProps> = ({ visible, onCancel, onSu
           label={
             <span>
               Allowed Models
-              <Tooltip title="Select which models are allowed to process requests from this tag">
+              <Tooltip title={t("tagManagement.selectWhichModelsAreAllowedToProcessRequestsFromThisTag")}>
                 <InfoCircleOutlined style={{ marginLeft: "4px" }} />
               </Tooltip>
             </span>
           }
           name="allowed_llms"
         >
-          <Select2 mode="multiple" placeholder="Select Models">
+          <Select2 mode="multiple" placeholder={t("tagManagement.selectModels")}>
             {availableModels.map((model) => (
               <Select2.Option key={model.model_info.id} value={model.model_info.id}>
                 <div>
@@ -121,7 +124,7 @@ const CreateTagModal: React.FC<CreateTagModalProps> = ({ visible, onCancel, onSu
         </Accordion>
 
         <div style={{ textAlign: "right", marginTop: "10px" }}>
-          <Button type="submit">Create Tag</Button>
+          <Button type="submit">{t("tagManagement.createTag")}</Button>
         </div>
       </Form>
     </Modal>

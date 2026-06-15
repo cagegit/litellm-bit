@@ -2,9 +2,11 @@ import React from "react";
 import { Text, Button, TabGroup, TabList, Tab, TabPanel, TabPanels } from "@tremor/react";
 import { CheckCircleIcon, XCircleIcon, ClipboardCopyIcon } from "@heroicons/react/outline";
 import { ResponseTimeIndicator } from "./response_time_indicator";
+import { useTranslations } from "@/i18n";
 
 // Helper function to deep-parse a JSON string if possible
 const deepParse = (input: any) => {
+
   let parsed = input;
   if (typeof parsed === "string") {
     try {

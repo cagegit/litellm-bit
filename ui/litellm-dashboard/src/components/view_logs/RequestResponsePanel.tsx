@@ -2,6 +2,7 @@ import { LogEntry } from "./columns";
 import NotificationsManager from "../molecules/notifications_manager";
 import { JsonView, defaultStyles } from "react-json-view-lite";
 import "react-json-view-lite/dist/index.css";
+import { useTranslations } from "@/i18n";
 
 interface RequestResponsePanelProps {
   row: {
@@ -24,6 +25,8 @@ export function RequestResponsePanel({
   getRawRequest,
   formattedResponse,
 }: RequestResponsePanelProps) {
+  const { t } = useTranslations("logs");
+
   const copyToClipboard = async (text: string) => {
     try {
       // Try modern clipboard API first

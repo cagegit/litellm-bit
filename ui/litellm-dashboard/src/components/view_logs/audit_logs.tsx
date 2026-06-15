@@ -8,6 +8,7 @@ import { uiAuditLogsCall } from "../networking";
 import { AuditLogEntry } from "./columns";
 import { AuditLogDrawer } from "./AuditLogDrawer/AuditLogDrawer";
 import DefaultProxyAdminTag from "../common_components/DefaultProxyAdminTag";
+import { useTranslations } from "@/i18n";
 
 const { Search } = Input;
 
@@ -41,6 +42,8 @@ const ACTION_COLOR: Record<string, string> = {
 const PAGE_SIZE = 50;
 
 export default function AuditLogs({ userID, userRole, token, accessToken, isActive, premiumUser }: AuditLogsProps) {
+  const { t } = useTranslations("logs");
+
   const [page, setPage] = useState(1);
 
   // Filter state

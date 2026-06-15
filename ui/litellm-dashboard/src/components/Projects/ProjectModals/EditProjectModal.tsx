@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Modal, Form, Button, Typography } from "antd";
+import { useTranslations } from "@/i18n";
 import { SaveOutlined } from "@ant-design/icons";
 import MessageManager from "@/components/molecules/message_manager";
 import { ProjectResponse } from "@/app/(dashboard)/hooks/projects/useProjects";
@@ -15,6 +16,7 @@ interface EditProjectModalProps {
 }
 
 export function EditProjectModal({ isOpen, project, onClose, onSuccess }: EditProjectModalProps) {
+  const { t } = useTranslations("common");
   const [form] = Form.useForm<ProjectFormValues>();
   const updateMutation = useUpdateProject();
 
@@ -72,12 +74,12 @@ export function EditProjectModal({ isOpen, project, onClose, onSuccess }: EditPr
         { projectId: project.project_id, params },
         {
           onSuccess: () => {
-            MessageManager.success("Project updated successfully");
+            MessageManager.success(t("projectUpdated"));
             onSuccess?.();
             onClose();
           },
           onError: (error) => {
-            MessageManager.error(error.message || "Failed to update project");
+            MessageManager.error(error.message || t("failedToUpdateProject"));
           },
         },
       );

@@ -3,6 +3,7 @@ import { Tooltip, InputNumber, Collapse, Badge } from "antd";
 import { InfoCircleOutlined, DollarOutlined, ToolOutlined } from "@ant-design/icons";
 import { Card, Title, Text } from "@tremor/react";
 import { MCPServerCostInfo } from "./types";
+import { useTranslations } from "@/i18n";
 
 interface MCPServerCostConfigProps {
   value?: MCPServerCostInfo;
@@ -17,6 +18,8 @@ const MCPServerCostConfig: React.FC<MCPServerCostConfigProps> = ({
   tools = [],
   disabled = false,
 }) => {
+  const { t } = useTranslations("mcp");
+
   const handleDefaultCostChange = (defaultCost: number | null) => {
     const updated = {
       ...value,
@@ -41,7 +44,7 @@ const MCPServerCostConfig: React.FC<MCPServerCostConfigProps> = ({
       <div className="space-y-6">
         <div className="flex items-center gap-2 mb-4">
           <DollarOutlined className="text-green-600" />
-          <Title>Cost Configuration</Title>
+          <Title>{t("mcp.costConfiguration")}</Title>
           <Tooltip title="Configure costs for this MCP server's tool calls. Set a default rate and per-tool overrides.">
             <InfoCircleOutlined className="text-gray-400" />
           </Tooltip>
@@ -51,7 +54,7 @@ const MCPServerCostConfig: React.FC<MCPServerCostConfigProps> = ({
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Default Cost per Query ($)
-              <Tooltip title="Default cost charged for each tool call to this server.">
+              <Tooltip title={t("mcp.defaultCostChargedForEachToolCallToThisServer")}>
                 <InfoCircleOutlined className="ml-1 text-gray-400" />
               </Tooltip>
             </label>
@@ -86,7 +89,7 @@ const MCPServerCostConfig: React.FC<MCPServerCostConfigProps> = ({
                     label: (
                       <div className="flex items-center">
                         <ToolOutlined className="mr-2 text-blue-500" />
-                        <span className="font-medium">Available Tools</span>
+                        <span className="font-medium">{t("mcp.availableTools")}</span>
                         <Badge
                           count={tools.length}
                           style={{
@@ -111,7 +114,7 @@ const MCPServerCostConfig: React.FC<MCPServerCostConfigProps> = ({
                                 min={0}
                                 step={0.0001}
                                 precision={4}
-                                placeholder="Use default"
+                                placeholder={t("mcp.useDefault")}
                                 value={value.tool_name_to_cost_per_query?.[tool.name]}
                                 onChange={(cost) => handleToolCostChange(tool.name, cost)}
                                 disabled={disabled}

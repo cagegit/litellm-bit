@@ -19,6 +19,7 @@ import {
 } from "./guardrail_info_helpers";
 import EditGuardrailForm from "./edit_guardrail_form";
 import { Guardrail, GuardrailDefinitionLocation } from "./types";
+import { useTranslations } from "@/i18n";
 
 interface GuardrailTableProps {
   guardrailsList: Guardrail[];
@@ -39,6 +40,7 @@ const GuardrailTable: React.FC<GuardrailTableProps> = ({
   isAdmin = false,
   onGuardrailClick,
 }) => {
+  const { t } = useTranslations("common");
   const [sorting, setSorting] = useState<SortingState>([{ id: "created_at", desc: true }]);
   const [editModalVisible, setEditModalVisible] = useState(false);
   const [selectedGuardrail, setSelectedGuardrail] = useState<Guardrail | null>(null);
@@ -63,7 +65,7 @@ const GuardrailTable: React.FC<GuardrailTableProps> = ({
 
   const columns: ColumnDef<Guardrail>[] = [
     {
-      header: "Guardrail ID",
+      header: t("guardrailId"),
       accessorKey: "guardrail_id",
       cell: (info: any) => (
         <Tooltip title={String(info.getValue() || "")}>
@@ -79,7 +81,7 @@ const GuardrailTable: React.FC<GuardrailTableProps> = ({
       ),
     },
     {
-      header: "Name",
+      header: t("name"),
       accessorKey: "guardrail_name",
       cell: ({ row }) => {
         const guardrail = row.original;
@@ -91,7 +93,7 @@ const GuardrailTable: React.FC<GuardrailTableProps> = ({
       },
     },
     {
-      header: "Provider",
+      header: t("provider"),
       accessorKey: "litellm_params.guardrail",
       cell: ({ row }) => {
         const guardrail = row.original;
@@ -101,7 +103,7 @@ const GuardrailTable: React.FC<GuardrailTableProps> = ({
             {logo && (
               <img
                 src={logo}
-                alt={`${displayName} logo`}
+                alt={t("logoAlt", { provider: displayName })}
                 className="w-4 h-4"
                 onError={(e) => {
                   // Hide broken image
@@ -115,7 +117,7 @@ const GuardrailTable: React.FC<GuardrailTableProps> = ({
       },
     },
     {
-      header: "Mode",
+      header: t("mode"),
       accessorKey: "litellm_params.mode",
       cell: ({ row }) => {
         const guardrail = row.original;
@@ -123,7 +125,7 @@ const GuardrailTable: React.FC<GuardrailTableProps> = ({
       },
     },
     {
-      header: "Default On",
+      header: t("defaultOn"),
       accessorKey: "litellm_params.default_on",
       cell: ({ row }) => {
         const guardrail = row.original;
@@ -133,13 +135,13 @@ const GuardrailTable: React.FC<GuardrailTableProps> = ({
             className="text-xs font-normal"
             size="xs"
           >
-            {guardrail.litellm_params?.default_on ? "Default On" : "Default Off"}
+            {guardrail.litellm_params?.default_on ? t("defaultOn") : t("defaultOff")}
           </Badge>
         );
       },
     },
     {
-      header: "Created At",
+      header: t("createdAt"),
       accessorKey: "created_at",
       cell: ({ row }) => {
         const guardrail = row.original;
@@ -151,7 +153,7 @@ const GuardrailTable: React.FC<GuardrailTableProps> = ({
       },
     },
     {
-      header: "Updated At",
+      header: t("updatedAt"),
       accessorKey: "updated_at",
       cell: ({ row }) => {
         const guardrail = row.original;
@@ -164,31 +166,31 @@ const GuardrailTable: React.FC<GuardrailTableProps> = ({
     },
     {
       id: "actions",
-      header: "Actions",
+      header: t("actions"),
       cell: ({ row }) => {
         const guardrail = row.original;
         const isConfigGuardrail = guardrail.guardrail_definition_location === GuardrailDefinitionLocation.CONFIG;
         return (
           <div className="flex space-x-2">
             {isConfigGuardrail ? (
-              <Tooltip title="Config guardrail cannot be deleted on the dashboard. Please delete it from the config file.">
+              <Tooltip title={t("configGuardrailNoDelete")}>
                 <Icon
                   data-testid="config-delete-icon"
                   icon={TrashIcon}
                   size="sm"
                   className="cursor-not-allowed text-gray-400"
-                  title="Config guardrail cannot be deleted on the dashboard. Please delete it from the config file."
-                  aria-label="Delete guardrail (config)"
+                  title={t("configGuardrailNoDelete")}
+                  aria-label={t("deleteGuardrailConfig")}
                 />
               </Tooltip>
             ) : (
-              <Tooltip title="Delete guardrail">
+              <Tooltip title={t("deleteGuardrail")}>
                 <Icon
                   icon={TrashIcon}
                   size="sm"
                   onClick={() =>
                     guardrail.guardrail_id &&
-                    onDeleteClick(guardrail.guardrail_id, guardrail.guardrail_name || "Unnamed Guardrail")
+                    onDeleteClick(guardrail.guardrail_id, guardrail.guardrail_name || t("unnamedGuardrail"))
                   }
                   className="cursor-pointer hover:text-red-500"
                 />
@@ -254,7 +256,7 @@ const GuardrailTable: React.FC<GuardrailTableProps> = ({
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-8 text-center">
                   <div className="text-center text-gray-500">
-                    <p>Loading...</p>
+                    <p>{t("loading")}</p>
                   </div>
                 </TableCell>
               </TableRow>
@@ -279,7 +281,7 @@ const GuardrailTable: React.FC<GuardrailTableProps> = ({
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-8 text-center">
                   <div className="text-center text-gray-500">
-                    <p>No guardrails found</p>
+                    <p>{t("noGuardrailsFound")}</p>
                   </div>
                 </TableCell>
               </TableRow>

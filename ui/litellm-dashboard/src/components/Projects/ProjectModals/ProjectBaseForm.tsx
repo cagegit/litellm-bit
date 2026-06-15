@@ -15,6 +15,7 @@ import {
   Typography,
   Button,
 } from "antd";
+import { useTranslations } from "@/i18n";
 import type { FormInstance } from "antd";
 import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
 import useAuthorized from "@/app/(dashboard)/hooks/useAuthorized";
@@ -41,6 +42,7 @@ interface ProjectBaseFormProps {
 }
 
 export function ProjectBaseForm({ form }: ProjectBaseFormProps) {
+  const { t } = useTranslations("common");
   const { accessToken, userId, userRole } = useAuthorized();
   const { data: teams } = useTeams();
 
@@ -117,17 +119,17 @@ export function ProjectBaseForm({ form }: ProjectBaseFormProps) {
         <Col span={12}>
           <Form.Item
             name="project_alias"
-            label="Project Name"
-            rules={[{ required: true, message: "Please enter a project name" }]}
+            label={t("projectName")}
+            rules={[{ required: true, message: t("enterProjectName") }]}
           >
-            <Input placeholder="e.g. Customer Support Bot" />
+            <Input placeholder={t("projectNamePlaceholder")} />
           </Form.Item>
         </Col>
         <Col span={12}>
-          <Form.Item name="team_id" label="Team" rules={[{ required: true, message: "Please select a team" }]}>
+          <Form.Item name="team_id" label={t("team")} rules={[{ required: true, message: t("selectATeam") }]}>
             <Select
               showSearch
-              placeholder="Search or select a team"
+              placeholder={t("searchOrSelectTeam")}
               onChange={handleTeamChange}
               allowClear
               optionLabelProp="label"
@@ -153,8 +155,8 @@ export function ProjectBaseForm({ form }: ProjectBaseFormProps) {
 
       <Row>
         <Col span={24}>
-          <Form.Item name="description" label="Description">
-            <Input.TextArea placeholder="Describe the purpose of this project" rows={3} />
+          <Form.Item name="description" label={t("description")}>
+            <Input.TextArea placeholder={t("describeProjectPurpose")} rows={3} />
           </Form.Item>
         </Col>
       </Row>
@@ -163,12 +165,12 @@ export function ProjectBaseForm({ form }: ProjectBaseFormProps) {
         <Col span={24}>
           <Form.Item
             name="models"
-            label="Allowed Models (scoped to selected team's models)"
-            help={!selectedTeam ? "Select a team first to see available models" : undefined}
+            label={t("allowedModels")}
+            help={!selectedTeam ? t("selectTeamFirstForModels") : undefined}
           >
             <Select
               mode="multiple"
-              placeholder={selectedTeam ? "Select models" : "Select a team first"}
+              placeholder={selectedTeam ? t("selectModels") : t("selectATeamFirst")}
               disabled={!selectedTeam}
               allowClear
               maxTagCount="responsive"
@@ -193,7 +195,7 @@ export function ProjectBaseForm({ form }: ProjectBaseFormProps) {
 
       <Row gutter={24}>
         <Col span={12}>
-          <Form.Item name="max_budget" label="Max Budget (USD)">
+          <Form.Item name="max_budget" label={t("maxBudgetUsd")}>
             <InputNumber prefix="$" style={{ width: "100%" }} placeholder="0.00" min={0} precision={2} />
           </Form.Item>
         </Col>
@@ -220,7 +222,7 @@ export function ProjectBaseForm({ form }: ProjectBaseFormProps) {
                 children: (
                   <>
                     <Flex align="center" gap={12}>
-                      <Typography.Text strong>Block Project</Typography.Text>
+                      <Typography.Text strong>{t("blockProject")}</Typography.Text>
                       <Form.Item name="isBlocked" valuePropName="checked" noStyle>
                         <Switch />
                       </Form.Item>
@@ -232,7 +234,7 @@ export function ProjectBaseForm({ form }: ProjectBaseFormProps) {
                             banner
                             type="warning"
                             showIcon
-                            message="All API requests using keys under this project will be rejected."
+                            message={t("blockProjectWarning")}
                             style={{ marginTop: 12 }}
                           />
                         ) : null
@@ -241,11 +243,11 @@ export function ProjectBaseForm({ form }: ProjectBaseFormProps) {
 
                     <Divider />
 
-                    <Form.Item label="Guardrails" name="guardrails" help="Select existing guardrails or enter new ones">
+                    <Form.Item label={t("guardrails")} name="guardrails" help={t("selectOrCreateGuardrails")}>
                       <Select
                         mode="tags"
                         style={{ width: "100%" }}
-                        placeholder="Select or enter guardrails"
+                        placeholder={t("selectOrEnterGuardrails")}
                         options={guardrailsList.map((name) => ({
                           value: name,
                           label: name,
@@ -267,7 +269,7 @@ export function ProjectBaseForm({ form }: ProjectBaseFormProps) {
                                 {...restField}
                                 name={[name, "model"]}
                                 rules={[
-                                  { required: true, message: "Missing model" },
+                                  { required: true, message: t("missingModel") },
                                   {
                                     validator: (_, value) => {
                                       if (!value) return Promise.resolve();
@@ -281,13 +283,13 @@ export function ProjectBaseForm({ form }: ProjectBaseFormProps) {
                                   },
                                 ]}
                               >
-                                <Input placeholder="Model name (e.g. gpt-4)" />
+                                <Input placeholder={t("modelNamePlaceholder")} />
                               </Form.Item>
                               <Form.Item {...restField} name={[name, "tpm"]}>
-                                <InputNumber placeholder="TPM Limit" min={0} />
+                                <InputNumber placeholder={t("tpmLimit")} min={0} />
                               </Form.Item>
                               <Form.Item {...restField} name={[name, "rpm"]}>
-                                <InputNumber placeholder="RPM Limit" min={0} />
+                                <InputNumber placeholder={t("rpmLimit")} min={0} />
                               </Form.Item>
                               <MinusCircleOutlined onClick={() => remove(name)} style={{ color: "#ef4444" }} />
                             </Space>
@@ -315,7 +317,7 @@ export function ProjectBaseForm({ form }: ProjectBaseFormProps) {
                                 {...restField}
                                 name={[name, "key"]}
                                 rules={[
-                                  { required: true, message: "Missing key" },
+                                  { required: true, message: t("missingKey") },
                                   {
                                     validator: (_, value) => {
                                       if (!value) return Promise.resolve();
@@ -329,14 +331,14 @@ export function ProjectBaseForm({ form }: ProjectBaseFormProps) {
                                   },
                                 ]}
                               >
-                                <Input placeholder="Key" />
+                                <Input placeholder={t("key")} />
                               </Form.Item>
                               <Form.Item
                                 {...restField}
                                 name={[name, "value"]}
-                                rules={[{ required: true, message: "Missing value" }]}
+                                rules={[{ required: true, message: t("missingValue") }]}
                               >
-                                <Input placeholder="Value" />
+                                <Input placeholder={t("value")} />
                               </Form.Item>
                               <MinusCircleOutlined onClick={() => remove(name)} style={{ color: "#ef4444" }} />
                             </Space>

@@ -5,6 +5,7 @@ import { Button as Button2, Modal, Form, Select as Select2, InputNumber } from "
 
 import NumericalInput from "./shared/numerical_input";
 import BudgetDurationDropdown from "./common_components/budget_duration_dropdown";
+import { useTranslations } from "@/i18n";
 
 interface EditUserModalProps {
   visible: boolean;
@@ -17,6 +18,7 @@ interface EditUserModalProps {
 const EditUserModal: React.FC<EditUserModalProps> = ({ visible, possibleUIRoles, onCancel, user, onSubmit }) => {
   const [editedUser, setEditedUser] = useState(user);
   const [form] = Form.useForm();
+  const { t } = useTranslations("common");
 
   useEffect(() => {
     form.resetFields();
@@ -39,7 +41,7 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ visible, possibleUIRoles,
   }
 
   return (
-    <Modal open={visible} onCancel={handleCancel} footer={null} title={"Edit User " + user.user_id} width={1000}>
+    <Modal open={visible} onCancel={handleCancel} footer={null} title={t("editUser") + " " + user.user_id} width={1000}>
       <Form
         form={form}
         onFinish={handleEditSubmit}
@@ -49,15 +51,15 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ visible, possibleUIRoles,
         labelAlign="left"
       >
         <>
-          <Form.Item className="mt-8" label="User Email" tooltip="Email of the User" name="user_email">
+          <Form.Item className="mt-8" label={t("userEmail")} tooltip={t("emailOfTheUser")} name="user_email">
             <TextInput />
           </Form.Item>
 
-          <Form.Item label="user_id" name="user_id" hidden={true}>
+          <Form.Item label={t("userId")} name="user_id" hidden={true}>
             <TextInput />
           </Form.Item>
 
-          <Form.Item label="User Role" name="user_role">
+          <Form.Item label={t("userRole")} name="user_role">
             <Select2>
               {possibleUIRoles &&
                 Object.entries(possibleUIRoles).map(([role, { ui_label, description }]) => (
@@ -73,34 +75,29 @@ const EditUserModal: React.FC<EditUserModalProps> = ({ visible, possibleUIRoles,
             </Select2>
           </Form.Item>
 
-          <Form.Item
-            label="Spend (USD)"
-            name="spend"
-            tooltip="(float) - Spend of all LLM calls completed by this user"
-            help="Across all keys (including keys with team_id)."
-          >
+          <Form.Item label={t("spendUsd")} name="spend" tooltip={t("spendTooltip")} help={t("spendHelp")}>
             <InputNumber min={0} step={0.01} />
           </Form.Item>
 
           <Form.Item
-            label="User Budget (USD)"
+            label={t("userBudgetUsd")}
             name="max_budget"
-            tooltip="(float) - Maximum budget of this user"
-            help="Maximum budget of this user."
+            tooltip={t("maxBudgetTooltip")}
+            help={t("maxBudgetHelp")}
           >
             <NumericalInput min={0} step={0.01} />
           </Form.Item>
 
-          <Form.Item label="Reset Budget" name="budget_duration">
+          <Form.Item label={t("resetBudget")} name="budget_duration">
             <BudgetDurationDropdown />
           </Form.Item>
 
           <div style={{ textAlign: "right", marginTop: "10px" }}>
-            <Button2 htmlType="submit">Save</Button2>
+            <Button2 htmlType="submit">{t("save")}</Button2>
           </div>
 
           <div style={{ textAlign: "right", marginTop: "10px" }}>
-            <Button2 htmlType="submit">Save</Button2>
+            <Button2 htmlType="submit">{t("save")}</Button2>
           </div>
         </>
       </Form>

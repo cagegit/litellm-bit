@@ -17,6 +17,7 @@ import {
   getModelCostMapSource,
 } from "./networking";
 import NotificationsManager from "./molecules/notifications_manager";
+import { useTranslations } from "@/i18n";
 
 const { Text } = Typography;
 
@@ -54,6 +55,9 @@ const PriceDataReload: React.FC<PriceDataReloadProps> = ({
   type = "primary",
   className = "",
 }) => {
+  const { t } = useTranslations("common");
+
+  
   const [isLoading, setIsLoading] = useState(false);
   const [isScheduling, setIsScheduling] = useState(false);
   const [isCancelling, setIsCancelling] = useState(false);
@@ -222,10 +226,10 @@ const PriceDataReload: React.FC<PriceDataReloadProps> = ({
       <Space direction="horizontal" size="middle" style={{ marginBottom: 16 }}>
         {/* Hard Refresh Button - Always visible */}
         <Popconfirm
-          title="Hard Refresh Price Data"
+          title={t("common.hardRefreshPriceData")}
           description="This will immediately fetch the latest pricing information from the remote source. Continue?"
           onConfirm={handleHardRefresh}
-          okText="Yes"
+          okText={t("common.yes")}
           cancelText="No"
           okButtonProps={{
             style: {
@@ -439,7 +443,7 @@ const PriceDataReload: React.FC<PriceDataReloadProps> = ({
                 </Tag>
               </div>
             ) : (
-              <Text type="secondary">No periodic reload scheduled</Text>
+              <Text type="secondary">{t("common.noPeriodicReloadScheduled")}</Text>
             )}
 
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -473,13 +477,13 @@ const PriceDataReload: React.FC<PriceDataReloadProps> = ({
 
       {/* Schedule Modal */}
       <Modal
-        title="Set Up Periodic Reload"
+        title={t("common.setUpPeriodicReload")}
         open={showScheduleModal}
         onOk={handleScheduleReload}
         onCancel={() => setShowScheduleModal(false)}
         confirmLoading={isScheduling}
-        okText="Schedule"
-        cancelText="Cancel"
+        okText={t("common.schedule")}
+        cancelText={t("common.cancel")}
         okButtonProps={{
           style: {
             backgroundColor: "#6366f1",

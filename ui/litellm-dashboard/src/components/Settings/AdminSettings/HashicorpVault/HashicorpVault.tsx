@@ -5,6 +5,7 @@ import { useHashicorpVaultConfig } from "@/app/(dashboard)/hooks/configOverrides
 import { useDeleteHashicorpVaultConfig } from "@/app/(dashboard)/hooks/configOverrides/useDeleteHashicorpVaultConfig";
 import { useUpdateHashicorpVaultConfig } from "@/app/(dashboard)/hooks/configOverrides/useUpdateHashicorpVaultConfig";
 import useAuthorized from "@/app/(dashboard)/hooks/useAuthorized";
+import { useTranslations } from "@/i18n";
 import DeleteResourceModal from "@/components/common_components/DeleteResourceModal";
 import NotificationManager from "@/components/molecules/notifications_manager";
 import { testHashicorpVaultConnection } from "@/app/(dashboard)/hooks/configOverrides/hashicorpVaultApi";
@@ -28,6 +29,7 @@ const descriptionsConfig = {
 };
 
 export default function HashicorpVault() {
+  const { t } = useTranslations("settings");
   const { accessToken } = useAuthorized();
   const { data, isLoading, isError, error } = useHashicorpVaultConfig();
   const { mutate: deleteConfig, isPending: isDeleting } = useDeleteHashicorpVaultConfig(accessToken);
@@ -46,7 +48,7 @@ export default function HashicorpVault() {
     setIsTesting(true);
     try {
       const result = await testHashicorpVaultConnection(accessToken);
-      NotificationManager.success(result.message || "Connection to Vault successful!");
+      NotificationManager.success(result.message || t("vaultConnectionSuccessful"));
     } catch (err) {
       NotificationManager.fromBackend(err);
     } finally {
@@ -57,7 +59,7 @@ export default function HashicorpVault() {
   const handleDelete = () => {
     deleteConfig(undefined, {
       onSuccess: () => {
-        NotificationManager.success("Hashicorp Vault configuration deleted");
+        NotificationManager.success(t("vaultConfigDeleted"));
         setIsDeleteModalOpen(false);
       },
       onError: (err) => {
@@ -72,7 +74,7 @@ export default function HashicorpVault() {
       { [clearingField]: "" },
       {
         onSuccess: () => {
-          NotificationManager.success(`${FIELD_LABELS[clearingField] ?? clearingField} cleared`);
+          NotificationManager.success(t("fieldCleared", { field: FIELD_LABELS[clearingField] ?? clearingField }));
           setClearingField(null);
         },
         onError: (err) => {
@@ -85,7 +87,7 @@ export default function HashicorpVault() {
   const renderValue = (key: string) => {
     const value = rawValues[key];
     if (!value) {
-      return <span className="text-gray-400 italic">Not configured</span>;
+      return <span className="text-gray-400 italic">{t("notConfigured")}</span>;
     }
     if (SENSITIVE_FIELDS.has(key)) {
       return (
@@ -112,7 +114,7 @@ export default function HashicorpVault() {
 
     return (
       <Descriptions bordered {...descriptionsConfig}>
-        <Descriptions.Item label="Auth Method">
+        <Descriptions.Item label={t("authMethod")}>
           <Text>{detectAuthMethod(rawValues)}</Text>
         </Descriptions.Item>
         {fieldsToShow.map(([key]) => (
@@ -134,7 +136,7 @@ export default function HashicorpVault() {
         <Card>
           <Alert
             type="error"
-            message="Could not load Hashicorp Vault configuration"
+            message={t("couldNotLoadVaultConfig")}
             description={error instanceof Error ? error.message : undefined}
           />
         </Card>
@@ -149,7 +151,7 @@ export default function HashicorpVault() {
                   <Title level={3} style={{ marginBottom: 0 }}>
                     Hashicorp Vault
                   </Title>
-                  <Text type="secondary">Manage secret manager configuration</Text>
+                  <Text type="secondary">{t("manageSecretManagerConfig")}</Text>
                 </div>
               </Flex>
 
@@ -157,13 +159,13 @@ export default function HashicorpVault() {
                 {isConfigured && (
                   <>
                     <Button icon={<PlugZap className="w-4 h-4" />} loading={isTesting} onClick={handleTestConnection}>
-                      Test Connection
+                      {t("testConnection")}
                     </Button>
                     <Button icon={<Edit className="w-4 h-4" />} onClick={() => setIsEditModalVisible(true)}>
-                      Edit Configuration
+                      {t("editConfiguration")}
                     </Button>
                     <Button danger icon={<Trash2 className="w-4 h-4" />} onClick={() => setIsDeleteModalOpen(true)}>
-                      Delete Configuration
+                      {t("deleteConfiguration")}
                     </Button>
                   </>
                 )}
@@ -174,7 +176,7 @@ export default function HashicorpVault() {
               <Alert
                 type="info"
                 showIcon
-                message={'Secrets must be stored with the field name "key"'}
+                message={t("secretsMustUseKeyName")}
                 description={
                   <>
                     <Text code>vault kv put secret/SECRET_NAME key=secret_value</Text>
@@ -183,7 +185,7 @@ export default function HashicorpVault() {
                       href="https://docs.litellm.ai/docs/secret_managers/hashicorp_vault"
                       target="_blank"
                     >
-                      View documentation
+                      {t("viewDocumentation")}
                     </Typography.Link>
                   </>
                 }
@@ -207,10 +209,10 @@ export default function HashicorpVault() {
 
       <DeleteResourceModal
         isOpen={isDeleteModalOpen}
-        title="Delete Hashicorp Vault Configuration?"
-        message="Models using Vault secrets will lose access to their API keys until a new configuration is saved."
-        resourceInformationTitle="Vault Configuration"
-        resourceInformation={[{ label: "Vault Address", value: rawValues.vault_addr }]}
+        title={t("deleteVaultConfiguration")}
+        message={t("vaultDeleteWarning")}
+        resourceInformationTitle={t("vaultConfiguration")}
+        resourceInformation={[{ label: t("vaultAddress"), value: rawValues.vault_addr }]}
         onCancel={() => setIsDeleteModalOpen(false)}
         onOk={handleDelete}
         confirmLoading={isDeleting}
@@ -218,11 +220,11 @@ export default function HashicorpVault() {
 
       <DeleteResourceModal
         isOpen={clearingField !== null}
-        title={`Clear ${clearingField ? FIELD_LABELS[clearingField] ?? clearingField : ""}?`}
-        message="This will remove the stored value."
-        resourceInformationTitle="Field"
+        title={t("clearField", { field: clearingField ? FIELD_LABELS[clearingField] ?? clearingField : "" })}
+        message={t("thisWillRemoveTheStoredValue")}
+        resourceInformationTitle={t("field")}
         resourceInformation={[
-          { label: "Field", value: clearingField ? FIELD_LABELS[clearingField] ?? clearingField : "" },
+          { label: t("field"), value: clearingField ? FIELD_LABELS[clearingField] ?? clearingField : "" },
         ]}
         onCancel={() => setClearingField(null)}
         onOk={handleClearField}

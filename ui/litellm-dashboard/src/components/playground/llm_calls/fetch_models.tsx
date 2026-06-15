@@ -1,6 +1,7 @@
 // fetch_models.ts
 
 import { modelHubCall } from "../../networking";
+import { useTranslations } from "@/i18n";
 
 export interface ModelGroup {
   model_group: string;

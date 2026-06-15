@@ -4,6 +4,7 @@ import { Text, Title, Badge } from "@tremor/react";
 import { enableClaudeCodePlugin, disableClaudeCodePlugin } from "../networking";
 import NotificationsManager from "../molecules/notifications_manager";
 import { Plugin } from "./types";
+import { useTranslations } from "@/i18n";
 
 const { Step } = Steps;
 
@@ -22,6 +23,8 @@ const MakeSkillPublicForm: React.FC<MakeSkillPublicFormProps> = ({
   skillsList,
   onSuccess,
 }) => {
+  const { t } = useTranslations("claudeCodePlugins");
+
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedSkills, setSelectedSkills] = useState<Set<string>>(new Set());
   const [loading, setLoading] = useState(false);
@@ -106,7 +109,7 @@ const MakeSkillPublicForm: React.FC<MakeSkillPublicFormProps> = ({
   const renderStep1 = () => (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <Title>Select Skills to Publish</Title>
+        <Title>{"Select Skills To Publish"}</Title>
         <Checkbox
           checked={allSelected}
           indeterminate={isIndeterminate}
@@ -125,7 +128,7 @@ const MakeSkillPublicForm: React.FC<MakeSkillPublicFormProps> = ({
         <div className="space-y-3">
           {skillsList.length === 0 ? (
             <div className="text-center py-8 text-gray-500">
-              <Text>No skills registered yet.</Text>
+              <Text>{"No Skills Registered Yet"}</Text>
             </div>
           ) : (
             skillsList.map((skill) => (
@@ -170,7 +173,7 @@ const MakeSkillPublicForm: React.FC<MakeSkillPublicFormProps> = ({
 
   const renderStep2 = () => (
     <div className="space-y-4">
-      <Title>Confirm Publish to Skill Hub</Title>
+      <Title>{"Confirm Publish To Skill Hub"}</Title>
 
       <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
         <Text className="text-sm text-yellow-800">
@@ -210,7 +213,7 @@ const MakeSkillPublicForm: React.FC<MakeSkillPublicFormProps> = ({
 
   return (
     <Modal
-      title="Publish to Skill Hub"
+      title={t("claudeCodePlugins.publishToSkillHub")}
       open={visible}
       onCancel={handleClose}
       footer={null}
@@ -219,8 +222,8 @@ const MakeSkillPublicForm: React.FC<MakeSkillPublicFormProps> = ({
     >
       <Form form={form} layout="vertical">
         <Steps current={currentStep} className="mb-6">
-          <Step title="Select Skills" />
-          <Step title="Confirm" />
+          <Step title={t("claudeCodePlugins.selectSkills")} />
+          <Step title={t("claudeCodePlugins.confirm")} />
         </Steps>
 
         {currentStep === 0 ? renderStep1() : renderStep2()}

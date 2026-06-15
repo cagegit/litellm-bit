@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Button, Collapse, Drawer, Empty, Spin, Table, Tooltip, Typography } from "antd";
 import { ReloadOutlined } from "@ant-design/icons";
 import { proxyBaseUrl } from "@/components/networking";
+import { useTranslations } from "@/i18n";
 
 const { Text } = Typography;
 
@@ -274,10 +275,11 @@ const GanttTimeline: React.FC<{
   run: WorkflowRun;
   events: WorkflowRunEvent[];
 }> = ({ run, events }) => {
+  const { t } = useTranslations("common");
   if (events.length === 0) {
     return (
       <div style={{ padding: "16px 0", color: "#a1a1aa", fontSize: 12, fontFamily: "monospace" }}>
-        No events recorded
+        {t("noEventsRecorded")}
       </div>
     );
   }
@@ -473,6 +475,7 @@ const MessageRow: React.FC<{ msg: WorkflowRunMessage }> = ({ msg }) => {
 // ── main component ────────────────────────────────────────────────────────────
 
 const WorkflowRuns: React.FC<WorkflowRunsProps> = ({ accessToken }) => {
+  const { t } = useTranslations("agents");
   const [runs, setRuns] = useState<WorkflowRun[]>([]);
   const [loadingRuns, setLoadingRuns] = useState(false);
   const [selectedRun, setSelectedRun] = useState<WorkflowRun | null>(null);
@@ -543,7 +546,7 @@ const WorkflowRuns: React.FC<WorkflowRunsProps> = ({ accessToken }) => {
 
   const columns = [
     {
-      title: "Run",
+      title: t("run"),
       dataIndex: "run_id",
       key: "run",
       render: (_: string, run: WorkflowRun) => (
@@ -557,13 +560,13 @@ const WorkflowRuns: React.FC<WorkflowRunsProps> = ({ accessToken }) => {
       ),
     },
     {
-      title: "Type",
+      title: t("type"),
       dataIndex: "workflow_type",
       key: "workflow_type",
       render: (v: string) => <span style={{ fontFamily: "monospace", fontSize: 12, color: "#71717a" }}>{v}</span>,
     },
     {
-      title: "Status",
+      title: t("status"),
       dataIndex: "status",
       key: "status",
       render: (status: RunStatus, run: WorkflowRun) => {
@@ -577,7 +580,7 @@ const WorkflowRuns: React.FC<WorkflowRunsProps> = ({ accessToken }) => {
       },
     },
     {
-      title: "Created",
+      title: t("created"),
       dataIndex: "created_at",
       key: "created_at",
       render: (v: string) => <span style={{ fontSize: 12, color: "#a1a1aa" }}>{timeAgo(v)}</span>,
@@ -604,10 +607,8 @@ const WorkflowRuns: React.FC<WorkflowRunsProps> = ({ accessToken }) => {
         }}
       >
         <div>
-          <div style={{ fontSize: 18, fontWeight: 600, color: "#18181b" }}>Workflow Runs</div>
-          <div style={{ fontSize: 13, color: "#71717a", marginTop: 2 }}>
-            Durable state tracking for agents and automated workflows
-          </div>
+          <div style={{ fontSize: 18, fontWeight: 600, color: "#18181b" }}>{t("workflowRuns")}</div>
+          <div style={{ fontSize: 13, color: "#71717a", marginTop: 2 }}>{t("workflowRunsDescription")}</div>
         </div>
         <Button
           icon={<ReloadOutlined />}
@@ -615,7 +616,7 @@ const WorkflowRuns: React.FC<WorkflowRunsProps> = ({ accessToken }) => {
           loading={loadingRuns}
           style={{ color: "#71717a", borderColor: "#e4e4e7" }}
         >
-          Refresh
+          {t("refresh")}
         </Button>
       </div>
 
@@ -635,7 +636,7 @@ const WorkflowRuns: React.FC<WorkflowRunsProps> = ({ accessToken }) => {
           locale={{
             emptyText: (
               <Empty
-                description={<span style={{ color: "#a1a1aa", fontSize: 13 }}>No workflow runs yet</span>}
+                description={<span style={{ color: "#a1a1aa", fontSize: 13 }}>{t("noWorkflowRuns")}</span>}
                 image={Empty.PRESENTED_IMAGE_SIMPLE}
               />
             ),
@@ -689,7 +690,7 @@ const WorkflowRuns: React.FC<WorkflowRunsProps> = ({ accessToken }) => {
                   gap: 4,
                 }}
               >
-                ← close
+                ← {t("close")}
               </button>
               <Button
                 size="small"
@@ -715,9 +716,9 @@ const WorkflowRuns: React.FC<WorkflowRunsProps> = ({ accessToken }) => {
                   key: "timeline",
                   label: (
                     <span style={{ fontSize: 12, fontWeight: 500, color: "#3f3f46" }}>
-                      Timeline
+                      {t("timeline")}
                       <span style={{ marginLeft: 6, fontSize: 11, color: "#a1a1aa", fontWeight: 400 }}>
-                        {events.length} {events.length === 1 ? "event" : "events"}
+                        {events.length} {events.length === 1 ? t("event") : t("events")}
                       </span>
                     </span>
                   ),
@@ -731,7 +732,7 @@ const WorkflowRuns: React.FC<WorkflowRunsProps> = ({ accessToken }) => {
                   key: "messages",
                   label: (
                     <span style={{ fontSize: 12, fontWeight: 500, color: "#3f3f46" }}>
-                      Messages
+                      {t("messages")}
                       <span style={{ marginLeft: 6, fontSize: 11, color: "#a1a1aa", fontWeight: 400 }}>
                         {messages.length}
                       </span>

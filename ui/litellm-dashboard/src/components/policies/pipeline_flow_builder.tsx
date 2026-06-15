@@ -17,6 +17,7 @@ import { testPipelineCall, listPolicyVersions, createPolicyVersion, updatePolicy
 import NotificationsManager from "../molecules/notifications_manager";
 import { getComplianceDatasetPrompts, getFrameworks } from "../../data/compliancePrompts";
 import type { CompliancePrompt } from "../../data/compliancePrompts";
+import { useTranslations } from "@/i18n";
 
 const TEST_SOURCE_QUICK = "quick_chat";
 const TEST_SOURCE_ALL = "__all__";

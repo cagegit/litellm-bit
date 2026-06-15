@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Select } from "antd";
 import { getPassThroughEndpointsCall } from "../networking";
+import { useTranslations } from "@/i18n";
 
 interface PassThroughRoutesSelectorProps {
   onChange: (selectedRoutes: string[]) => void;
@@ -22,10 +23,11 @@ const PassThroughRoutesSelector: React.FC<PassThroughRoutesSelectorProps> = ({
   value,
   className,
   accessToken,
-  placeholder = "Select pass through routes",
+  placeholder,
   disabled = false,
   teamId,
 }) => {
+  const { t } = useTranslations("common");
   const [passThroughRoutes, setPassThroughRoutes] = useState<Array<{ label: string; value: string }>>([]);
   const [loading, setLoading] = useState(false);
 
@@ -72,7 +74,7 @@ const PassThroughRoutesSelector: React.FC<PassThroughRoutesSelectorProps> = ({
   return (
     <Select
       mode="tags"
-      placeholder={placeholder}
+      placeholder={placeholder || t("selectPassThroughRoutes")}
       onChange={onChange}
       value={value}
       loading={loading}

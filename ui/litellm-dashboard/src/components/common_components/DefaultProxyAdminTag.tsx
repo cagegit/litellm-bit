@@ -1,3 +1,4 @@
+import { useTranslations } from "@/i18n";
 import { Tag, Typography } from "antd";
 
 const { Text } = Typography;
@@ -14,8 +15,9 @@ interface DefaultProxyAdminTagProps {
  * plain text.
  */
 export default function DefaultProxyAdminTag({ userId }: DefaultProxyAdminTagProps) {
+  const { t } = useTranslations("common");
   if (userId === DEFAULT_USER_ID) {
-    return <Tag color="blue">Default Proxy Admin</Tag>;
+    return <Tag color="blue">{t("defaultProxyAdmin")}</Tag>;
   }
 
   return <Text>{userId}</Text>;

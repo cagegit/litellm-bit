@@ -1,5 +1,6 @@
 import React from "react";
 import { UiLoadingSpinner } from "../ui/ui-loading-spinner";
+import { useTranslations } from "@/i18n";
 
 interface ChartLoaderProps {
   isDateChanging?: boolean;

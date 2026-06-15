@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import { useTranslations } from "@/i18n";
 import { Modal, Form, Button, Select, Tooltip } from "antd";
 import { UserAddOutlined } from "@ant-design/icons";
 import debounce from "lodash/debounce";
@@ -43,15 +44,8 @@ const UserSearchModal: React.FC<UserSearchModalProps> = ({
   onCancel,
   onSubmit,
   accessToken,
-  title = "Add Team Member",
-  roles = [
-    {
-      label: "admin",
-      value: "admin",
-      description: "Admin role. Can create team keys, add members, and manage settings.",
-    },
-    { label: "user", value: "user", description: "User role. Can view team info, but not manage it." },
-  ],
+  title: titleProp,
+  roles: rolesProp,
   defaultRole = "user",
   teamId,
 }) => {
@@ -60,6 +54,12 @@ const UserSearchModal: React.FC<UserSearchModalProps> = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [selectedField, setSelectedField] = useState<"user_email" | "user_id">("user_email");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { t } = useTranslations("common");
+  const resolvedTitle = titleProp || t("addTeamMember");
+  const roles = rolesProp || [
+    { label: t("admin"), value: "admin", description: t("adminRoleDesc") },
+    { label: t("user"), value: "user", description: t("userRoleDesc") },
+  ];
 
   const fetchUsers = async (searchText: string, fieldName: "user_email" | "user_id"): Promise<void> => {
     if (!searchText) {
@@ -128,7 +128,14 @@ const UserSearchModal: React.FC<UserSearchModalProps> = ({
   };
 
   return (
-    <Modal title={title} open={isVisible} onCancel={handleClose} footer={null} width={800} maskClosable={!isSubmitting}>
+    <Modal
+      title={resolvedTitle}
+      open={isVisible}
+      onCancel={handleClose}
+      footer={null}
+      width={800}
+      maskClosable={!isSubmitting}
+    >
       <Form<FormValues>
         form={form}
         onFinish={handleSubmit}
@@ -139,11 +146,11 @@ const UserSearchModal: React.FC<UserSearchModalProps> = ({
           role: defaultRole,
         }}
       >
-        <Form.Item label="Email" name="user_email" className="mb-4">
+        <Form.Item label={t("email")} name="user_email" className="mb-4">
           <Select
             showSearch
             className="w-full"
-            placeholder="Search by email"
+            placeholder={t("searchByEmail")}
             filterOption={false}
             onSearch={(value) => handleSearch(value, "user_email")}
             onSelect={(value, option) => handleSelect(value, option as UserOption)}
@@ -154,13 +161,13 @@ const UserSearchModal: React.FC<UserSearchModalProps> = ({
           />
         </Form.Item>
 
-        <div className="text-center mb-4">OR</div>
+        <div className="text-center mb-4">{t("or")}</div>
 
-        <Form.Item label="User ID" name="user_id" className="mb-4">
+        <Form.Item label={t("userId")} name="user_id" className="mb-4">
           <Select
             showSearch
             className="w-full"
-            placeholder="Search by user ID"
+            placeholder={t("searchByUserId")}
             filterOption={false}
             onSearch={(value) => handleSearch(value, "user_id")}
             onSelect={(value, option) => handleSelect(value, option as UserOption)}
@@ -170,7 +177,7 @@ const UserSearchModal: React.FC<UserSearchModalProps> = ({
           />
         </Form.Item>
 
-        <Form.Item label="Member Role" name="role" className="mb-4">
+        <Form.Item label={t("memberRole")} name="role" className="mb-4">
           <Select defaultValue={defaultRole}>
             {roles.map((role) => (
               <Select.Option key={role.value} value={role.value}>
@@ -185,7 +192,7 @@ const UserSearchModal: React.FC<UserSearchModalProps> = ({
 
         <div className="text-right mt-4">
           <Button type="primary" htmlType="submit" icon={<UserAddOutlined />} loading={isSubmitting}>
-            {isSubmitting ? "Adding..." : "Add Member"}
+            {isSubmitting ? t("adding") : t("addMember")}
           </Button>
         </div>
       </Form>

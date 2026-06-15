@@ -1,6 +1,7 @@
 import { DeleteOutlined } from "@ant-design/icons";
 import { Button, Select, Table, Typography } from "antd";
 import React from "react";
+import { useTranslations } from "@/i18n";
 
 const { Text } = Typography;
 const { Option } = Select;
@@ -19,6 +20,8 @@ interface KeywordTableProps {
 }
 
 const KeywordTable: React.FC<KeywordTableProps> = ({ keywords, onActionChange, onRemove }) => {
+  const { t } = useTranslations("settings");
+
   const columns = [
     {
       title: "Keyword",
@@ -37,8 +40,8 @@ const KeywordTable: React.FC<KeywordTableProps> = ({ keywords, onActionChange, o
           style={{ width: 120 }}
           size="small"
         >
-          <Option value="BLOCK">Block</Option>
-          <Option value="MASK">Mask</Option>
+          <Option value="BLOCK">{t("settings.block")}</Option>
+          <Option value="MASK">{t("settings.mask")}</Option>
         </Select>
       ),
     },
@@ -61,7 +64,7 @@ const KeywordTable: React.FC<KeywordTableProps> = ({ keywords, onActionChange, o
   ];
 
   if (keywords.length === 0) {
-    return <div style={{ textAlign: "center", padding: "40px 0", color: "#999" }}>No keywords added.</div>;
+    return <div style={{ textAlign: "center", padding: "40px 0", color: "#999" }}>{t("settings.noKeywordsAdded")}</div>;
   }
 
   return <Table dataSource={keywords} columns={columns} rowKey="id" pagination={false} size="small" />;

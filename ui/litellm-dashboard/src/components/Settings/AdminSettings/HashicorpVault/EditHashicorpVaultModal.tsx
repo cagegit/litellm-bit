@@ -3,6 +3,7 @@
 import { useHashicorpVaultConfig } from "@/app/(dashboard)/hooks/configOverrides/useHashicorpVaultConfig";
 import { useUpdateHashicorpVaultConfig } from "@/app/(dashboard)/hooks/configOverrides/useUpdateHashicorpVaultConfig";
 import useAuthorized from "@/app/(dashboard)/hooks/useAuthorized";
+import { useTranslations } from "@/i18n";
 import NotificationManager from "@/components/molecules/notifications_manager";
 import { Button, Divider, Form, Input, Modal, Space, Typography } from "antd";
 import React, { useEffect } from "react";
@@ -14,28 +15,6 @@ interface FieldGroup {
   fields: string[];
 }
 
-const FIELD_GROUPS: FieldGroup[] = [
-  {
-    title: "Connection",
-    fields: ["vault_addr", "vault_namespace", "vault_mount_name", "vault_path_prefix"],
-  },
-  {
-    title: "Token Authentication",
-    subtitle: "Use a Vault token to authenticate. Only one auth method is required.",
-    fields: ["vault_token"],
-  },
-  {
-    title: "AppRole Authentication",
-    subtitle: "Use AppRole credentials to authenticate. Only one auth method is required.",
-    fields: ["approle_role_id", "approle_secret_id", "approle_mount_path"],
-  },
-  {
-    title: "TLS",
-    subtitle: "Optional client certificate for mTLS.",
-    fields: ["client_cert", "client_key", "vault_cert_role"],
-  },
-];
-
 interface EditHashicorpVaultModalProps {
   isVisible: boolean;
   onCancel: () => void;
@@ -43,6 +22,7 @@ interface EditHashicorpVaultModalProps {
 }
 
 const EditHashicorpVaultModal: React.FC<EditHashicorpVaultModalProps> = ({ isVisible, onCancel, onSuccess }) => {
+  const { t } = useTranslations("settings");
   const [form] = Form.useForm();
   const { accessToken } = useAuthorized();
   const { data } = useHashicorpVaultConfig();
@@ -81,7 +61,7 @@ const EditHashicorpVaultModal: React.FC<EditHashicorpVaultModalProps> = ({ isVis
 
     mutate(config, {
       onSuccess: () => {
-        NotificationManager.success("Hashicorp Vault configuration updated successfully");
+        NotificationManager.success(t("vaultConfigUpdated"));
         onSuccess();
       },
       onError: (err) => {
@@ -100,14 +80,12 @@ const EditHashicorpVaultModal: React.FC<EditHashicorpVaultModalProps> = ({ isVis
     if (!fieldSchema) return null;
 
     const rules =
-      fieldName === "vault_addr"
-        ? [{ pattern: /^https?:\/\/.+/, message: "Must start with http:// or https://" }]
-        : undefined;
+      fieldName === "vault_addr" ? [{ pattern: /^https?:\/\/.+/, message: t("mustStartWithHttp") }] : undefined;
 
     const isSensitive = SENSITIVE_FIELDS.has(fieldName);
     const existingValue = rawValues[fieldName];
     const hasExistingValue = isSensitive && existingValue != null && existingValue !== "";
-    const placeholder = hasExistingValue ? `Leave blank to keep existing (${existingValue})` : fieldSchema?.description;
+    const placeholder = hasExistingValue ? t("leaveBlankToKeep", { value: existingValue }) : fieldSchema?.description;
 
     return (
       <Form.Item key={fieldName} name={fieldName} label={FIELD_LABELS[fieldName] ?? fieldName} rules={rules}>
@@ -116,18 +94,40 @@ const EditHashicorpVaultModal: React.FC<EditHashicorpVaultModalProps> = ({ isVis
     );
   };
 
+  const FIELD_GROUPS: FieldGroup[] = [
+    {
+      title: t("connection"),
+      fields: ["vault_addr", "vault_namespace", "vault_mount_name", "vault_path_prefix"],
+    },
+    {
+      title: t("tokenAuthentication"),
+      subtitle: t("onlyOneAuthMethodRequired"),
+      fields: ["vault_token"],
+    },
+    {
+      title: t("approleAuthentication"),
+      subtitle: t("onlyOneAuthMethodRequired"),
+      fields: ["approle_role_id", "approle_secret_id", "approle_mount_path"],
+    },
+    {
+      title: "TLS",
+      subtitle: t("optionalClientCertForMtls"),
+      fields: ["client_cert", "client_key", "vault_cert_role"],
+    },
+  ];
+
   return (
     <Modal
-      title="Edit Hashicorp Vault Configuration"
+      title={t("editVaultConfiguration")}
       open={isVisible}
       width={700}
       footer={
         <Space>
           <Button onClick={handleCancel} disabled={isPending}>
-            Cancel
+            {t("cancel")}
           </Button>
           <Button type="primary" loading={isPending} onClick={() => form.submit()}>
-            {isPending ? "Saving..." : "Save"}
+            {isPending ? t("saving") : t("save")}
           </Button>
         </Space>
       }

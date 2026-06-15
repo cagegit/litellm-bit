@@ -9,6 +9,7 @@ import CacheControlSettings from "./cache_control_settings";
 import VectorStoreSelector from "../vector_store_management/VectorStoreSelector";
 import { Tag } from "../tag_management/types";
 import { formItemValidateJSON } from "../../utils/textUtils";
+import { useTranslations } from "@/i18n";
 const { Link } = Typography;
 
 interface AdvancedSettingsProps {
@@ -28,6 +29,8 @@ const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({
   tagsList,
   accessToken,
 }) => {
+  const { t } = useTranslations("models");
+
   const [form] = Form.useForm();
   const [customPricing, setCustomPricing] = React.useState(false);
   const [pricingModel, setPricingModel] = React.useState<"per_token" | "per_second">("per_token");

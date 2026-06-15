@@ -3,6 +3,7 @@ import { Button, Divider, Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import NotificationsManager from "../molecules/notifications_manager";
 import { testSearchToolConnection } from "../networking";
+import { useTranslations } from "@/i18n";
 
 const { Text } = Typography;
 
@@ -13,6 +14,8 @@ interface SearchConnectionTestProps {
 }
 
 const SearchConnectionTest: React.FC<SearchConnectionTestProps> = ({ litellmParams, accessToken, onTestComplete }) => {
+  const { t } = useTranslations("mcp");
+
   const [isLoading, setIsLoading] = useState(true);
   const [testResult, setTestResult] = useState<{
     status: "success" | "error";

@@ -36,6 +36,7 @@ import FilterComponent, { FilterOption } from "../molecules/filter";
 import DefaultProxyAdminTag from "../common_components/DefaultProxyAdminTag";
 import { Organization } from "../networking";
 import KeyInfoView from "../templates/key_info_view";
+import { useTranslations } from "@/i18n";
 
 interface VirtualKeysTableProps {
   teams: Team[] | null;
@@ -53,6 +54,8 @@ interface VirtualKeysTableProps {
  */
 
 export function VirtualKeysTable({ teams, organizations, onSortChange, currentSort }: VirtualKeysTableProps) {
+  const { t } = useTranslations("keys");
+
   const { data: fetchedOrganizations } = useOrganizations();
   const resolvedOrganizations = fetchedOrganizations ?? organizations ?? [];
   const [selectedKey, setSelectedKey] = useState<KeyResponse | null>(null);
@@ -496,7 +499,7 @@ export function VirtualKeysTable({ teams, organizations, onSortChange, currentSo
                 <div className="flex flex-col">
                   {models.length === 0 ? (
                     <Badge size={"xs"} className="mb-1" color="red">
-                      <Text>All Proxy Models</Text>
+                      <Text>{t("keys.allProxyModels")}</Text>
                     </Badge>
                   ) : (
                     <>
@@ -520,7 +523,7 @@ export function VirtualKeysTable({ teams, organizations, onSortChange, currentSo
                           {models.slice(0, 3).map((model, index) =>
                             model === "all-proxy-models" ? (
                               <Badge key={index} size={"xs"} color="red">
-                                <Text>All Proxy Models</Text>
+                                <Text>{t("keys.allProxyModels")}</Text>
                               </Badge>
                             ) : (
                               <Badge key={index} size={"xs"} color="blue">
@@ -544,7 +547,7 @@ export function VirtualKeysTable({ teams, organizations, onSortChange, currentSo
                               {models.slice(3).map((model, index) =>
                                 model === "all-proxy-models" ? (
                                   <Badge key={index + 3} size={"xs"} color="red">
-                                    <Text>All Proxy Models</Text>
+                                    <Text>{t("keys.allProxyModels")}</Text>
                                   </Badge>
                                 ) : (
                                   <Badge key={index + 3} size={"xs"} color="blue">
@@ -734,7 +737,7 @@ export function VirtualKeysTable({ teams, organizations, onSortChange, currentSo
                 icon={<SyncOutlined spin={isButtonLoading} />}
                 onClick={handleRefresh}
                 disabled={isButtonLoading}
-                title="Fetch data"
+                title={t("keys.fetchData")}
               >
                 {isButtonLoading ? "Fetching" : "Fetch"}
               </AntButton>
@@ -883,7 +886,7 @@ export function VirtualKeysTable({ teams, organizations, onSortChange, currentSo
                       <TableRow>
                         <TableCell colSpan={columns.length} className="h-8 text-center">
                           <div className="text-center text-gray-500">
-                            <p>No keys found</p>
+                            <p>{t("keys.noKeysFound")}</p>
                           </div>
                         </TableCell>
                       </TableRow>

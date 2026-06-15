@@ -1,12 +1,15 @@
 import React from "react";
 import { Text } from "@tremor/react";
 import { MCPServerCostInfo } from "./types";
+import { useTranslations } from "@/i18n";
 
 interface MCPServerCostDisplayProps {
   costConfig?: MCPServerCostInfo | null;
 }
 
 const MCPServerCostDisplay: React.FC<MCPServerCostDisplayProps> = ({ costConfig }) => {
+  const { t } = useTranslations("mcp");
+
   const hasDefaultCost =
     costConfig?.default_cost_per_query !== undefined && costConfig?.default_cost_per_query !== null;
   const hasToolCosts =
@@ -34,14 +37,14 @@ const MCPServerCostDisplay: React.FC<MCPServerCostDisplayProps> = ({ costConfig 
           costConfig?.default_cost_per_query !== undefined &&
           costConfig?.default_cost_per_query !== null && (
             <div>
-              <Text className="font-medium">Default Cost per Query</Text>
+              <Text className="font-medium">{t("mcp.defaultCostPerQuery")}</Text>
               <div className="text-green-600 font-mono">${costConfig.default_cost_per_query.toFixed(4)}</div>
             </div>
           )}
 
         {hasToolCosts && costConfig?.tool_name_to_cost_per_query && (
           <div>
-            <Text className="font-medium">Tool-Specific Costs</Text>
+            <Text className="font-medium">{t("mcp.toolSpecificCosts")}</Text>
             <div className="mt-2 space-y-2">
               {Object.entries(costConfig.tool_name_to_cost_per_query).map(
                 ([toolName, cost]) =>

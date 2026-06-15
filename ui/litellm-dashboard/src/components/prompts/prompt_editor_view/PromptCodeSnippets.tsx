@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Modal, Select, Button as AntdButton, Tabs } from "antd";
 import { CodeOutlined } from "@ant-design/icons";
 import { Button as TremorButton, Text } from "@tremor/react";
+import { useTranslations } from "@/i18n";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { coy } from "react-syntax-highlighter/dist/esm/styles/prism";
 import NotificationsManager from "../../molecules/notifications_manager";
@@ -26,6 +27,7 @@ const PromptCodeSnippets: React.FC<PromptCodeSnippetsProps> = ({
   version = "1",
   proxySettings,
 }) => {
+  const { t } = useTranslations("prompts");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState<"curl" | "python" | "javascript">("curl");
   const [selectedTab, setSelectedTab] = useState("basic");
@@ -238,10 +240,10 @@ main();`;
         Get Code
       </TremorButton>
 
-      <Modal title="Generated Code" open={isModalVisible} onCancel={handleCancel} footer={null} width={800}>
+      <Modal title={t("prompts.generatedCode")} open={isModalVisible} onCancel={handleCancel} footer={null} width={800}>
         <div className="flex justify-between items-center mb-4">
           <div>
-            <Text className="font-medium block mb-1 text-gray-700">Language</Text>
+            <Text className="font-medium block mb-1 text-gray-700">{t("prompts.language")}</Text>
             <Select
               value={selectedLanguage}
               onChange={(value) => setSelectedLanguage(value as "curl" | "python" | "javascript")}

@@ -5,6 +5,7 @@ import { PlusOutlined, MinusCircleOutlined, InfoCircleOutlined } from "@ant-desi
 import { AGENT_FORM_CONFIG, SKILL_FIELD_CONFIG } from "./agent_config";
 
 import CostConfigFields from "./cost_config_fields";
+import { useTranslations } from "@/i18n";
 
 const { Panel } = Collapse;
 
@@ -18,15 +19,17 @@ interface AgentFormFieldsProps {
  * Uses shared configuration from agent_config.ts
  */
 const AgentFormFields: React.FC<AgentFormFieldsProps> = ({ showAgentName = true, visiblePanels }) => {
+  const { t } = useTranslations("agents");
+
   const shouldShow = (key: string) => !visiblePanels || visiblePanels.includes(key);
   return (
     <>
       {showAgentName && (
         <Form.Item
-          label="Agent Name"
+          label={t("agents.agentName")}
           name="agent_name"
-          rules={[{ required: true, message: "Please enter a unique agent name" }]}
-          tooltip="Unique identifier for the agent"
+          rules={[{ required: true, message: t("agents.pleaseEnterUniqueAgentName") }]}
+          tooltip={t("agents.uniqueIdentifierForAgent")}
         >
           <Input placeholder="e.g., customer-support-agent" />
         </Form.Item>
@@ -73,7 +76,7 @@ const AgentFormFields: React.FC<AgentFormFieldsProps> = ({ showAgentName = true,
                         {...field}
                         label={SKILL_FIELD_CONFIG.id.label}
                         name={[field.name, "id"]}
-                        rules={[{ required: SKILL_FIELD_CONFIG.id.required, message: "Required" }]}
+                        rules={[{ required: SKILL_FIELD_CONFIG.id.required, message: t("agents.required") }]}
                       >
                         <Input placeholder={SKILL_FIELD_CONFIG.id.placeholder} />
                       </Form.Item>
@@ -82,7 +85,7 @@ const AgentFormFields: React.FC<AgentFormFieldsProps> = ({ showAgentName = true,
                         {...field}
                         label={SKILL_FIELD_CONFIG.name.label}
                         name={[field.name, "name"]}
-                        rules={[{ required: SKILL_FIELD_CONFIG.name.required, message: "Required" }]}
+                        rules={[{ required: SKILL_FIELD_CONFIG.name.required, message: t("agents.required") }]}
                       >
                         <Input placeholder={SKILL_FIELD_CONFIG.name.placeholder} />
                       </Form.Item>
@@ -91,7 +94,7 @@ const AgentFormFields: React.FC<AgentFormFieldsProps> = ({ showAgentName = true,
                         {...field}
                         label={SKILL_FIELD_CONFIG.description.label}
                         name={[field.name, "description"]}
-                        rules={[{ required: SKILL_FIELD_CONFIG.description.required, message: "Required" }]}
+                        rules={[{ required: SKILL_FIELD_CONFIG.description.required, message: t("agents.required") }]}
                       >
                         <Input.TextArea
                           rows={SKILL_FIELD_CONFIG.description.rows}
@@ -103,7 +106,7 @@ const AgentFormFields: React.FC<AgentFormFieldsProps> = ({ showAgentName = true,
                         {...field}
                         label={SKILL_FIELD_CONFIG.tags.label}
                         name={[field.name, "tags"]}
-                        rules={[{ required: SKILL_FIELD_CONFIG.tags.required, message: "Required" }]}
+                        rules={[{ required: SKILL_FIELD_CONFIG.tags.required, message: t("agents.required") }]}
                       >
                         <Select
                           mode="tags"
@@ -188,7 +191,7 @@ const AgentFormFields: React.FC<AgentFormFieldsProps> = ({ showAgentName = true,
 
         {/* Authentication Headers */}
         {shouldShow("auth_headers") && (
-          <Panel header="Authentication Headers" key="auth_headers">
+          <Panel header={t("agents.authenticationHeaders")} key="auth_headers">
             {/* Static Headers */}
             <Form.Item
               label={
@@ -208,16 +211,16 @@ const AgentFormFields: React.FC<AgentFormFieldsProps> = ({ showAgentName = true,
                         <Form.Item
                           {...restField}
                           name={[name, "header"]}
-                          rules={[{ required: true, message: "Header name required" }]}
+                          rules={[{ required: true, message: t("agents.headerNameRequired") }]}
                         >
-                          <Input placeholder="Header name (e.g. Authorization)" style={{ width: 220 }} />
+                          <Input placeholder={t("agents.headerNameegAuthorization")} style={{ width: 220 }} />
                         </Form.Item>
                         <Form.Item
                           {...restField}
                           name={[name, "value"]}
-                          rules={[{ required: true, message: "Value required" }]}
+                          rules={[{ required: true, message: t("agents.valueRequired") }]}
                         >
-                          <Input placeholder="Value (e.g. Bearer token123)" style={{ width: 260 }} />
+                          <Input placeholder={t("agents.valueegBearerToken123")} style={{ width: 260 }} />
                         </Form.Item>
                         <MinusCircleOutlined onClick={() => remove(name)} style={{ color: "#ff4d4f" }} />
                       </Space>

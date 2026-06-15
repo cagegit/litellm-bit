@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Space } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { TextInput } from "@tremor/react";
+import { useTranslations } from "@/i18n";
 
 interface QueryParamInputProps {
   value?: Record<string, string>;
@@ -9,6 +10,7 @@ interface QueryParamInputProps {
 }
 
 const QueryParamInput: React.FC<QueryParamInputProps> = ({ value = {}, onChange }) => {
+  const { t } = useTranslations("common");
   const [pairs, setPairs] = useState<[string, string][]>(Object.entries(value));
 
   const handleAdd = () => {
@@ -33,12 +35,12 @@ const QueryParamInput: React.FC<QueryParamInputProps> = ({ value = {}, onChange 
       {pairs.map(([key, val], index) => (
         <Space key={index} style={{ display: "flex", marginBottom: 8 }} align="center">
           <TextInput
-            placeholder="Parameter Name (e.g., version)"
+            placeholder={t("parameterName")}
             value={key}
             onChange={(e) => handleChange(index, e.target.value, val)}
           />
           <TextInput
-            placeholder="Parameter Value (e.g., v1)"
+            placeholder={t("parameterValue")}
             value={val}
             onChange={(e) => handleChange(index, key, e.target.value)}
           />
@@ -48,7 +50,7 @@ const QueryParamInput: React.FC<QueryParamInputProps> = ({ value = {}, onChange 
         </Space>
       ))}
       <Button type="dashed" onClick={handleAdd} icon={<PlusOutlined />}>
-        Add Query Parameter
+        {t("addQueryParameter")}
       </Button>
     </div>
   );

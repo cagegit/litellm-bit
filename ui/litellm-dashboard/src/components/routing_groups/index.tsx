@@ -11,10 +11,13 @@ import RoutingGroupsTable from "./RoutingGroupsTable";
 import RoutingGroupModal from "./RoutingGroupModal";
 import NotificationsManager from "../molecules/notifications_manager";
 import type { RoutingGroup } from "./types";
+import { useTranslations } from "@/i18n";
 
 const { Text } = Typography;
 
 const RoutingGroups: React.FC = () => {
+  const { t } = useTranslations("settings");
+
   const { data, isLoading, refetch, isFetching } = useRoutingGroups();
   const { data: routerFields } = useRouterFields();
   const { data: modelHub } = useModelHub();
@@ -104,7 +107,7 @@ const RoutingGroups: React.FC = () => {
           <Input
             allowClear
             prefix={<SearchOutlined className="text-gray-400" />}
-            placeholder="Search groups..."
+            placeholder={t("settings.searchGroups")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="max-w-sm"
@@ -146,10 +149,10 @@ const RoutingGroups: React.FC = () => {
 
       <Modal
         open={Boolean(deletingGroup)}
-        title="Delete routing group?"
-        okText="Delete"
+        title={t("settings.deleteRoutingGroup")}
+        okText={t("settings.delete")}
         okButtonProps={{ danger: true, loading: saveMutation.isPending }}
-        cancelText="Cancel"
+        cancelText={t("settings.cancel")}
         onOk={confirmDelete}
         onCancel={() => setDeletingGroup(null)}
       >

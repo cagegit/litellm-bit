@@ -2,6 +2,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Button, Badge, Text } from "@tremor/react";
 import { Tooltip } from "antd";
 import { CopyOutlined } from "@ant-design/icons";
+import { useTranslations } from "@/i18n";
 import { MarketplacePluginEntry } from "@/components/claude_code_plugins/types";
 import {
   formatInstallCommand,
@@ -13,9 +14,11 @@ export const getMarketplaceTableColumns = (
   copyToClipboard: (text: string) => void,
   publicPage: boolean = false,
 ): ColumnDef<MarketplacePluginEntry>[] => {
+  const { t } = useTranslations("aiHub");
+
   const allColumns: ColumnDef<MarketplacePluginEntry>[] = [
     {
-      header: "Plugin Name",
+      header: t("pluginName"),
       accessorKey: "name",
       enableSorting: true,
       sortingFn: "alphanumeric",
@@ -27,7 +30,7 @@ export const getMarketplaceTableColumns = (
           <div className="space-y-1">
             <div className="flex items-center space-x-2">
               <Text className="font-medium text-sm">{plugin.name}</Text>
-              <Tooltip title="Copy install command">
+              <Tooltip title={t("copyInstallCommand")}>
                 <CopyOutlined
                   onClick={() => copyToClipboard(installCommand)}
                   className="cursor-pointer text-gray-500 hover:text-blue-500 text-xs"
@@ -36,14 +39,14 @@ export const getMarketplaceTableColumns = (
             </div>
             {/* Show description on mobile */}
             <div className="md:hidden">
-              <Text className="text-xs text-gray-600">{plugin.description || "No description"}</Text>
+              <Text className="text-xs text-gray-600">{plugin.description || t("noDescription")}</Text>
             </div>
           </div>
         );
       },
     },
     {
-      header: "Description",
+      header: t("description"),
       accessorKey: "description",
       enableSorting: true,
       sortingFn: "alphanumeric",
@@ -57,7 +60,7 @@ export const getMarketplaceTableColumns = (
       },
     },
     {
-      header: "Version",
+      header: t("version"),
       accessorKey: "version",
       enableSorting: true,
       sortingFn: "alphanumeric",
@@ -77,7 +80,7 @@ export const getMarketplaceTableColumns = (
       },
     },
     {
-      header: "Category",
+      header: t("category"),
       accessorKey: "category",
       enableSorting: true,
       sortingFn: "alphanumeric",
@@ -91,7 +94,7 @@ export const getMarketplaceTableColumns = (
           </Badge>
         ) : (
           <Badge color="gray" size="sm">
-            Uncategorized
+            {t("uncategorized")}
           </Badge>
         );
       },
@@ -100,7 +103,7 @@ export const getMarketplaceTableColumns = (
       },
     },
     {
-      header: "Source",
+      header: t("source"),
       accessorKey: "source",
       enableSorting: false,
       cell: ({ row }) => {
@@ -114,7 +117,7 @@ export const getMarketplaceTableColumns = (
       },
     },
     {
-      header: "Keywords",
+      header: t("keywords"),
       accessorKey: "keywords",
       enableSorting: false,
       cell: ({ row }) => {
@@ -142,7 +145,7 @@ export const getMarketplaceTableColumns = (
       },
     },
     {
-      header: "Install Command",
+      header: t("installCommand"),
       id: "install_command",
       enableSorting: false,
       cell: ({ row }) => {
@@ -154,7 +157,7 @@ export const getMarketplaceTableColumns = (
             <code className="text-xs bg-gray-100 px-2 py-1 rounded font-mono truncate max-w-[200px]">
               {installCommand}
             </code>
-            <Tooltip title="Copy command">
+            <Tooltip title={t("copyCommand")}>
               <Button
                 size="xs"
                 variant="secondary"

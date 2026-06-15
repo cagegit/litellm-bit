@@ -43,6 +43,7 @@ import NotificationsManager from "./molecules/notifications_manager";
 import type { MCPUserEnvVarsStatus } from "./mcp_tools/types";
 import { createApiClient, deriveErrorMessage } from "@/lib/http/client";
 import { resolveApiBase } from "@/lib/http/resolveApiBase";
+import { useTranslations } from "@/i18n";
 
 export { deriveErrorMessage };
 export { ApiError } from "@/lib/http/client";
@@ -362,6 +363,8 @@ const MCP_AUTH_HEADER: string = "x-mcp-auth";
 
 // Function to set the global header name
 export function setGlobalLitellmHeaderName(headerName: string = "Authorization") {
+  const { t } = useTranslations("common");
+
   console.log(`setGlobalLitellmHeaderName: ${headerName}`);
   globalLitellmHeaderName = headerName;
 }

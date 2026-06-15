@@ -13,6 +13,7 @@ import { fetchAvailableModels, ModelGroup } from "../../../playground/llm_calls/
 import { AddFallbacksModal } from "./AddFallbacksModal";
 import { FallbackGroup } from "./FallbackGroupConfig";
 import { FallbackSelectionForm } from "./FallbackSelectionForm";
+import { useTranslations } from "@/i18n";
 
 export type FallbackEntry = { [modelName: string]: string[] };
 export type Fallbacks = FallbackEntry[];
@@ -36,6 +37,8 @@ export default function AddFallbacks({ models, accessToken, value = [], onChange
       fallbackModels: [],
     },
   ]);
+
+  const { t } = useTranslations("settings");
 
   // Reset groups state and increment modal key when modal opens
   useEffect(() => {
@@ -84,9 +87,7 @@ export default function AddFallbacks({ models, accessToken, value = [], onChange
     // Validation
     const invalidGroups = groups.filter((g) => !g.primaryModel || g.fallbackModels.length === 0);
     if (invalidGroups.length > 0) {
-      MessageManager.error(
-        `Please complete configuration for all groups. ${invalidGroups.length} group(s) incomplete.`,
-      );
+      MessageManager.error(t("configurationIncomplete", { count: invalidGroups.length }));
       return;
     }
 
@@ -106,7 +107,7 @@ export default function AddFallbacks({ models, accessToken, value = [], onChange
       setIsSaving(true);
       try {
         await onChange(updatedFallbacks);
-        NotificationManager.success(`${groups.length} fallback configuration(s) added successfully!`);
+        NotificationManager.success(t("fallbacksAddedSuccessfully", { count: groups.length }));
         handleCancel();
       } catch (error) {
         // Error handling is done in handleFallbacksChange, so we don't need to show another notification here
@@ -115,7 +116,7 @@ export default function AddFallbacks({ models, accessToken, value = [], onChange
         setIsSaving(false);
       }
     } else {
-      NotificationManager.fromBackend("onChange callback not provided");
+      NotificationManager.fromBackend(t("onChangeCallbackNotProvided"));
     }
   };
 
@@ -126,7 +127,7 @@ export default function AddFallbacks({ models, accessToken, value = [], onChange
         onClick={() => setIsModalVisible(true)}
         icon={() => <span className="mr-1">+</span>}
       >
-        Add Fallbacks
+        {t("addFallbacks")}
       </TremorButton>
       <AddFallbacksModal open={isModalVisible} onCancel={handleCancel}>
         <FallbackSelectionForm
@@ -141,7 +142,7 @@ export default function AddFallbacks({ models, accessToken, value = [], onChange
         {groups.length > 0 && (
           <div className="flex items-center justify-end space-x-3 pt-6 mt-6 border-t border-gray-100">
             <Button type="default" onClick={handleCancel} disabled={isSaving}>
-              Cancel
+              {t("cancel")}
             </Button>
             <Button
               type="default"
@@ -149,7 +150,7 @@ export default function AddFallbacks({ models, accessToken, value = [], onChange
               disabled={groups.length === 0 || isSaving}
               loading={isSaving}
             >
-              {isSaving ? "Saving Configuration..." : "Save All Configurations"}
+              {isSaving ? t("savingConfiguration") : t("saveAllConfigurations")}
             </Button>
           </div>
         )}

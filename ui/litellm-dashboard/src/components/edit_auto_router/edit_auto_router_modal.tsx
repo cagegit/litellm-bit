@@ -5,6 +5,7 @@ import { modelAvailableCall, modelPatchUpdateCall } from "../networking";
 import { fetchAvailableModels, ModelGroup } from "../playground/llm_calls/fetch_models";
 import RouterConfigBuilder from "../add_model/RouterConfigBuilder";
 import NotificationsManager from "../molecules/notifications_manager";
+import { useTranslations } from "@/i18n";
 
 interface EditAutoRouterModalProps {
   isVisible: boolean;
@@ -23,6 +24,8 @@ const EditAutoRouterModal: React.FC<EditAutoRouterModalProps> = ({
   accessToken,
   userRole,
 }) => {
+  const { t } = useTranslations("settings");
+
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [modelAccessGroups, setModelAccessGroups] = useState<string[]>([]);
@@ -148,7 +151,7 @@ const EditAutoRouterModal: React.FC<EditAutoRouterModalProps> = ({
 
   return (
     <Modal
-      title="Edit Auto Router Configuration"
+      title={t("settings.editAutoRouterConfiguration")}
       open={isVisible}
       onCancel={onCancel}
       footer={[
@@ -170,9 +173,9 @@ const EditAutoRouterModal: React.FC<EditAutoRouterModalProps> = ({
         <Form form={form} layout="vertical" className="space-y-4">
           {/* Auto Router Name */}
           <Form.Item
-            label="Auto Router Name"
+            label={t("settings.autoRouterName")}
             name="auto_router_name"
-            rules={[{ required: true, message: "Auto router name is required" }]}
+            rules={[{ required: true, message: t("settings.autoRouterNameIsRequired") }]}
           >
             <TextInput placeholder="e.g., auto_router_1, smart_routing" />
           </Form.Item>
@@ -190,12 +193,12 @@ const EditAutoRouterModal: React.FC<EditAutoRouterModalProps> = ({
 
           {/* Default Model */}
           <Form.Item
-            label="Default Model"
+            label={t("settings.defaultModel")}
             name="auto_router_default_model"
-            rules={[{ required: true, message: "Default model is required" }]}
+            rules={[{ required: true, message: t("settings.defaultModelIsRequired") }]}
           >
             <AntdSelect
-              placeholder="Select a default model"
+              placeholder={t("settings.selectADefaultModel")}
               onChange={(value) => {
                 setShowCustomDefaultModel(value === "custom");
               }}
@@ -205,9 +208,9 @@ const EditAutoRouterModal: React.FC<EditAutoRouterModalProps> = ({
           </Form.Item>
 
           {/* Embedding Model */}
-          <Form.Item label="Embedding Model" name="auto_router_embedding_model">
+          <Form.Item label={t("settings.embeddingModel")} name="auto_router_embedding_model">
             <AntdSelect
-              placeholder="Select an embedding model (optional)"
+              placeholder={t("settings.selectAnEmbeddingModeloptional")}
               onChange={(value) => {
                 setShowCustomEmbeddingModel(value === "custom");
               }}
@@ -220,14 +223,14 @@ const EditAutoRouterModal: React.FC<EditAutoRouterModalProps> = ({
           {/* Model Access Groups - Admin only */}
           {userRole === "Admin" && (
             <Form.Item
-              label="Model Access Groups"
+              label={t("settings.modelAccessGroups")}
               name="model_access_group"
-              tooltip="Control who can access this auto router"
+              tooltip={t("settings.controlWhoCanAccessThisAutoRouter")}
             >
               <AntdSelect
                 mode="tags"
                 showSearch
-                placeholder="Select existing groups or type to create new ones"
+                placeholder={t("settings.selectExistingGroupsOrTypeToCreateNewOnes")}
                 optionFilterProp="children"
                 tokenSeparators={[","]}
                 options={modelAccessGroups.map((group) => ({

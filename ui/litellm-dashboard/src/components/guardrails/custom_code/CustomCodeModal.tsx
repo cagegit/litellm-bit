@@ -13,6 +13,7 @@ import {
 } from "@ant-design/icons";
 import { createGuardrailCall, updateGuardrailCall, testCustomCodeGuardrail } from "../../networking";
 import NotificationsManager from "../../molecules/notifications_manager";
+import { useTranslations } from "@/i18n";
 
 const { Panel } = Collapse;
 const { TextArea } = Input;
@@ -166,6 +167,8 @@ interface CustomCodeModalProps {
 }
 
 const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onSuccess, accessToken, editData }) => {
+  const { t } = useTranslations("settings");
+
   const isEditMode = !!editData;
   const [guardrailName, setGuardrailName] = useState("");
   const [mode, setMode] = useState<string[]>(["pre_call"]);

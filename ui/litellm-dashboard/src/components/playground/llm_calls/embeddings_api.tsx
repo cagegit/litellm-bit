@@ -1,5 +1,6 @@
 import NotificationManager from "@/components/molecules/notifications_manager";
 import { getProxyBaseUrl, getGlobalLitellmHeaderName } from "@/components/networking";
+import { useTranslations } from "@/i18n";
 
 export async function makeOpenAIEmbeddingsRequest(
   input: string,

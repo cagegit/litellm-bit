@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslations } from "@/i18n";
 import { Form, Input, Select, Collapse } from "antd";
 import { AgentCreateInfo, AgentCredentialFieldMetadata } from "../networking";
 import { AGENT_FORM_CONFIG } from "./agent_config";
@@ -16,19 +17,20 @@ interface DynamicAgentFormFieldsProps {
  * credential fields defined by the agent type metadata.
  */
 const DynamicAgentFormFields: React.FC<DynamicAgentFormFieldsProps> = ({ agentTypeInfo }) => {
+  const { t } = useTranslations("agents");
   return (
     <>
       <Form.Item
-        label="Agent Name"
+        label={t("agentName")}
         name="agent_name"
-        rules={[{ required: true, message: "Please enter a unique agent name" }]}
-        tooltip="Unique identifier for the agent"
+        rules={[{ required: true, message: t("pleaseEnterUniqueAgentName") }]}
+        tooltip={t("uniqueIdentifierForAgent")}
       >
-        <Input placeholder="e.g., my-langgraph-agent" />
+        <Input placeholder={t("agentNamePlaceholder")} />
       </Form.Item>
 
-      <Form.Item label="Description" name="description" tooltip="Brief description of what this agent does">
-        <Input.TextArea rows={2} placeholder="Describe what this agent does..." />
+      <Form.Item label={t("description")} name="description" tooltip={t("briefDescriptionOfAgent")}>
+        <Input.TextArea rows={2} placeholder={t("describeWhatAgentDoes")} />
       </Form.Item>
 
       {agentTypeInfo.credential_fields.map((field: AgentCredentialFieldMetadata) => (
@@ -36,7 +38,9 @@ const DynamicAgentFormFields: React.FC<DynamicAgentFormFieldsProps> = ({ agentTy
           key={field.key}
           label={field.label}
           name={field.key}
-          rules={field.required ? [{ required: true, message: `Please enter ${field.label}` }] : undefined}
+          rules={
+            field.required ? [{ required: true, message: t("pleaseEnterField", { field: field.label }) }] : undefined
+          }
           tooltip={field.tooltip}
           initialValue={field.default_value}
         >
@@ -71,7 +75,11 @@ const DynamicAgentFormFields: React.FC<DynamicAgentFormFieldsProps> = ({ agentTy
  * Builds agent data from form values for dynamic agent types.
  * Uses configuration from agentTypeInfo to determine which fields to include.
  */
-export const buildDynamicAgentData = (values: any, agentTypeInfo: AgentCreateInfo) => {
+export const buildDynamicAgentData = (
+  values: any,
+  agentTypeInfo: AgentCreateInfo,
+  t?: (key: string, params?: Record<string, string>) => string,
+) => {
   // Build litellm_params from template
   const litellmParams: Record<string, any> = {
     ...(agentTypeInfo.litellm_params_template || {}),
@@ -114,7 +122,11 @@ export const buildDynamicAgentData = (values: any, agentTypeInfo: AgentCreateInf
     agent_card_params: {
       protocolVersion: "1.0",
       name: values.display_name || values.agent_name,
-      description: values.description || `${agentTypeInfo.agent_type_display_name} agent`,
+      description:
+        values.description ||
+        (t
+          ? t("agentFallback", { type: agentTypeInfo.agent_type_display_name })
+          : `${agentTypeInfo.agent_type_display_name} agent`),
       url: values.api_base || "",
       version: "1.0.0",
       defaultInputModes: ["text"],
@@ -126,7 +138,7 @@ export const buildDynamicAgentData = (values: any, agentTypeInfo: AgentCreateInf
         {
           id: "chat",
           name: "Chat",
-          description: "General chat capability",
+          description: t ? t("generalChatCapability") : "General chat capability",
           tags: ["chat", "conversation"],
         },
       ],

@@ -1,5 +1,6 @@
 import React from "react";
 import { Skeleton } from "antd";
+import { useTranslations } from "@/i18n";
 import AgentCard from "./agent_card";
 import { Agent, AgentKeyInfo } from "./types";
 
@@ -24,6 +25,8 @@ const AgentCardGrid: React.FC<AgentCardGridProps> = ({
   isAdmin,
   onAgentClick,
 }) => {
+  const { t } = useTranslations("agents");
+
   if (isLoading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -37,11 +40,7 @@ const AgentCardGrid: React.FC<AgentCardGridProps> = ({
   if (!agentsList || agentsList.length === 0) {
     return (
       <div className="rounded-lg border border-gray-200 bg-gray-50/50 py-12 text-center">
-        <p className="text-gray-500">
-          {isAdmin
-            ? "No agents found. Create one to get started."
-            : "No agents found. Contact an admin to create agents."}
-        </p>
+        <p className="text-gray-500">{isAdmin ? t("noAgentsFoundCreate") : t("noAgentsFoundContact")}</p>
       </div>
     );
   }

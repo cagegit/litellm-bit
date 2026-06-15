@@ -3,6 +3,7 @@ import { Form, Input, InputNumber, Select, Tooltip } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import { Button, TextInput } from "@tremor/react";
 import { OAUTH_FLOW } from "./types";
+import { useTranslations } from "@/i18n";
 
 interface OAuthFlowStatus {
   startOAuthFlow: () => void;
@@ -38,6 +39,8 @@ const OAuthFormFields: React.FC<OAuthFormFieldsProps> = ({
   initialFlowType,
   docsUrl,
 }) => {
+  const { t } = useTranslations("mcp");
+
   const placeholderSuffix = isEditing ? " (leave blank to keep existing)" : "";
 
   return (
@@ -45,7 +48,7 @@ const OAuthFormFields: React.FC<OAuthFormFieldsProps> = ({
       <Form.Item
         label={
           <FieldLabel
-            label="OAuth Flow Type"
+            label={t("mcp.oauthFlowType")}
             tooltip="Choose how the proxy authenticates with this MCP server. M2M is for server-to-server communication using client credentials. Interactive (PKCE) is for user-facing flows that require browser-based authorization."
           />
         }
@@ -55,13 +58,13 @@ const OAuthFormFields: React.FC<OAuthFormFieldsProps> = ({
         <Select className="rounded-lg" size="large">
           <Select.Option value={OAUTH_FLOW.M2M}>
             <div>
-              <span className="font-medium">Machine-to-Machine (M2M)</span>
+              <span className="font-medium">{t("mcp.machineToMachinem2m")}</span>
               <span className="text-gray-400 text-xs ml-2">server-to-server, no user interaction</span>
             </div>
           </Select.Option>
           <Select.Option value={OAUTH_FLOW.INTERACTIVE}>
             <div>
-              <span className="font-medium">Interactive (PKCE)</span>
+              <span className="font-medium">{t("mcp.interactivepkce")}</span>
               <span className="text-gray-400 text-xs ml-2">browser-based user authorization</span>
             </div>
           </Select.Option>
@@ -71,9 +74,9 @@ const OAuthFormFields: React.FC<OAuthFormFieldsProps> = ({
       {isM2M ? (
         <>
           <Form.Item
-            label={<FieldLabel label="Client ID" tooltip="OAuth2 client ID for the client_credentials grant." />}
+            label={<FieldLabel label={t("mcp.clientId")} tooltip={t("mcp.oauth2ClientIdForTheClientCredentialsGrant")} />}
             name={["credentials", "client_id"]}
-            rules={[{ required: true, message: "Client ID is required for M2M OAuth" }]}
+            rules={[{ required: true, message: t("mcp.clientIdIsRequiredForM2mOauth") }]}
           >
             <TextInput
               type="password"
@@ -83,10 +86,10 @@ const OAuthFormFields: React.FC<OAuthFormFieldsProps> = ({
           </Form.Item>
           <Form.Item
             label={
-              <FieldLabel label="Client Secret" tooltip="OAuth2 client secret for the client_credentials grant." />
+              <FieldLabel label={t("mcp.clientSecret")} tooltip={t("mcp.oauth2ClientSecretForTheClientCredentialsGrant")} />
             }
             name={["credentials", "client_secret"]}
-            rules={[{ required: true, message: "Client Secret is required for M2M OAuth" }]}
+            rules={[{ required: true, message: t("mcp.clientSecretIsRequiredForM2mOauth") }]}
           >
             <TextInput
               type="password"
@@ -95,22 +98,22 @@ const OAuthFormFields: React.FC<OAuthFormFieldsProps> = ({
             />
           </Form.Item>
           <Form.Item
-            label={<FieldLabel label="Token URL" tooltip="Token endpoint URL for the client_credentials grant." />}
+            label={<FieldLabel label={t("mcp.tokenUrl")} tooltip={t("mcp.tokenEndpointUrlForTheClientCredentialsGrant")} />}
             name="token_url"
-            rules={[{ required: true, message: "Token URL is required for M2M OAuth" }]}
+            rules={[{ required: true, message: t("mcp.tokenUrlIsRequiredForM2mOauth") }]}
           >
             <TextInput placeholder="https://auth.example.com/oauth/token" className={fieldClassName} />
           </Form.Item>
           <Form.Item
             label={
               <FieldLabel
-                label="Scopes (optional)"
-                tooltip="Optional scopes to request with the client_credentials grant."
+                label={t("mcp.scopesoptional")}
+                tooltip={t("mcp.optionalScopesToRequestWithTheClientCredentialsGrant")}
               />
             }
             name={["credentials", "scopes"]}
           >
-            <Select mode="tags" tokenSeparators={[","]} placeholder="Add scopes" className="rounded-lg" size="large" />
+            <Select mode="tags" tokenSeparators={[","]} placeholder={t("mcp.placeholderAddScopes")} className="rounded-lg" size="large" />
           </Form.Item>
         </>
       ) : (
@@ -119,8 +122,8 @@ const OAuthFormFields: React.FC<OAuthFormFieldsProps> = ({
             label={
               <span className="flex items-center justify-between w-full">
                 <FieldLabel
-                  label="Client ID (optional)"
-                  tooltip="Provide only if your MCP server cannot handle dynamic client registration."
+                  label={t("mcp.clientIdoptional")}
+                  tooltip={t("mcp.tooltipOauthClientInfo")}
                 />
                 {docsUrl && (
                   <a
@@ -142,8 +145,8 @@ const OAuthFormFields: React.FC<OAuthFormFieldsProps> = ({
           <Form.Item
             label={
               <FieldLabel
-                label="Client Secret (optional)"
-                tooltip="Provide only if your MCP server cannot handle dynamic client registration."
+                label={t("mcp.clientSecretoptional")}
+                tooltip={t("mcp.tooltipOauthClientInfo")}
               />
             }
             name={["credentials", "client_secret"]}
@@ -157,19 +160,19 @@ const OAuthFormFields: React.FC<OAuthFormFieldsProps> = ({
           <Form.Item
             label={
               <FieldLabel
-                label="Scopes (optional)"
+                label={t("mcp.scopesoptional")}
                 tooltip="Optional scopes requested during token exchange. Separate multiple scopes with enter or commas."
               />
             }
             name={["credentials", "scopes"]}
           >
-            <Select mode="tags" tokenSeparators={[","]} placeholder="Add scopes" className="rounded-lg" size="large" />
+            <Select mode="tags" tokenSeparators={[","]} placeholder={t("mcp.placeholderAddScopes")} className="rounded-lg" size="large" />
           </Form.Item>
           <Form.Item
             label={
               <FieldLabel
-                label="Authorization URL (optional)"
-                tooltip="Optional override for the authorization endpoint."
+                label={t("mcp.authorizationUrloptional")}
+                tooltip={t("mcp.tooltipAuthUrlOverride")}
               />
             }
             name="authorization_url"
@@ -177,7 +180,7 @@ const OAuthFormFields: React.FC<OAuthFormFieldsProps> = ({
             <TextInput placeholder="https://example.com/oauth/authorize" className={fieldClassName} />
           </Form.Item>
           <Form.Item
-            label={<FieldLabel label="Token URL (optional)" tooltip="Optional override for the token endpoint." />}
+            label={<FieldLabel label={t("mcp.tokenUrloptional")} tooltip={t("mcp.tooltipTokenUrlOverride")} />}
             name="token_url"
           >
             <TextInput placeholder="https://example.com/oauth/token" className={fieldClassName} />
@@ -185,8 +188,8 @@ const OAuthFormFields: React.FC<OAuthFormFieldsProps> = ({
           <Form.Item
             label={
               <FieldLabel
-                label="Registration URL (optional)"
-                tooltip="Optional override for the dynamic client registration endpoint."
+                label={t("mcp.registrationUrloptional")}
+                tooltip={t("mcp.tooltipRegistrationUrlOverride")}
               />
             }
             name="registration_url"
@@ -196,7 +199,7 @@ const OAuthFormFields: React.FC<OAuthFormFieldsProps> = ({
           <Form.Item
             label={
               <FieldLabel
-                label="Token Validation Rules (optional)"
+                label={t("mcp.tokenValidationRules")}
                 tooltip='JSON object of key-value rules checked against the OAuth token response before storing. Supports dot-notation for nested fields (e.g. {"organization": "my-org", "team.id": "123"}). Tokens that fail validation are rejected with HTTP 403.'
               />
             }
@@ -224,7 +227,7 @@ const OAuthFormFields: React.FC<OAuthFormFieldsProps> = ({
           <Form.Item
             label={
               <FieldLabel
-                label="Token Storage TTL (seconds, optional)"
+                label={t("mcp.tokenStorageTtl")}
                 tooltip="How long to cache each user's OAuth access token in Redis before evicting it (regardless of the token's own expires_in). Leave blank to derive the TTL from the token's expires_in, or fall back to the 12-hour default."
               />
             }

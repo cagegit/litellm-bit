@@ -4,6 +4,7 @@
 
 import { Typography, Table } from "antd";
 import { ParsedTool, ParameterRow } from "./types";
+import { useTranslations } from "@/i18n";
 
 const { Text } = Typography;
 
@@ -12,6 +13,8 @@ interface FormattedToolViewProps {
 }
 
 export function FormattedToolView({ tool }: FormattedToolViewProps) {
+  const { t } = useTranslations("logs");
+
   // Parse parameters for table display
   const parameterRows: ParameterRow[] = Object.entries(tool.parameters?.properties || {}).map(
     ([name, schema]: [string, any]) => ({

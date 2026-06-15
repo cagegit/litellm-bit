@@ -30,6 +30,7 @@ import EditBudgetModal from "./edit_budget_modal";
 import { CREATE_END_USER_CURL_COMMAND, CHAT_COMPLETIONS_CURL_COMMAND, OPENAI_SDK_PYTHON_CODE } from "./constants";
 import useAuthorized from "@/app/(dashboard)/hooks/useAuthorized";
 import { isProxyAdminRole } from "@/utils/roles";
+import { useTranslations } from "@/i18n";
 
 interface BudgetSettingsPageProps {
   accessToken: string | null;
@@ -44,6 +45,7 @@ export interface budgetItem {
 }
 
 const BudgetPanel: React.FC<BudgetSettingsPageProps> = ({ accessToken }) => {
+  const { t } = useTranslations("settings");
   const [isCreateModelVisible, setIsCreateModelVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
   const [selectedBudget, setSelectedBudget] = useState<budgetItem | null>(null);
@@ -75,13 +77,13 @@ const BudgetPanel: React.FC<BudgetSettingsPageProps> = ({ accessToken }) => {
     }
     try {
       await deleteBudget.mutateAsync(selectedBudget.budget_id);
-      NotificationsManager.success("Budget deleted.");
+      NotificationsManager.success(t("budgetDeleted"));
     } catch (error) {
       console.error("Error deleting budget:", error);
       if (typeof NotificationsManager.fromBackend === "function") {
-        NotificationsManager.fromBackend("Failed to delete budget");
+        NotificationsManager.fromBackend(t("failedToDeleteBudget"));
       } else {
-        NotificationsManager.info("Failed to delete budget");
+        NotificationsManager.info(t("failedToDeleteBudget"));
       }
     } finally {
       setIsDeleteModalVisible(false);
@@ -97,13 +99,13 @@ const BudgetPanel: React.FC<BudgetSettingsPageProps> = ({ accessToken }) => {
     <div className="w-full mx-auto flex-auto overflow-y-auto m-8 p-2">
       {canModify && (
         <Button size="sm" variant="primary" className="mb-2" onClick={() => setIsCreateModelVisible(true)}>
-          + Create Budget
+          + {t("createBudget")}
         </Button>
       )}
       <TabGroup>
         <TabList>
-          <Tab>Budgets</Tab>
-          <Tab>Examples</Tab>
+          <Tab>{t("budgets")}</Tab>
+          <Tab>{t("examples")}</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
@@ -117,14 +119,14 @@ const BudgetPanel: React.FC<BudgetSettingsPageProps> = ({ accessToken }) => {
                 />
               )}
               <Card>
-                <Text>Create a budget to assign to customers.</Text>
+                <Text>{t("createBudgetDescription")}</Text>
                 <Table>
                   <TableHead>
                     <TableRow>
-                      <TableHeaderCell>Budget ID</TableHeaderCell>
-                      <TableHeaderCell>Max Budget</TableHeaderCell>
-                      <TableHeaderCell>TPM</TableHeaderCell>
-                      <TableHeaderCell>RPM</TableHeaderCell>
+                      <TableHeaderCell>{t("budgetId")}</TableHeaderCell>
+                      <TableHeaderCell>{t("maxBudget")}</TableHeaderCell>
+                      <TableHeaderCell>{t("tpm")}</TableHeaderCell>
+                      <TableHeaderCell>{t("rpm")}</TableHeaderCell>
                     </TableRow>
                   </TableHead>
 
@@ -135,20 +137,20 @@ const BudgetPanel: React.FC<BudgetSettingsPageProps> = ({ accessToken }) => {
                       .map((value: budgetItem) => (
                         <TableRow key={value.budget_id}>
                           <TableCell>{value.budget_id}</TableCell>
-                          <TableCell>{value.max_budget ? value.max_budget : "n/a"}</TableCell>
-                          <TableCell>{value.tpm_limit ? value.tpm_limit : "n/a"}</TableCell>
-                          <TableCell>{value.rpm_limit ? value.rpm_limit : "n/a"}</TableCell>
+                          <TableCell>{value.max_budget ? value.max_budget : t("notApplicable")}</TableCell>
+                          <TableCell>{value.tpm_limit ? value.tpm_limit : t("notApplicable")}</TableCell>
+                          <TableCell>{value.rpm_limit ? value.rpm_limit : t("notApplicable")}</TableCell>
                           {canModify && (
                             <>
                               <TableIconActionButton
                                 variant="Edit"
-                                tooltipText="Edit budget"
+                                tooltipText={t("editBudget")}
                                 onClick={() => handleEditCall(value)}
                                 dataTestId="edit-budget-button"
                               />
                               <TableIconActionButton
                                 variant="Delete"
-                                tooltipText="Delete budget"
+                                tooltipText={t("deleteBudget")}
                                 onClick={() => handleDeleteClick(value)}
                                 dataTestId="delete-budget-button"
                               />
@@ -161,14 +163,14 @@ const BudgetPanel: React.FC<BudgetSettingsPageProps> = ({ accessToken }) => {
               </Card>
               <DeleteResourceModal
                 isOpen={isDeleteModalVisible}
-                title="Delete Budget?"
-                message="Are you sure you want to delete this budget? This action cannot be undone."
-                resourceInformationTitle="Budget Information"
+                title={t("deleteBudgetQuestion")}
+                message={t("deleteBudgetConfirmMessage")}
+                resourceInformationTitle={t("budgetInformation")}
                 resourceInformation={[
-                  { label: "Budget ID", value: selectedBudget?.budget_id, code: true },
-                  { label: "Max Budget", value: selectedBudget?.max_budget },
-                  { label: "TPM", value: selectedBudget?.tpm_limit },
-                  { label: "RPM", value: selectedBudget?.rpm_limit },
+                  { label: t("budgetId"), value: selectedBudget?.budget_id, code: true },
+                  { label: t("maxBudget"), value: selectedBudget?.max_budget },
+                  { label: t("tpm"), value: selectedBudget?.tpm_limit },
+                  { label: t("rpm"), value: selectedBudget?.rpm_limit },
                 ]}
                 onCancel={handleDeleteCancel}
                 onOk={handleDeleteConfirm}
@@ -178,12 +180,12 @@ const BudgetPanel: React.FC<BudgetSettingsPageProps> = ({ accessToken }) => {
           </TabPanel>
           <TabPanel>
             <div className="mt-6">
-              <Text className="text-base">How to use budget id</Text>
+              <Text className="text-base">{t("howToUseBudgetId")}</Text>
               <TabGroup>
                 <TabList>
-                  <Tab>Assign Budget to Customer</Tab>
-                  <Tab>Test it (Curl)</Tab>
-                  <Tab>Test it (OpenAI SDK)</Tab>
+                  <Tab>{t("assignBudgetToCustomer")}</Tab>
+                  <Tab>{t("testItCurl")}</Tab>
+                  <Tab>{t("testItOpenaiSdk")}</Tab>
                 </TabList>
                 <TabPanels>
                   <TabPanel>

@@ -3,6 +3,7 @@
 import React, { useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Button, Card, Drawer, Empty, Input, Space, Table, Tooltip, Typography, message } from "antd";
+import { useTranslations } from "@/i18n";
 import type { ColumnsType } from "antd/es/table";
 import {
   DeleteOutlined,
@@ -44,6 +45,7 @@ function formatTimestamp(ts?: string): string {
 const PAGE_SIZE = 50;
 
 export const MemoryView: React.FC<MemoryViewProps> = ({ accessToken }) => {
+  const { t } = useTranslations("memoryView");
   const [searchInput, setSearchInput] = useState("");
   const [appliedSearch, setAppliedSearch] = useState("");
   const [detailRow, setDetailRow] = useState<MemoryRow | null>(null);
@@ -95,11 +97,11 @@ export const MemoryView: React.FC<MemoryViewProps> = ({ accessToken }) => {
       return createMemory(accessToken, args);
     },
     onSuccess: (row) => {
-      message.success(`Created ${row.key}`);
+      message.success(t("created", { key: row.key }));
       invalidateList();
     },
     onError: (err: Error) => {
-      message.error(`Save failed: ${err.message}`);
+      message.error(t("saveFailed", { message: err.message }));
     },
   });
 
@@ -110,7 +112,7 @@ export const MemoryView: React.FC<MemoryViewProps> = ({ accessToken }) => {
       return updateMemory(accessToken, key, payload);
     },
     onSuccess: (row) => {
-      message.success(`Updated ${row.key}`);
+      message.success(t("updated", { key: row.key }));
       invalidateList();
     },
     onError: (err: Error) => {
@@ -124,11 +126,11 @@ export const MemoryView: React.FC<MemoryViewProps> = ({ accessToken }) => {
       return deleteMemory(accessToken, key).then(() => key);
     },
     onSuccess: (key) => {
-      message.success(`Deleted ${key}`);
+      message.success(t("deleted", { key }));
       invalidateList();
     },
     onError: (err: Error) => {
-      message.error(`Delete failed: ${err.message}`);
+      message.error(t("deleteFailed", { message: err.message }));
     },
   });
 
@@ -165,7 +167,7 @@ export const MemoryView: React.FC<MemoryViewProps> = ({ accessToken }) => {
       try {
         metadataPayload = JSON.parse(metadataText);
       } catch {
-        message.error("Metadata must be valid JSON (or leave empty).");
+        message.error(t("metadataMustBeJson"));
         return false;
       }
     }
@@ -214,14 +216,14 @@ export const MemoryView: React.FC<MemoryViewProps> = ({ accessToken }) => {
 
   const columns: ColumnsType<MemoryRow> = [
     {
-      title: "ID",
+      title: t("id"),
       dataIndex: "memory_id",
       key: "memory_id",
       width: 140,
       render: (_: unknown, r: MemoryRow) => renderIdPill(r.memory_id, () => setDetailRow(r)),
     },
     {
-      title: "Name",
+      title: t("name"),
       dataIndex: "key",
       key: "key",
       width: 200,
@@ -232,7 +234,7 @@ export const MemoryView: React.FC<MemoryViewProps> = ({ accessToken }) => {
       // `updated_at DESC`; use the prefix filter for discovery by name.
     },
     {
-      title: "Preview",
+      title: t("preview"),
       dataIndex: "value",
       key: "value",
       render: (v: string) => (
@@ -242,21 +244,21 @@ export const MemoryView: React.FC<MemoryViewProps> = ({ accessToken }) => {
       ),
     },
     {
-      title: "User ID",
+      title: t("userId"),
       dataIndex: "user_id",
       key: "user_id",
       width: 160,
       render: (uid?: string | null) => renderIdPill(uid),
     },
     {
-      title: "Team ID",
+      title: t("teamId"),
       dataIndex: "team_id",
       key: "team_id",
       width: 160,
       render: (tid?: string | null) => renderIdPill(tid),
     },
     {
-      title: "Updated",
+      title: t("updated"),
       dataIndex: "updated_at",
       key: "updated_at",
       width: 180,
@@ -291,11 +293,10 @@ export const MemoryView: React.FC<MemoryViewProps> = ({ accessToken }) => {
       <Space direction="vertical" size="large" style={{ width: "100%" }}>
         <div>
           <Title level={3} style={{ marginBottom: 4 }}>
-            Memory
+            {t("memory")}
           </Title>
           <Paragraph type="secondary" style={{ marginBottom: 0 }}>
-            Inspect what your agents have stored under <Text code>/v1/memory</Text>. Scoped to memories visible to your
-            user / team (admins see all).
+            {t("memoryDescription")}
           </Paragraph>
         </div>
 
@@ -311,7 +312,7 @@ export const MemoryView: React.FC<MemoryViewProps> = ({ accessToken }) => {
             <Space>
               <Input
                 allowClear
-                placeholder='Filter by key prefix, e.g. "user:"'
+                placeholder={t("filterByPrefix")}
                 prefix={<SearchOutlined />}
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
@@ -347,14 +348,14 @@ export const MemoryView: React.FC<MemoryViewProps> = ({ accessToken }) => {
               pageSize: PAGE_SIZE,
               total,
               showSizeChanger: false,
-              showTotal: (n, range) => `${range[0]}–${range[1]} of ${n}`,
+              showTotal: (n, range) => t("rangeOfTotal", { start: range[0], end: range[1], total: n }),
               onChange: (page) => setCurrentPage(page),
             }}
             locale={{
               emptyText: (
                 <Empty
                   description={
-                    appliedSearch ? `No memories with keys starting with "${appliedSearch}"` : "No memories stored yet"
+                    appliedSearch ? t("noMemoriesWithPrefix", { prefix: appliedSearch }) : t("noMemoriesYet")
                   }
                 />
               ),
@@ -373,7 +374,7 @@ export const MemoryView: React.FC<MemoryViewProps> = ({ accessToken }) => {
               <Text code>{detailRow.key}</Text>
             </Space>
           ) : (
-            "Memory"
+            t("memory")
           )
         }
         width={720}
@@ -384,7 +385,7 @@ export const MemoryView: React.FC<MemoryViewProps> = ({ accessToken }) => {
             <Space size="large" wrap>
               <div>
                 <Text strong style={{ display: "block" }}>
-                  Memory ID
+                  {t("memoryId")}
                 </Text>
                 <Text code style={{ fontSize: 12 }}>
                   {detailRow.memory_id}
@@ -392,19 +393,19 @@ export const MemoryView: React.FC<MemoryViewProps> = ({ accessToken }) => {
               </div>
               <div>
                 <Text strong style={{ display: "block" }}>
-                  User ID
+                  {t("userId")}
                 </Text>
                 <Text type={detailRow.user_id ? undefined : "secondary"}>{detailRow.user_id ?? "-"}</Text>
               </div>
               <div>
                 <Text strong style={{ display: "block" }}>
-                  Team ID
+                  {t("teamId")}
                 </Text>
                 <Text type={detailRow.team_id ? undefined : "secondary"}>{detailRow.team_id ?? "-"}</Text>
               </div>
             </Space>
             <div>
-              <Text strong>Value</Text>
+              <Text strong>{t("value")}</Text>
               <Paragraph
                 style={{
                   background: "#fafafa",
@@ -420,7 +421,7 @@ export const MemoryView: React.FC<MemoryViewProps> = ({ accessToken }) => {
             </div>
             {detailRow.metadata !== undefined && detailRow.metadata !== null && (
               <div>
-                <Text strong>Metadata</Text>
+                <Text strong>{t("metadata")}</Text>
                 <Paragraph
                   style={{
                     background: "#fafafa",
@@ -437,11 +438,11 @@ export const MemoryView: React.FC<MemoryViewProps> = ({ accessToken }) => {
             )}
             <Space split={<Text type="secondary">·</Text>} wrap size="small" style={{ color: "rgba(0,0,0,0.45)" }}>
               <Text type="secondary">
-                Created {formatTimestamp(detailRow.created_at)}
+                {t("createdAt")} {formatTimestamp(detailRow.created_at)}
                 {detailRow.created_by ? ` by ${detailRow.created_by}` : ""}
               </Text>
               <Text type="secondary">
-                Updated {formatTimestamp(detailRow.updated_at)}
+                {t("updatedAt")} {formatTimestamp(detailRow.updated_at)}
                 {detailRow.updated_by ? ` by ${detailRow.updated_by}` : ""}
               </Text>
             </Space>
@@ -464,16 +465,16 @@ export const MemoryView: React.FC<MemoryViewProps> = ({ accessToken }) => {
       {/* Delete confirmation modal */}
       <DeleteResourceModal
         isOpen={!!deleteRow}
-        title="Delete memory"
-        message="This action cannot be undone."
+        title={t("deleteMemory")}
+        message={t("cannotUndo")}
         resourceInformationTitle="Memory"
         resourceInformation={
           deleteRow
             ? [
-                { label: "Key", value: deleteRow.key, code: true },
-                { label: "Memory ID", value: deleteRow.memory_id, code: true },
-                { label: "User ID", value: deleteRow.user_id ?? "-", code: true },
-                { label: "Team ID", value: deleteRow.team_id ?? "-", code: true },
+                { label: t("key"), value: deleteRow.key, code: true },
+                { label: t("memoryId"), value: deleteRow.memory_id, code: true },
+                { label: t("userId"), value: deleteRow.user_id ?? "-", code: true },
+                { label: t("teamId"), value: deleteRow.team_id ?? "-", code: true },
               ]
             : []
         }

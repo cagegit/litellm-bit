@@ -13,6 +13,7 @@ import MessageManager from "@/components/molecules/message_manager";
 import { DeleteOutlined, LinkOutlined } from "@ant-design/icons";
 import { Badge, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from "@tremor/react";
 import { deleteMCPOAuthUserCredential, listMCPUserCredentials, MCPUserCredentialListItem } from "../networking";
+import { useTranslations } from "@/i18n";
 
 interface Props {
   accessToken: string;
@@ -54,6 +55,8 @@ function expiryLabel(isoString: string | null | undefined): string {
 }
 
 const MCPCredentialsTab: React.FC<Props> = ({ accessToken }) => {
+  const { t } = useTranslations("chat");
+
   const [credentials, setCredentials] = useState<MCPUserCredentialListItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [revoking, setRevoking] = useState<Set<string>>(new Set());
@@ -92,7 +95,7 @@ const MCPCredentialsTab: React.FC<Props> = ({ accessToken }) => {
     <div className="w-full">
       {/* Header */}
       <div className="mb-4">
-        <h2 className="text-base font-semibold text-gray-900 mb-0.5">App Credentials</h2>
+        <h2 className="text-base font-semibold text-gray-900 mb-0.5">{t("chat.appCredentials")}</h2>
         <p className="text-sm text-gray-500 m-0">Your stored OAuth connections — used automatically in chat.</p>
       </div>
 
@@ -105,16 +108,16 @@ const MCPCredentialsTab: React.FC<Props> = ({ accessToken }) => {
           <LinkOutlined className="text-2xl mb-3 block text-gray-300" />
           No connections yet.
           <br />
-          Go to <strong>Apps</strong> and click <strong>Connect</strong> to authorize an MCP server.
+          Go to <strong>{t("chat.apps")}</strong> and click <strong>{t("chat.connect")}</strong> to authorize an MCP server.
         </div>
       ) : (
         <div className="rounded-lg border border-gray-200 overflow-hidden">
           <Table>
             <TableHead>
               <TableRow>
-                <TableHeaderCell className="text-xs font-medium text-gray-500 py-2 px-4">App</TableHeaderCell>
-                <TableHeaderCell className="text-xs font-medium text-gray-500 py-2 px-4">Connected</TableHeaderCell>
-                <TableHeaderCell className="text-xs font-medium text-gray-500 py-2 px-4">Status</TableHeaderCell>
+                <TableHeaderCell className="text-xs font-medium text-gray-500 py-2 px-4">{t("chat.app")}</TableHeaderCell>
+                <TableHeaderCell className="text-xs font-medium text-gray-500 py-2 px-4">{t("chat.connected")}</TableHeaderCell>
+                <TableHeaderCell className="text-xs font-medium text-gray-500 py-2 px-4">{t("chat.status")}</TableHeaderCell>
                 <TableHeaderCell className="text-xs font-medium text-gray-500 py-2 px-4 text-right">
                   Actions
                 </TableHeaderCell>
@@ -145,7 +148,7 @@ const MCPCredentialsTab: React.FC<Props> = ({ accessToken }) => {
                       <button
                         onClick={() => handleRevoke(cred.server_id)}
                         disabled={isRevoking}
-                        title="Revoke connection"
+                        title={t("chat.revokeConnection")}
                         className={`inline-flex items-center justify-center rounded-md border border-gray-200 px-2 py-1 text-gray-400 hover:text-red-500 hover:border-red-200 transition-colors ${isRevoking ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
                         style={{ background: "none" }}
                       >

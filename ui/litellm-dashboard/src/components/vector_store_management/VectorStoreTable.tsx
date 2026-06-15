@@ -1,3 +1,4 @@
+import { useTranslations } from "@/i18n";
 import { ChevronDownIcon, ChevronUpIcon, SwitchVerticalIcon } from "@heroicons/react/outline";
 import {
   ColumnDef,
@@ -22,11 +23,12 @@ interface VectorStoreTableProps {
 }
 
 const VectorStoreTable: React.FC<VectorStoreTableProps> = ({ data, onView, onEdit, onDelete }) => {
+  const { t } = useTranslations("vectorStore");
   const [sorting, setSorting] = React.useState<SortingState>([{ id: "created_at", desc: true }]);
 
   const columns: ColumnDef<VectorStore>[] = [
     {
-      header: "Vector Store ID",
+      header: t("vectorStoreId"),
       accessorKey: "vector_store_id",
       cell: ({ row }) => {
         const vectorStore = row.original;
@@ -43,7 +45,7 @@ const VectorStoreTable: React.FC<VectorStoreTableProps> = ({ data, onView, onEdi
       },
     },
     {
-      header: "Name",
+      header: t("name"),
       accessorKey: "vector_store_name",
       cell: ({ row }) => {
         const vectorStore = row.original;
@@ -55,7 +57,7 @@ const VectorStoreTable: React.FC<VectorStoreTableProps> = ({ data, onView, onEdi
       },
     },
     {
-      header: "Description",
+      header: t("description"),
       accessorKey: "vector_store_description",
       cell: ({ row }) => {
         const vectorStore = row.original;
@@ -67,7 +69,7 @@ const VectorStoreTable: React.FC<VectorStoreTableProps> = ({ data, onView, onEdi
       },
     },
     {
-      header: "Files",
+      header: t("files"),
       accessorKey: "vector_store_metadata",
       cell: ({ row }) => {
         const vectorStore = row.original;
@@ -77,12 +79,12 @@ const VectorStoreTable: React.FC<VectorStoreTableProps> = ({ data, onView, onEdi
           return <span className="text-xs text-gray-400">-</span>;
         }
 
-        const filenames = ingestedFiles.map((file) => file.filename || file.file_url || "Unknown").join(", ");
+        const filenames = ingestedFiles.map((file) => file.filename || file.file_url || t("unknown")).join(", ");
 
         const displayText =
           ingestedFiles.length === 1
-            ? ingestedFiles[0].filename || ingestedFiles[0].file_url || "1 file"
-            : `${ingestedFiles.length} files`;
+            ? ingestedFiles[0].filename || ingestedFiles[0].file_url || t("oneFile")
+            : `${ingestedFiles.length} ${t("files_lower")}`;
 
         return (
           <Tooltip title={filenames}>
@@ -92,7 +94,7 @@ const VectorStoreTable: React.FC<VectorStoreTableProps> = ({ data, onView, onEdi
       },
     },
     {
-      header: "Provider",
+      header: t("provider"),
       accessorKey: "custom_llm_provider",
       cell: ({ row }) => {
         const vectorStore = row.original;
@@ -106,7 +108,7 @@ const VectorStoreTable: React.FC<VectorStoreTableProps> = ({ data, onView, onEdi
       },
     },
     {
-      header: "Created At",
+      header: t("createdAt"),
       accessorKey: "created_at",
       sortingFn: "datetime",
       cell: ({ row }) => {
@@ -115,7 +117,7 @@ const VectorStoreTable: React.FC<VectorStoreTableProps> = ({ data, onView, onEdi
       },
     },
     {
-      header: "Updated At",
+      header: t("updatedAt"),
       accessorKey: "updated_at",
       sortingFn: "datetime",
       cell: ({ row }) => {
@@ -132,12 +134,12 @@ const VectorStoreTable: React.FC<VectorStoreTableProps> = ({ data, onView, onEdi
           <div className="flex space-x-2">
             <TableIconActionButton
               variant="Edit"
-              tooltipText="Edit vector store"
+              tooltipText={t("editVectorStore")}
               onClick={() => onEdit(vectorStore.vector_store_id)}
             />
             <TableIconActionButton
               variant="Delete"
-              tooltipText="Delete vector store"
+              tooltipText={t("deleteVectorStore")}
               onClick={() => onDelete(vectorStore.vector_store_id)}
             />
           </div>
@@ -217,7 +219,7 @@ const VectorStoreTable: React.FC<VectorStoreTableProps> = ({ data, onView, onEdi
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-8 text-center">
                   <div className="text-center text-gray-500">
-                    <p>No vector stores found</p>
+                    <p>{t("noVectorStoresFound")}</p>
                   </div>
                 </TableCell>
               </TableRow>

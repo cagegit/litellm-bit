@@ -51,6 +51,7 @@ import SpendByProvider from "./EntityUsage/SpendByProvider";
 import TopKeyView from "./EntityUsage/TopKeyView";
 import UsageAIChatPanel from "./UsageAIChatPanel";
 import { UsageOption, UsageViewSelect } from "./UsageViewSelect/UsageViewSelect";
+import { useTranslations } from "@/i18n";
 
 interface UsagePageProps {
   teams: Team[];
@@ -58,6 +59,8 @@ interface UsagePageProps {
 }
 
 const UsagePage: React.FC<UsagePageProps> = ({ teams, organizations }) => {
+  const { t } = useTranslations("billing");
+
   const { accessToken, userRole, userId: userID, premiumUser } = useAuthorized();
   // Aggregated endpoint: try first, fall back to paginated if unavailable
   const [aggregatedData, setAggregatedData] = useState<{ results: DailyData[]; metadata: any } | null>(null);
@@ -495,12 +498,12 @@ const UsagePage: React.FC<UsagePageProps> = ({ teams, organizations }) => {
             <>
               {isAdmin && usageView === "global" && (
                 <div className="mb-4">
-                  <Text className="mb-2">Filter by user</Text>
+                  <Text className="mb-2">{t("billing.filterByUser")}</Text>
                   <Select
                     showSearch
                     allowClear
                     style={{ width: "100%" }}
-                    placeholder="Select user to filter..."
+                    placeholder={t("billing.selectUserToFilter")}
                     value={selectedUserId}
                     onChange={(value) => setSelectedUserId(value ?? null)}
                     filterOption={false}
@@ -526,11 +529,11 @@ const UsagePage: React.FC<UsagePageProps> = ({ teams, organizations }) => {
               <TabGroup>
                 <div className="flex justify-between items-center">
                   <TabList variant="solid" className="mt-1">
-                    <Tab>Cost</Tab>
-                    <Tab>Model Activity</Tab>
-                    <Tab>Key Activity</Tab>
-                    <Tab>MCP Server Activity</Tab>
-                    <Tab>Endpoint Activity</Tab>
+                    <Tab>{t("billing.cost")}</Tab>
+                    <Tab>{t("billing.modelActivity")}</Tab>
+                    <Tab>{t("billing.keyActivity")}</Tab>
+                    <Tab>{t("billing.mcpServerActivity")}</Tab>
+                    <Tab>{t("billing.endpointActivity")}</Tab>
                   </TabList>
                   <div className="flex items-center gap-2">
                     <Button
@@ -597,23 +600,23 @@ const UsagePage: React.FC<UsagePageProps> = ({ teams, organizations }) => {
 
                       <Col numColSpan={2}>
                         <Card>
-                          <Title>Usage Metrics</Title>
+                          <Title>{t("billing.usageMetrics")}</Title>
                           <Grid numItems={5} className="gap-4 mt-4">
                             <Card>
-                              <Title>Total Requests</Title>
+                              <Title>{t("billing.totalRequests")}</Title>
                               <Text className="text-2xl font-bold mt-2">
                                 {userSpendData.metadata?.total_api_requests?.toLocaleString() || 0}
                               </Text>
                             </Card>
                             <Card>
-                              <Title>Successful Requests</Title>
+                              <Title>{t("billing.successfulRequests")}</Title>
                               <Text className="text-2xl font-bold mt-2 text-green-600">
                                 {userSpendData.metadata?.total_successful_requests?.toLocaleString() || 0}
                               </Text>
                             </Card>
                             <Card>
                               <div className="flex items-center gap-2">
-                                <Title>Failed Requests</Title>
+                                <Title>{t("billing.failedRequests")}</Title>
                                 <Tooltip title="Includes requests that failed to route to a provider, tool usage failures, and other request errors where the provider cannot be determined.">
                                   <InfoCircleOutlined className="text-gray-400 hover:text-gray-600" />
                                 </Tooltip>
@@ -623,7 +626,7 @@ const UsagePage: React.FC<UsagePageProps> = ({ teams, organizations }) => {
                               </Text>
                             </Card>
                             <Card>
-                              <Title>Average Cost per Request</Title>
+                              <Title>{t("billing.averageCostPerRequest")}</Title>
                               <Text className="text-2xl font-bold mt-2">
                                 $
                                 {formatNumberWithCommas(
@@ -637,7 +640,7 @@ const UsagePage: React.FC<UsagePageProps> = ({ teams, organizations }) => {
                               onClick={() => setShowTokenBreakdown(!showTokenBreakdown)}
                             >
                               <div className="flex items-center gap-2">
-                                <Title>Total Tokens</Title>
+                                <Title>{t("billing.totalTokens")}</Title>
                                 {showTokenBreakdown ? (
                                   <DownOutlined className="text-gray-400 text-xs" />
                                 ) : (
@@ -652,25 +655,25 @@ const UsagePage: React.FC<UsagePageProps> = ({ teams, organizations }) => {
                           {showTokenBreakdown && (
                             <Grid numItems={4} className="gap-4 mt-4">
                               <Card>
-                                <Title>Input Tokens</Title>
+                                <Title>{t("billing.inputTokens")}</Title>
                                 <Text className="text-2xl font-bold mt-2 text-blue-600">
                                   {(userSpendData.metadata?.total_prompt_tokens || 0).toLocaleString()}
                                 </Text>
                               </Card>
                               <Card>
-                                <Title>Output Tokens</Title>
+                                <Title>{t("billing.outputTokens")}</Title>
                                 <Text className="text-2xl font-bold mt-2 text-cyan-600">
                                   {userSpendData.metadata?.total_completion_tokens?.toLocaleString() || 0}
                                 </Text>
                               </Card>
                               <Card>
-                                <Title>Cache Read Tokens</Title>
+                                <Title>{t("billing.cacheReadTokens")}</Title>
                                 <Text className="text-2xl font-bold mt-2 text-green-600">
                                   {userSpendData.metadata?.total_cache_read_input_tokens?.toLocaleString() || 0}
                                 </Text>
                               </Card>
                               <Card>
-                                <Title>Cache Write Tokens</Title>
+                                <Title>{t("billing.cacheWriteTokens")}</Title>
                                 <Text className="text-2xl font-bold mt-2 text-purple-600">
                                   {userSpendData.metadata?.total_cache_creation_input_tokens?.toLocaleString() || 0}
                                 </Text>
@@ -683,7 +686,7 @@ const UsagePage: React.FC<UsagePageProps> = ({ teams, organizations }) => {
                       {/* Daily Spend Chart */}
                       <Col numColSpan={2}>
                         <Card>
-                          <Title>Daily Spend</Title>
+                          <Title>{t("billing.dailySpend")}</Title>
                           {loading ? (
                             <ChartLoader isDateChanging={isDateChanging} />
                           ) : (
@@ -718,7 +721,7 @@ const UsagePage: React.FC<UsagePageProps> = ({ teams, organizations }) => {
                       {/* Top API Keys */}
                       <Col numColSpan={1}>
                         <Card className="h-full">
-                          <Title>Top Virtual Keys</Title>
+                          <Title>{t("billing.topVirtualKeys")}</Title>
                           <TopKeyView
                             topKeys={topKeys}
                             teams={null}

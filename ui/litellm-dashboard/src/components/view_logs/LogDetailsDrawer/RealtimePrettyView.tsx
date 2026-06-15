@@ -14,6 +14,7 @@ import {
   DownOutlined,
   UpOutlined,
 } from "@ant-design/icons";
+import { useTranslations } from "@/i18n";
 import { SectionHeader } from "./SectionHeader";
 
 const { Text } = Typography;
@@ -90,6 +91,7 @@ export function isRealtimeResponse(response: any): boolean {
 }
 
 export function RealtimePrettyView({ response, metrics }: RealtimePrettyViewProps) {
+  const { t } = useTranslations("logs");
   const events: RealtimeEvent[] = response?.results || [];
   const usage = response?.usage;
 
@@ -122,7 +124,7 @@ export function RealtimePrettyView({ response, metrics }: RealtimePrettyViewProp
             fontSize: 13,
           }}
         >
-          No recognized realtime events found
+          {t("noRealtimeEvents")}
         </div>
       )}
     </div>
@@ -130,6 +132,7 @@ export function RealtimePrettyView({ response, metrics }: RealtimePrettyViewProp
 }
 
 function SessionCard({ session, turnCount }: { session: RealtimeSession; turnCount: number }) {
+  const { t } = useTranslations("logs");
   const [isCollapsed, setIsCollapsed] = useState(true);
 
   return (
@@ -170,14 +173,14 @@ function SessionCard({ session, turnCount }: { session: RealtimeSession; turnCou
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <SettingOutlined style={{ color: "#8c8c8c", fontSize: 14 }} />
-            <Text style={{ fontWeight: 500, fontSize: 14 }}>Session</Text>
+            <Text style={{ fontWeight: 500, fontSize: 14 }}>{t("session")}</Text>
           </div>
           <Text type="secondary" style={{ fontSize: 12 }}>
             {session.model}
           </Text>
           {turnCount > 0 && (
             <Tag color="purple" style={{ margin: 0, fontWeight: 500 }}>
-              {turnCount} {turnCount === 1 ? "turn" : "turns"}
+              {t("turnCount", { count: turnCount })}
             </Tag>
           )}
           {session.voice && (
@@ -214,15 +217,15 @@ function SessionCard({ session, turnCount }: { session: RealtimeSession; turnCou
               fontSize: 13,
             }}
           >
-            <ConfigRow label="Model" value={session.model} />
-            <ConfigRow label="Voice" value={session.voice} />
-            <ConfigRow label="Temperature" value={session.temperature} />
-            <ConfigRow label="Max Output Tokens" value={session.max_response_output_tokens} />
-            <ConfigRow label="Input Audio Format" value={session.input_audio_format} />
-            <ConfigRow label="Output Audio Format" value={session.output_audio_format} />
-            {session.turn_detection && <ConfigRow label="Turn Detection" value={session.turn_detection.type} />}
+            <ConfigRow label={t("model")} value={session.model} />
+            <ConfigRow label={t("voice")} value={session.voice} />
+            <ConfigRow label={t("temperature")} value={session.temperature} />
+            <ConfigRow label={t("maxOutputTokens")} value={session.max_response_output_tokens} />
+            <ConfigRow label={t("inputAudioFormat")} value={session.input_audio_format} />
+            <ConfigRow label={t("outputAudioFormat")} value={session.output_audio_format} />
+            {session.turn_detection && <ConfigRow label={t("turnDetection")} value={session.turn_detection.type} />}
             {session.tools && session.tools.length > 0 && (
-              <ConfigRow label="Tools" value={`${session.tools.length} tool(s)`} />
+              <ConfigRow label={t("tools")} value={t("toolCount", { count: session.tools.length })} />
             )}
           </div>
 
@@ -238,7 +241,7 @@ function SessionCard({ session, turnCount }: { session: RealtimeSession; turnCou
                   marginBottom: 4,
                 }}
               >
-                Instructions
+                {t("instructions")}
               </Text>
               <div
                 style={{
@@ -324,6 +327,7 @@ function ConversationCard({
 }
 
 function ResponseTurn({ response, index }: { response: RealtimeResponse; index: number }) {
+  const { t } = useTranslations("logs");
   const outputs = response.output || [];
   const usage = response.usage;
 
@@ -345,17 +349,17 @@ function ResponseTurn({ response, index }: { response: RealtimeResponse; index: 
         }}
       >
         <Tag color={response.status === "completed" ? "green" : "orange"} style={{ margin: 0 }}>
-          {response.status || "unknown"}
+          {response.status || t("unknown")}
         </Tag>
         {usage && (
           <Text type="secondary" style={{ fontSize: 11 }}>
-            {usage.input_tokens ?? 0} in / {usage.output_tokens ?? 0} out tokens
+            {t("tokensInOut", { input: usage.input_tokens ?? 0, output: usage.output_tokens ?? 0 })}
           </Text>
         )}
         {response.conversation_id && (
           <Tooltip title={response.conversation_id}>
             <Text type="secondary" style={{ fontSize: 11, cursor: "help" }}>
-              conv: {response.conversation_id.slice(0, 12)}...
+              {t("conversationLabel")}: {response.conversation_id.slice(0, 12)}...
             </Text>
           </Tooltip>
         )}
@@ -374,6 +378,7 @@ function ResponseTurn({ response, index }: { response: RealtimeResponse; index: 
 }
 
 function OutputMessage({ output }: { output: RealtimeOutputItem }) {
+  const { t } = useTranslations("logs");
   const contents = output.content || [];
   const hasTranscripts = contents.some((c) => c.transcript || c.text);
 
@@ -391,7 +396,7 @@ function OutputMessage({ output }: { output: RealtimeOutputItem }) {
           marginBottom: 3,
         }}
       >
-        {output.role?.toUpperCase() || "ASSISTANT"}
+        {output.role?.toUpperCase() || t("assistant")}
       </Text>
       {contents.map((c, cIdx) => {
         const text = c.transcript || c.text;
@@ -445,6 +450,7 @@ function OutputMessage({ output }: { output: RealtimeOutputItem }) {
 }
 
 function TokenBreakdown({ label, details }: { label: string; details: Record<string, any> }) {
+  const { t } = useTranslations("logs");
   const entries = Object.entries(details).filter(
     ([, v]) => typeof v === "number" || (typeof v === "object" && v !== null),
   );
@@ -454,7 +460,7 @@ function TokenBreakdown({ label, details }: { label: string; details: Record<str
   return (
     <div style={{ marginTop: 4 }}>
       <Text type="secondary" style={{ fontSize: 10, letterSpacing: "0.5px", textTransform: "uppercase" }}>
-        {label} Token Breakdown
+        {t("tokenBreakdown", { label })}
       </Text>
       <div
         style={{

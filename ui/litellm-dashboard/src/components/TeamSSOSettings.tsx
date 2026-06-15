@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTranslations } from "@/i18n";
 import { Card, Button, InputNumber, Typography, Spin, Select, Tag, Row, Col } from "antd";
 import { EditOutlined, SaveOutlined } from "@ant-design/icons";
 import { getDefaultTeamSettings, updateDefaultTeamSettings } from "./networking";
@@ -52,10 +53,8 @@ const SettingRow: React.FC<SettingRowProps> = ({ label, description, isEditing, 
   </Row>
 );
 
-const NotSet = () => <Text className="text-gray-400 italic">Not set</Text>;
-
-const renderTags = (values: string[], displayFn?: (v: string) => string) => {
-  if (!values || values.length === 0) return <NotSet />;
+const renderTags = (values: string[], displayFn?: (v: string) => string, emptyText?: string) => {
+  if (!values || values.length === 0) return <Text className="text-gray-400 italic">{emptyText}</Text>;
   return (
     <div className="flex flex-wrap gap-2">
       {values.map((v) => (
@@ -92,6 +91,7 @@ const TeamSSOSettings: React.FC<TeamSSOSettingsProps> = ({ accessToken }) => {
   const [editedValues, setEditedValues] = useState<SettingsValues>(DEFAULT_VALUES);
   const [saving, setSaving] = useState<boolean>(false);
   const [fetchError, setFetchError] = useState<boolean>(false);
+  const { t } = useTranslations("common");
 
   useEffect(() => {
     const fetchSettings = async () => {
@@ -108,7 +108,7 @@ const TeamSSOSettings: React.FC<TeamSSOSettingsProps> = ({ accessToken }) => {
       } catch (error) {
         console.error("Error fetching team SSO settings:", error);
         setFetchError(true);
-        NotificationsManager.fromBackend("Failed to fetch team settings");
+        NotificationsManager.fromBackend(t("failedToFetchTeamSettings"));
       } finally {
         setLoading(false);
       }
@@ -127,10 +127,10 @@ const TeamSSOSettings: React.FC<TeamSSOSettingsProps> = ({ accessToken }) => {
       setValues(newValues);
       setEditedValues(newValues);
       setIsEditing(false);
-      NotificationsManager.success("Default team settings updated successfully");
+      NotificationsManager.success(t("defaultTeamSettingsUpdatedSuccessfully"));
     } catch (error) {
       console.error("Error updating team settings:", error);
-      NotificationsManager.fromBackend("Failed to update team settings");
+      NotificationsManager.fromBackend(t("failedToUpdateTeamSettings"));
     } finally {
       setSaving(false);
     }
@@ -156,7 +156,7 @@ const TeamSSOSettings: React.FC<TeamSSOSettingsProps> = ({ accessToken }) => {
   if (fetchError) {
     return (
       <Card>
-        <Text>No team settings available or you do not have permission to view them.</Text>
+        <Text>{t("noTeamSettingsPermission")}</Text>
       </Card>
     );
   }
@@ -167,25 +167,23 @@ const TeamSSOSettings: React.FC<TeamSSOSettingsProps> = ({ accessToken }) => {
       <div className="flex justify-between items-start mb-2">
         <div>
           <Title level={3} className="m-0 text-gray-900">
-            Default Team Settings
+            {t("defaultTeamSettings")}
           </Title>
-          <Text className="text-gray-500 mt-1 block">
-            These settings will be applied by default when creating new teams.
-          </Text>
+          <Text className="text-gray-500 mt-1 block">{t("defaultTeamSettingsDescription")}</Text>
         </div>
         <div>
           {isEditing ? (
             <div className="flex gap-3">
               <Button onClick={handleCancel} disabled={saving}>
-                Cancel
+                {t("cancel")}
               </Button>
               <Button type="primary" onClick={handleSave} loading={saving} icon={<SaveOutlined />}>
-                Save Changes
+                {t("saveChanges")}
               </Button>
             </div>
           ) : (
             <Button onClick={() => setIsEditing(true)} icon={<EditOutlined />}>
-              Edit Settings
+              {t("editSettings")}
             </Button>
           )}
         </div>
@@ -201,7 +199,11 @@ const TeamSSOSettings: React.FC<TeamSSOSettingsProps> = ({ accessToken }) => {
               description="Maximum budget (in USD) for new automatically created teams."
               isEditing={isEditing}
               viewContent={
-                values.max_budget != null ? <Text>${Number(values.max_budget).toLocaleString()}</Text> : <NotSet />
+                values.max_budget != null ? (
+                  <Text>${Number(values.max_budget).toLocaleString()}</Text>
+                ) : (
+                  <Text className="text-gray-400 italic">{t("notSet")}</Text>
+                )
               }
               editContent={
                 <InputNumber
@@ -221,7 +223,11 @@ const TeamSSOSettings: React.FC<TeamSSOSettingsProps> = ({ accessToken }) => {
               description="How frequently the team's budget resets."
               isEditing={isEditing}
               viewContent={
-                values.budget_duration ? <Text>{getBudgetDurationLabel(values.budget_duration)}</Text> : <NotSet />
+                values.budget_duration ? (
+                  <Text>{getBudgetDurationLabel(values.budget_duration)}</Text>
+                ) : (
+                  <Text className="text-gray-400 italic">{t("notSet")}</Text>
+                )
               }
               editContent={
                 <BudgetDurationDropdown
@@ -236,7 +242,13 @@ const TeamSSOSettings: React.FC<TeamSSOSettingsProps> = ({ accessToken }) => {
               label="TPM Limit"
               description="Maximum tokens per minute allowed across all models."
               isEditing={isEditing}
-              viewContent={values.tpm_limit != null ? <Text>{values.tpm_limit.toLocaleString()}</Text> : <NotSet />}
+              viewContent={
+                values.tpm_limit != null ? (
+                  <Text>{values.tpm_limit.toLocaleString()}</Text>
+                ) : (
+                  <Text className="text-gray-400 italic">{t("notSet")}</Text>
+                )
+              }
               editContent={
                 <InputNumber
                   className="w-full"
@@ -253,7 +265,13 @@ const TeamSSOSettings: React.FC<TeamSSOSettingsProps> = ({ accessToken }) => {
               label="RPM Limit"
               description="Maximum requests per minute allowed across all models."
               isEditing={isEditing}
-              viewContent={values.rpm_limit != null ? <Text>{values.rpm_limit.toLocaleString()}</Text> : <NotSet />}
+              viewContent={
+                values.rpm_limit != null ? (
+                  <Text>{values.rpm_limit.toLocaleString()}</Text>
+                ) : (
+                  <Text className="text-gray-400 italic">{t("notSet")}</Text>
+                )
+              }
               editContent={
                 <InputNumber
                   className="w-full"
@@ -276,7 +294,7 @@ const TeamSSOSettings: React.FC<TeamSSOSettingsProps> = ({ accessToken }) => {
               label="Models"
               description="Default list of models that new teams can access."
               isEditing={isEditing}
-              viewContent={renderTags(values.models, getModelDisplayName)}
+              viewContent={renderTags(values.models, getModelDisplayName, t("notSet"))}
               editContent={
                 <ModelSelect
                   value={editedValues.models || []}
@@ -292,7 +310,7 @@ const TeamSSOSettings: React.FC<TeamSSOSettingsProps> = ({ accessToken }) => {
               label="Team Member Permissions"
               description="Default permissions granted to members of newly created teams. /key/info and /key/health are always included."
               isEditing={isEditing}
-              viewContent={renderTags(values.team_member_permissions)}
+              viewContent={renderTags(values.team_member_permissions, undefined, t("notSet"))}
               editContent={
                 <Select
                   mode="multiple"

@@ -2,6 +2,7 @@ import openai from "openai";
 import { getProxyBaseUrl } from "@/components/networking";
 import NotificationManager from "@/components/molecules/notifications_manager";
 import type { OpenAIVoice } from "../chat_ui/chatConstants";
+import { useTranslations } from "@/i18n";
 
 export async function makeOpenAIAudioSpeechRequest(
   input: string,
