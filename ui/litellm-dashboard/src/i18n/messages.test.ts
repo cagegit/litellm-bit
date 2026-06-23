@@ -1,0 +1,32 @@
+import { describe, expect, it } from "vitest";
+import en from "./messages/en.json";
+import zh from "./messages/zh.json";
+
+function flatten(value: unknown, prefix = ""): Map<string, string> {
+  if (typeof value === "string") return new Map([[prefix, value]]);
+  if (typeof value !== "object" || value === null || Array.isArray(value)) return new Map();
+  return new Map(
+    Object.entries(value).flatMap(([key, child]) => [...flatten(child, prefix ? `${prefix}.${key}` : key)]),
+  );
+}
+
+function placeholders(message: string): string[] {
+  return [...message.matchAll(/\{(\w+)\}/g)].map((match) => match[1]).sort();
+}
+
+describe("translation messages", () => {
+  const enMessages = flatten(en);
+  const zhMessages = flatten(zh);
+
+  it("has identical English and Chinese keys", () => {
+    expect([...zhMessages.keys()].sort()).toEqual([...enMessages.keys()].sort());
+  });
+
+  it("has identical placeholders for every translated message", () => {
+    const mismatches = [...enMessages].flatMap(([key, message]) => {
+      const translated = zhMessages.get(key);
+      return translated !== undefined && placeholders(message).join() !== placeholders(translated).join() ? [key] : [];
+    });
+    expect(mismatches).toEqual([]);
+  });
+});
