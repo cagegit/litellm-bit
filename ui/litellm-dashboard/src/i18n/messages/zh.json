@@ -1685,7 +1685,14 @@
     "useAdvancedParameters": "使用高级参数",
     "useTeamMappings": "使用团队映射",
     "userIdIsNotSet": "未设置用户 ID",
-    "usingExistingCredential": "使用现有凭据"
+    "usingExistingCredential": "使用现有凭据",
+    "ssoSettings": "SSO设置",
+    "ipAddress": "IP 地址",
+    "uiSettings": "UI设置",
+    "autoRotation": "自动轮换",
+    "hourly": "每小时",
+    "selectProvider": "选择提供商",
+    "keywords": "关键词"
   },
   "layout": {
     "title": "LiteLLM 控制台",
@@ -1990,7 +1997,35 @@
     "accessGroupAssignment": "团队成员可以为此团队的虚拟密钥分配访问组",
     "teamDailyActivity": "团队成员可以查看所有团队使用数据",
     "spendLogs": "团队成员可以查看整个团队的消费日志",
-    "access": "访问 "
+    "access": "访问 ",
+    "members": "{count} 名成员",
+    "allProxyModels": "所有代理模型",
+    "here": "在此处",
+    "reset": "重置",
+    "virtualKeys": "虚拟密钥",
+    "policies": "策略",
+    "tpmLimit": "TPM 限制",
+    "rpmLimit": "RPM 限制",
+    "routerSettings": "路由设置",
+    "guardrails": "护栏",
+    "selectGuardrails": "选择防护栏",
+    "other": "其他",
+    "yes": "是",
+    "organization": "组织",
+    "selectOrganization": "选择组织",
+    "metadata": "元数据",
+    "teamBudget": "团队预算（可选）",
+    "maxBudget": "最大预算",
+    "never": "永不过期",
+    "active": "活跃",
+    "deleteUserQuestion": "删除用户？",
+    "overview": "概览",
+    "details": "详情",
+    "personalModels": "个人模型",
+    "userAlias": "用户别名",
+    "globalProxyRole": "全局代理角色",
+    "team": "团队",
+    "memberRole": "成员角色"
   },
   "models": {
     "title": "模型",
@@ -2128,7 +2163,12 @@
     "more": "更多",
     "clickToUpload": "点击上传",
     "giveAGcpServiceAccountjsonFile": "提供 gcp 服务账号（.json 文件）",
-    "loadingProviderFields": "正在加载提供商字段..."
+    "loadingProviderFields": "正在加载提供商字段...",
+    "enterpriseOnlyFeature": "（仅限企业版功能）",
+    "modelAccessGroup": "模型访问组",
+    "connectionTestResults": "连接测试结果",
+    "enterCustomModelName": "输入自定义模型名",
+    "testConnection": "测试连接"
   },
   "logs": {
     "title": "日志",
@@ -2394,7 +2434,21 @@
     "noLogsForPeriod": "此时间段无日志。请选择防护栏和日期范围。",
     "sample": "样本",
     "noLogsToDisplay": "无日志可显示。请调整筛选条件或日期范围。",
-    "noInput": "—"
+    "noInput": "—",
+    "all": "全部",
+    "detected": "检测到：{label}",
+    "callType": "调用类型",
+    "timeToFirstToken": "首令牌时间",
+    "metadata": "元数据",
+    "assistant": "助手",
+    "temperature": "温度",
+    "tools": "工具",
+    "instructions": "说明",
+    "liveTail": "实时跟踪",
+    "fetchData": "获取数据",
+    "to": "至",
+    "showing": "显示",
+    "page": "页"
   },
   "settings": {
     "title": "设置",
@@ -2678,7 +2732,28 @@
     "teamName": "团队名",
     "toolName": "工具名",
     "totalToolsDiscovered": "已发现工具总数",
-    "userAgent": "User Agent"
+    "userAgent": "User Agent",
+    "modelAccessGroups": "模型访问组",
+    "selectExistingGroupsOrTypeToCreateNewOnes": "选择现有组或输入以创建新组",
+    "mask": "掩码",
+    "patternName": "模式名称",
+    "regexPattern": "正则表达式",
+    "action": "操作",
+    "selectAModel": "选择模型",
+    "logOnly": "仅记录",
+    "globalGuardrail": "全局护栏",
+    "scope": "范围",
+    "keys": "密钥",
+    "tags": "标签",
+    "deleteAttachment": "删除附件",
+    "editPolicy": "编辑策略",
+    "deletePolicy": "删除策略",
+    "searchGroups": "按名称、ID 或描述搜索组...",
+    "testConnection": "测试连接",
+    "viewDocumentation": "查看文档",
+    "role": "角色",
+    "groupClaim": "组声明",
+    "defaultRole": "默认角色"
   },
   "organization": {
     "title": "组织",
@@ -2964,7 +3039,18 @@
     "selectUserToFilter": "选择要筛选的用户...",
     "successfulRequests": "成功请求",
     "topVirtualKeys": "排名靠前的虚拟密钥",
-    "usageMetrics": "使用指标"
+    "usageMetrics": "使用指标",
+    "example": "示例",
+    "input": "输入",
+    "output": "输出",
+    "actions": "操作",
+    "creating": "创建中...",
+    "create": "创建",
+    "active": "活跃",
+    "edit": "编辑",
+    "delete": "删除",
+    "update": "更新",
+    "close": "关闭"
   },
   "table": {
     "show": "显示",
@@ -3305,7 +3391,13 @@
     "generatedpromptFile": "生成的 .prompt 文件",
     "language": "语言",
     "thisIsTheDotpromptFormatThatWillBeSavedToTheDatabase": "这是将保存到数据库的 dotprompt 格式",
-    "unsavedChanges": "未保存的更改"
+    "unsavedChanges": "未保存的更改",
+    "assistant": "助手",
+    "cancel": "取消",
+    "actions": "操作",
+    "delete": "删除",
+    "variableName": "变量名称",
+    "save": "保存"
   },
   "agents": {
     "title": "智能体",
@@ -3394,7 +3486,16 @@
     "spendusd": "支出（USD）",
     "status": "状态",
     "thisActionCannotBeUndone": "此操作无法撤销。",
-    "whenEnabledOnlyAgentsWithReachableUrlsAreShown": "启用时，仅显示 URL 可达的 Agent"
+    "whenEnabledOnlyAgentsWithReachableUrlsAreShown": "启用时，仅显示 URL 可达的 Agent",
+    "type": "类型",
+    "refresh": "刷新",
+    "close": "关闭",
+    "guardrails": "护栏",
+    "skills": "技能",
+    "capabilities": "能力",
+    "authenticationHeaders": "认证请求头",
+    "headerNameRequired": "标头名称为必填项",
+    "valueRequired": "值不能为空"
   },
   "mcp": {
     "title": "MCP",
@@ -3934,7 +4035,16 @@
     "universalMcpConnection": "通用 MCP 连接",
     "useDefault": "使用默认",
     "useThisUrlWithAnyMcpClientThatSupportsHttpTransport": "将此 URL 用于任何支持 HTTP 传输的 MCP 客户端",
-    "virtualKeySetup": "虚拟密钥设置"
+    "virtualKeySetup": "虚拟密钥设置",
+    "accessGroup": "访问组",
+    "toolset": "工具集",
+    "selectMCPServers": "选择MCP服务器和访问组（可选）",
+    "githubUrlPlaceholder": "https://github.com/org/repo/tree/main/my-skill",
+    "valuePlaceholder": "智能体应该记住的内容…",
+    "public": "公开",
+    "update": "更新",
+    "enter": "输入",
+    "close": "关闭"
   },
   "tagManagement": {
     "title": "标签",
@@ -3967,7 +4077,13 @@
     "budgetDuration": "预算周期",
     "tagUpdatedSuccessfully": "标签更新成功",
     "errorFetchingTagDetails": "获取标签详情失败: {error}",
-    "errorUpdatingTag": "更新标签失败: {error}"
+    "errorUpdatingTag": "更新标签失败: {error}",
+    "tagManagement": "标签管理",
+    "cancel": "取消",
+    "saveChanges": "保存更改",
+    "maxBudget": "最大预算",
+    "tpmLimit": "TPM 限制",
+    "rpmLimit": "RPM 限制"
   },
   "vectorStore": {
     "title": "向量存储",
@@ -4070,7 +4186,9 @@
     "attributes": "属性",
     "noResults": "未找到结果",
     "searchPlaceholder": "输入搜索查询...（Shift+Enter 换行）",
-    "search": "搜索"
+    "search": "搜索",
+    "providerTooltip": "辅助自动填充提供商特定字段",
+    "actions": "操作"
   },
   "survey": {
     "title": "调查",
@@ -4150,7 +4268,14 @@
     "no": "否",
     "deleteSkill": "删除技能",
     "loading": "加载中...",
-    "noSkillsFound": "未找到技能。添加一个以开始。"
+    "noSkillsFound": "未找到技能。添加一个以开始。",
+    "selectSkills": "选择技能",
+    "confirm": "确认",
+    "skills": "技能",
+    "source": "来源",
+    "tags": "标签",
+    "delete": "删除",
+    "cannotUndo": "此操作无法撤销。"
   },
   "deletedKeys": {
     "title": "已删除密钥",
@@ -4388,11 +4513,22 @@
     "modelsWillBeMadePublic_one": "个模型将被公开",
     "modelsWillBeMadePublic_other": "个模型将被公开",
     "makeModelsPublic": "公开模型",
-    "selectModels": "选择模型"
+    "selectModels": "选择模型",
+    "yes": "是",
+    "details": "详情",
+    "info": "信息",
+    "modelOverview": "模型概览",
+    "allSkills": "所有技能",
+    "actions": "操作",
+    "save": "保存"
   },
   "cloudZero": {
     "title": "CloudZero",
-    "costTracking": "成本追踪"
+    "costTracking": "成本追踪",
+    "exportData": "导出数据",
+    "apiKey": "API 密钥",
+    "connectionId": "连接 ID",
+    "cancel": "取消"
   },
   "team": {
     "allProxyModels": "所有代理模型",

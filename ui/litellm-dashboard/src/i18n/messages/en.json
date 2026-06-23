@@ -1685,7 +1685,14 @@
     "useAdvancedParameters": "Use Advanced Parameters",
     "useTeamMappings": "Use Team Mappings",
     "userIdIsNotSet": "User ID is not set",
-    "usingExistingCredential": "Using Existing Credential"
+    "usingExistingCredential": "Using Existing Credential",
+    "ssoSettings": "SSO Settings",
+    "ipAddress": "IP Address",
+    "uiSettings": "UI Settings",
+    "autoRotation": "Auto-Rotation",
+    "hourly": "Hourly",
+    "selectProvider": "Select provider",
+    "keywords": "Keywords"
   },
   "layout": {
     "title": "LiteLLM Dashboard",
@@ -1990,7 +1997,35 @@
     "accessGroupAssignment": "Member can assign access groups to virtual keys for this team",
     "teamDailyActivity": "Member can view all team usage data (not just their own)",
     "spendLogs": "Member can view spend logs for the entire team (not just their own)",
-    "access": "Access "
+    "access": "Access ",
+    "members": "{count} Members",
+    "allProxyModels": "All Proxy Models",
+    "here": "here",
+    "reset": "Reset",
+    "virtualKeys": "Virtual Keys",
+    "policies": "Policies",
+    "tpmLimit": "TPM Limit",
+    "rpmLimit": "RPM Limit",
+    "routerSettings": "Router Settings",
+    "guardrails": "Guardrails",
+    "selectGuardrails": "Select guardrails",
+    "other": "Other",
+    "yes": "Yes",
+    "organization": "Organization",
+    "selectOrganization": "Select Organization",
+    "metadata": "Metadata",
+    "teamBudget": "Team Budget (Optional)",
+    "maxBudget": "Max Budget",
+    "never": "Never",
+    "active": "Active",
+    "deleteUserQuestion": "Delete User?",
+    "overview": "Overview",
+    "details": "Details",
+    "personalModels": "Personal Models",
+    "userAlias": "User Alias",
+    "globalProxyRole": "Global Proxy Role",
+    "team": "Team",
+    "memberRole": "Member Role"
   },
   "models": {
     "title": "Models",
@@ -2128,7 +2163,12 @@
     "more": "more",
     "clickToUpload": "Click to Upload",
     "giveAGcpServiceAccountjsonFile": "Give a gcp service account(.json file)",
-    "loadingProviderFields": "Loading provider fields..."
+    "loadingProviderFields": "Loading provider fields...",
+    "enterpriseOnlyFeature": "(Enterprise only Feature)",
+    "modelAccessGroup": "Model Access Group",
+    "connectionTestResults": "Connection Test Results",
+    "enterCustomModelName": "Enter custom model name",
+    "testConnection": "Test Connection"
   },
   "logs": {
     "title": "Logs",
@@ -2394,7 +2434,21 @@
     "noLogsForPeriod": "No logs for this period. Select a guardrail and date range.",
     "sample": "Sample",
     "noLogsToDisplay": "No logs to display. Adjust filters or date range.",
-    "noInput": "—"
+    "noInput": "—",
+    "all": "All",
+    "detected": "Detected: {label}",
+    "callType": "Call type",
+    "timeToFirstToken": "Time to first token",
+    "metadata": "Metadata",
+    "assistant": "Assistant",
+    "temperature": "Temperature",
+    "tools": "Tools",
+    "instructions": "Instructions",
+    "liveTail": "Live Tail",
+    "fetchData": "Fetch data",
+    "to": "To",
+    "showing": "Showing",
+    "page": "Page"
   },
   "settings": {
     "title": "Settings",
@@ -2678,7 +2732,28 @@
     "teamName": "Team Name",
     "toolName": "Tool Name",
     "totalToolsDiscovered": "Total Tools Discovered",
-    "userAgent": "User Agent"
+    "userAgent": "User Agent",
+    "modelAccessGroups": "Model Access Groups",
+    "selectExistingGroupsOrTypeToCreateNewOnes": "Select existing groups or type to create new ones",
+    "mask": "Mask",
+    "patternName": "Pattern name",
+    "regexPattern": "Regex pattern",
+    "action": "Action",
+    "selectAModel": "Select a model",
+    "logOnly": "Log Only",
+    "globalGuardrail": "Global guardrail",
+    "scope": "Scope",
+    "keys": "Keys",
+    "tags": "Tags",
+    "deleteAttachment": "Delete Attachment",
+    "editPolicy": "Edit Policy",
+    "deletePolicy": "Delete Policy",
+    "searchGroups": "Search groups by name, ID, or description...",
+    "testConnection": "Test Connection",
+    "viewDocumentation": "View Documentation",
+    "role": "Role",
+    "groupClaim": "Group Claim",
+    "defaultRole": "Default Role"
   },
   "organization": {
     "title": "Organization",
@@ -2964,7 +3039,18 @@
     "selectUserToFilter": "Select user to filter...",
     "successfulRequests": "Successful Requests",
     "topVirtualKeys": "Top Virtual Keys",
-    "usageMetrics": "Usage Metrics"
+    "usageMetrics": "Usage Metrics",
+    "example": "Example",
+    "input": "Input",
+    "output": "Output",
+    "actions": "Actions",
+    "creating": "Creating...",
+    "create": "Create",
+    "active": "Active",
+    "edit": "Edit",
+    "delete": "Delete",
+    "update": "Update",
+    "close": "Close"
   },
   "table": {
     "show": "Show",
@@ -3305,7 +3391,13 @@
     "generatedpromptFile": "Generated .prompt file",
     "language": "Language",
     "thisIsTheDotpromptFormatThatWillBeSavedToTheDatabase": "This is the dotprompt format that will be saved to the database",
-    "unsavedChanges": "Unsaved changes"
+    "unsavedChanges": "Unsaved changes",
+    "assistant": "Assistant",
+    "cancel": "Cancel",
+    "actions": "Actions",
+    "delete": "Delete",
+    "variableName": "Variable Name",
+    "save": "Save"
   },
   "agents": {
     "title": "Agents",
@@ -3394,7 +3486,16 @@
     "spendusd": "Spend (USD)",
     "status": "Status",
     "thisActionCannotBeUndone": "This action cannot be undone.",
-    "whenEnabledOnlyAgentsWithReachableUrlsAreShown": "When enabled, only agents with reachable URLs are shown"
+    "whenEnabledOnlyAgentsWithReachableUrlsAreShown": "When enabled, only agents with reachable URLs are shown",
+    "type": "Type",
+    "refresh": "Refresh",
+    "close": "Close",
+    "guardrails": "Guardrails",
+    "skills": "Skills",
+    "capabilities": "Capabilities",
+    "authenticationHeaders": "Authentication Headers",
+    "headerNameRequired": "Header name is required",
+    "valueRequired": "Value is required"
   },
   "mcp": {
     "title": "MCP",
@@ -3934,7 +4035,16 @@
     "universalMcpConnection": "Universal MCP Connection",
     "useDefault": "Use default",
     "useThisUrlWithAnyMcpClientThatSupportsHttpTransport": "Use this URL with any MCP client that supports HTTP transport",
-    "virtualKeySetup": "Virtual Key Setup"
+    "virtualKeySetup": "Virtual Key Setup",
+    "accessGroup": "Access Group",
+    "toolset": "Toolset",
+    "selectMCPServers": "Select MCP servers and access groups (optional)",
+    "githubUrlPlaceholder": "https://github.com/org/repo/tree/main/my-skill",
+    "valuePlaceholder": "What the agent should remember…",
+    "public": "Public",
+    "update": "Update",
+    "enter": "Enter",
+    "close": "Close"
   },
   "tagManagement": {
     "title": "Tags",
@@ -3967,7 +4077,13 @@
     "budgetDuration": "Budget Duration",
     "tagUpdatedSuccessfully": "Tag updated successfully",
     "errorFetchingTagDetails": "Error fetching tag details: {error}",
-    "errorUpdatingTag": "Error updating tag: {error}"
+    "errorUpdatingTag": "Error updating tag: {error}",
+    "tagManagement": "Tag Management",
+    "cancel": "Cancel",
+    "saveChanges": "Save Changes",
+    "maxBudget": "Max Budget",
+    "tpmLimit": "TPM Limit",
+    "rpmLimit": "RPM Limit"
   },
   "vectorStore": {
     "title": "Vector Store",
@@ -4070,7 +4186,9 @@
     "attributes": "Attributes",
     "noResults": "No results found",
     "searchPlaceholder": "Enter your search query... (Shift+Enter for new line)",
-    "search": "Search"
+    "search": "Search",
+    "providerTooltip": "Helper to auto-populate provider specific fields",
+    "actions": "Actions"
   },
   "survey": {
     "title": "Survey",
@@ -4150,7 +4268,14 @@
     "no": "No",
     "deleteSkill": "Delete skill",
     "loading": "Loading...",
-    "noSkillsFound": "No skills found. Add one to get started."
+    "noSkillsFound": "No skills found. Add one to get started.",
+    "selectSkills": "Select skills",
+    "confirm": "Confirm",
+    "skills": "Skills",
+    "source": "Source",
+    "tags": "Tags",
+    "delete": "Delete",
+    "cannotUndo": "This action cannot be undone."
   },
   "deletedKeys": {
     "title": "Deleted Keys",
@@ -4388,11 +4513,22 @@
     "modelsWillBeMadePublic_one": "model will be made public",
     "modelsWillBeMadePublic_other": "models will be made public",
     "makeModelsPublic": "Make Models Public",
-    "selectModels": "Select Models"
+    "selectModels": "Select Models",
+    "yes": "Yes",
+    "details": "Details",
+    "info": "Info",
+    "modelOverview": "Model Overview",
+    "allSkills": "All Skills",
+    "actions": "Actions",
+    "save": "Save"
   },
   "cloudZero": {
     "title": "CloudZero",
-    "costTracking": "Cost Tracking"
+    "costTracking": "Cost Tracking",
+    "exportData": "Export Data",
+    "apiKey": "API Key",
+    "connectionId": "Connection ID",
+    "cancel": "Cancel"
   },
   "team": {
     "allProxyModels": "All Proxy Models",
