@@ -3,7 +3,11 @@ import { extname, join, dirname, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const messagesDir = join(__dirname, "..", "src", "i18n", "messages");
+const argumentValue = (name, fallback) => {
+  const index = process.argv.indexOf(name);
+  return index >= 0 && process.argv[index + 1] ? process.argv[index + 1] : fallback;
+};
+const messagesDir = argumentValue("--messages-dir", join(__dirname, "..", "src", "i18n", "messages"));
 
 function extractKeys(obj, prefix = "") {
   const keys = [];
@@ -57,7 +61,7 @@ const placeholderMismatches = extractMessages(enData)
   .map(([key]) => key)
   .sort();
 
-const sourceRoot = join(__dirname, "..", "src");
+const sourceRoot = argumentValue("--source-root", join(__dirname, "..", "src"));
 const sourceFiles = (directory) =>
   readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
     const path = join(directory, entry.name);
