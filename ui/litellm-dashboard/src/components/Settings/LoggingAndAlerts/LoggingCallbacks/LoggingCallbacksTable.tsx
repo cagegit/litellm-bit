@@ -3,7 +3,6 @@ import type { TableProps } from "antd";
 import { Table } from "antd";
 import Title from "antd/es/typography/Title";
 import React from "react";
-import { useTranslations } from "@/i18n";
 import TableIconActionButton from "../../../common_components/IconActionButton/TableIconActionButtons/TableIconActionButton";
 import { AlertingObject } from "./types";
 
@@ -42,31 +41,26 @@ export const LoggingCallbacksTable: React.FC<LoggingCallbacksProps> = ({
   onDelete = () => {},
   onAdd = () => {},
 }) => {
-  const { t } = useTranslations("settings");
   const columns: TableProps<CallbackRow>["columns"] = [
     {
-      title: <span className="font-medium text-gray-700">{t("callbackName")}</span>,
+      title: <span className="font-medium text-gray-700">Callback Name</span>,
       dataIndex: "name",
       key: "name",
       render: (_: string, record: CallbackRow) => {
         const id = record.name;
-        console.log("availableCallbacks", availableCallbacks);
         const displayName = availableCallbacks[id]?.ui_callback_name || id;
         return <div className="font-medium text-gray-800">{displayName}</div>;
       },
     },
     {
-      title: <span className="font-medium text-gray-700">{t("mode")}</span>,
+      title: <span className="font-medium text-gray-700">Mode</span>,
       key: "mode",
       render: (_: unknown, record: CallbackRow) => {
-        const mode = record.mode || "success";
-        const rawLabel = CALLBACK_MODES.find((m) => m.value === mode)?.label || mode;
-        const modeLabelMap: Record<string, string> = {
-          Success: t("callbackModeSuccess"),
-          Failure: t("callbackModeFailure"),
-          "Success & Failure": t("callbackModeSuccessAndFailure"),
-        };
-        const label = modeLabelMap[rawLabel] || rawLabel;
+        // Backend sends `type` (success | failure); legacy in-memory rows
+        // from add-callback flow set `mode`. Read both so newly-added rows
+        // and server-fetched rows both render correctly.
+        const mode = record.type || record.mode || "success";
+        const label = CALLBACK_MODES.find((m) => m.value === mode)?.label || mode;
         const badgeClass =
           mode === "success"
             ? "bg-green-100 text-green-800"
@@ -82,14 +76,14 @@ export const LoggingCallbacksTable: React.FC<LoggingCallbacksProps> = ({
       width: 240,
     },
     {
-      title: <span className="font-medium text-gray-700 text-right w-full block">{t("actions")}</span>,
+      title: <span className="font-medium text-gray-700 text-right w-full block">Actions</span>,
       key: "actions",
       align: "right",
       render: (_: unknown, record: CallbackRow) => (
         <div className="flex justify-end gap-2">
-          <TableIconActionButton variant="Test" tooltipText={t("testCallback")} onClick={() => onTest(record)} />
-          <TableIconActionButton variant="Edit" tooltipText={t("editCallback")} onClick={() => onEdit(record)} />
-          <TableIconActionButton variant="Delete" tooltipText={t("deleteCallback")} onClick={() => onDelete(record)} />
+          <TableIconActionButton variant="Test" tooltipText="Test Callback" onClick={() => onTest(record)} />
+          <TableIconActionButton variant="Edit" tooltipText="Edit Callback" onClick={() => onEdit(record)} />
+          <TableIconActionButton variant="Delete" tooltipText="Delete Callback" onClick={() => onDelete(record)} />
         </div>
       ),
       width: 240,
@@ -99,17 +93,17 @@ export const LoggingCallbacksTable: React.FC<LoggingCallbacksProps> = ({
     <>
       <div className="w-full mt-4">
         <Button onClick={onAdd} className="mx-auto">
-          {t("addCallback")}
+          + Add Callback
         </Button>
         <div className="flex justify-between items-center my-2">
-          <Title level={4}>{t("activeLoggingCallbacks")}</Title>
+          <Title level={4}>Active Logging Callbacks</Title>
         </div>
         {/* Empty state */}
         {callbacks.length === 0 ? (
           <div className="flex flex-col items-center justify-center p-8 bg-gray-50 border border-gray-200 rounded-lg">
             <div className="text-center">
-              <h3 className="text-lg font-medium text-gray-700 mb-2">{t("noCallbacksConfigured")}</h3>
-              <p className="text-gray-500">{t("addFirstCallbackDescription")}</p>
+              <h3 className="text-lg font-medium text-gray-700 mb-2">No callbacks configured</h3>
+              <p className="text-gray-500">Add your first callback to start logging data to external services.</p>
             </div>
           </div>
         ) : (
@@ -117,7 +111,10 @@ export const LoggingCallbacksTable: React.FC<LoggingCallbacksProps> = ({
             <Table
               columns={columns}
               dataSource={callbacks as CallbackRow[]}
-              rowKey={(record) => record.name}
+              // `generic_api` can appear as both a success and a failure
+              // callback simultaneously — keying by `name` alone produced
+              // duplicate React keys. Compose with type to keep keys unique.
+              rowKey={(record) => `${record.name}-${record.type || record.mode || "success"}`}
               pagination={false}
               rowClassName={() => "hover:bg-gray-50"}
             />

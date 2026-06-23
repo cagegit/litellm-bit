@@ -1,8 +1,7 @@
 import { InfoCircleOutlined } from "@ant-design/icons";
 import { Select as AntdSelect, Card, Divider, Space, Tooltip, Typography } from "antd";
 import React from "react";
-import { ModelGroup } from "../playground/llm_calls/fetch_models";
-import { useTranslations } from "@/i18n";
+import { ModelGroup } from "@/components/llm_calls/fetch_models";
 
 const { Text } = Typography;
 
@@ -43,7 +42,6 @@ const TIER_DESCRIPTIONS: Record<keyof ComplexityTiers, { label: string; descript
 };
 
 const ComplexityRouterConfig: React.FC<ComplexityRouterConfigProps> = ({ modelInfo, value, onChange }) => {
-  const { t } = useTranslations("models");
   // Prepare model options for dropdowns
   const modelOptions = modelInfo.map((model) => ({
     value: model.model_group,
@@ -61,15 +59,16 @@ const ComplexityRouterConfig: React.FC<ComplexityRouterConfigProps> = ({ modelIn
     <div className="w-full max-w-none">
       <Space align="center" style={{ marginBottom: 16 }}>
         <Typography.Title level={4} style={{ margin: 0 }}>
-          {t("complexityTierConfiguration")}
+          Complexity Tier Configuration
         </Typography.Title>
-        <Tooltip title={t("complexityTierTooltip")}>
+        <Tooltip title="Map each complexity tier to a model. Simple queries use cheaper/faster models, complex queries use more capable models.">
           <InfoCircleOutlined className="text-gray-400" />
         </Tooltip>
       </Space>
 
       <Text type="secondary" style={{ display: "block", marginBottom: 24 }}>
-        {t("complexityRouterDescription")}
+        The complexity router automatically classifies requests by complexity using rule-based scoring (no API calls,
+        &lt;1ms latency). Configure which model handles each tier.
       </Text>
 
       <Card>
@@ -81,19 +80,19 @@ const ComplexityRouterConfig: React.FC<ComplexityRouterConfigProps> = ({ modelIn
               <div className="mb-4">
                 <div className="flex items-center gap-2 mb-2">
                   <Text strong style={{ fontSize: 16 }}>
-                    {tierInfo.label} {t("tier")}
+                    {tierInfo.label} Tier
                   </Text>
                   <Tooltip title={tierInfo.description}>
                     <InfoCircleOutlined className="text-gray-400" />
                   </Tooltip>
                 </div>
                 <Text type="secondary" style={{ display: "block", marginBottom: 8, fontSize: 12 }}>
-                  {t("examples")}: {tierInfo.examples}
+                  Examples: {tierInfo.examples}
                 </Text>
                 <AntdSelect
                   value={value[tier]}
                   onChange={(model) => handleTierChange(tier, model)}
-                  placeholder={t("selectModelFor", { tier: tierInfo.label.toLowerCase() })}
+                  placeholder={`Select model for ${tierInfo.label.toLowerCase()} queries`}
                   showSearch
                   style={{ width: "100%" }}
                   options={modelOptions}
@@ -108,23 +107,25 @@ const ComplexityRouterConfig: React.FC<ComplexityRouterConfigProps> = ({ modelIn
 
       <Card className="bg-gray-50">
         <Text strong style={{ display: "block", marginBottom: 8 }}>
-          {t("howClassificationWorks")}
+          How Classification Works
         </Text>
         <Text type="secondary" style={{ fontSize: 13 }}>
-          {t("classificationDescription")}
+          The router scores each request across 7 dimensions: token count, code presence, reasoning markers, technical
+          terms, simple indicators, multi-step patterns, and question complexity. The weighted score determines the
+          tier:
         </Text>
         <ul style={{ marginTop: 8, marginBottom: 0, paddingLeft: 20, fontSize: 13, color: "rgba(0, 0, 0, 0.45)" }}>
           <li>
-            <strong>SIMPLE</strong>: {t("scoreLessThan015")}
+            <strong>SIMPLE</strong>: Score &lt; 0.15
           </li>
           <li>
-            <strong>MEDIUM</strong>: {t("score015To035")}
+            <strong>MEDIUM</strong>: Score 0.15 - 0.35
           </li>
           <li>
-            <strong>COMPLEX</strong>: {t("score035To060")}
+            <strong>COMPLEX</strong>: Score 0.35 - 0.60
           </li>
           <li>
-            <strong>REASONING</strong>: {t("scoreGreaterThan060")}
+            <strong>REASONING</strong>: Score &gt; 0.60 (or 2+ reasoning markers)
           </li>
         </ul>
       </Card>

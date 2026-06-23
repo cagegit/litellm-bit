@@ -2,8 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { TextInput, Text } from "@tremor/react";
 import { Select } from "antd";
 import { RobotOutlined } from "@ant-design/icons";
-import { fetchAvailableModels, ModelGroup } from "../playground/llm_calls/fetch_models";
-import { useTranslations } from "@/i18n";
+import { fetchAvailableModels, ModelGroup } from "@/components/llm_calls/fetch_models";
 
 interface ModelSelectorProps {
   accessToken: string;
@@ -28,8 +27,6 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({
   showLabel = true,
   labelText = "Select Model",
 }) => {
-  const { t } = useTranslations("common");
-
   const [selectedModel, setSelectedModel] = useState<string | undefined>(value);
   const [showCustomModelInput, setShowCustomModelInput] = useState<boolean>(false);
   const [modelInfo, setModelInfo] = useState<ModelGroup[]>([]);
@@ -112,7 +109,7 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({
       {showCustomModelInput && (
         <TextInput
           className="mt-2"
-          placeholder={t("common.enterCustomModelName")}
+          placeholder="Enter custom model name"
           onValueChange={handleCustomModelChange}
           disabled={disabled}
         />

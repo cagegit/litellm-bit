@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Alert, Form, Input, Select, Tooltip } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
-import { fetchAvailableModels, ModelGroup } from "../playground/llm_calls/fetch_models";
-import { useTranslations } from "@/i18n";
+import { fetchAvailableModels, ModelGroup } from "@/components/llm_calls/fetch_models";
 
 interface S3VectorsConfigProps {
   accessToken: string | null;
@@ -11,8 +10,6 @@ interface S3VectorsConfigProps {
 }
 
 const S3VectorsConfig: React.FC<S3VectorsConfigProps> = ({ accessToken, providerParams, onParamsChange }) => {
-  const { t } = useTranslations("vectorStore");
-
   const [embeddingModels, setEmbeddingModels] = useState<ModelGroup[]>([]);
   const [isLoadingModels, setIsLoadingModels] = useState(false);
 
@@ -53,8 +50,8 @@ const S3VectorsConfig: React.FC<S3VectorsConfigProps> = ({ accessToken, provider
             <p>AWS S3 Vectors allows you to store and query vector embeddings directly in S3:</p>
             <ul style={{ marginLeft: "16px", marginTop: "8px" }}>
               <li>Vector buckets and indexes will be automatically created if they don&apos;t exist</li>
-              <li>{t("vectorStore.vectorDimensionsAreAutoDetectedFromYourSelectedEmbeddingModel")}</li>
-              <li>{t("vectorStore.ensureYourAwsCredentialsHavePermissionsForS3VectorsOperations")}</li>
+              <li>Vector dimensions are auto-detected from your selected embedding model</li>
+              <li>Ensure your AWS credentials have permissions for S3 Vectors operations</li>
               <li>
                 Learn more:{" "}
                 <a
@@ -137,7 +134,7 @@ const S3VectorsConfig: React.FC<S3VectorsConfigProps> = ({ accessToken, provider
         label={
           <span>
             AWS Region{" "}
-            <Tooltip title={t("vectorStore.awsRegionWhereTheS3BucketIsLocatedegUsWest2")}>
+            <Tooltip title="AWS region where the S3 bucket is located (e.g., us-west-2)">
               <InfoCircleOutlined style={{ marginLeft: "4px" }} />
             </Tooltip>
           </span>
@@ -158,7 +155,7 @@ const S3VectorsConfig: React.FC<S3VectorsConfigProps> = ({ accessToken, provider
         label={
           <span>
             Embedding Model{" "}
-            <Tooltip title={t("vectorStore.selectTheEmbeddingModelToUseForVectorGeneration")}>
+            <Tooltip title="Select the embedding model to use for vector generation">
               <InfoCircleOutlined style={{ marginLeft: "4px" }} />
             </Tooltip>
           </span>
@@ -168,7 +165,7 @@ const S3VectorsConfig: React.FC<S3VectorsConfigProps> = ({ accessToken, provider
         <Select
           value={providerParams.embedding_model || undefined}
           onChange={(value) => handleFieldChange("embedding_model", value)}
-          placeholder={t("vectorStore.selectAnEmbeddingModel")}
+          placeholder="Select an embedding model"
           size="large"
           showSearch
           loading={isLoadingModels}

@@ -1,6 +1,5 @@
 import { Button } from "antd";
 import React, { useEffect, useState } from "react";
-import { useTranslations } from "@/i18n";
 import NotificationsManager from "../molecules/notifications_manager";
 import { getCallbacksCall, getRouterSettingsCall, setCallbacksCall } from "../networking";
 import RouterSettingsForm, { RouterSettingsFormValue } from "./RouterSettingsForm";
@@ -9,7 +8,6 @@ interface RouterSettingsProps {
   accessToken: string | null;
   userRole: string | null;
   userID: string | null;
-  modelData: any;
 }
 
 interface routingStrategyArgs {
@@ -17,8 +15,7 @@ interface routingStrategyArgs {
   lowest_latency_buffer?: number;
 }
 
-const RouterSettings: React.FC<RouterSettingsProps> = ({ accessToken, userRole, userID, modelData }) => {
-  const { t } = useTranslations("settings");
+const RouterSettings: React.FC<RouterSettingsProps> = ({ accessToken, userRole, userID }) => {
   const [formValue, setFormValue] = useState<RouterSettingsFormValue>({
     routerSettings: {},
     selectedStrategy: null,
@@ -171,10 +168,10 @@ const RouterSettings: React.FC<RouterSettingsProps> = ({ accessToken, userRole, 
     try {
       setCallbacksCall(accessToken, payload);
     } catch (error) {
-      NotificationsManager.fromBackend(t("failedToUpdateRouterSettings") + error);
+      NotificationsManager.fromBackend("Failed to update router settings: " + error);
     }
 
-    NotificationsManager.success(t("changesSaved"));
+    NotificationsManager.success("router settings updated successfully");
   };
 
   if (!accessToken) {
@@ -193,9 +190,9 @@ const RouterSettings: React.FC<RouterSettingsProps> = ({ accessToken, userRole, 
 
       {/* Actions - Sticky at bottom */}
       <div className="border-t border-gray-200 pt-6 flex justify-end gap-3">
-        <Button onClick={() => window.location.reload()}>{t("reset")}</Button>
+        <Button onClick={() => window.location.reload()}>Reset</Button>
         <Button type="primary" onClick={handleSaveChanges}>
-          {t("saveChanges")}
+          Save Changes
         </Button>
       </div>
     </div>

@@ -51,7 +51,6 @@ import {
 } from "./networking";
 import TopKeyView from "./UsagePage/components/EntityUsage/TopKeyView";
 import { formatNumberWithCommas } from "@/utils/dataUtils";
-import { useTranslations } from "@/i18n";
 console.log("process.env.NODE_ENV", process.env.NODE_ENV);
 
 interface UsagePageProps {
@@ -134,7 +133,6 @@ const isAdminOrAdminViewer = (role: string | null): boolean => {
 };
 
 const UsagePage: React.FC<UsagePageProps> = ({ accessToken, token, userRole, userID, keys, premiumUser }) => {
-  const { t } = useTranslations("common");
   const currentDate = new Date();
   const [keySpendData, setKeySpendData] = useState<any[]>([]);
   const [topKeys, setTopKeys] = useState<any[]>([]);
@@ -542,15 +540,15 @@ const UsagePage: React.FC<UsagePageProps> = ({ accessToken, token, userRole, use
     return (
       <div style={{ width: "100%" }} className="p-8">
         <Card>
-          <Title>{t("databaseQueryLimitReached")}</Title>
+          <Title>Database Query Limit Reached</Title>
           <Text className="mt-4">
-            {t("spendLogsRows", { rows: proxySettings.NUM_SPEND_LOGS_ROWS })}
+            SpendLogs in DB has {proxySettings.NUM_SPEND_LOGS_ROWS} rows.
             <br></br>
-            {t("followGuideForUsage")}
+            Please follow our guide to view usage when SpendLogs has more than 1M rows.
           </Text>
           <Button className="mt-4">
-            <a href="https://docs.litellm.ai/docs/proxy/spending_monitoring" target="_blank">
-              {t("viewUsageGuide")}
+            <a href="https://docs.litellm.ai/docs/proxy/cost_tracking" target="_blank">
+              View Usage Guide
             </a>
           </Button>
         </Card>
@@ -562,13 +560,13 @@ const UsagePage: React.FC<UsagePageProps> = ({ accessToken, token, userRole, use
     <div style={{ width: "100%" }} className="p-8">
       <TabGroup>
         <TabList className="mt-2">
-          <Tab>{t("allUp")}</Tab>
+          <Tab>All Up</Tab>
 
           {isAdminOrAdminViewer(userRole) ? (
             <>
-              <Tab>{t("teamBasedUsage")}</Tab>
-              <Tab>{t("customerUsage")}</Tab>
-              <Tab>{t("tagBasedUsage")}</Tab>
+              <Tab>Team Based Usage</Tab>
+              <Tab>Customer Usage</Tab>
+              <Tab>Tag Based Usage</Tab>
             </>
           ) : (
             <>
@@ -580,25 +578,22 @@ const UsagePage: React.FC<UsagePageProps> = ({ accessToken, token, userRole, use
           <TabPanel>
             <TabGroup>
               <TabList variant="solid" className="mt-1">
-                <Tab>{t("cost")}</Tab>
-                <Tab>{t("activity")}</Tab>
+                <Tab>Cost</Tab>
+                <Tab>Activity</Tab>
               </TabList>
               <TabPanels>
                 <TabPanel>
                   <Grid numItems={2} className="gap-2 h-[100vh] w-full">
                     <Col numColSpan={2}>
                       <Text className="text-tremor-default text-tremor-content dark:text-dark-tremor-content mb-2 mt-2 text-lg">
-                        {t("projectSpend", {
-                          month: new Date().toLocaleString("default", { month: "long" }),
-                          startDay: 1,
-                          endDay: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate(),
-                        })}
+                        Project Spend {new Date().toLocaleString("default", { month: "long" })} 1 -{" "}
+                        {new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate()}
                       </Text>
                       <ViewUserSpend userSpend={totalMonthlySpend} selectedTeam={null} userMaxBudget={null} />
                     </Col>
                     <Col numColSpan={2}>
                       <Card>
-                        <Title>{t("monthlySpend")}</Title>
+                        <Title>Monthly Spend</Title>
                         <BarChart
                           data={keySpendData}
                           index="date"
@@ -613,13 +608,13 @@ const UsagePage: React.FC<UsagePageProps> = ({ accessToken, token, userRole, use
                     </Col>
                     <Col numColSpan={1}>
                       <Card className="h-full">
-                        <Title>{t("topVirtualKeys")}</Title>
+                        <Title>Top Virtual Keys</Title>
                         <TopKeyView topKeys={topKeys} teams={null} topKeysLimit={5} setTopKeysLimit={() => {}} />
                       </Card>
                     </Col>
                     <Col numColSpan={1}>
                       <Card className="h-full">
-                        <Title>{t("topModels")}</Title>
+                        <Title>Top Models</Title>
                         <BarChart
                           className="mt-4 h-40"
                           data={topModels}
@@ -637,7 +632,7 @@ const UsagePage: React.FC<UsagePageProps> = ({ accessToken, token, userRole, use
                     <Col numColSpan={1}></Col>
                     <Col numColSpan={2}>
                       <Card className="mb-2">
-                        <Title>{t("spendByProvider")}</Title>
+                        <Title>Spend by Provider</Title>
                         <>
                           <Grid numItems={2}>
                             <Col numColSpan={1}>
@@ -655,8 +650,8 @@ const UsagePage: React.FC<UsagePageProps> = ({ accessToken, token, userRole, use
                               <Table>
                                 <TableHead>
                                   <TableRow>
-                                    <TableHeaderCell>{t("provider")}</TableHeaderCell>
-                                    <TableHeaderCell>{t("spend")}</TableHeaderCell>
+                                    <TableHeaderCell>Provider</TableHeaderCell>
+                                    <TableHeaderCell>Spend</TableHeaderCell>
                                   </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -665,7 +660,7 @@ const UsagePage: React.FC<UsagePageProps> = ({ accessToken, token, userRole, use
                                       <TableCell>{provider.provider}</TableCell>
                                       <TableCell>
                                         {parseFloat(provider.spend.toFixed(2)) < 0.00001
-                                          ? t("lessThanZero")
+                                          ? "less than 0.00"
                                           : formatNumberWithCommas(provider.spend, 2)}
                                       </TableCell>
                                     </TableRow>
@@ -682,11 +677,11 @@ const UsagePage: React.FC<UsagePageProps> = ({ accessToken, token, userRole, use
                 <TabPanel>
                   <Grid numItems={1} className="gap-2 h-[75vh] w-full">
                     <Card>
-                      <Title>{t("allUp")}</Title>
+                      <Title>All Up</Title>
                       <Grid numItems={2}>
                         <Col>
                           <Subtitle style={{ fontSize: "15px", fontWeight: "normal", color: "#535452" }}>
-                            {t("apiRequests")} {valueFormatterNumbers(globalActivity.sum_api_requests)}
+                            API Requests {valueFormatterNumbers(globalActivity.sum_api_requests)}
                           </Subtitle>
                           <AreaChart
                             className="h-40"
@@ -700,7 +695,7 @@ const UsagePage: React.FC<UsagePageProps> = ({ accessToken, token, userRole, use
                         </Col>
                         <Col>
                           <Subtitle style={{ fontSize: "15px", fontWeight: "normal", color: "#535452" }}>
-                            {t("tokens")} {valueFormatterNumbers(globalActivity.sum_total_tokens)}
+                            Tokens {valueFormatterNumbers(globalActivity.sum_total_tokens)}
                           </Subtitle>
                           <BarChart
                             className="h-40"
@@ -722,7 +717,7 @@ const UsagePage: React.FC<UsagePageProps> = ({ accessToken, token, userRole, use
                           <Grid numItems={2}>
                             <Col>
                               <Subtitle style={{ fontSize: "15px", fontWeight: "normal", color: "#535452" }}>
-                                {t("apiRequests")} {valueFormatterNumbers(globalActivity.sum_api_requests)}
+                                API Requests {valueFormatterNumbers(globalActivity.sum_api_requests)}
                               </Subtitle>
                               <AreaChart
                                 className="h-40"
@@ -736,7 +731,7 @@ const UsagePage: React.FC<UsagePageProps> = ({ accessToken, token, userRole, use
                             </Col>
                             <Col>
                               <Subtitle style={{ fontSize: "15px", fontWeight: "normal", color: "#535452" }}>
-                                {t("tokens")} {valueFormatterNumbers(globalActivity.sum_total_tokens)}
+                                Tokens {valueFormatterNumbers(globalActivity.sum_total_tokens)}
                               </Subtitle>
                               <BarChart
                                 className="h-40"
@@ -761,11 +756,11 @@ const UsagePage: React.FC<UsagePageProps> = ({ accessToken, token, userRole, use
             <Grid numItems={2} className="gap-2 h-[75vh] w-full">
               <Col numColSpan={2}>
                 <Card className="mb-2">
-                  <Title>{t("totalSpendPerTeam")}</Title>
+                  <Title>Total Spend Per Team</Title>
                   <BarList data={totalSpendPerTeam} />
                 </Card>
                 <Card>
-                  <Title>{t("dailySpendPerTeam")}</Title>
+                  <Title>Daily Spend Per Team</Title>
                   <BarChart
                     className="h-72"
                     data={teamSpendData}
@@ -782,9 +777,9 @@ const UsagePage: React.FC<UsagePageProps> = ({ accessToken, token, userRole, use
           </TabPanel>
           <TabPanel>
             <p className="mb-2 text-gray-500 italic text-[12px]">
-              {t("customersOfYourLlmApiCalls")}{" "}
+              Customers of your LLM API calls. Tracked when a `user` param is passed in your LLM calls{" "}
               <a className="text-blue-500" href="https://docs.litellm.ai/docs/proxy/users" target="_blank">
-                {t("docsHere")}
+                docs here
               </a>
             </p>
             <Grid numItems={2}>
@@ -798,7 +793,7 @@ const UsagePage: React.FC<UsagePageProps> = ({ accessToken, token, userRole, use
                 />
               </Col>
               <Col>
-                <Text>{t("selectKey")}</Text>
+                <Text>Select Key</Text>
                 <Select defaultValue="all-keys">
                   <SelectItem
                     key="all-keys"
@@ -807,7 +802,7 @@ const UsagePage: React.FC<UsagePageProps> = ({ accessToken, token, userRole, use
                       updateEndUserData(dateValue.from, dateValue.to, null);
                     }}
                   >
-                    {t("allKeys")}
+                    All Keys
                   </SelectItem>
                   {keys?.map((key: any, index: number) => {
                     if (key && key["key_alias"] !== null && key["key_alias"].length > 0) {
@@ -833,9 +828,9 @@ const UsagePage: React.FC<UsagePageProps> = ({ accessToken, token, userRole, use
               <Table className="max-h-[70vh] min-h-[500px]">
                 <TableHead>
                   <TableRow>
-                    <TableHeaderCell>{t("customer")}</TableHeaderCell>
-                    <TableHeaderCell>{t("spend")}</TableHeaderCell>
-                    <TableHeaderCell>{t("totalEvents")}</TableHeaderCell>
+                    <TableHeaderCell>Customer</TableHeaderCell>
+                    <TableHeaderCell>Spend</TableHeaderCell>
+                    <TableHeaderCell>Total Events</TableHeaderCell>
                   </TableRow>
                 </TableHead>
 
@@ -873,7 +868,7 @@ const UsagePage: React.FC<UsagePageProps> = ({ accessToken, token, userRole, use
                         value={"all-tags"}
                         onClick={() => setSelectedTags(["all-tags"])}
                       >
-                        {t("allTags")}
+                        All Tags
                       </MultiSelectItem>
                       {allTagNames &&
                         allTagNames
@@ -895,7 +890,7 @@ const UsagePage: React.FC<UsagePageProps> = ({ accessToken, token, userRole, use
                         value={"all-tags"}
                         onClick={() => setSelectedTags(["all-tags"])}
                       >
-                        {t("allTags")}
+                        All Tags
                       </MultiSelectItem>
                       {allTagNames &&
                         allTagNames
@@ -908,7 +903,7 @@ const UsagePage: React.FC<UsagePageProps> = ({ accessToken, token, userRole, use
                                 // @ts-ignore
                                 disabled={true}
                               >
-                                ✨ {tag} {t("enterpriseOnlyFeature")}
+                                ✨ {tag} (Enterprise only Feature)
                               </SelectItem>
                             );
                           })}
@@ -920,15 +915,15 @@ const UsagePage: React.FC<UsagePageProps> = ({ accessToken, token, userRole, use
             <Grid numItems={2} className="gap-2 h-[75vh] w-full mb-4">
               <Col numColSpan={2}>
                 <Card>
-                  <Title>{t("spendPerTag")}</Title>
+                  <Title>Spend Per Tag</Title>
                   <Text>
-                    {t("trackCostPerTag")}{" "}
+                    Get Started by Tracking cost per tag{" "}
                     <a
                       className="text-blue-500"
                       href="https://docs.litellm.ai/docs/proxy/cost_tracking"
                       target="_blank"
                     >
-                      {t("here")}
+                      here
                     </a>
                   </Text>
                   <BarChart

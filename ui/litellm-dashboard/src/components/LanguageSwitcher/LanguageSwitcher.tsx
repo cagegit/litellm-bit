@@ -6,7 +6,7 @@ import { GlobalOutlined, CheckOutlined } from "@ant-design/icons";
 import { useTranslations } from "@/i18n";
 
 export function LanguageSwitcher() {
-  const { t } = useTranslations("layout");
+  const { t } = useTranslations("common");
 
   const { locale, setLocale } = useLocale();
   const [open, setOpen] = useState(false);
@@ -40,8 +40,8 @@ export function LanguageSwitcher() {
       <button
         onClick={() => setOpen((v) => !v)}
         className="flex items-center gap-1.5 rounded-md px-2 py-1.5 text-sm text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900"
-        title={t("layout.switchLanguage")}
-        aria-label={t("layout.switchLanguage")}
+        title={t("switchLanguage")}
+        aria-label={t("switchLanguage")}
       >
         <GlobalOutlined />
         <span className="hidden sm:inline">{currentLabel}</span>

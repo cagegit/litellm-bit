@@ -4,7 +4,6 @@ import { Icon, Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow
 import { Tooltip, Typography } from "antd";
 import openai from "openai";
 import React, { useEffect, useState } from "react";
-import { useTranslations } from "@/i18n";
 import DeleteResourceModal from "../../../common_components/DeleteResourceModal";
 import { ProviderLogo } from "../../../molecules/models/ProviderLogo";
 import NotificationsManager from "../../../molecules/notifications_manager";
@@ -66,7 +65,6 @@ interface FallbacksProps {
   accessToken: string | null;
   userRole: string | null;
   userID: string | null;
-  modelData: any;
 }
 
 async function testFallbackModelResponse(selectedModel: string, accessToken: string) {
@@ -116,8 +114,7 @@ async function testFallbackModelResponse(selectedModel: string, accessToken: str
   }
 }
 
-const Fallbacks: React.FC<FallbacksProps> = ({ accessToken, userRole, userID, modelData }) => {
-  const { t } = useTranslations("settings");
+const Fallbacks: React.FC<FallbacksProps> = ({ accessToken, userRole, userID }) => {
   const [routerSettings, setRouterSettings] = useState<{ [key: string]: any }>({});
   const [isDeleting, setIsDeleting] = useState(false);
   const [fallbackToDelete, setFallbackToDelete] = useState<FallbackEntry | null>(null);
@@ -245,7 +242,6 @@ const Fallbacks: React.FC<FallbacksProps> = ({ accessToken, userRole, userID, mo
     <>
       {canModify && (
         <AddFallbacks
-          models={modelData?.data ? modelData.data.map((data: any) => data.model_name) : []}
           accessToken={accessToken || ""}
           value={routerSettings.fallbacks || []}
           onChange={handleFallbacksChange}
@@ -254,16 +250,16 @@ const Fallbacks: React.FC<FallbacksProps> = ({ accessToken, userRole, userID, mo
       {!hasFallbacks ? (
         <div className="rounded-lg border border-gray-200 bg-gray-50 px-4 py-6 text-center">
           <Typography.Text type="secondary">
-            t("noFallbacksConfigured")
+            No fallbacks configured. Add fallbacks to automatically try another model when the primary fails.
           </Typography.Text>
         </div>
       ) : (
         <Table>
           <TableHead>
             <TableRow>
-              <TableHeaderCell>{t("modelName")}</TableHeaderCell>
-              <TableHeaderCell>{t("fallbacks")}</TableHeaderCell>
-              <TableHeaderCell>{t("actions")}</TableHeaderCell>
+              <TableHeaderCell>Model Name</TableHeaderCell>
+              <TableHeaderCell>Fallbacks</TableHeaderCell>
+              <TableHeaderCell>Actions</TableHeaderCell>
             </TableRow>
           </TableHead>
 
@@ -278,7 +274,7 @@ const Fallbacks: React.FC<FallbacksProps> = ({ accessToken, userRole, userID, mo
                   <TableCell className="align-top">
                     {canModify && (
                       <>
-                        <Tooltip title={t("testFallback")}>
+                        <Tooltip title="Test fallback">
                           <Icon
                             icon={PlayIcon}
                             size="sm"
@@ -286,7 +282,7 @@ const Fallbacks: React.FC<FallbacksProps> = ({ accessToken, userRole, userID, mo
                             className="cursor-pointer hover:text-blue-600"
                           />
                         </Tooltip>
-                        <Tooltip title={t("deleteFallback")}>
+                        <Tooltip title="Delete fallback">
                           <span
                             data-testid="delete-fallback-button"
                             role="button"
@@ -309,12 +305,12 @@ const Fallbacks: React.FC<FallbacksProps> = ({ accessToken, userRole, userID, mo
       )}
       <DeleteResourceModal
         isOpen={isDeleteModalOpen}
-        title={t("deleteFallbackConfirm")}
-        message={t("deleteFallbackMessage")}
-        resourceInformationTitle={t("fallbackInfo")}
+        title="Delete Fallback?"
+        message="Are you sure you want to delete this fallback? This action cannot be undone."
+        resourceInformationTitle="Fallback Information"
         resourceInformation={[
           {
-            label: t("modelName"),
+            label: "Model Name",
             value: fallbackToDelete ? Object.keys(fallbackToDelete)[0] : "",
             code: true,
           },
