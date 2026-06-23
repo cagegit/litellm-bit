@@ -7,18 +7,20 @@ import { describe, expect, it } from "vitest";
 const checker = resolve("scripts/check-i18n-sync.mjs");
 function runChecker(en: object, zh: object, source: string) {
   const root = mkdtempSync(join(tmpdir(), "i18n-checker-"));
-  const messages = join(root, "messages");
-  const sources = join(root, "src");
-  mkdirSync(messages);
-  mkdirSync(sources);
-  writeFileSync(join(messages, "en.json"), JSON.stringify(en));
-  writeFileSync(join(messages, "zh.json"), JSON.stringify(zh));
-  writeFileSync(join(sources, "fixture.tsx"), source);
-  const result = spawnSync(process.execPath, [checker, "--messages-dir", messages, "--source-root", sources], {
-    encoding: "utf8",
-  });
-  rmSync(root, { recursive: true, force: true });
-  return result;
+  try {
+    const messages = join(root, "messages");
+    const sources = join(root, "src");
+    mkdirSync(messages);
+    mkdirSync(sources);
+    writeFileSync(join(messages, "en.json"), JSON.stringify(en));
+    writeFileSync(join(messages, "zh.json"), JSON.stringify(zh));
+    writeFileSync(join(sources, "fixture.tsx"), source);
+    return spawnSync(process.execPath, [checker, "--messages-dir", messages, "--source-root", sources], {
+      encoding: "utf8",
+    });
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
 }
 
 describe("check-i18n-sync", () => {
