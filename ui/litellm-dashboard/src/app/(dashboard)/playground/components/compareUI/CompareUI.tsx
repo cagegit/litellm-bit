@@ -696,7 +696,7 @@ export default function CompareUI({ accessToken, disabledPersonalKeyCreation }: 
         <div className="border-b px-4 py-2">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-2">
-              <span className="text-sm font-medium text-gray-600">{t("playground.virtualKeySource")}</span>
+              <span className="text-sm font-medium text-gray-600">{t("virtualKeySource")}</span>
               <Select
                 value={apiKeySource}
                 onChange={(value) => setApiKeySource(value as "session" | "custom")}
@@ -706,19 +706,19 @@ export default function CompareUI({ accessToken, disabledPersonalKeyCreation }: 
                 <Select.Option value="session" disabled={!canUseSessionKey}>
                   Current UI Session
                 </Select.Option>
-                <Select.Option value="custom">{t("playground.virtualKey")}</Select.Option>
+                <Select.Option value="custom">{t("virtualKey")}</Select.Option>
               </Select>
               {apiKeySource === "custom" && (
                 <Input.Password
                   value={customApiKey}
                   onChange={(event) => setCustomApiKey(event.target.value)}
-                  placeholder={t("playground.enterVirtualKey")}
+                  placeholder={t("enterVirtualKey")}
                   className="w-56"
                 />
               )}
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-sm font-medium text-gray-600">{t("playground.endpoint")}</span>
+              <span className="text-sm font-medium text-gray-600">{t("endpoint")}</span>
               <Select
                 value={selectedEndpoint}
                 onChange={(value) => setSelectedEndpoint(value as EndpointIdType)}
@@ -773,7 +773,7 @@ export default function CompareUI({ accessToken, disabledPersonalKeyCreation }: 
             <div className="border border-gray-200 shadow-lg rounded-xl bg-white p-4">
               <div className="flex items-center justify-between gap-4 mb-3 min-h-8">
                 {hasAttachment ? (
-                  <span className="text-sm text-gray-500">{t("playground.attachmentReadyToSend")}</span>
+                  <span className="text-sm text-gray-500">{t("attachmentReadyToSend")}</span>
                 ) : showSuggestedPrompts ? (
                   <div className="flex items-center gap-2 overflow-x-auto">
                     {SUGGESTED_PROMPTS.map((prompt) => (

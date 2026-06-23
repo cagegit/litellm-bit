@@ -40,13 +40,13 @@ const ModelSection = ({
         <Card>
           <Text>{t("totalTokens")}</Text>
           <Title>{metrics.total_tokens.toLocaleString()}</Title>
-          <Text>{Math.round(metrics.total_tokens / metrics.total_successful_requests)} t("avgPerSuccessfulRequest")</Text>
+          <Text>{Math.round(metrics.total_tokens / metrics.total_successful_requests)} {t("avgPerSuccessfulRequest")}</Text>
         </Card>
         <Card>
           <Text>{t("totalSpend")}</Text>
           <Title>${formatNumberWithCommas(metrics.total_spend, 2)}</Title>
           <Text>
-            ${formatNumberWithCommas(metrics.total_spend / metrics.total_successful_requests, 3)} t("perSuccessfulRequest")
+            ${formatNumberWithCommas(metrics.total_spend / metrics.total_successful_requests, 3)} {t("perSuccessfulRequest")}
           </Text>
         </Card>
       </Grid>
@@ -60,7 +60,7 @@ const ModelSection = ({
                 <div key={keyData.api_key} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
                   <div>
                     <Text className="font-medium">{keyData.key_alias || `${keyData.api_key.substring(0, 10)}...`}</Text>
-                    {keyData.team_id && <Text className="text-xs text-gray-500">t("team") + ": "{keyData.team_id}</Text>}
+                    {keyData.team_id && <Text className="text-xs text-gray-500">{t("team")}: {keyData.team_id}</Text>}
                   </div>
                   <div className="text-right">
                     <Text className="font-medium">${formatNumberWithCommas(keyData.spend, 2)}</Text>

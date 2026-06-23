@@ -204,7 +204,7 @@ const AttachmentTable: React.FC<AttachmentTableProps> = ({
           <div className="flex space-x-2">
             <ImpactPopover attachment={attachment} accessToken={accessToken} />
             {isAdmin && (
-              <Tooltip title={t("settings.deleteAttachment")}>
+              <Tooltip title={t("deleteAttachment")}>
                 <Icon
                   icon={TrashIcon}
                   size="sm"
@@ -273,7 +273,7 @@ const AttachmentTable: React.FC<AttachmentTableProps> = ({
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-8 text-center">
                   <div className="text-center text-gray-500">
-                    <p>{t("settings.loading")}</p>
+                    <p>{t("loading")}</p>
                   </div>
                 </TableCell>
               </TableRow>
@@ -298,7 +298,7 @@ const AttachmentTable: React.FC<AttachmentTableProps> = ({
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-8 text-center">
                   <div className="text-center text-gray-500">
-                    <p>{t("settings.noAttachmentsFound")}</p>
+                    <p>{t("noAttachmentsFound")}</p>
                   </div>
                 </TableCell>
               </TableRow>

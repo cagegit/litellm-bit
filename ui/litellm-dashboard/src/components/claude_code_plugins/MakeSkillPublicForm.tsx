@@ -213,7 +213,7 @@ const MakeSkillPublicForm: React.FC<MakeSkillPublicFormProps> = ({
 
   return (
     <Modal
-      title={t("claudeCodePlugins.publishToSkillHub")}
+      title={t("publishToSkillHub")}
       open={visible}
       onCancel={handleClose}
       footer={null}
@@ -222,8 +222,8 @@ const MakeSkillPublicForm: React.FC<MakeSkillPublicFormProps> = ({
     >
       <Form form={form} layout="vertical">
         <Steps current={currentStep} className="mb-6">
-          <Step title={t("claudeCodePlugins.selectSkills")} />
-          <Step title={t("claudeCodePlugins.confirm")} />
+          <Step title={t("selectSkills")} />
+          <Step title={t("confirm")} />
         </Steps>
 
         {currentStep === 0 ? renderStep1() : renderStep2()}

@@ -103,17 +103,17 @@ function ConnectTabContent({
   return (
     <div className="mx-auto max-w-3xl space-y-6">
       <div>
-        <h3 className="text-sm font-semibold text-gray-900 mb-1">{t("playground.proxyBaseUrl")}</h3>
+        <h3 className="text-sm font-semibold text-gray-900 mb-1">{t("proxyBaseUrl")}</h3>
         <p className="text-sm text-gray-600 font-mono bg-gray-50 px-2 py-1.5 rounded border border-gray-200 break-all">
           {baseUrl}
         </p>
       </div>
       <div>
-        <h3 className="text-sm font-semibold text-gray-900 mb-2">{t("playground.callYourAgentcurl")}</h3>
+        <h3 className="text-sm font-semibold text-gray-900 mb-2">{t("callYourAgentcurl")}</h3>
         <CodeBlock code={curlExample} language="bash" />
       </div>
       <div className="rounded-lg border border-gray-200 bg-gray-50 p-4">
-        <h3 className="text-sm font-semibold text-gray-900 mb-2">{t("playground.createAKeyForThisAgent")}</h3>
+        <h3 className="text-sm font-semibold text-gray-900 mb-2">{t("createAKeyForThisAgent")}</h3>
         <p className="text-sm text-gray-600 mb-3">
           Create a virtual key that can only call this agent. The key will be scoped to you (user_id) and restricted to
           the model <span className="font-mono text-gray-800">{agentName}</span>.
@@ -122,7 +122,7 @@ function ConnectTabContent({
           Create key for this agent
         </Button>
         {disabledPersonalKeyCreation && (
-          <p className="text-xs text-amber-600 mt-2">{t("playground.keyCreationIsDisabledForYourAccount")}</p>
+          <p className="text-xs text-amber-600 mt-2">{t("keyCreationIsDisabledForYourAccount")}</p>
         )}
         {createdKeyValue && (
           <p className="text-xs text-green-700 mt-2">
@@ -440,7 +440,7 @@ export default function AgentBuilderView({
 
   if (!accessToken || !userID || !userRole) {
     return (
-      <div className="flex h-full items-center justify-center p-8 text-gray-500">{t("playground.signInToUseAgentBuilder")}</div>
+      <div className="flex h-full items-center justify-center p-8 text-gray-500">{t("signInToUseAgentBuilder")}</div>
     );
   }
 
@@ -448,7 +448,7 @@ export default function AgentBuilderView({
     <div className="flex h-full flex-col bg-white text-gray-900">
       <div className="flex flex-shrink-0 flex-col border-b border-gray-200">
         <div className="flex h-12 items-center justify-between px-4">
-          <span className="text-sm font-medium text-gray-900">{t("playground.agentBuilder")}</span>
+          <span className="text-sm font-medium text-gray-900">{t("agentBuilder")}</span>
           {isNewAgent ? (
             <Button
               type="primary"
@@ -460,7 +460,7 @@ export default function AgentBuilderView({
               Save Agent
             </Button>
           ) : (
-            <span className="text-xs text-gray-500">{t("playground.buildAgentsThatPassYourComplianceRequirements")}</span>
+            <span className="text-xs text-gray-500">{t("buildAgentsThatPassYourComplianceRequirements")}</span>
           )}
         </div>
         <div className="flex items-center gap-2 border-t border-amber-200 bg-amber-50 px-4 py-2 text-xs text-amber-800">
@@ -480,8 +480,8 @@ export default function AgentBuilderView({
         {/* Roster */}
         <div className="w-60 flex-shrink-0 border-r border-gray-200 bg-white flex flex-col">
           <div className="flex items-center justify-between border-b border-gray-200 p-3">
-            <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">{t("playground.agents")}</span>
-            <Button type="text" size="small" icon={<PlusOutlined />} onClick={handleAddAgent} aria-label={t("playground.addAgent")} />
+            <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">{t("agents")}</span>
+            <Button type="text" size="small" icon={<PlusOutlined />} onClick={handleAddAgent} aria-label={t("addAgent")} />
           </div>
           <div className="flex-1 overflow-y-auto p-2">
             {loadingAgents ? (
@@ -552,35 +552,35 @@ export default function AgentBuilderView({
                               </div>
                             )}
                             <div>
-                              <label className="mb-1 block text-sm font-medium text-gray-700">{t("playground.agentName")}</label>
+                              <label className="mb-1 block text-sm font-medium text-gray-700">{t("agentName")}</label>
                               <Input
                                 value={draftName}
                                 onChange={(e) => setDraftName(e.target.value)}
-                                placeholder={t("playground.myAgent")}
+                                placeholder={t("myAgent")}
                               />
                             </div>
                             <div>
-                              <label className="mb-1 block text-sm font-medium text-gray-700">{t("playground.systemPrompt")}</label>
+                              <label className="mb-1 block text-sm font-medium text-gray-700">{t("systemPrompt")}</label>
                               <TextArea
                                 value={draftSystemPrompt}
                                 onChange={(e) => setDraftSystemPrompt(e.target.value)}
-                                placeholder={t("playground.youAreAHelpfulAssistant")}
+                                placeholder={t("youAreAHelpfulAssistant")}
                                 rows={6}
                               />
                             </div>
                             <div>
-                              <label className="mb-1 block text-sm font-medium text-gray-700">{t("playground.underlyingLlm")}</label>
+                              <label className="mb-1 block text-sm font-medium text-gray-700">{t("underlyingLlm")}</label>
                               <Select
                                 value={draftUnderlyingModel}
                                 onChange={setDraftUnderlyingModel}
                                 className="w-full"
                                 options={modelGroups.map((m) => ({ value: m.model_group, label: m.model_group }))}
-                                placeholder={t("playground.selectModel")}
+                                placeholder={t("selectModel")}
                               />
                             </div>
                             <div className="grid grid-cols-2 gap-4">
                               <div>
-                                <label className="mb-1 block text-sm font-medium text-gray-700">{t("playground.temperature")}</label>
+                                <label className="mb-1 block text-sm font-medium text-gray-700">{t("temperature")}</label>
                                 <Input
                                   type="number"
                                   min={0}
@@ -591,7 +591,7 @@ export default function AgentBuilderView({
                                 />
                               </div>
                               <div>
-                                <label className="mb-1 block text-sm font-medium text-gray-700">{t("playground.maxTokens")}</label>
+                                <label className="mb-1 block text-sm font-medium text-gray-700">{t("maxTokens")}</label>
                                 <Input
                                   type="number"
                                   min={1}
@@ -601,10 +601,10 @@ export default function AgentBuilderView({
                               </div>
                             </div>
                             <div>
-                              <label className="mb-1 block text-sm font-medium text-gray-700">{t("playground.mcpServers")}</label>
+                              <label className="mb-1 block text-sm font-medium text-gray-700">{t("mcpServers")}</label>
                               <Select
                                 mode="multiple"
-                                placeholder={t("playground.selectMcpServersToAttachsameFormatAsChatCompletionsApi")}
+                                placeholder={t("selectMcpServersToAttachsameFormatAsChatCompletionsApi")}
                                 value={selectedMCPServerIds}
                                 onChange={handleMCPServerChange}
                                 loading={loadingMCPServers}

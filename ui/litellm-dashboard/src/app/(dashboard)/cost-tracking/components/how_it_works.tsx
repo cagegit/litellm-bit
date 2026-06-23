@@ -30,7 +30,7 @@ const HowItWorks: React.FC = () => {
   return (
     <div className="space-y-4 pt-2">
       <div>
-        <Text className="font-medium text-gray-900 text-sm mb-1">{t("billing.costCalculation")}</Text>
+        <Text className="font-medium text-gray-900 text-sm mb-1">{t("costCalculation")}</Text>
         <Text className="text-xs text-gray-600">
           Discounts are applied to provider costs:{" "}
           <code className="bg-gray-100 px-1.5 py-0.5 rounded text-xs">
@@ -39,18 +39,18 @@ const HowItWorks: React.FC = () => {
         </Text>
       </div>
       <div>
-        <Text className="font-medium text-gray-900 text-sm mb-1">{t("billing.example")}</Text>
+        <Text className="font-medium text-gray-900 text-sm mb-1">{t("example")}</Text>
         <Text className="text-xs text-gray-600">
           A 5% discount on a $10.00 request results in: $10.00 × (1 - 0.05) = $9.50
         </Text>
       </div>
       <div>
-        <Text className="font-medium text-gray-900 text-sm mb-1">{t("billing.validRange")}</Text>
+        <Text className="font-medium text-gray-900 text-sm mb-1">{t("validRange")}</Text>
         <Text className="text-xs text-gray-600">Discount percentages must be between 0% and 100%</Text>
       </div>
 
       <div className="pt-4 border-t border-gray-200">
-        <Text className="font-medium text-gray-900 text-sm mb-2">{t("billing.validatingDiscounts")}</Text>
+        <Text className="font-medium text-gray-900 text-sm mb-2">{t("validatingDiscounts")}</Text>
         <Text className="text-xs text-gray-600 mb-3">
           Make a test request and check the response headers to verify discounts are applied:
         </Text>
@@ -70,25 +70,25 @@ const HowItWorks: React.FC = () => {
             <code className="bg-gray-100 px-2 py-1 rounded text-xs font-mono text-gray-800 whitespace-nowrap">
               x-litellm-response-cost
             </code>
-            <Text className="text-xs text-gray-600">{t("billing.finalCostAfterDiscount")}</Text>
+            <Text className="text-xs text-gray-600">{t("finalCostAfterDiscount")}</Text>
           </div>
           <div className="flex items-start gap-3">
             <code className="bg-gray-100 px-2 py-1 rounded text-xs font-mono text-gray-800 whitespace-nowrap">
               x-litellm-response-cost-original
             </code>
-            <Text className="text-xs text-gray-600">{t("billing.originalCostBeforeDiscount")}</Text>
+            <Text className="text-xs text-gray-600">{t("originalCostBeforeDiscount")}</Text>
           </div>
           <div className="flex items-start gap-3">
             <code className="bg-gray-100 px-2 py-1 rounded text-xs font-mono text-gray-800 whitespace-nowrap">
               x-litellm-response-cost-discount-amount
             </code>
-            <Text className="text-xs text-gray-600">{t("billing.amountDiscounted")}</Text>
+            <Text className="text-xs text-gray-600">{t("amountDiscounted")}</Text>
           </div>
         </div>
       </div>
 
       <div className="pt-4 border-t border-gray-200">
-        <Text className="font-medium text-gray-900 text-sm mb-3">{t("billing.discountCalculator")}</Text>
+        <Text className="font-medium text-gray-900 text-sm mb-3">{t("discountCalculator")}</Text>
         <Text className="text-xs text-gray-600 mb-3">
           Enter values from your response headers to verify the discount:
         </Text>
@@ -119,7 +119,7 @@ const HowItWorks: React.FC = () => {
 
         {calculatedDiscount && (
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <Text className="text-sm font-medium text-blue-900 mb-2">{t("billing.calculatedResults")}</Text>
+            <Text className="text-sm font-medium text-blue-900 mb-2">{t("calculatedResults")}</Text>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Text className="text-xs text-blue-800">Original Cost:</Text>

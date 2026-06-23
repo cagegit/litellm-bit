@@ -39,13 +39,13 @@ const CreateTagModal: React.FC<CreateTagModalProps> = ({ visible, onCancel, onSu
   };
 
   return (
-    <Modal title={t("tagManagement.createNewTag")} open={visible} width={800} footer={null} onCancel={handleCancel}>
+    <Modal title={t("createNewTag")} open={visible} width={800} footer={null} onCancel={handleCancel}>
       <Form form={form} onFinish={handleFinish} labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} labelAlign="left">
-        <Form.Item label={t("tagManagement.tagName")} name="tag_name" rules={[{ required: true, message: t("tagManagement.pleaseInputTagName") }]}>
+        <Form.Item label={t("tagName")} name="tag_name" rules={[{ required: true, message: t("pleaseInputTagName") }]}>
           <TextInput />
         </Form.Item>
 
-        <Form.Item label={t("tagManagement.description")} name="description">
+        <Form.Item label={t("description")} name="description">
           <Input.TextArea rows={4} />
         </Form.Item>
 
@@ -53,14 +53,14 @@ const CreateTagModal: React.FC<CreateTagModalProps> = ({ visible, onCancel, onSu
           label={
             <span>
               Allowed Models
-              <Tooltip title={t("tagManagement.selectWhichModelsAreAllowedToProcessRequestsFromThisTag")}>
+              <Tooltip title={t("selectWhichModelsAreAllowedToProcessRequestsFromThisTag")}>
                 <InfoCircleOutlined style={{ marginLeft: "4px" }} />
               </Tooltip>
             </span>
           }
           name="allowed_llms"
         >
-          <Select2 mode="multiple" placeholder={t("tagManagement.selectModels")}>
+          <Select2 mode="multiple" placeholder={t("selectModels")}>
             {availableModels.map((model) => (
               <Select2.Option key={model.model_info.id} value={model.model_info.id}>
                 <div>
@@ -124,7 +124,7 @@ const CreateTagModal: React.FC<CreateTagModalProps> = ({ visible, onCancel, onSu
         </Accordion>
 
         <div style={{ textAlign: "right", marginTop: "10px" }}>
-          <Button type="submit">{t("tagManagement.createTag")}</Button>
+          <Button type="submit">{t("createTag")}</Button>
         </div>
       </Form>
     </Modal>

@@ -66,7 +66,7 @@ export function VectorStoreViewer({ data }: VectorStoreViewerProps) {
         items={[
           {
             key: "1",
-            label: <h3 className="text-lg font-medium text-gray-900">{t("logs.vectorStoreRequests")}</h3>,
+            label: <h3 className="text-lg font-medium text-gray-900">{t("vectorStoreRequests")}</h3>,
             children: (
               <div className="p-4">
                 {data.map((request, index) => (
@@ -114,7 +114,7 @@ export function VectorStoreViewer({ data }: VectorStoreViewerProps) {
                       </div>
                     </div>
 
-                    <h4 className="font-medium mb-2">{t("logs.searchResults")}</h4>
+                    <h4 className="font-medium mb-2">{t("searchResults")}</h4>
                     <div className="space-y-2">
                       {request.vector_store_search_response.data.map((result, resultIndex) => {
                         const isExpanded = expandedResults[`${index}-${resultIndex}`] || false;

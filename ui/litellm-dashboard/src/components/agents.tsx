@@ -155,7 +155,7 @@ const AgentsPanel: React.FC<AgentsPanelProps> = ({ accessToken, userRole, teams 
   return (
     <div className="w-full mx-auto flex-auto overflow-y-auto m-8 p-2">
       <div className="flex flex-col gap-2 mb-4">
-        <h1 className="text-2xl font-bold">{t("agents.title")}</h1>
+        <h1 className="text-2xl font-bold">{t("title")}</h1>
         <p className="text-sm text-gray-600">
           List of A2A-spec agents that are available to be used in your organization. Go to AI Hub, to make agents
           public.
@@ -173,10 +173,10 @@ const AgentsPanel: React.FC<AgentsPanelProps> = ({ accessToken, userRole, teams 
               + Add New Agent
             </Button>
           )}
-          <Tooltip title={t("agents.whenEnabledOnlyAgentsWithReachableUrlsAreShown")}>
+          <Tooltip title={t("whenEnabledOnlyAgentsWithReachableUrlsAreShown")}>
             <div className="flex items-center gap-2">
               <CheckCircleOutlined className={healthCheckEnabled ? "text-green-500" : "text-gray-400"} />
-              <span className="text-sm text-gray-600">{t("agents.healthCheck")}</span>
+              <span className="text-sm text-gray-600">{t("healthCheck")}</span>
               <Switch
                 size="small"
                 checked={healthCheckEnabled}
@@ -203,13 +203,13 @@ const AgentsPanel: React.FC<AgentsPanelProps> = ({ accessToken, userRole, teams 
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableHeaderCell>{t("agents.agentName")}</TableHeaderCell>
-                  <TableHeaderCell>{t("agents.agentId")}</TableHeaderCell>
-                  <TableHeaderCell>{t("agents.spendusd")}</TableHeaderCell>
-                  <TableHeaderCell>{t("agents.model")}</TableHeaderCell>
-                  <TableHeaderCell>{t("agents.created")}</TableHeaderCell>
-                  <TableHeaderCell>{t("agents.status")}</TableHeaderCell>
-                  {isAdmin && <TableHeaderCell>{t("agents.actions")}</TableHeaderCell>}
+                  <TableHeaderCell>{t("agentName")}</TableHeaderCell>
+                  <TableHeaderCell>{t("agentId")}</TableHeaderCell>
+                  <TableHeaderCell>{t("spendusd")}</TableHeaderCell>
+                  <TableHeaderCell>{t("model")}</TableHeaderCell>
+                  <TableHeaderCell>{t("created")}</TableHeaderCell>
+                  <TableHeaderCell>{t("status")}</TableHeaderCell>
+                  {isAdmin && <TableHeaderCell>{t("actions")}</TableHeaderCell>}
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -252,9 +252,9 @@ const AgentsPanel: React.FC<AgentsPanelProps> = ({ accessToken, userRole, teams 
                       </TableCell>
                       <TableCell>
                         {keyInfoMap[agent.agent_id]?.has_key ? (
-                          <Badge color="green">{t("agents.active")}</Badge>
+                          <Badge color="green">{t("active")}</Badge>
                         ) : (
-                          <Badge color="yellow">{t("agents.needsSetup")}</Badge>
+                          <Badge color="yellow">{t("needsSetup")}</Badge>
                         )}
                       </TableCell>
                       {isAdmin && (
@@ -284,16 +284,16 @@ const AgentsPanel: React.FC<AgentsPanelProps> = ({ accessToken, userRole, teams 
 
       {agentToDelete && (
         <Modal
-          title={t("agents.deleteAgent")}
+          title={t("deleteAgent")}
           open={agentToDelete !== null}
           onOk={handleDeleteConfirm}
           onCancel={handleDeleteCancel}
           confirmLoading={isDeleting}
-          okText={t("agents.delete")}
+          okText={t("delete")}
           okButtonProps={{ danger: true }}
         >
           <p>Are you sure you want to delete agent: {agentToDelete.name}?</p>
-          <p>{t("agents.thisActionCannotBeUndone")}</p>
+          <p>{t("thisActionCannotBeUndone")}</p>
         </Modal>
       )}
     </div>

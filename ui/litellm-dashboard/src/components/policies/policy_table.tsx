@@ -221,7 +221,7 @@ const PolicyTable: React.FC<PolicyTableProps> = ({
           <div className="flex space-x-2">
             {isAdmin && (
               <>
-                <Tooltip title={t("settings.editPolicy")}>
+                <Tooltip title={t("editPolicy")}>
                   <Icon
                     icon={PencilIcon}
                     size="sm"
@@ -229,7 +229,7 @@ const PolicyTable: React.FC<PolicyTableProps> = ({
                     className="cursor-pointer hover:text-blue-500"
                   />
                 </Tooltip>
-                <Tooltip title={t("settings.deletePolicy")}>
+                <Tooltip title={t("deletePolicy")}>
                   <Icon
                     icon={TrashIcon}
                     size="sm"
@@ -301,7 +301,7 @@ const PolicyTable: React.FC<PolicyTableProps> = ({
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-8 text-center">
                   <div className="text-center text-gray-500">
-                    <p>{t("settings.loading")}</p>
+                    <p>{t("loading")}</p>
                   </div>
                 </TableCell>
               </TableRow>
@@ -326,7 +326,7 @@ const PolicyTable: React.FC<PolicyTableProps> = ({
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-8 text-center">
                   <div className="text-center text-gray-500">
-                    <p>{t("settings.noPoliciesFound")}</p>
+                    <p>{t("noPoliciesFound")}</p>
                   </div>
                 </TableCell>
               </TableRow>

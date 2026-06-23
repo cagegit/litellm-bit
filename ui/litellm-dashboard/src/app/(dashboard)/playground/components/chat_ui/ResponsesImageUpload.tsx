@@ -31,7 +31,7 @@ const ResponsesImageUpload: React.FC<ResponsesImageUploadProps> = ({
           className="inline-block"
           style={{ padding: 0, border: "none", background: "none" }}
         >
-          <Tooltip title={t("playground.attachImageOrPdf")}>
+          <Tooltip title={t("attachImageOrPdf")}>
             <button
               type="button"
               className="flex items-center justify-center w-8 h-8 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-md transition-colors"

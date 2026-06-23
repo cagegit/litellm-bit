@@ -29,7 +29,7 @@ const StdioConfiguration: React.FC<StdioConfigurationProps> = ({ isVisible, requ
       }
       name="stdio_config"
       rules={[
-        ...(required ? [{ required: true, message: t("mcp.pleaseEnterStdioConfiguration") }] : []),
+        ...(required ? [{ required: true, message: t("pleaseEnterStdioConfiguration") }] : []),
         {
           validator: (_, value) => {
             if (!value) return Promise.resolve();

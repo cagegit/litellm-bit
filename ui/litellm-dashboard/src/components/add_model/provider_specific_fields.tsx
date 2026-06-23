@@ -240,7 +240,7 @@ const ProviderSpecificFields: React.FC<ProviderSpecificFieldsProps> = ({ selecte
       {isLoading && allFields.length === 0 && (
         <Row>
           <Col span={24}>
-            <Text className="mb-2">{t("models.loadingProviderFields")}</Text>
+            <Text className="mb-2">{t("loadingProviderFields")}</Text>
           </Col>
         </Row>
       )}
@@ -258,7 +258,7 @@ const ProviderSpecificFields: React.FC<ProviderSpecificFieldsProps> = ({ selecte
           <Form.Item
             label={field.label}
             name={field.key}
-            rules={field.required ? [{ required: true, message: t("models.required") }] : undefined}
+            rules={field.required ? [{ required: true, message: t("required") }] : undefined}
             tooltip={field.tooltip}
             className={field.key === "vertex_credentials" ? "mb-0" : undefined}
           >
@@ -286,7 +286,7 @@ const ProviderSpecificFields: React.FC<ProviderSpecificFieldsProps> = ({ selecte
                   }, 500);
                 }}
               >
-                <Button2 icon={<UploadOutlined />}>{t("models.clickToUpload")}</Button2>
+                <Button2 icon={<UploadOutlined />}>{t("clickToUpload")}</Button2>
               </Upload>
             ) : field.type === "textarea" ? (
               <Input.TextArea
@@ -309,7 +309,7 @@ const ProviderSpecificFields: React.FC<ProviderSpecificFieldsProps> = ({ selecte
           {field.key === "vertex_credentials" && (
             <Row>
               <Col>
-                <Text className="mb-3 mt-1">{t("models.giveAGcpServiceAccountjsonFile")}</Text>
+                <Text className="mb-3 mt-1">{t("giveAGcpServiceAccountjsonFile")}</Text>
               </Col>
             </Row>
           )}

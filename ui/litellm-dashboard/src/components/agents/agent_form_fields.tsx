@@ -26,10 +26,10 @@ const AgentFormFields: React.FC<AgentFormFieldsProps> = ({ showAgentName = true,
     <>
       {showAgentName && (
         <Form.Item
-          label={t("agents.agentName")}
+          label={t("agentName")}
           name="agent_name"
-          rules={[{ required: true, message: t("agents.pleaseEnterUniqueAgentName") }]}
-          tooltip={t("agents.uniqueIdentifierForAgent")}
+          rules={[{ required: true, message: t("pleaseEnterUniqueAgentName") }]}
+          tooltip={t("uniqueIdentifierForAgent")}
         >
           <Input placeholder="e.g., customer-support-agent" />
         </Form.Item>
@@ -76,7 +76,7 @@ const AgentFormFields: React.FC<AgentFormFieldsProps> = ({ showAgentName = true,
                         {...field}
                         label={SKILL_FIELD_CONFIG.id.label}
                         name={[field.name, "id"]}
-                        rules={[{ required: SKILL_FIELD_CONFIG.id.required, message: t("agents.required") }]}
+                        rules={[{ required: SKILL_FIELD_CONFIG.id.required, message: t("required") }]}
                       >
                         <Input placeholder={SKILL_FIELD_CONFIG.id.placeholder} />
                       </Form.Item>
@@ -85,7 +85,7 @@ const AgentFormFields: React.FC<AgentFormFieldsProps> = ({ showAgentName = true,
                         {...field}
                         label={SKILL_FIELD_CONFIG.name.label}
                         name={[field.name, "name"]}
-                        rules={[{ required: SKILL_FIELD_CONFIG.name.required, message: t("agents.required") }]}
+                        rules={[{ required: SKILL_FIELD_CONFIG.name.required, message: t("required") }]}
                       >
                         <Input placeholder={SKILL_FIELD_CONFIG.name.placeholder} />
                       </Form.Item>
@@ -94,7 +94,7 @@ const AgentFormFields: React.FC<AgentFormFieldsProps> = ({ showAgentName = true,
                         {...field}
                         label={SKILL_FIELD_CONFIG.description.label}
                         name={[field.name, "description"]}
-                        rules={[{ required: SKILL_FIELD_CONFIG.description.required, message: t("agents.required") }]}
+                        rules={[{ required: SKILL_FIELD_CONFIG.description.required, message: t("required") }]}
                       >
                         <Input.TextArea
                           rows={SKILL_FIELD_CONFIG.description.rows}
@@ -106,7 +106,7 @@ const AgentFormFields: React.FC<AgentFormFieldsProps> = ({ showAgentName = true,
                         {...field}
                         label={SKILL_FIELD_CONFIG.tags.label}
                         name={[field.name, "tags"]}
-                        rules={[{ required: SKILL_FIELD_CONFIG.tags.required, message: t("agents.required") }]}
+                        rules={[{ required: SKILL_FIELD_CONFIG.tags.required, message: t("required") }]}
                       >
                         <Select
                           mode="tags"
@@ -191,7 +191,7 @@ const AgentFormFields: React.FC<AgentFormFieldsProps> = ({ showAgentName = true,
 
         {/* Authentication Headers */}
         {shouldShow("auth_headers") && (
-          <Panel header={t("agents.authenticationHeaders")} key="auth_headers">
+          <Panel header={t("authenticationHeaders")} key="auth_headers">
             {/* Static Headers */}
             <Form.Item
               label={
@@ -211,16 +211,16 @@ const AgentFormFields: React.FC<AgentFormFieldsProps> = ({ showAgentName = true,
                         <Form.Item
                           {...restField}
                           name={[name, "header"]}
-                          rules={[{ required: true, message: t("agents.headerNameRequired") }]}
+                          rules={[{ required: true, message: t("headerNameRequired") }]}
                         >
-                          <Input placeholder={t("agents.headerNameegAuthorization")} style={{ width: 220 }} />
+                          <Input placeholder={t("headerNameegAuthorization")} style={{ width: 220 }} />
                         </Form.Item>
                         <Form.Item
                           {...restField}
                           name={[name, "value"]}
-                          rules={[{ required: true, message: t("agents.valueRequired") }]}
+                          rules={[{ required: true, message: t("valueRequired") }]}
                         >
-                          <Input placeholder={t("agents.valueegBearerToken123")} style={{ width: 260 }} />
+                          <Input placeholder={t("valueegBearerToken123")} style={{ width: 260 }} />
                         </Form.Item>
                         <MinusCircleOutlined onClick={() => remove(name)} style={{ color: "#ff4d4f" }} />
                       </Space>

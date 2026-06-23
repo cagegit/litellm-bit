@@ -240,10 +240,10 @@ main();`;
         Get Code
       </TremorButton>
 
-      <Modal title={t("prompts.generatedCode")} open={isModalVisible} onCancel={handleCancel} footer={null} width={800}>
+      <Modal title={t("generatedCode")} open={isModalVisible} onCancel={handleCancel} footer={null} width={800}>
         <div className="flex justify-between items-center mb-4">
           <div>
-            <Text className="font-medium block mb-1 text-gray-700">{t("prompts.language")}</Text>
+            <Text className="font-medium block mb-1 text-gray-700">{t("language")}</Text>
             <Select
               value={selectedLanguage}
               onChange={(value) => setSelectedLanguage(value as "curl" | "python" | "javascript")}

@@ -172,10 +172,10 @@ const CompliancePanel: React.FC<CompliancePanelProps> = ({ accessToken, logEntry
 
   return (
     <div>
-      <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">{t("logs.regulatoryCompliance")}</h4>
+      <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-4">{t("regulatoryCompliance")}</h4>
       <div className="space-y-3">
-        <ComplianceCard title={t("logs.euAiAct")} data={euAiActData} loading={euAiActLoading} error={euAiActError} />
-        <ComplianceCard title={t("logs.gdpr")} data={gdprData} loading={gdprLoading} error={gdprError} />
+        <ComplianceCard title={t("euAiAct")} data={euAiActData} loading={euAiActLoading} error={euAiActError} />
+        <ComplianceCard title={t("gdpr")} data={gdprData} loading={gdprLoading} error={gdprError} />
       </div>
     </div>
   );

@@ -19,26 +19,26 @@ export const CommunityEngagementButtons: React.FC = () => {
   return (
     <div
       className="flex items-center gap-0.5 rounded-md border border-gray-200/80 bg-gray-50 px-0.5 py-0"
-      aria-label={t("common.communityLinks")}
+      aria-label={t("communityLinks")}
     >
-      <Tooltip title={t("common.litellmSlackCommunity")}>
+      <Tooltip title={t("litellmSlackCommunity")}>
         <a
           href="https://www.litellm.ai/support"
           target="_blank"
           rel="noopener noreferrer"
           className={iconBtnClass}
-          aria-label={t("common.joinSlack")}
+          aria-label={t("joinSlack")}
         >
           <SlackOutlined className="text-lg" />
         </a>
       </Tooltip>
-      <Tooltip title={t("common.litellmOnGithub")}>
+      <Tooltip title={t("litellmOnGithub")}>
         <a
           href="https://github.com/BerriAI/litellm"
           target="_blank"
           rel="noopener noreferrer"
           className={iconBtnClass}
-          aria-label={t("common.litellmOnGithub")}
+          aria-label={t("litellmOnGithub")}
         >
           <GithubOutlined className="text-lg" />
         </a>

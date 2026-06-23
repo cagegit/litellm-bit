@@ -471,7 +471,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
                 <div className="flex flex-col">
                   {models.length === 0 ? (
                     <Badge size="xs" className="mb-1" color="red">
-                      <Text>{t("team.allProxyModels")}</Text>
+                      <Text>{t("allProxyModels")}</Text>
                     </Badge>
                   ) : (
                     <>
@@ -495,7 +495,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
                           {models.slice(0, 3).map((model, index) =>
                             model === "all-proxy-models" ? (
                               <Badge key={index} size="xs" color="red">
-                                <Text>{t("team.allProxyModels")}</Text>
+                                <Text>{t("allProxyModels")}</Text>
                               </Badge>
                             ) : (
                               <Badge key={index} size="xs" color="blue">
@@ -519,7 +519,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
                               {models.slice(3).map((model, index) =>
                                 model === "all-proxy-models" ? (
                                   <Badge key={index + 3} size="xs" color="red">
-                                    <Text>{t("team.allProxyModels")}</Text>
+                                    <Text>{t("allProxyModels")}</Text>
                                   </Badge>
                                 ) : (
                                   <Badge key={index + 3} size="xs" color="blue">
@@ -733,7 +733,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
                       <TableRow>
                         <TableCell colSpan={columns.length} className="h-8 text-center">
                           <div className="text-center text-gray-500">
-                            <p>{t("team.loadingKeys")}</p>
+                            <p>{t("loadingKeys")}</p>
                           </div>
                         </TableCell>
                       </TableRow>
@@ -766,7 +766,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
                       <TableRow>
                         <TableCell colSpan={columns.length} className="h-8 text-center">
                           <div className="text-center text-gray-500">
-                            <p>{t("team.noKeysFound")}</p>
+                            <p>{t("noKeysFound")}</p>
                           </div>
                         </TableCell>
                       </TableRow>

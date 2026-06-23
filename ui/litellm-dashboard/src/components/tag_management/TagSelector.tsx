@@ -38,7 +38,7 @@ const TagSelector: React.FC<TagSelectorProps> = ({ onChange, value, className, a
     <Select
       mode="tags"
       showSearch
-      placeholder={t("tagManagement.selectOrCreateTags")}
+      placeholder={t("selectOrCreateTags")}
       onChange={onChange}
       value={value}
       loading={loading}

@@ -31,10 +31,10 @@ const CustomPatternModal: React.FC<CustomPatternModalProps> = ({
   const { t } = useTranslations("settings");
 
   return (
-    <Modal title={t("settings.addCustomRegexPattern")} open={visible} onCancel={onCancel} footer={null} width={800}>
+    <Modal title={t("addCustomRegexPattern")} open={visible} onCancel={onCancel} footer={null} width={800}>
       <Space direction="vertical" style={{ width: "100%" }} size="large">
         <div>
-          <Text strong>{t("settings.patternName")}</Text>
+          <Text strong>{t("patternName")}</Text>
           <Input
             placeholder="e.g., internal_id, employee_code"
             value={patternName}
@@ -44,7 +44,7 @@ const CustomPatternModal: React.FC<CustomPatternModalProps> = ({
         </div>
 
         <div>
-          <Text strong>{t("settings.regexPattern")}</Text>
+          <Text strong>{t("regexPattern")}</Text>
           <Input
             placeholder="e.g., ID-[0-9]{6}"
             value={patternRegex}
@@ -57,19 +57,19 @@ const CustomPatternModal: React.FC<CustomPatternModalProps> = ({
         </div>
 
         <div>
-          <Text strong>{t("settings.action")}</Text>
+          <Text strong>{t("action")}</Text>
           <Text type="secondary" style={{ display: "block", marginTop: 4, marginBottom: 8 }}>
             Choose what action the guardrail should take when this pattern is detected
           </Text>
           <Select value={patternAction} onChange={onActionChange} style={{ width: "100%" }}>
-            <Option value="BLOCK">{t("settings.block")}</Option>
-            <Option value="MASK">{t("settings.mask")}</Option>
+            <Option value="BLOCK">{t("block")}</Option>
+            <Option value="MASK">{t("mask")}</Option>
           </Select>
         </div>
       </Space>
 
       <div style={{ display: "flex", justifyContent: "flex-end", gap: "8px", marginTop: "24px" }}>
-        <Button onClick={onCancel}>{t("settings.cancel")}</Button>
+        <Button onClick={onCancel}>{t("cancel")}</Button>
         <Button type="primary" onClick={onAdd}>
           Add
         </Button>

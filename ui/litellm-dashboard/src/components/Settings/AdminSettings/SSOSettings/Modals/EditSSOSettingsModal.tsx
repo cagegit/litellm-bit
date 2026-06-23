@@ -127,7 +127,7 @@ const EditSSOSettingsModal: React.FC<EditSSOSettingsModalProps> = ({ isVisible, 
 
   return (
     <Modal
-      title={t("common.editSsoSettings")}
+      title={t("editSsoSettings")}
       open={isVisible}
       width={800}
       footer={

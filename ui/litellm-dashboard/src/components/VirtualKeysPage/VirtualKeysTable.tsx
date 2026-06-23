@@ -501,7 +501,7 @@ export function VirtualKeysTable({ teams, organizations, onSortChange, currentSo
                 <div className="flex flex-col">
                   {models.length === 0 ? (
                     <Badge size={"xs"} className="mb-1" color="red">
-                      <Text>{t("keys.allProxyModels")}</Text>
+                      <Text>{t("allProxyModels")}</Text>
                     </Badge>
                   ) : (
                     <>
@@ -525,7 +525,7 @@ export function VirtualKeysTable({ teams, organizations, onSortChange, currentSo
                           {models.slice(0, 3).map((model, index) =>
                             model === "all-proxy-models" ? (
                               <Badge key={index} size={"xs"} color="red">
-                                <Text>{t("keys.allProxyModels")}</Text>
+                                <Text>{t("allProxyModels")}</Text>
                               </Badge>
                             ) : (
                               <Badge key={index} size={"xs"} color="blue">
@@ -549,7 +549,7 @@ export function VirtualKeysTable({ teams, organizations, onSortChange, currentSo
                               {models.slice(3).map((model, index) =>
                                 model === "all-proxy-models" ? (
                                   <Badge key={index + 3} size={"xs"} color="red">
-                                    <Text>{t("keys.allProxyModels")}</Text>
+                                    <Text>{t("allProxyModels")}</Text>
                                   </Badge>
                                 ) : (
                                   <Badge key={index + 3} size={"xs"} color="blue">
@@ -739,7 +739,7 @@ export function VirtualKeysTable({ teams, organizations, onSortChange, currentSo
                 icon={<SyncOutlined spin={isButtonLoading} />}
                 onClick={handleRefresh}
                 disabled={isButtonLoading}
-                title={t("keys.fetchData")}
+                title={t("fetchData")}
               >
                 {isButtonLoading ? "Fetching" : "Fetch"}
               </AntButton>
@@ -888,7 +888,7 @@ export function VirtualKeysTable({ teams, organizations, onSortChange, currentSo
                       <TableRow>
                         <TableCell colSpan={columns.length} className="h-8 text-center">
                           <div className="text-center text-gray-500">
-                            <p>{t("keys.noKeysFound")}</p>
+                            <p>{t("noKeysFound")}</p>
                           </div>
                         </TableCell>
                       </TableRow>

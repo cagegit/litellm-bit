@@ -312,7 +312,7 @@ const UserDashboard: React.FC<UserDashboardProps> = ({
   }
 
   if (userID == null) {
-    return <h1>{t("common.userIdIsNotSet")}</h1>;
+    return <h1>{t("userIdIsNotSet")}</h1>;
   }
 
   if (userRole == null) {

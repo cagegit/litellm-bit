@@ -226,10 +226,10 @@ const PriceDataReload: React.FC<PriceDataReloadProps> = ({
       <Space direction="horizontal" size="middle" style={{ marginBottom: 16 }}>
         {/* Hard Refresh Button - Always visible */}
         <Popconfirm
-          title={t("common.hardRefreshPriceData")}
+          title={t("hardRefreshPriceData")}
           description="This will immediately fetch the latest pricing information from the remote source. Continue?"
           onConfirm={handleHardRefresh}
-          okText={t("common.yes")}
+          okText={t("yes")}
           cancelText="No"
           okButtonProps={{
             style: {
@@ -443,7 +443,7 @@ const PriceDataReload: React.FC<PriceDataReloadProps> = ({
                 </Tag>
               </div>
             ) : (
-              <Text type="secondary">{t("common.noPeriodicReloadScheduled")}</Text>
+              <Text type="secondary">{t("noPeriodicReloadScheduled")}</Text>
             )}
 
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -477,13 +477,13 @@ const PriceDataReload: React.FC<PriceDataReloadProps> = ({
 
       {/* Schedule Modal */}
       <Modal
-        title={t("common.setUpPeriodicReload")}
+        title={t("setUpPeriodicReload")}
         open={showScheduleModal}
         onOk={handleScheduleReload}
         onCancel={() => setShowScheduleModal(false)}
         confirmLoading={isScheduling}
-        okText={t("common.schedule")}
-        cancelText={t("common.cancel")}
+        okText={t("schedule")}
+        cancelText={t("cancel")}
         okButtonProps={{
           style: {
             backgroundColor: "#6366f1",

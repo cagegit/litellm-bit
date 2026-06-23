@@ -196,10 +196,10 @@ const ContentCategoryConfiguration: React.FC<ContentCategoryConfigurationProps> 
           style={{ width: "100%" }}
         >
           <Option value="BLOCK">
-            <Tag color="red">{t("settings.block1")}</Tag>
+            <Tag color="red">{t("block1")}</Tag>
           </Option>
           <Option value="MASK">
-            <Tag color="orange">{t("settings.mask1")}</Tag>
+            <Tag color="orange">{t("mask1")}</Tag>
           </Option>
         </Select>
       ),
@@ -215,9 +215,9 @@ const ContentCategoryConfiguration: React.FC<ContentCategoryConfigurationProps> 
           onChange={(value) => onCategoryUpdate(record.id, "severity_threshold", value)}
           style={{ width: "100%" }}
         >
-          <Option value="low">{t("settings.low")}</Option>
-          <Option value="medium">{t("settings.medium")}</Option>
-          <Option value="high">{t("settings.high")}</Option>
+          <Option value="low">{t("low")}</Option>
+          <Option value="medium">{t("medium")}</Option>
+          <Option value="high">{t("high")}</Option>
         </Select>
       ),
     },
@@ -255,7 +255,7 @@ const ContentCategoryConfiguration: React.FC<ContentCategoryConfigurationProps> 
     >
       <div style={{ marginBottom: 16, display: "flex", gap: 8 }}>
         <Select
-          placeholder={t("settings.selectAContentCategory")}
+          placeholder={t("selectAContentCategory")}
           value={selectedCategoryName || undefined}
           onChange={setSelectedCategoryName}
           style={{ flex: 1 }}
@@ -299,7 +299,7 @@ const ContentCategoryConfiguration: React.FC<ContentCategoryConfigurationProps> 
             )}
           </div>
           {loadingPreviewYaml ? (
-            <div style={{ padding: "16px", textAlign: "center", color: "#888" }}>{t("settings.loadingContent")}</div>
+            <div style={{ padding: "16px", textAlign: "center", color: "#888" }}>{t("loadingContent")}</div>
           ) : previewYaml ? (
             <pre
               style={{
@@ -363,7 +363,7 @@ const ContentCategoryConfiguration: React.FC<ContentCategoryConfigurationProps> 
                     </div>
                   ),
                   children: loadingYaml[category.category] ? (
-                    <div style={{ padding: "16px", textAlign: "center", color: "#888" }}>{t("settings.loadingContent")}</div>
+                    <div style={{ padding: "16px", textAlign: "center", color: "#888" }}>{t("loadingContent")}</div>
                   ) : categoryYaml[category.category] ? (
                     <pre
                       style={{

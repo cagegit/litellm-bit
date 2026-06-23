@@ -64,7 +64,7 @@ export const HelpLink: React.FC<HelpLinkProps> = ({
       target="_blank"
       rel="noopener noreferrer"
       className={`${baseClasses} ${variantClasses[variant]} ${className}`}
-      title={t("common.openDocumentationInANewTab")}
+      title={t("openDocumentationInANewTab")}
     >
       <span>{children}</span>
       <ExternalLink className="h-3.5 w-3.5 flex-shrink-0" aria-hidden="true" />
@@ -96,7 +96,7 @@ export const HelpIcon: React.FC<HelpIconProps> = ({ content, learnMoreHref, lear
         onMouseLeave={() => setShowTooltip(false)}
         onFocus={() => setShowTooltip(true)}
         onBlur={() => setShowTooltip(false)}
-        aria-label={t("common.helpInformation")}
+        aria-label={t("helpInformation")}
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <circle cx="12" cy="12" r="10" strokeWidth="1.5" />

@@ -134,7 +134,7 @@ const TagManagement: React.FC<TagProps> = ({ accessToken, userID, userRole }) =>
       ) : (
         <div className="gap-2 p-8 h-[75vh] w-full mt-2">
           <div className="flex justify-between mt-2 w-full items-center mb-4">
-            <h1>{t("tagManagement.tagManagement")}</h1>
+            <h1>{t("tagManagement")}</h1>
             <div className="flex items-center space-x-2">
               {lastRefreshed && <Text>Last Refreshed: {lastRefreshed}</Text>}
               <Icon
@@ -196,9 +196,9 @@ const TagManagement: React.FC<TagProps> = ({ accessToken, userID, userRole }) =>
                   <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <div className="sm:flex sm:items-start">
                       <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                        <h3 className="text-lg leading-6 font-medium text-gray-900">{t("tagManagement.deleteTag")}</h3>
+                        <h3 className="text-lg leading-6 font-medium text-gray-900">{t("deleteTag")}</h3>
                         <div className="mt-2">
-                          <p className="text-sm text-gray-500">{t("tagManagement.areYouSureYouWantToDeleteThisTag")}</p>
+                          <p className="text-sm text-gray-500">{t("areYouSureYouWantToDeleteThisTag")}</p>
                         </div>
                       </div>
                     </div>

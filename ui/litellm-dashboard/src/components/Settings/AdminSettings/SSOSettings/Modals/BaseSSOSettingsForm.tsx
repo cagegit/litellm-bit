@@ -111,9 +111,9 @@ const BaseSSOSettingsForm: React.FC<BaseSSOSettingsFormProps> = ({ form, onFormS
     <div>
       <Form form={form} onFinish={onFormSubmit} labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} labelAlign="left">
         <Form.Item
-          label={t("common.ssoProvider")}
+          label={t("ssoProvider")}
           name="sso_provider"
-          rules={[{ required: true, message: t("common.pleaseSelectSSOProvider") }]}
+          rules={[{ required: true, message: t("pleaseSelectSSOProvider") }]}
         >
           <Select>
             {Object.entries(ssoProviderLogoMap).map(([value, logo]) => (
@@ -146,18 +146,18 @@ const BaseSSOSettingsForm: React.FC<BaseSSOSettingsFormProps> = ({ form, onFormS
         </Form.Item>
 
         <Form.Item
-          label={t("common.proxyAdminEmail")}
+          label={t("proxyAdminEmail")}
           name="user_email"
-          rules={[{ required: true, message: t("common.pleaseEnterProxyAdminEmail") }]}
+          rules={[{ required: true, message: t("pleaseEnterProxyAdminEmail") }]}
         >
           <TextInput />
         </Form.Item>
         <Form.Item
-          label={t("common.proxyBaseUrl")}
+          label={t("proxyBaseUrl")}
           name="proxy_base_url"
           normalize={(value) => value?.trim()}
           rules={[
-            { required: true, message: t("common.pleaseEnterProxyBaseUrl") },
+            { required: true, message: t("pleaseEnterProxyBaseUrl") },
             {
               pattern: /^https?:\/\/.+/,
               message: "URL must start with http:// or https://",
@@ -183,7 +183,7 @@ const BaseSSOSettingsForm: React.FC<BaseSSOSettingsFormProps> = ({ form, onFormS
           {({ getFieldValue }) => {
             const provider = getFieldValue("sso_provider");
             return provider === "okta" || provider === "generic" ? (
-              <Form.Item label={t("common.useRoleMappings")} name="use_role_mappings" valuePropName="checked">
+              <Form.Item label={t("useRoleMappings")} name="use_role_mappings" valuePropName="checked">
                 <Checkbox />
               </Form.Item>
             ) : null;
@@ -203,9 +203,9 @@ const BaseSSOSettingsForm: React.FC<BaseSSOSettingsFormProps> = ({ form, onFormS
             const supportsRoleMappings = provider === "okta" || provider === "generic";
             return useRoleMappings && supportsRoleMappings ? (
               <Form.Item
-                label={t("common.groupClaim")}
+                label={t("groupClaim")}
                 name="group_claim"
-                rules={[{ required: true, message: t("common.pleaseEnterGroupClaim") }]}
+                rules={[{ required: true, message: t("pleaseEnterGroupClaim") }]}
               >
                 <TextInput />
               </Form.Item>
@@ -226,28 +226,28 @@ const BaseSSOSettingsForm: React.FC<BaseSSOSettingsFormProps> = ({ form, onFormS
             const supportsRoleMappings = provider === "okta" || provider === "generic";
             return useRoleMappings && supportsRoleMappings ? (
               <>
-                <Form.Item label={t("common.defaultRole")} name="default_role" initialValue="Internal User">
+                <Form.Item label={t("defaultRole")} name="default_role" initialValue="Internal User">
                   <Select>
-                    <Select.Option value="internal_user_viewer">{t("common.internalViewer")}</Select.Option>
-                    <Select.Option value="internal_user">{t("common.internalUser")}</Select.Option>
-                    <Select.Option value="proxy_admin_viewer">{t("common.adminViewer")}</Select.Option>
-                    <Select.Option value="proxy_admin">{t("common.proxyAdmin")}</Select.Option>
+                    <Select.Option value="internal_user_viewer">{t("internalViewer")}</Select.Option>
+                    <Select.Option value="internal_user">{t("internalUser")}</Select.Option>
+                    <Select.Option value="proxy_admin_viewer">{t("adminViewer")}</Select.Option>
+                    <Select.Option value="proxy_admin">{t("proxyAdmin")}</Select.Option>
                   </Select>
                 </Form.Item>
 
-                <Form.Item label={t("common.proxyAdminTeams")} name="proxy_admin_teams">
+                <Form.Item label={t("proxyAdminTeams")} name="proxy_admin_teams">
                   <TextInput />
                 </Form.Item>
 
-                <Form.Item label={t("common.adminViewerTeams")} name="admin_viewer_teams">
+                <Form.Item label={t("adminViewerTeams")} name="admin_viewer_teams">
                   <TextInput />
                 </Form.Item>
 
-                <Form.Item label={t("common.internalUserTeams")} name="internal_user_teams">
+                <Form.Item label={t("internalUserTeams")} name="internal_user_teams">
                   <TextInput />
                 </Form.Item>
 
-                <Form.Item label={t("common.internalViewerTeams")} name="internal_viewer_teams">
+                <Form.Item label={t("internalViewerTeams")} name="internal_viewer_teams">
                   <TextInput />
                 </Form.Item>
               </>
@@ -262,7 +262,7 @@ const BaseSSOSettingsForm: React.FC<BaseSSOSettingsFormProps> = ({ form, onFormS
           {({ getFieldValue }) => {
             const provider = getFieldValue("sso_provider");
             return provider === "okta" || provider === "generic" ? (
-              <Form.Item label={t("common.useTeamMappings")} name="use_team_mappings" valuePropName="checked">
+              <Form.Item label={t("useTeamMappings")} name="use_team_mappings" valuePropName="checked">
                 <Checkbox />
               </Form.Item>
             ) : null;
@@ -282,9 +282,9 @@ const BaseSSOSettingsForm: React.FC<BaseSSOSettingsFormProps> = ({ form, onFormS
             const supportsTeamMappings = provider === "okta" || provider === "generic";
             return useTeamMappings && supportsTeamMappings ? (
               <Form.Item
-                label={t("common.teamIdsJwtField")}
+                label={t("teamIdsJwtField")}
                 name="team_ids_jwt_field"
-                rules={[{ required: true, message: t("common.pleaseEnterTheTeamIdsJwtField") }]}
+                rules={[{ required: true, message: t("pleaseEnterTheTeamIdsJwtField") }]}
               >
                 <TextInput />
               </Form.Item>

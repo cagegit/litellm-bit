@@ -109,7 +109,7 @@ const RoutingGroups: React.FC = () => {
           <Input
             allowClear
             prefix={<SearchOutlined className="text-gray-400" />}
-            placeholder={t("settings.searchGroups")}
+            placeholder={t("searchGroups")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="max-w-sm"
@@ -151,10 +151,10 @@ const RoutingGroups: React.FC = () => {
 
       <Modal
         open={Boolean(deletingGroup)}
-        title={t("settings.deleteRoutingGroup")}
-        okText={t("settings.delete")}
+        title={t("deleteRoutingGroup")}
+        okText={t("delete")}
         okButtonProps={{ danger: true, loading: saveMutation.isPending }}
-        cancelText={t("settings.cancel")}
+        cancelText={t("cancel")}
         onOk={confirmDelete}
         onCancel={() => setDeletingGroup(null)}
       >

@@ -114,8 +114,8 @@ const CacheSettings: React.FC<CacheSettingsProps> = ({ accessToken, userRole, us
     <div className="w-full space-y-8 py-2">
       <div className="space-y-6">
         <div className="max-w-3xl">
-          <h3 className="text-sm font-medium text-gray-900">{t("settings.cacheSettings")}</h3>
-          <p className="text-xs text-gray-500 mt-1">{t("settings.configureRedisCacheForLitellm")}</p>
+          <h3 className="text-sm font-medium text-gray-900">{t("cacheSettings")}</h3>
+          <p className="text-xs text-gray-500 mt-1">{t("configureRedisCacheForLitellm")}</p>
         </div>
 
         {/* Redis Type Selector */}
@@ -127,7 +127,7 @@ const CacheSettings: React.FC<CacheSettingsProps> = ({ accessToken, userRole, us
 
         {/* Basic Fields */}
         <div className="space-y-6 pt-4 border-t border-gray-200">
-          <h4 className="text-sm font-medium text-gray-900">{t("settings.connectionSettings")}</h4>
+          <h4 className="text-sm font-medium text-gray-900">{t("connectionSettings")}</h4>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             {basicFields.map((field: any) => {
               if (!field) return null;
@@ -140,7 +140,7 @@ const CacheSettings: React.FC<CacheSettingsProps> = ({ accessToken, userRole, us
         {/* Redis Type-Specific Fields */}
         {redisType === "cluster" && clusterFields.length > 0 && (
           <div className="space-y-6 pt-4 border-t border-gray-200">
-            <h4 className="text-sm font-medium text-gray-900">{t("settings.clusterConfiguration")}</h4>
+            <h4 className="text-sm font-medium text-gray-900">{t("clusterConfiguration")}</h4>
             <div className="grid grid-cols-1 gap-6">
               {clusterFields.map((field: any) => {
                 const currentValue = cacheSettings[field.field_name] ?? field.field_default ?? "";
@@ -152,7 +152,7 @@ const CacheSettings: React.FC<CacheSettingsProps> = ({ accessToken, userRole, us
 
         {redisType === "sentinel" && sentinelFields.length > 0 && (
           <div className="space-y-6 pt-4 border-t border-gray-200">
-            <h4 className="text-sm font-medium text-gray-900">{t("settings.sentinelConfiguration")}</h4>
+            <h4 className="text-sm font-medium text-gray-900">{t("sentinelConfiguration")}</h4>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               {sentinelFields.map((field: any) => {
                 const currentValue = cacheSettings[field.field_name] ?? field.field_default ?? "";
@@ -164,7 +164,7 @@ const CacheSettings: React.FC<CacheSettingsProps> = ({ accessToken, userRole, us
 
         {redisType === "semantic" && semanticFields.length > 0 && (
           <div className="space-y-6 pt-4 border-t border-gray-200">
-            <h4 className="text-sm font-medium text-gray-900">{t("settings.semanticConfiguration")}</h4>
+            <h4 className="text-sm font-medium text-gray-900">{t("semanticConfiguration")}</h4>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               {semanticFields.map((field: any) => {
                 const currentValue = cacheSettings[field.field_name] ?? field.field_default ?? "";
@@ -177,14 +177,14 @@ const CacheSettings: React.FC<CacheSettingsProps> = ({ accessToken, userRole, us
         {/* Advanced Settings Accordion */}
         <Accordion className="mt-4">
           <AccordionHeader>
-            <span className="text-sm font-medium text-gray-900">{t("settings.advancedSettings")}</span>
+            <span className="text-sm font-medium text-gray-900">{t("advancedSettings")}</span>
           </AccordionHeader>
           <AccordionBody>
             <div className="space-y-6">
               {/* SSL Settings */}
               {sslFields.length > 0 && (
                 <div className="space-y-4">
-                  <h5 className="text-sm font-medium text-gray-700">{t("settings.sslSettings")}</h5>
+                  <h5 className="text-sm font-medium text-gray-700">{t("sslSettings")}</h5>
                   <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                     {sslFields.map((field: any) => {
                       if (!field) return null;
@@ -198,7 +198,7 @@ const CacheSettings: React.FC<CacheSettingsProps> = ({ accessToken, userRole, us
               {/* Cache Management */}
               {cacheManagementFields.length > 0 && (
                 <div className="space-y-4 pt-4 border-t border-gray-200">
-                  <h5 className="text-sm font-medium text-gray-700">{t("settings.cacheManagement")}</h5>
+                  <h5 className="text-sm font-medium text-gray-700">{t("cacheManagement")}</h5>
                   <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                     {cacheManagementFields.map((field: any) => {
                       if (!field) return null;
@@ -212,7 +212,7 @@ const CacheSettings: React.FC<CacheSettingsProps> = ({ accessToken, userRole, us
               {/* GCP Authentication */}
               {gcpFields.length > 0 && (
                 <div className="space-y-4 pt-4 border-t border-gray-200">
-                  <h5 className="text-sm font-medium text-gray-700">{t("settings.gcpAuthentication")}</h5>
+                  <h5 className="text-sm font-medium text-gray-700">{t("gcpAuthentication")}</h5>
                   <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
                     {gcpFields.map((field: any) => {
                       if (!field) return null;

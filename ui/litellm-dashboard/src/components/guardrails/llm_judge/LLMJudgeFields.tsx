@@ -27,7 +27,7 @@ const LLMJudgeFields: React.FC<LLMJudgeFieldsProps> = ({ availableModels, form }
           color: "#389e0d",
         }}
       >
-        After each LLM response, the <strong>{t("settings.judgeModel")}</strong> scores it 0–100 against your criteria. If the weighted
+        After each LLM response, the <strong>{t("judgeModel")}</strong> scores it 0–100 against your criteria. If the weighted
         average falls below the threshold, the response is blocked (or logged).
       </div>
 
@@ -41,11 +41,11 @@ const LLMJudgeFields: React.FC<LLMJudgeFieldsProps> = ({ availableModels, form }
             </Tooltip>
           </span>
         }
-        rules={[{ required: true, message: t("settings.selectAJudgeModel") }]}
+        rules={[{ required: true, message: t("selectAJudgeModel") }]}
       >
         <Select
           showSearch
-          placeholder={t("settings.selectAModel")}
+          placeholder={t("selectAModel")}
           options={availableModels.map((m) => ({ label: m, value: m }))}
         />
       </Form.Item>
@@ -78,8 +78,8 @@ const LLMJudgeFields: React.FC<LLMJudgeFieldsProps> = ({ availableModels, form }
         initialValue="block"
       >
         <Select>
-          <Select.Option value="block">{t("settings.blockreturn422")}</Select.Option>
-          <Select.Option value="log">{t("settings.logOnly")}</Select.Option>
+          <Select.Option value="block">{t("blockreturn422")}</Select.Option>
+          <Select.Option value="log">{t("logOnly")}</Select.Option>
         </Select>
       </Form.Item>
 
@@ -110,10 +110,10 @@ const LLMJudgeFields: React.FC<LLMJudgeFieldsProps> = ({ availableModels, form }
                     <Form.Item
                       {...restField}
                       name={[name, "name"]}
-                      rules={[{ required: true, message: t("settings.enterCriterionName") }]}
+                      rules={[{ required: true, message: t("enterCriterionName") }]}
                       style={{ flex: 2, marginBottom: 8 }}
                     >
-                      <Input placeholder={t("settings.criterionNameegPolicyAccuracy")} />
+                      <Input placeholder={t("criterionNameegPolicyAccuracy")} />
                     </Form.Item>
                     <Form.Item
                       {...restField}
@@ -125,7 +125,7 @@ const LLMJudgeFields: React.FC<LLMJudgeFieldsProps> = ({ availableModels, form }
                           </span>
                         </Tooltip>
                       }
-                      rules={[{ required: true, message: t("settings.enterWeight") }]}
+                      rules={[{ required: true, message: t("enterWeight") }]}
                       style={{ flex: 1, marginBottom: 8 }}
                     >
                       <InputNumber min={0} max={100} addonAfter="%" style={{ width: "100%" }} placeholder="e.g. 50" />
@@ -139,10 +139,10 @@ const LLMJudgeFields: React.FC<LLMJudgeFieldsProps> = ({ availableModels, form }
                   <Form.Item
                     {...restField}
                     name={[name, "description"]}
-                    rules={[{ required: true, message: t("settings.describeWhatToCheck") }]}
+                    rules={[{ required: true, message: t("describeWhatToCheck") }]}
                     style={{ marginBottom: 8 }}
                   >
-                    <Input placeholder={t("settings.whatShouldTheJudgeCheckForThisCriterion")} />
+                    <Input placeholder={t("whatShouldTheJudgeCheckForThisCriterion")} />
                   </Form.Item>
                 </div>
               ))}

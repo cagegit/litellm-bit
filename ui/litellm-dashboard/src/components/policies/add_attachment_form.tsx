@@ -189,7 +189,7 @@ const AddAttachmentForm: React.FC<AddAttachmentFormProps> = ({
   }));
 
   return (
-    <Modal title={t("settings.createPolicyAttachment")} open={visible} onCancel={handleClose} footer={null} width={600}>
+    <Modal title={t("createPolicyAttachment")} open={visible} onCancel={handleClose} footer={null} width={600}>
       <Form
         form={form}
         layout="vertical"
@@ -199,12 +199,12 @@ const AddAttachmentForm: React.FC<AddAttachmentFormProps> = ({
       >
         <Form.Item
           name="policy_names"
-          label={t("settings.policies")}
-          rules={[{ required: true, message: t("settings.pleaseSelectAtLeastOnePolicy") }]}
+          label={t("policies")}
+          rules={[{ required: true, message: t("pleaseSelectAtLeastOnePolicy") }]}
         >
           <Select
             mode="multiple"
-            placeholder={t("settings.selectPoliciesToAttach")}
+            placeholder={t("selectPoliciesToAttach")}
             options={policyOptions}
             showSearch
             filterOption={(input, option) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase())}
@@ -213,13 +213,13 @@ const AddAttachmentForm: React.FC<AddAttachmentFormProps> = ({
         </Form.Item>
 
         <Divider orientation="left">
-          <Text strong>{t("settings.scope")}</Text>
+          <Text strong>{t("scope")}</Text>
         </Divider>
 
-        <Form.Item label={t("settings.scopeType")}>
+        <Form.Item label={t("scopeType")}>
           <Radio.Group value={scopeType} onChange={(e) => setScopeType(e.target.value)}>
-            <Radio value="specific">{t("settings.specificteamsKeysModelsOrTags")}</Radio>
-            <Radio value="global">{t("settings.globalappliesToAllRequests")}</Radio>
+            <Radio value="specific">{t("specificteamsKeysModelsOrTags")}</Radio>
+            <Radio value="global">{t("globalappliesToAllRequests")}</Radio>
           </Radio.Group>
         </Form.Item>
 
@@ -227,7 +227,7 @@ const AddAttachmentForm: React.FC<AddAttachmentFormProps> = ({
           <>
             <Form.Item
               name="teams"
-              label={t("settings.teams")}
+              label={t("teams")}
               tooltip="Select team aliases or enter custom patterns. Supports wildcards (e.g., healthcare-*)"
             >
               <Select
@@ -247,7 +247,7 @@ const AddAttachmentForm: React.FC<AddAttachmentFormProps> = ({
 
             <Form.Item
               name="keys"
-              label={t("settings.keys")}
+              label={t("keys")}
               tooltip="Select key aliases or enter custom patterns. Supports wildcards (e.g., dev-*)"
             >
               <Select
@@ -267,7 +267,7 @@ const AddAttachmentForm: React.FC<AddAttachmentFormProps> = ({
 
             <Form.Item
               name="models"
-              label={t("settings.models")}
+              label={t("models")}
               tooltip="Model names this attachment applies to. Supports wildcards (e.g., gpt-4*). Leave empty to apply to all models."
             >
               <Select
@@ -289,7 +289,7 @@ const AddAttachmentForm: React.FC<AddAttachmentFormProps> = ({
 
             <Form.Item
               name="tags"
-              label={t("settings.tags")}
+              label={t("tags")}
               tooltip="Match against tags set in key or team metadata. Use exact values (e.g., healthcare) or wildcard patterns (e.g., health-*) where * matches any suffix."
               extra={
                 <Text type="secondary" style={{ fontSize: 12 }}>

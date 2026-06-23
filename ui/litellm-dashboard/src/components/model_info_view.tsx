@@ -394,7 +394,7 @@ export default function ModelInfoView({
         <TremorButton icon={ArrowLeftIcon} variant="light" onClick={onClose} className="mb-4">
           Back to Models
         </TremorButton>
-        <Text>{t("common.loading")}</Text>
+        <Text>{t("loading")}</Text>
       </div>
     );
   }
@@ -406,7 +406,7 @@ export default function ModelInfoView({
         <TremorButton icon={ArrowLeftIcon} variant="light" onClick={onClose} className="mb-4">
           Back to Models
         </TremorButton>
-        <Text>{t("common.modelNotFound")}</Text>
+        <Text>{t("modelNotFound")}</Text>
       </div>
     );
   }
@@ -549,8 +549,8 @@ export default function ModelInfoView({
 
       <TabGroup>
         <TabList className="mb-6">
-          <Tab>{t("common.overview")}</Tab>
-          <Tab>{t("common.rawJson")}</Tab>
+          <Tab>{t("overview")}</Tab>
+          <Tab>{t("rawJson")}</Tab>
         </TabList>
 
         <TabPanels>
@@ -558,7 +558,7 @@ export default function ModelInfoView({
             {/* Overview Grid */}
             <Grid numItems={1} numItemsSm={2} numItemsLg={3} className="gap-6 mb-6">
               <Card>
-                <Text>{t("common.provider")}</Text>
+                <Text>{t("provider")}</Text>
                 <div className="mt-2 flex items-center space-x-2">
                   {modelData.provider && (
                     <img
@@ -588,7 +588,7 @@ export default function ModelInfoView({
                 </div>
               </Card>
               <Card>
-                <Text>{t("common.litellmModel")}</Text>
+                <Text>{t("litellmModel")}</Text>
                 <div className="mt-2 overflow-hidden">
                   <Tooltip title={modelData.litellm_model_name || "Not Set"}>
                     <div className="break-all text-sm font-medium leading-relaxed cursor-pointer">
@@ -598,7 +598,7 @@ export default function ModelInfoView({
                 </div>
               </Card>
               <Card>
-                <Text>{t("common.pricing")}</Text>
+                <Text>{t("pricing")}</Text>
                 <div className="mt-2">
                   <Text>Input: ${modelData.input_cost}/1M tokens</Text>
                   <Text>Output: ${modelData.output_cost}/1M tokens</Text>
@@ -642,7 +642,7 @@ export default function ModelInfoView({
             {/* Settings Card */}
             <Card>
               <div className="flex justify-between items-center mb-4">
-                <Title>{t("common.modelSettings")}</Title>
+                <Title>{t("modelSettings")}</Title>
                 <div className="flex gap-2">
                   {isAutoRouter && canEditModel && !isEditing && (
                     <TremorButton onClick={() => setIsAutoRouterModalOpen(true)} className="flex items-center">
@@ -731,10 +731,10 @@ export default function ModelInfoView({
                   <div className="space-y-4">
                     <div className="space-y-4">
                       <div>
-                        <Text className="font-medium">{t("common.modelName")}</Text>
+                        <Text className="font-medium">{t("modelName")}</Text>
                         {isEditing ? (
                           <Form.Item name="model_name" className="mb-0">
-                            <TextInput placeholder={t("common.enterModelName")} />
+                            <TextInput placeholder={t("enterModelName")} />
                           </Form.Item>
                         ) : (
                           <div className="mt-1 p-2 bg-gray-50 rounded">{localModelData.model_name}</div>
@@ -742,10 +742,10 @@ export default function ModelInfoView({
                       </div>
 
                       <div>
-                        <Text className="font-medium">{t("common.litellmModelName")}</Text>
+                        <Text className="font-medium">{t("litellmModelName")}</Text>
                         {isEditing ? (
                           <Form.Item name="litellm_model_name" className="mb-0">
-                            <TextInput placeholder={t("common.enterLitellmModelName")} />
+                            <TextInput placeholder={t("enterLitellmModelName")} />
                           </Form.Item>
                         ) : (
                           <div className="mt-1 p-2 bg-gray-50 rounded">{localModelData.litellm_model_name}</div>
@@ -753,10 +753,10 @@ export default function ModelInfoView({
                       </div>
 
                       <div>
-                        <Text className="font-medium">{t("common.inputCostper1mTokens")}</Text>
+                        <Text className="font-medium">{t("inputCostper1mTokens")}</Text>
                         {isEditing ? (
                           <Form.Item name="input_cost" className="mb-0">
-                            <NumericalInput placeholder={t("common.enterInputCost")} />
+                            <NumericalInput placeholder={t("enterInputCost")} />
                           </Form.Item>
                         ) : (
                           <div className="mt-1 p-2 bg-gray-50 rounded">
@@ -770,10 +770,10 @@ export default function ModelInfoView({
                       </div>
 
                       <div>
-                        <Text className="font-medium">{t("common.outputCostper1mTokens")}</Text>
+                        <Text className="font-medium">{t("outputCostper1mTokens")}</Text>
                         {isEditing ? (
                           <Form.Item name="output_cost" className="mb-0">
-                            <NumericalInput placeholder={t("common.enterOutputCost")} />
+                            <NumericalInput placeholder={t("enterOutputCost")} />
                           </Form.Item>
                         ) : (
                           <div className="mt-1 p-2 bg-gray-50 rounded">
@@ -787,14 +787,14 @@ export default function ModelInfoView({
                       </div>
 
                       <div>
-                        <Text className="font-medium">{t("common.cacheReadCostper1mTokens")}</Text>
+                        <Text className="font-medium">{t("cacheReadCostper1mTokens")}</Text>
                         {isEditing ? (
                           <Form.Item
                             name="cache_read_cost"
                             className="mb-0"
-                            tooltip={t("common.ifLeftBlankOnSaveDefaultsToInputCost")}
+                            tooltip={t("ifLeftBlankOnSaveDefaultsToInputCost")}
                           >
-                            <NumericalInput placeholder={t("common.defaultsToInputCostIfBlank")} />
+                            <NumericalInput placeholder={t("defaultsToInputCostIfBlank")} />
                           </Form.Item>
                         ) : (
                           <div className="mt-1 p-2 bg-gray-50 rounded">
@@ -810,14 +810,14 @@ export default function ModelInfoView({
                       </div>
 
                       <div>
-                        <Text className="font-medium">{t("common.cacheWriteCostper1mTokens")}</Text>
+                        <Text className="font-medium">{t("cacheWriteCostper1mTokens")}</Text>
                         {isEditing ? (
                           <Form.Item
                             name="cache_write_cost"
                             className="mb-0"
                             tooltip="If left blank on save, defaults to Input Cost (backend falls back to input_cost_per_token)."
                           >
-                            <NumericalInput placeholder={t("common.defaultsToInputCostIfBlank")} />
+                            <NumericalInput placeholder={t("defaultsToInputCostIfBlank")} />
                           </Form.Item>
                         ) : (
                           <div className="mt-1 p-2 bg-gray-50 rounded">
@@ -833,10 +833,10 @@ export default function ModelInfoView({
                       </div>
 
                       <div>
-                        <Text className="font-medium">{t("common.apiBase")}</Text>
+                        <Text className="font-medium">{t("apiBase")}</Text>
                         {isEditing ? (
                           <Form.Item name="api_base" className="mb-0">
-                            <TextInput placeholder={t("common.enterApiBase")} />
+                            <TextInput placeholder={t("enterApiBase")} />
                           </Form.Item>
                         ) : (
                           <div className="mt-1 p-2 bg-gray-50 rounded">
@@ -846,10 +846,10 @@ export default function ModelInfoView({
                       </div>
 
                       <div>
-                        <Text className="font-medium">{t("common.customLlmProvider")}</Text>
+                        <Text className="font-medium">{t("customLlmProvider")}</Text>
                         {isEditing ? (
                           <Form.Item name="custom_llm_provider" className="mb-0">
-                            <TextInput placeholder={t("common.enterCustomLlmProvider")} />
+                            <TextInput placeholder={t("enterCustomLlmProvider")} />
                           </Form.Item>
                         ) : (
                           <div className="mt-1 p-2 bg-gray-50 rounded">
@@ -859,10 +859,10 @@ export default function ModelInfoView({
                       </div>
 
                       <div>
-                        <Text className="font-medium">{t("common.organization")}</Text>
+                        <Text className="font-medium">{t("organization")}</Text>
                         {isEditing ? (
                           <Form.Item name="organization" className="mb-0">
-                            <TextInput placeholder={t("common.enterOrganization")} />
+                            <TextInput placeholder={t("enterOrganization")} />
                           </Form.Item>
                         ) : (
                           <div className="mt-1 p-2 bg-gray-50 rounded">
@@ -872,10 +872,10 @@ export default function ModelInfoView({
                       </div>
 
                       <div>
-                        <Text className="font-medium">{t("common.tpmtokensPerMinute")}</Text>
+                        <Text className="font-medium">{t("tpmtokensPerMinute")}</Text>
                         {isEditing ? (
                           <Form.Item name="tpm" className="mb-0">
-                            <NumericalInput placeholder={t("common.enterTpm")} />
+                            <NumericalInput placeholder={t("enterTpm")} />
                           </Form.Item>
                         ) : (
                           <div className="mt-1 p-2 bg-gray-50 rounded">
@@ -885,10 +885,10 @@ export default function ModelInfoView({
                       </div>
 
                       <div>
-                        <Text className="font-medium">{t("common.rpmrequestsPerMinute")}</Text>
+                        <Text className="font-medium">{t("rpmrequestsPerMinute")}</Text>
                         {isEditing ? (
                           <Form.Item name="rpm" className="mb-0">
-                            <NumericalInput placeholder={t("common.enterRpm")} />
+                            <NumericalInput placeholder={t("enterRpm")} />
                           </Form.Item>
                         ) : (
                           <div className="mt-1 p-2 bg-gray-50 rounded">
@@ -898,10 +898,10 @@ export default function ModelInfoView({
                       </div>
 
                       <div>
-                        <Text className="font-medium">{t("common.maxRetries")}</Text>
+                        <Text className="font-medium">{t("maxRetries")}</Text>
                         {isEditing ? (
                           <Form.Item name="max_retries" className="mb-0">
-                            <NumericalInput placeholder={t("common.enterMaxRetries")} />
+                            <NumericalInput placeholder={t("enterMaxRetries")} />
                           </Form.Item>
                         ) : (
                           <div className="mt-1 p-2 bg-gray-50 rounded">
@@ -911,10 +911,10 @@ export default function ModelInfoView({
                       </div>
 
                       <div>
-                        <Text className="font-medium">{t("common.timeoutseconds")}</Text>
+                        <Text className="font-medium">{t("timeoutseconds")}</Text>
                         {isEditing ? (
                           <Form.Item name="timeout" className="mb-0">
-                            <NumericalInput placeholder={t("common.enterTimeout")} />
+                            <NumericalInput placeholder={t("enterTimeout")} />
                           </Form.Item>
                         ) : (
                           <div className="mt-1 p-2 bg-gray-50 rounded">
@@ -924,10 +924,10 @@ export default function ModelInfoView({
                       </div>
 
                       <div>
-                        <Text className="font-medium">{t("common.streamTimeoutseconds")}</Text>
+                        <Text className="font-medium">{t("streamTimeoutseconds")}</Text>
                         {isEditing ? (
                           <Form.Item name="stream_timeout" className="mb-0">
-                            <NumericalInput placeholder={t("common.enterStreamTimeout")} />
+                            <NumericalInput placeholder={t("enterStreamTimeout")} />
                           </Form.Item>
                         ) : (
                           <div className="mt-1 p-2 bg-gray-50 rounded">
@@ -937,13 +937,13 @@ export default function ModelInfoView({
                       </div>
 
                       <div>
-                        <Text className="font-medium">{t("common.modelAccessGroups")}</Text>
+                        <Text className="font-medium">{t("modelAccessGroups")}</Text>
                         {isEditing ? (
                           <Form.Item name="model_access_group" className="mb-0">
                             <Select
                               mode="tags"
                               showSearch
-                              placeholder={t("common.selectExistingGroupsOrTypeToCreateNewOnes")}
+                              placeholder={t("selectExistingGroupsOrTypeToCreateNewOnes")}
                               optionFilterProp="children"
                               tokenSeparators={[","]}
                               maxTagCount="responsive"
@@ -986,7 +986,7 @@ export default function ModelInfoView({
                       <div>
                         <Text className="font-medium">
                           Guardrails
-                          <Tooltip title={t("common.applySafetyGuardrailsToThisModelToFilterContentOrEnforcePolicies")}>
+                          <Tooltip title={t("applySafetyGuardrailsToThisModelToFilterContentOrEnforcePolicies")}>
                             <a
                               href="https://docs.litellm.ai/docs/proxy/guardrails/quick_start"
                               target="_blank"
@@ -1002,7 +1002,7 @@ export default function ModelInfoView({
                             <Select
                               mode="tags"
                               showSearch
-                              placeholder={t("common.selectExistingGuardrailsOrTypeToCreateNewOnes")}
+                              placeholder={t("selectExistingGuardrailsOrTypeToCreateNewOnes")}
                               optionFilterProp="children"
                               tokenSeparators={[","]}
                               maxTagCount="responsive"
@@ -1063,7 +1063,7 @@ export default function ModelInfoView({
                             <VectorStoreSelector
                               onChange={() => {}}
                               accessToken={accessToken || ""}
-                              placeholder={t("common.selectKnowledgeBasesoptional")}
+                              placeholder={t("selectKnowledgeBasesoptional")}
                             />
                           </Form.Item>
                         ) : (
@@ -1097,13 +1097,13 @@ export default function ModelInfoView({
                       </div>
 
                       <div>
-                        <Text className="font-medium">{t("common.tags")}</Text>
+                        <Text className="font-medium">{t("tags")}</Text>
                         {isEditing ? (
                           <Form.Item name="tags" className="mb-0">
                             <Select
                               mode="tags"
                               showSearch
-                              placeholder={t("common.selectExistingTagsOrTypeToCreateNewOnes")}
+                              placeholder={t("selectExistingTagsOrTypeToCreateNewOnes")}
                               optionFilterProp="children"
                               tokenSeparators={[","]}
                               maxTagCount="responsive"
@@ -1144,12 +1144,12 @@ export default function ModelInfoView({
                         )}
                       </div>
                       <div>
-                        <Text className="font-medium">{t("common.existingCredentials")}</Text>
+                        <Text className="font-medium">{t("existingCredentials")}</Text>
                         {isEditing ? (
                           <Form.Item name="litellm_credential_name" className="mb-0">
                             <Select
                               showSearch
-                              placeholder={t("common.selectOrSearchForExistingCredentials")}
+                              placeholder={t("selectOrSearchForExistingCredentials")}
                               optionFilterProp="children"
                               filterOption={(input, option) =>
                                 (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
@@ -1173,12 +1173,12 @@ export default function ModelInfoView({
 
                       {isWildcardModel && (
                         <div>
-                          <Text className="font-medium">{t("common.healthCheckModel")}</Text>
+                          <Text className="font-medium">{t("healthCheckModel")}</Text>
                           {isEditing ? (
                             <Form.Item name="health_check_model" className="mb-0">
                               <Select
                                 showSearch
-                                placeholder={t("common.selectExistingHealthCheckModel")}
+                                placeholder={t("selectExistingHealthCheckModel")}
                                 optionFilterProp="children"
                                 allowClear
                                 options={(() => {
@@ -1217,11 +1217,11 @@ export default function ModelInfoView({
                         />
                       ) : (
                         <div>
-                          <Text className="font-medium">{t("common.cacheControl")}</Text>
+                          <Text className="font-medium">{t("cacheControl")}</Text>
                           <div className="mt-1 p-2 bg-gray-50 rounded">
                             {localModelData.litellm_params?.cache_control_injection_points ? (
                               <div>
-                                <p>{t("common.enabled")}</p>
+                                <p>{t("enabled")}</p>
                                 <div className="mt-2">
                                   {localModelData.litellm_params.cache_control_injection_points.map(
                                     (point: any, i: number) => (
@@ -1241,7 +1241,7 @@ export default function ModelInfoView({
                       )}
 
                       <div>
-                        <Text className="font-medium">{t("common.modelInfo")}</Text>
+                        <Text className="font-medium">{t("modelInfo")}</Text>
                         {isEditing ? (
                           <Form.Item name="model_info" className="mb-0">
                             <Input.TextArea
@@ -1292,7 +1292,7 @@ export default function ModelInfoView({
                         )}
                       </div>
                       <div>
-                        <Text className="font-medium">{t("common.teamId")}</Text>
+                        <Text className="font-medium">{t("teamId")}</Text>
                         <div className="mt-1 p-2 bg-gray-50 rounded">{modelData.model_info.team_id || "Not Set"}</div>
                       </div>
                     </div>
@@ -1318,7 +1318,7 @@ export default function ModelInfoView({
                   </div>
                 </Form>
               ) : (
-                <Text>{t("common.loading")}</Text>
+                <Text>{t("loading")}</Text>
               )}
             </Card>
           </TabPanel>
@@ -1333,7 +1333,7 @@ export default function ModelInfoView({
 
       <DeleteResourceModal
         isOpen={isDeleteModalOpen}
-        title={t("common.deleteModel")}
+        title={t("deleteModel")}
         alertMessage="This action cannot be undone."
         message="Are you sure you want to delete this model?"
         resourceInformationTitle="Model Information"
@@ -1372,7 +1372,7 @@ export default function ModelInfoView({
         <Modal
           open={isCredentialModalOpen}
           onCancel={() => setIsCredentialModalOpen(false)}
-          title={t("common.usingExistingCredential")}
+          title={t("usingExistingCredential")}
         >
           <Text>{modelData.litellm_params.litellm_credential_name}</Text>
         </Modal>

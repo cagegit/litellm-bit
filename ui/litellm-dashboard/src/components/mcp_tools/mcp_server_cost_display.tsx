@@ -37,14 +37,14 @@ const MCPServerCostDisplay: React.FC<MCPServerCostDisplayProps> = ({ costConfig 
           costConfig?.default_cost_per_query !== undefined &&
           costConfig?.default_cost_per_query !== null && (
             <div>
-              <Text className="font-medium">{t("mcp.defaultCostPerQuery")}</Text>
+              <Text className="font-medium">{t("defaultCostPerQuery")}</Text>
               <div className="text-green-600 font-mono">${costConfig.default_cost_per_query.toFixed(4)}</div>
             </div>
           )}
 
         {hasToolCosts && costConfig?.tool_name_to_cost_per_query && (
           <div>
-            <Text className="font-medium">{t("mcp.toolSpecificCosts")}</Text>
+            <Text className="font-medium">{t("toolSpecificCosts")}</Text>
             <div className="mt-2 space-y-2">
               {Object.entries(costConfig.tool_name_to_cost_per_query).map(
                 ([toolName, cost]) =>

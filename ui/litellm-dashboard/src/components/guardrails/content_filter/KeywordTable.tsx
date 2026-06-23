@@ -40,8 +40,8 @@ const KeywordTable: React.FC<KeywordTableProps> = ({ keywords, onActionChange, o
           style={{ width: 120 }}
           size="small"
         >
-          <Option value="BLOCK">{t("settings.block")}</Option>
-          <Option value="MASK">{t("settings.mask")}</Option>
+          <Option value="BLOCK">{t("block")}</Option>
+          <Option value="MASK">{t("mask")}</Option>
         </Select>
       ),
     },
@@ -64,7 +64,7 @@ const KeywordTable: React.FC<KeywordTableProps> = ({ keywords, onActionChange, o
   ];
 
   if (keywords.length === 0) {
-    return <div style={{ textAlign: "center", padding: "40px 0", color: "#999" }}>{t("settings.noKeywordsAdded")}</div>;
+    return <div style={{ textAlign: "center", padding: "40px 0", color: "#999" }}>{t("noKeywordsAdded")}</div>;
   }
 
   return <Table dataSource={keywords} columns={columns} rowKey="id" pagination={false} size="small" />;

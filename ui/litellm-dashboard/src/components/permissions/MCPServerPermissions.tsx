@@ -108,7 +108,7 @@ export function MCPServerPermissions({
     <div className="space-y-3">
       <div className="flex items-center gap-2">
         <ServerIcon className="h-4 w-4 text-blue-600" />
-        <Text className="font-semibold text-gray-900">{t("permissions.mcpServers")}</Text>
+        <Text className="font-semibold text-gray-900">{t("mcpServers")}</Text>
         <Badge color="blue" size="xs">
           {totalCount}
         </Badge>
@@ -241,7 +241,7 @@ export function MCPServerPermissions({
       ) : (
         <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-50 border border-gray-200">
           <ServerIcon className="h-4 w-4 text-gray-400" />
-          <Text className="text-gray-500 text-sm">{t("permissions.noMcpServersAccessGroupsOrToolsetsConfigured")}</Text>
+          <Text className="text-gray-500 text-sm">{t("noMcpServersAccessGroupsOrToolsetsConfigured")}</Text>
         </div>
       )}
     </div>

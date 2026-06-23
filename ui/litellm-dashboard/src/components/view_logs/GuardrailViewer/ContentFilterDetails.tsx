@@ -99,7 +99,7 @@ const ContentFilterDetails: React.FC<ContentFilterDetailsProps> = ({ response })
   if (detections.length === 0) {
     return (
       <div className="bg-white rounded-lg border border-gray-200 p-4">
-        <div className="text-gray-600 text-sm">{t("logs.noDetectionsFound")}</div>
+        <div className="text-gray-600 text-sm">{t("noDetectionsFound")}</div>
       </div>
     );
   }
@@ -147,7 +147,7 @@ const ContentFilterDetails: React.FC<ContentFilterDetailsProps> = ({ response })
 
       {/* Patterns Section */}
       {patterns.length > 0 && (
-        <Section title={t("logs.patternsMatched")} count={patterns.length} defaultOpen={true}>
+        <Section title={t("patternsMatched")} count={patterns.length} defaultOpen={true}>
           <div className="space-y-2">
             {patterns.map((detection, idx) => (
               <div key={idx} className="p-3 bg-gray-50 rounded-md">
@@ -167,7 +167,7 @@ const ContentFilterDetails: React.FC<ContentFilterDetailsProps> = ({ response })
 
       {/* Blocked Words Section */}
       {blockedWords.length > 0 && (
-        <Section title={t("logs.blockedWordsDetected")} count={blockedWords.length} defaultOpen={true}>
+        <Section title={t("blockedWordsDetected")} count={blockedWords.length} defaultOpen={true}>
           <div className="space-y-2">
             {blockedWords.map((detection, idx) => (
               <div key={idx} className="p-3 bg-gray-50 rounded-md">
@@ -190,7 +190,7 @@ const ContentFilterDetails: React.FC<ContentFilterDetailsProps> = ({ response })
 
       {/* Category Keywords Section */}
       {categoryKeywords.length > 0 && (
-        <Section title={t("logs.categoryKeywordsDetected")} count={categoryKeywords.length} defaultOpen={true}>
+        <Section title={t("categoryKeywordsDetected")} count={categoryKeywords.length} defaultOpen={true}>
           <div className="space-y-2">
             {categoryKeywords.map((detection, idx) => (
               <div key={idx} className="p-3 bg-gray-50 rounded-md">
@@ -220,7 +220,7 @@ const ContentFilterDetails: React.FC<ContentFilterDetailsProps> = ({ response })
       )}
 
       {/* Raw JSON (for debugging) */}
-      <Section title={t("logs.rawDetectionData")} defaultOpen={false}>
+      <Section title={t("rawDetectionData")} defaultOpen={false}>
         <pre className="bg-gray-50 rounded p-3 text-xs overflow-x-auto">{JSON.stringify(detections, null, 2)}</pre>
       </Section>
     </div>

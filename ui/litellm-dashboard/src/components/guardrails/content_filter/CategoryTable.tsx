@@ -70,9 +70,9 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
             style={{ width: 150 }}
             size="small"
           >
-            <Option value="high">{t("settings.high")}</Option>
-            <Option value="medium">{t("settings.medium")}</Option>
-            <Option value="low">{t("settings.low")}</Option>
+            <Option value="high">{t("high")}</Option>
+            <Option value="medium">{t("medium")}</Option>
+            <Option value="low">{t("low")}</Option>
           </Select>
         );
       },
@@ -93,8 +93,8 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
             style={{ width: 120 }}
             size="small"
           >
-            <Option value="BLOCK">{t("settings.block")}</Option>
-            <Option value="MASK">{t("settings.mask")}</Option>
+            <Option value="BLOCK">{t("block")}</Option>
+            <Option value="MASK">{t("mask")}</Option>
           </Select>
         );
       },
@@ -115,7 +115,7 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
   }
 
   if (categories.length === 0) {
-    return <div style={{ textAlign: "center", padding: "40px 0", color: "#999" }}>{t("settings.noCategoriesConfigured")}</div>;
+    return <div style={{ textAlign: "center", padding: "40px 0", color: "#999" }}>{t("noCategoriesConfigured")}</div>;
   }
 
   return <Table dataSource={categories} columns={columns} rowKey="id" pagination={false} size="small" />;

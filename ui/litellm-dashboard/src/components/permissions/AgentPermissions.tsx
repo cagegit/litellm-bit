@@ -61,7 +61,7 @@ export function AgentPermissions({ agents, agentAccessGroups = [], accessToken }
     <div className="space-y-3">
       <div className="flex items-center gap-2">
         <UserGroupIcon className="h-4 w-4 text-purple-600" />
-        <Text className="font-semibold text-gray-900">{t("permissions.agents")}</Text>
+        <Text className="font-semibold text-gray-900">{t("agents")}</Text>
         <Badge color="purple" size="xs">
           {totalCount}
         </Badge>
@@ -99,7 +99,7 @@ export function AgentPermissions({ agents, agentAccessGroups = [], accessToken }
       ) : (
         <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-gray-50 border border-gray-200">
           <UserGroupIcon className="h-4 w-4 text-gray-400" />
-          <Text className="text-gray-500 text-sm">{t("permissions.noAgentsOrAccessGroupsConfigured")}</Text>
+          <Text className="text-gray-500 text-sm">{t("noAgentsOrAccessGroupsConfigured")}</Text>
         </div>
       )}
     </div>

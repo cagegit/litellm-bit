@@ -69,8 +69,8 @@ const PromptEditorHeader: React.FC<PromptEditorHeaderProps> = ({
             { label: "Production", value: "production" },
           ]}
         />
-        <span className="px-2 py-0.5 text-xs bg-gray-100 text-gray-600 rounded">{t("prompts.draft")}</span>
-        <span className="text-xs text-gray-400">{t("prompts.unsavedChanges")}</span>
+        <span className="px-2 py-0.5 text-xs bg-gray-100 text-gray-600 rounded">{t("draft")}</span>
+        <span className="text-xs text-gray-400">{t("unsavedChanges")}</span>
       </div>
       <div className="flex items-center space-x-2">
         <PromptCodeSnippets

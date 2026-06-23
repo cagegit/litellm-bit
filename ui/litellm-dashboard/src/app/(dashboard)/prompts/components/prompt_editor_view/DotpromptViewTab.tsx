@@ -15,8 +15,8 @@ const DotpromptViewTab: React.FC<DotpromptViewTabProps> = ({ prompt }) => {
   return (
     <div className="p-6">
       <div className="mb-4">
-        <h3 className="text-sm font-medium text-gray-700 mb-2">{t("prompts.generatedpromptFile")}</h3>
-        <p className="text-xs text-gray-500">{t("prompts.thisIsTheDotpromptFormatThatWillBeSavedToTheDatabase")}</p>
+        <h3 className="text-sm font-medium text-gray-700 mb-2">{t("generatedpromptFile")}</h3>
+        <p className="text-xs text-gray-500">{t("thisIsTheDotpromptFormatThatWillBeSavedToTheDatabase")}</p>
       </div>
       <div className="bg-gray-50 border border-gray-200 rounded-lg p-4 overflow-auto">
         <pre className="text-sm text-gray-900 font-mono whitespace-pre-wrap">{dotpromptContent}</pre>

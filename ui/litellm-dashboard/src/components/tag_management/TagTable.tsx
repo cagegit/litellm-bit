@@ -121,16 +121,16 @@ const TagTable: React.FC<TagTableProps> = ({ data, onEdit, onDelete, onSelectTag
         return (
           <div className="flex space-x-2">
             {isDynamicSpendTag ? (
-              <Tooltip title={t("tagManagement.dynamicallyGeneratedSpendTagsCannotBeEdited")}>
+              <Tooltip title={t("dynamicallyGeneratedSpendTagsCannotBeEdited")}>
                 <Icon
                   icon={PencilAltIcon}
                   size="sm"
                   className="opacity-50 cursor-not-allowed"
-                  aria-label={t("tagManagement.editTagdisabled")}
+                  aria-label={t("editTagdisabled")}
                 />
               </Tooltip>
             ) : (
-              <Tooltip title={t("tagManagement.editTag")}>
+              <Tooltip title={t("editTag")}>
                 <Icon
                   icon={PencilAltIcon}
                   size="sm"
@@ -140,16 +140,16 @@ const TagTable: React.FC<TagTableProps> = ({ data, onEdit, onDelete, onSelectTag
               </Tooltip>
             )}
             {isDynamicSpendTag ? (
-              <Tooltip title={t("tagManagement.dynamicallyGeneratedSpendTagsCannotBeDeleted")}>
+              <Tooltip title={t("dynamicallyGeneratedSpendTagsCannotBeDeleted")}>
                 <Icon
                   icon={TrashIcon}
                   size="sm"
                   className="opacity-50 cursor-not-allowed"
-                  aria-label={t("tagManagement.deleteTagdisabled")}
+                  aria-label={t("deleteTagdisabled")}
                 />
               </Tooltip>
             ) : (
-              <Tooltip title={t("tagManagement.deleteTag1")}>
+              <Tooltip title={t("deleteTag1")}>
                 <Icon
                   icon={TrashIcon}
                   size="sm"
@@ -235,7 +235,7 @@ const TagTable: React.FC<TagTableProps> = ({ data, onEdit, onDelete, onSelectTag
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-8 text-center">
                   <div className="text-center text-gray-500">
-                    <p>{t("tagManagement.noTagsFound")}</p>
+                    <p>{t("noTagsFound")}</p>
                   </div>
                 </TableCell>
               </TableRow>

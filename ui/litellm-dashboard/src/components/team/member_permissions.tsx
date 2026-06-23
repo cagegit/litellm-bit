@@ -72,7 +72,7 @@ const MemberPermissions: React.FC<MemberPermissionsProps> = ({ teamId, accessTok
   };
 
   if (loading) {
-    return <div className="p-6 text-center">{t("team.loadingPermissions")}</div>;
+    return <div className="p-6 text-center">{t("loadingPermissions")}</div>;
   }
 
   const hasPermissions = permissions.length > 0;
@@ -80,7 +80,7 @@ const MemberPermissions: React.FC<MemberPermissionsProps> = ({ teamId, accessTok
   return (
     <Card className="bg-white shadow-md rounded-md p-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b pb-4 mb-6">
-        <Title className="mb-2 sm:mb-0">{t("team.memberPermissions")}</Title>
+        <Title className="mb-2 sm:mb-0">{t("memberPermissions")}</Title>
         {canEditTeam && hasChanges && (
           <div className="flex gap-3">
             <Button icon={<ReloadOutlined />} onClick={handleReset}>
@@ -93,16 +93,16 @@ const MemberPermissions: React.FC<MemberPermissionsProps> = ({ teamId, accessTok
         )}
       </div>
 
-      <Text className="mb-6 text-gray-600">{t("team.controlWhatTeamMembersCanDoWhenTheyAreNotTeamAdmins")}</Text>
+      <Text className="mb-6 text-gray-600">{t("controlWhatTeamMembersCanDoWhenTheyAreNotTeamAdmins")}</Text>
 
       {hasPermissions ? (
         <div className="overflow-x-auto">
           <Table className=" min-w-full">
             <TableHead>
               <TableRow>
-                <TableHeaderCell>{t("team.method")}</TableHeaderCell>
-                <TableHeaderCell>{t("team.endpoint")}</TableHeaderCell>
-                <TableHeaderCell>{t("team.description")}</TableHeaderCell>
+                <TableHeaderCell>{t("method")}</TableHeaderCell>
+                <TableHeaderCell>{t("endpoint")}</TableHeaderCell>
+                <TableHeaderCell>{t("description")}</TableHeaderCell>
                 <TableHeaderCell className="sticky right-0 bg-white shadow-[-4px_0_4px_-4px_rgba(0,0,0,0.1)] text-center">
                   Allow Access
                 </TableHeaderCell>
@@ -141,7 +141,7 @@ const MemberPermissions: React.FC<MemberPermissionsProps> = ({ teamId, accessTok
         </div>
       ) : (
         <div className="py-12">
-          <Empty description={t("team.noPermissionsAvailable")} />
+          <Empty description={t("noPermissionsAvailable")} />
         </div>
       )}
     </Card>

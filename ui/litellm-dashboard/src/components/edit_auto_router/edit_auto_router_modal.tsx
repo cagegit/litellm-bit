@@ -151,7 +151,7 @@ const EditAutoRouterModal: React.FC<EditAutoRouterModalProps> = ({
 
   return (
     <Modal
-      title={t("settings.editAutoRouterConfiguration")}
+      title={t("editAutoRouterConfiguration")}
       open={isVisible}
       onCancel={onCancel}
       footer={[
@@ -173,9 +173,9 @@ const EditAutoRouterModal: React.FC<EditAutoRouterModalProps> = ({
         <Form form={form} layout="vertical" className="space-y-4">
           {/* Auto Router Name */}
           <Form.Item
-            label={t("settings.autoRouterName")}
+            label={t("autoRouterName")}
             name="auto_router_name"
-            rules={[{ required: true, message: t("settings.autoRouterNameIsRequired") }]}
+            rules={[{ required: true, message: t("autoRouterNameIsRequired") }]}
           >
             <TextInput placeholder="e.g., auto_router_1, smart_routing" />
           </Form.Item>
@@ -193,12 +193,12 @@ const EditAutoRouterModal: React.FC<EditAutoRouterModalProps> = ({
 
           {/* Default Model */}
           <Form.Item
-            label={t("settings.defaultModel")}
+            label={t("defaultModel")}
             name="auto_router_default_model"
-            rules={[{ required: true, message: t("settings.defaultModelIsRequired") }]}
+            rules={[{ required: true, message: t("defaultModelIsRequired") }]}
           >
             <AntdSelect
-              placeholder={t("settings.selectADefaultModel")}
+              placeholder={t("selectADefaultModel")}
               onChange={(value) => {
                 setShowCustomDefaultModel(value === "custom");
               }}
@@ -208,9 +208,9 @@ const EditAutoRouterModal: React.FC<EditAutoRouterModalProps> = ({
           </Form.Item>
 
           {/* Embedding Model */}
-          <Form.Item label={t("settings.embeddingModel")} name="auto_router_embedding_model">
+          <Form.Item label={t("embeddingModel")} name="auto_router_embedding_model">
             <AntdSelect
-              placeholder={t("settings.selectAnEmbeddingModeloptional")}
+              placeholder={t("selectAnEmbeddingModeloptional")}
               onChange={(value) => {
                 setShowCustomEmbeddingModel(value === "custom");
               }}
@@ -223,14 +223,14 @@ const EditAutoRouterModal: React.FC<EditAutoRouterModalProps> = ({
           {/* Model Access Groups - Admin only */}
           {userRole === "Admin" && (
             <Form.Item
-              label={t("settings.modelAccessGroups")}
+              label={t("modelAccessGroups")}
               name="model_access_group"
-              tooltip={t("settings.controlWhoCanAccessThisAutoRouter")}
+              tooltip={t("controlWhoCanAccessThisAutoRouter")}
             >
               <AntdSelect
                 mode="tags"
                 showSearch
-                placeholder={t("settings.selectExistingGroupsOrTypeToCreateNewOnes")}
+                placeholder={t("selectExistingGroupsOrTypeToCreateNewOnes")}
                 optionFilterProp="children"
                 tokenSeparators={[","]}
                 options={modelAccessGroups.map((group) => ({

@@ -22,7 +22,7 @@ const VariableWarning: React.FC<VariableWarningProps> = ({ extractedVariables, v
       <div className="flex items-start gap-2">
         <span className="text-yellow-600 text-sm">⚠️</span>
         <div className="flex-1">
-          <p className="text-sm text-yellow-800 font-medium mb-1">{t("prompts.pleaseFillInAllTemplateVariablesAbove")}</p>
+          <p className="text-sm text-yellow-800 font-medium mb-1">{t("pleaseFillInAllTemplateVariablesAbove")}</p>
           <p className="text-xs text-yellow-700">
             Missing: {missingVariables.map((varName) => `{{${varName}}}`).join(", ")}
           </p>

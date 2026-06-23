@@ -70,7 +70,7 @@ export const modelHubColumns = (
           <div className="space-y-1">
             <div className="flex items-center space-x-2">
               <Text className="font-medium text-sm">{model.model_group}</Text>
-              <Tooltip title={t("common.copyModelName")}>
+              <Tooltip title={t("copyModelName")}>
                 <CopyOutlined
                   onClick={() => copyToClipboard(model.model_group)}
                   className="cursor-pointer text-gray-500 hover:text-blue-500 text-xs"
@@ -238,8 +238,8 @@ export const modelHubColumns = (
 
         return (
           <Button size="xs" variant="secondary" onClick={() => showModal(model)} icon={InfoCircleOutlined}>
-            <span className="hidden lg:inline">{t("common.details")}</span>
-            <span className="lg:hidden">{t("common.info")}</span>
+            <span className="hidden lg:inline">{t("details")}</span>
+            <span className="lg:hidden">{t("info")}</span>
           </Button>
         );
       },

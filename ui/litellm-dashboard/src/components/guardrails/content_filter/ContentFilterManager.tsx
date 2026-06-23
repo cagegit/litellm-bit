@@ -236,7 +236,7 @@ const ContentFilterManager: React.FC<ContentFilterManagerProps> = ({
   // Edit mode
   return (
     <>
-      <Divider orientation="left">{t("settings.contentFilterConfiguration")}</Divider>
+      <Divider orientation="left">{t("contentFilterConfiguration")}</Divider>
       {hasUnsavedChanges && (
         <Alert
           type="warning"

@@ -177,10 +177,10 @@ const MemberModal = <T extends BaseMember>({
       <Form form={form} onFinish={handleSubmit} labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} labelAlign="left">
         {config.showEmail && (
           <Form.Item
-            label={t("team.email")}
+            label={t("email")}
             name="user_email"
             className="mb-4"
-            rules={[{ type: "email", message: t("team.pleaseEnterAValidEmail") }]}
+            rules={[{ type: "email", message: t("pleaseEnterAValidEmail") }]}
           >
             <TextInput placeholder="user@example.com" />
           </Form.Item>
@@ -188,12 +188,12 @@ const MemberModal = <T extends BaseMember>({
 
         {config.showEmail && config.showUserId && (
           <div className="text-center mb-4">
-            <Text>{t("team.or")}</Text>
+            <Text>{t("or")}</Text>
           </div>
         )}
 
         {config.showUserId && (
-          <Form.Item label={t("team.userId")} name="user_id" className="mb-4">
+          <Form.Item label={t("userId")} name="user_id" className="mb-4">
             <TextInput placeholder="user_123" />
           </Form.Item>
         )}
@@ -201,7 +201,7 @@ const MemberModal = <T extends BaseMember>({
         <Form.Item
           label={
             <div className="flex items-center gap-2">
-              <span>{t("team.role")}</span>
+              <span>{t("role")}</span>
               {mode === "edit" && initialData && (
                 <span className="text-gray-500 text-sm">(Current: {getRoleLabel(initialData.role)})</span>
               )}
@@ -209,7 +209,7 @@ const MemberModal = <T extends BaseMember>({
           }
           name="role"
           className="mb-4"
-          rules={[{ required: true, message: t("team.pleaseSelectARole") }]}
+          rules={[{ required: true, message: t("pleaseSelectARole") }]}
         >
           <Select>
             {mode === "edit" && initialData

@@ -43,7 +43,7 @@ export function ToolsSection({ log }: ToolsSectionProps) {
             key: "1",
             label: (
               <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
-                <h3 className="text-lg font-medium text-gray-900">{t("logs.tools")}</h3>
+                <h3 className="text-lg font-medium text-gray-900">{t("tools")}</h3>
                 <Text type="secondary" style={{ fontSize: 14 }}>
                   {totalTools} provided, {calledTools} called
                 </Text>

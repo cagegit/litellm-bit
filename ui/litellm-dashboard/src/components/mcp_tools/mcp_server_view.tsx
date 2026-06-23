@@ -152,9 +152,9 @@ export const MCPServerView: React.FC<MCPServerViewProps> = ({
       <TabGroup index={selectedTabIndex} onIndexChange={setSelectedTabIndex}>
         <TabList className="mb-4">
           {[
-            <Tab key="overview">{t("mcp.overview")}</Tab>,
-            <Tab key="tools">{t("mcp.mcpTools")}</Tab>,
-            ...(isProxyAdmin ? [<Tab key="settings">{t("mcp.settings")}</Tab>] : []),
+            <Tab key="overview">{t("overview")}</Tab>,
+            <Tab key="tools">{t("mcpTools")}</Tab>,
+            ...(isProxyAdmin ? [<Tab key="settings">{t("settings")}</Tab>] : []),
           ]}
         </TabList>
 
@@ -163,7 +163,7 @@ export const MCPServerView: React.FC<MCPServerViewProps> = ({
           <TabPanel>
             <Grid numItems={1} numItemsSm={2} numItemsLg={3} className="gap-4">
               <Card className="p-4">
-                <Text className="text-xs font-medium text-gray-500 uppercase tracking-wide">{t("mcp.transport")}</Text>
+                <Text className="text-xs font-medium text-gray-500 uppercase tracking-wide">{t("transport")}</Text>
                 <div className="mt-3">
                   {getTransportBadge(
                     handleTransport(mcpServer.transport ?? undefined, mcpServer.spec_path ?? undefined),
@@ -172,12 +172,12 @@ export const MCPServerView: React.FC<MCPServerViewProps> = ({
               </Card>
 
               <Card className="p-4">
-                <Text className="text-xs font-medium text-gray-500 uppercase tracking-wide">{t("mcp.authentication")}</Text>
+                <Text className="text-xs font-medium text-gray-500 uppercase tracking-wide">{t("authentication")}</Text>
                 <div className="mt-3">{getAuthBadge(handleAuth(mcpServer.auth_type ?? undefined))}</div>
               </Card>
 
               <Card className="p-4">
-                <Text className="text-xs font-medium text-gray-500 uppercase tracking-wide">{t("mcp.hostUrl")}</Text>
+                <Text className="text-xs font-medium text-gray-500 uppercase tracking-wide">{t("hostUrl")}</Text>
                 <div className="mt-3 flex items-center gap-2">
                   <Text className="break-all overflow-wrap-anywhere font-mono text-sm">
                     {renderUrlWithToggle(mcpServer.url, showFullUrl)}
@@ -199,7 +199,7 @@ export const MCPServerView: React.FC<MCPServerViewProps> = ({
               </Card>
             </Grid>
             <Card className="mt-4 p-4">
-              <Text className="text-xs font-medium text-gray-500 uppercase tracking-wide">{t("mcp.costConfiguration")}</Text>
+              <Text className="text-xs font-medium text-gray-500 uppercase tracking-wide">{t("costConfiguration")}</Text>
               <div className="mt-3">
                 <MCPServerCostDisplay costConfig={mcpServer.mcp_info?.mcp_server_cost_info} />
               </div>
@@ -226,7 +226,7 @@ export const MCPServerView: React.FC<MCPServerViewProps> = ({
           <TabPanel>
             <Card>
               <div className="flex justify-between items-center mb-4">
-                <Title>{t("mcp.mcpServerSettings")}</Title>
+                <Title>{t("mcpServerSettings")}</Title>
                 {editing ? null : (
                   <Button variant="light" onClick={() => setEditing(true)}>
                     Edit Settings
@@ -245,25 +245,25 @@ export const MCPServerView: React.FC<MCPServerViewProps> = ({
               ) : (
                 <div className="divide-y divide-gray-100">
                   <div className="py-3 grid grid-cols-3 gap-4">
-                    <Text className="text-sm font-medium text-gray-500">{t("mcp.serverName")}</Text>
+                    <Text className="text-sm font-medium text-gray-500">{t("serverName")}</Text>
                     <div className="col-span-2 text-sm text-gray-900">
                       {mcpServer.server_name || <span className="text-gray-400">—</span>}
                     </div>
                   </div>
                   <div className="py-3 grid grid-cols-3 gap-4">
-                    <Text className="text-sm font-medium text-gray-500">{t("mcp.alias")}</Text>
+                    <Text className="text-sm font-medium text-gray-500">{t("alias")}</Text>
                     <div className="col-span-2 text-sm font-mono text-gray-900">
                       {mcpServer.alias || <span className="text-gray-400">—</span>}
                     </div>
                   </div>
                   <div className="py-3 grid grid-cols-3 gap-4">
-                    <Text className="text-sm font-medium text-gray-500">{t("mcp.description")}</Text>
+                    <Text className="text-sm font-medium text-gray-500">{t("description")}</Text>
                     <div className="col-span-2 text-sm text-gray-900">
                       {mcpServer.description || <span className="text-gray-400">—</span>}
                     </div>
                   </div>
                   <div className="py-3 grid grid-cols-3 gap-4">
-                    <Text className="text-sm font-medium text-gray-500">{t("mcp.url")}</Text>
+                    <Text className="text-sm font-medium text-gray-500">{t("url")}</Text>
                     <div className="col-span-2 text-sm font-mono text-gray-900 break-all flex items-center gap-2">
                       {renderUrlWithToggle(mcpServer.url, showFullUrl)}
                       {hasToken && (
@@ -277,17 +277,17 @@ export const MCPServerView: React.FC<MCPServerViewProps> = ({
                     </div>
                   </div>
                   <div className="py-3 grid grid-cols-3 gap-4">
-                    <Text className="text-sm font-medium text-gray-500">{t("mcp.transport")}</Text>
+                    <Text className="text-sm font-medium text-gray-500">{t("transport")}</Text>
                     <div className="col-span-2">
                       {getTransportBadge(handleTransport(mcpServer.transport, mcpServer.spec_path))}
                     </div>
                   </div>
                   <div className="py-3 grid grid-cols-3 gap-4">
-                    <Text className="text-sm font-medium text-gray-500">{t("mcp.authentication")}</Text>
+                    <Text className="text-sm font-medium text-gray-500">{t("authentication")}</Text>
                     <div className="col-span-2">{getAuthBadge(handleAuth(mcpServer.auth_type))}</div>
                   </div>
                   <div className="py-3 grid grid-cols-3 gap-4">
-                    <Text className="text-sm font-medium text-gray-500">{t("mcp.extraHeaders")}</Text>
+                    <Text className="text-sm font-medium text-gray-500">{t("extraHeaders")}</Text>
                     <div className="col-span-2 text-sm text-gray-900">
                       {mcpServer.extra_headers && mcpServer.extra_headers.length > 0 ? (
                         mcpServer.extra_headers.join(", ")
@@ -297,7 +297,7 @@ export const MCPServerView: React.FC<MCPServerViewProps> = ({
                     </div>
                   </div>
                   <div className="py-3 grid grid-cols-3 gap-4">
-                    <Text className="text-sm font-medium text-gray-500">{t("mcp.allowAllKeys")}</Text>
+                    <Text className="text-sm font-medium text-gray-500">{t("allowAllKeys")}</Text>
                     <div className="col-span-2">
                       {mcpServer.allow_all_keys ? (
                         <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-green-50 text-green-700 rounded-full border border-green-200 text-xs font-medium">
@@ -312,7 +312,7 @@ export const MCPServerView: React.FC<MCPServerViewProps> = ({
                     </div>
                   </div>
                   <div className="py-3 grid grid-cols-3 gap-4">
-                    <Text className="text-sm font-medium text-gray-500">{t("mcp.networkAccess")}</Text>
+                    <Text className="text-sm font-medium text-gray-500">{t("networkAccess")}</Text>
                     <div className="col-span-2">
                       {mcpServer.available_on_public_internet ? (
                         <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-green-50 text-green-700 rounded-full border border-green-200 text-xs font-medium">
@@ -329,7 +329,7 @@ export const MCPServerView: React.FC<MCPServerViewProps> = ({
                   </div>
                   {handleAuth(mcpServer.auth_type) === "oauth2" && (
                     <div className="py-3 grid grid-cols-3 gap-4">
-                      <Text className="text-sm font-medium text-gray-500">{t("mcp.delegateAuthToUpstream")}</Text>
+                      <Text className="text-sm font-medium text-gray-500">{t("delegateAuthToUpstream")}</Text>
                       <div className="col-span-2">
                         {mcpServer.delegate_auth_to_upstream ? (
                           <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-green-50 text-green-700 rounded-full border border-green-200 text-xs font-medium">
@@ -350,7 +350,7 @@ export const MCPServerView: React.FC<MCPServerViewProps> = ({
                       (h) => typeof h === "string" && h.toLowerCase() === "authorization",
                     ) && (
                       <div className="py-3 grid grid-cols-3 gap-4">
-                        <Text className="text-sm font-medium text-gray-500">{t("mcp.oauthPassThrough")}</Text>
+                        <Text className="text-sm font-medium text-gray-500">{t("oauthPassThrough")}</Text>
                         <div className="col-span-2">
                           {mcpServer.oauth_passthrough ? (
                             <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-green-50 text-green-700 rounded-full border border-green-200 text-xs font-medium">
@@ -366,7 +366,7 @@ export const MCPServerView: React.FC<MCPServerViewProps> = ({
                       </div>
                     )}
                   <div className="py-3 grid grid-cols-3 gap-4">
-                    <Text className="text-sm font-medium text-gray-500">{t("mcp.accessGroups")}</Text>
+                    <Text className="text-sm font-medium text-gray-500">{t("accessGroups")}</Text>
                     <div className="col-span-2">
                       {mcpServer.mcp_access_groups && mcpServer.mcp_access_groups.length > 0 ? (
                         <div className="flex flex-wrap gap-1.5">
@@ -385,7 +385,7 @@ export const MCPServerView: React.FC<MCPServerViewProps> = ({
                     </div>
                   </div>
                   <div className="py-3 grid grid-cols-3 gap-4">
-                    <Text className="text-sm font-medium text-gray-500">{t("mcp.allowedTools")}</Text>
+                    <Text className="text-sm font-medium text-gray-500">{t("allowedTools")}</Text>
                     <div className="col-span-2">
                       {mcpServer.allowed_tools && mcpServer.allowed_tools.length > 0 ? (
                         <div className="flex flex-wrap gap-1.5">
@@ -406,7 +406,7 @@ export const MCPServerView: React.FC<MCPServerViewProps> = ({
                     </div>
                   </div>
                   <div className="py-3 grid grid-cols-3 gap-4">
-                    <Text className="text-sm font-medium text-gray-500">{t("mcp.cost")}</Text>
+                    <Text className="text-sm font-medium text-gray-500">{t("cost")}</Text>
                     <div className="col-span-2">
                       <MCPServerCostDisplay costConfig={mcpServer.mcp_info?.mcp_server_cost_info} />
                     </div>

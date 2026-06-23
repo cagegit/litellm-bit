@@ -178,7 +178,7 @@ const RoutingGroupsTable: React.FC<RoutingGroupsTableProps> = ({ groups, loading
       align: "right",
       render: (_, group) => (
         <Flex justify="flex-end" align="center" gap={8}>
-          <Tooltip title={t("settings.edit")}>
+          <Tooltip title={t("edit")}>
             <Button
               type="text"
               icon={<EditOutlined />}
@@ -188,7 +188,7 @@ const RoutingGroupsTable: React.FC<RoutingGroupsTableProps> = ({ groups, loading
               }}
             />
           </Tooltip>
-          <Tooltip title={t("settings.delete")}>
+          <Tooltip title={t("delete")}>
             <Button
               type="text"
               danger
@@ -218,7 +218,7 @@ const RoutingGroupsTable: React.FC<RoutingGroupsTableProps> = ({ groups, loading
           <div className="bg-gray-50 border border-gray-200 rounded-md p-4 my-2">
             <Flex align="center" gap={8} className="mb-2">
               <CodeOutlined className="text-blue-500" />
-              <Text strong>{t("settings.howRoutingWorksForThisGroup")}</Text>
+              <Text strong>{t("howRoutingWorksForThisGroup")}</Text>
             </Flex>
             <Paragraph className="text-sm text-gray-600 mb-3">
               Callers request any model in the group by name — LiteLLM picks a deployment behind the scenes using the{" "}

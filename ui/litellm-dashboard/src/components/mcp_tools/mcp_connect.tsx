@@ -485,7 +485,7 @@ const MCPConnect: React.FC<MCPConnectProps> = ({ currentServerAccessGroups = [] 
     <div>
       <Space direction="vertical" size="large" className="w-full">
         <div>
-          <TremorTitle className="text-3xl font-bold text-gray-900 mb-3">{t("mcp.connectToYourMcpClient")}</TremorTitle>
+          <TremorTitle className="text-3xl font-bold text-gray-900 mb-3">{t("connectToYourMcpClient")}</TremorTitle>
           <TremorText className="text-lg text-gray-600">
             Use tools directly from any MCP client with LiteLLM MCP. Enable your AI assistant to perform real-world
             tasks through a simple, secure connection.

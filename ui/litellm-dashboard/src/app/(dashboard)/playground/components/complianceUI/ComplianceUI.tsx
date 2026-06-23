@@ -703,8 +703,8 @@ export default function ComplianceUI({
         {/* Top config */}
         <div className="flex-shrink-0 border-b border-gray-200 px-6 py-4">
           <div className="mb-3">
-            <h3 className="text-sm font-semibold text-gray-900">{t("playground.testConfiguration")}</h3>
-            <p className="text-xs text-gray-500 mt-0.5">{t("playground.selectPoliciesGuardrailsOrBothToTestAgainst")}</p>
+            <h3 className="text-sm font-semibold text-gray-900">{t("testConfiguration")}</h3>
+            <p className="text-xs text-gray-500 mt-0.5">{t("selectPoliciesGuardrailsOrBothToTestAgainst")}</p>
           </div>
 
           <div className="flex items-start gap-3 flex-wrap">
@@ -786,7 +786,7 @@ export default function ComplianceUI({
                           type="button"
                           onClick={() => toggleGuardrail(id)}
                           className="hover:text-indigo-900"
-                          aria-label={t("playground.remove")}
+                          aria-label={t("remove")}
                         >
                           <X className="w-2.5 h-2.5" />
                         </button>
@@ -844,7 +844,7 @@ export default function ComplianceUI({
             <div className="flex-1 overflow-y-auto min-h-0">
               <div className="px-4 pt-4 pb-2">
                 <div className="flex items-center justify-between mb-2.5">
-                  <h3 className="text-sm font-semibold text-gray-900">{t("playground.testPrompts")}</h3>
+                  <h3 className="text-sm font-semibold text-gray-900">{t("testPrompts")}</h3>
                   <span className="text-[11px] text-gray-400 tabular-nums">
                     {selectedPromptIds.size}/{totalPromptCount}
                   </span>
@@ -856,7 +856,7 @@ export default function ComplianceUI({
                     type="text"
                     value={searchPrompt}
                     onChange={(e) => setSearchPrompt(e.target.value)}
-                    placeholder={t("playground.searchPrompts")}
+                    placeholder={t("searchPrompts")}
                     className="w-full border border-gray-200 rounded-lg pl-8 pr-3 py-1.5 text-xs placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400"
                   />
                 </div>
@@ -909,7 +909,7 @@ export default function ComplianceUI({
                   <textarea
                     value={newPromptText}
                     onChange={(e) => setNewPromptText(e.target.value)}
-                    placeholder={t("playground.enterYourTestPrompt")}
+                    placeholder={t("enterYourTestPrompt")}
                     rows={2}
                     className="w-full border border-gray-200 rounded px-2.5 py-1.5 text-xs text-gray-700 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-400 resize-none bg-white"
                   />
@@ -957,7 +957,7 @@ export default function ComplianceUI({
               {showCsvUpload && (
                 <div className="mx-4 mb-2 border border-blue-200 bg-blue-50/30 rounded-lg p-3">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-[11px] font-semibold text-gray-700">{t("playground.uploadCsvDataset")}</span>
+                    <span className="text-[11px] font-semibold text-gray-700">{t("uploadCsvDataset")}</span>
                     <button
                       type="button"
                       onClick={downloadCsvTemplate}
@@ -1141,7 +1141,7 @@ export default function ComplianceUI({
                                               deleteCustomPrompt(prompt.id);
                                             }}
                                             className="opacity-0 group-hover:opacity-100 p-0.5 text-gray-400 hover:text-red-500 transition-all flex-shrink-0"
-                                            aria-label={t("playground.delete")}
+                                            aria-label={t("delete")}
                                           >
                                             <Trash2 className="w-3 h-3" />
                                           </button>
@@ -1231,7 +1231,7 @@ export default function ComplianceUI({
                         <div className="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center mx-auto mb-3">
                           <MessageSquare className="w-5 h-5 text-gray-400" />
                         </div>
-                        <p className="text-xs text-gray-500">{t("playground.typeAPromptBelowToQuicklyTestIt")}</p>
+                        <p className="text-xs text-gray-500">{t("typeAPromptBelowToQuicklyTestIt")}</p>
                       </div>
                     </div>
                   )}
@@ -1282,13 +1282,13 @@ export default function ComplianceUI({
                       value={quickTestInput}
                       onChange={(e) => setQuickTestInput(e.target.value)}
                       onKeyDown={handleQuickTestKeyDown}
-                      placeholder={t("playground.enterTextToTest")}
+                      placeholder={t("enterTextToTest")}
                       rows={3}
                       className="w-full px-3 pt-3 pb-1 text-sm text-gray-700 placeholder:text-gray-400 focus:outline-none resize-none"
                     />
                     <div className="flex items-center justify-between px-3 pb-2">
                       <span className="text-[10px] text-gray-400">
-                        Press <kbd className="px-1 py-0.5 bg-gray-100 rounded text-[10px] font-mono">{t("playground.enter")}</kbd> to
+                        Press <kbd className="px-1 py-0.5 bg-gray-100 rounded text-[10px] font-mono">{t("enter")}</kbd> to
                         submit ·{" "}
                         <kbd className="px-1 py-0.5 bg-gray-100 rounded text-[10px] font-mono">Shift+Enter</kbd> for new
                         line
@@ -1313,7 +1313,7 @@ export default function ComplianceUI({
               <div className="flex-1 flex flex-col overflow-hidden bg-white min-h-0">
                 <div className="px-5 py-3 border-b border-gray-200 flex-shrink-0">
                   <div className="flex items-center justify-between mb-2">
-                    <h2 className="text-sm font-semibold text-gray-900">{t("playground.results")}</h2>
+                    <h2 className="text-sm font-semibold text-gray-900">{t("results")}</h2>
                     {testResults.length > 0 && (
                       <div className="flex items-center gap-2">
                         <button
@@ -1331,14 +1331,14 @@ export default function ComplianceUI({
                           </span>
                           <span
                             className="flex items-center gap-1 text-amber-600"
-                            title={t("playground.allowedContentThatShouldHaveBeenBlocked")}
+                            title={t("allowedContentThatShouldHaveBeenBlocked")}
                           >
                             <AlertTriangle className="w-3 h-3" />
                             {falseNegativeCount} FN
                           </span>
                           <span
                             className="flex items-center gap-1 text-red-600"
-                            title={t("playground.blockedContentThatShouldHaveBeenAllowed")}
+                            title={t("blockedContentThatShouldHaveBeenAllowed")}
                           >
                             <X className="w-3 h-3" />
                             {falsePositiveCount} FP
@@ -1406,12 +1406,12 @@ export default function ComplianceUI({
                               <span className="text-gray-500">correct</span>
                             </span>
                             <div className="w-px h-4 bg-gray-200" />
-                            <span title={t("playground.allowedContentThatShouldHaveBeenBlocked")}>
+                            <span title={t("allowedContentThatShouldHaveBeenBlocked")}>
                               <span className="font-semibold text-amber-700">{falseNegativeCount}</span>{" "}
                               <span className="text-gray-500">false negative</span>
                             </span>
                             <div className="w-px h-4 bg-gray-200" />
-                            <span title={t("playground.blockedContentThatShouldHaveBeenAllowed")}>
+                            <span title={t("blockedContentThatShouldHaveBeenAllowed")}>
                               <span className="font-semibold text-red-700">{falsePositiveCount}</span>{" "}
                               <span className="text-gray-500">false positive</span>
                             </span>
@@ -1425,7 +1425,7 @@ export default function ComplianceUI({
                                   : "bg-red-50 border-red-200 text-red-700"
                             }`}
                           >
-                            <span className="text-[10px] font-semibold uppercase tracking-wider opacity-90">{t("playground.score")}</span>
+                            <span className="text-[10px] font-semibold uppercase tracking-wider opacity-90">{t("score")}</span>
                             <span>{Math.round((matchCount / completedResults.length) * 100)}%</span>
                           </div>
                         </div>

@@ -61,16 +61,16 @@ const SpendByProvider: React.FC<SpendByProviderProps> = ({ loading, isDateChangi
   return (
     <Card className="h-full">
       <div className="flex justify-between items-center mb-4">
-        <Title>{t("common.spendByProvider")}</Title>
+        <Title>{t("spendByProvider")}</Title>
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
-            <label className="text-sm text-gray-700">{t("common.showZeroSpend")}</label>
+            <label className="text-sm text-gray-700">{t("showZeroSpend")}</label>
             <Switch checked={includeZeroSpend} onChange={setIncludeZeroSpend} />
           </div>
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-1">
-              <label className="text-sm text-gray-700">{t("common.showUnknown")}</label>
-              <Tooltip title={t("common.requestsThatFailedToRouteToAProvider")}>
+              <label className="text-sm text-gray-700">{t("showUnknown")}</label>
+              <Tooltip title={t("requestsThatFailedToRouteToAProvider")}>
                 <InfoCircleOutlined className="text-gray-400 hover:text-gray-600" />
               </Tooltip>
             </div>
@@ -96,11 +96,11 @@ const SpendByProvider: React.FC<SpendByProviderProps> = ({ loading, isDateChangi
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableHeaderCell>{t("common.provider")}</TableHeaderCell>
-                  <TableHeaderCell>{t("common.spend")}</TableHeaderCell>
-                  <TableHeaderCell className="text-green-600">{t("common.successful")}</TableHeaderCell>
-                  <TableHeaderCell className="text-red-600">{t("common.failed")}</TableHeaderCell>
-                  <TableHeaderCell>{t("common.tokens")}</TableHeaderCell>
+                  <TableHeaderCell>{t("provider")}</TableHeaderCell>
+                  <TableHeaderCell>{t("spend")}</TableHeaderCell>
+                  <TableHeaderCell className="text-green-600">{t("successful")}</TableHeaderCell>
+                  <TableHeaderCell className="text-red-600">{t("failed")}</TableHeaderCell>
+                  <TableHeaderCell>{t("tokens")}</TableHeaderCell>
                 </TableRow>
               </TableHead>
               <TableBody>

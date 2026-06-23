@@ -169,14 +169,14 @@ const MCPToolPermissions: React.FC<MCPToolPermissionsProps> = ({
               {isLoading && (
                 <div className="flex items-center justify-center py-8">
                   <Spin size="large" />
-                  <Text className="ml-3 text-gray-500">{t("mcp.loadingTools")}</Text>
+                  <Text className="ml-3 text-gray-500">{t("loadingTools")}</Text>
                 </div>
               )}
 
               {/* Error */}
               {error && !isLoading && (
                 <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-center">
-                  <Text className="text-red-600 font-medium">{t("mcp.unableToLoadTools")}</Text>
+                  <Text className="text-red-600 font-medium">{t("unableToLoadTools")}</Text>
                   <Text className="text-sm text-red-500 mt-1">{error}</Text>
                 </div>
               )}
@@ -226,7 +226,7 @@ const MCPToolPermissions: React.FC<MCPToolPermissionsProps> = ({
               {/* Empty State */}
               {!isLoading && !error && tools.length === 0 && (
                 <div className="text-center py-6">
-                  <Text className="text-gray-500">{t("mcp.noToolsAvailable")}</Text>
+                  <Text className="text-gray-500">{t("noToolsAvailable")}</Text>
                 </div>
               )}
             </div>
