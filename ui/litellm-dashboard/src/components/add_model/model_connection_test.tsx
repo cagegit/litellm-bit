@@ -62,7 +62,7 @@ const ModelConnectionTest: React.FC<ModelConnectionTestProps> = ({
 
       const response = await testConnectionRequest(accessToken, litellmParamsObj, modelInfoObj, modelInfoObj?.mode);
       if (response.status === "success") {
-        NotificationsManager.success("Connection test successful!");
+        NotificationsManager.success(t("connectionTestSuccessful"));
         setError(null);
         setIsSuccess(true);
       } else {
@@ -277,7 +277,7 @@ ${formattedBody}
                 icon={<CopyOutlined />}
                 onClick={() => {
                   navigator.clipboard.writeText(curlCommand || "");
-                  NotificationsManager.success("Copied to clipboard");
+                  NotificationsManager.success(t("copiedToClipboard"));
                 }}
               >
                 Copy to Clipboard

@@ -34,7 +34,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
           value={inputMessage}
           onChange={(e) => onInputChange(e.target.value)}
           onKeyDown={onKeyDown}
-          placeholder="Type your message... (Shift+Enter for new line)"
+          placeholder={t("typeYourMessage")}
           disabled={isLoading}
           className="flex-1"
           autoSize={{ minRows: 1, maxRows: 4 }}

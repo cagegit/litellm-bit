@@ -6,6 +6,7 @@ import ProviderSpecificFields from "../add_model/provider_specific_fields";
 import { CredentialItem } from "../networking";
 import { Providers, providerLogoMap } from "../provider_info_helpers";
 import { resetCredentialFormOnProviderChange } from "./credential_form_helpers";
+import { useTranslations } from "@/i18n";
 const { Link } = Typography;
 
 interface EditCredentialsModalProps {
@@ -23,6 +24,7 @@ export default function EditCredentialsModal({
   uploadProps,
   existingCredential,
 }: EditCredentialsModalProps) {
+  const { t } = useTranslations("models");
   const [form] = Form.useForm();
   const [selectedProvider, setSelectedProvider] = useState<Providers>(Providers.Anthropic);
 
@@ -59,7 +61,7 @@ export default function EditCredentialsModal({
 
   return (
     <Modal
-      title="Edit Credential"
+      title={t("editCredential")}
       open={open}
       onCancel={() => {
         onCancel();
@@ -72,13 +74,13 @@ export default function EditCredentialsModal({
       <Form form={form} onFinish={handleSubmit} layout="vertical">
         {/* Credential Name */}
         <Form.Item
-          label="Credential Name:"
+          label={t("credentialName")}
           name="credential_name"
           rules={[{ required: true, message: "Credential name is required" }]}
           initialValue={existingCredential?.credential_name}
         >
           <TextInput
-            placeholder="Enter a friendly name for these credentials"
+            placeholder={t("friendlyNameForCredentials")}
             disabled={existingCredential?.credential_name ? true : false}
           />
         </Form.Item>
@@ -86,7 +88,7 @@ export default function EditCredentialsModal({
         {/* Provider Selection */}
         <Form.Item
           rules={[{ required: true, message: "Required" }]}
-          label="Provider:"
+          label={t("provider")}
           name="custom_llm_provider"
           tooltip="Helper to auto-populate provider specific fields"
         >
@@ -126,7 +128,7 @@ export default function EditCredentialsModal({
 
         {/* Modal Footer */}
         <div className="flex justify-between items-center">
-          <Tooltip title="Get help on our github">
+          <Tooltip title={t("getHelpOnGithub")}>
             <Link href="https://github.com/BerriAI/litellm/issues">Need Help?</Link>
           </Tooltip>
 

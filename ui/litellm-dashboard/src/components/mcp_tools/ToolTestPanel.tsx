@@ -115,6 +115,7 @@ export function ToolTestPanel({
   error: Error | null;
   onClose: () => void;
 }) {
+  const { t } = useTranslations("mcp");
   const [form] = Form.useForm();
   const [viewMode, setViewMode] = React.useState<"formatted" | "json">("formatted");
   const [startTime, setStartTime] = React.useState<number | null>(null);
@@ -280,7 +281,7 @@ export function ToolTestPanel({
   const handleCopyResult = async () => {
     const success = await copyToClipboard(JSON.stringify(result, null, 2));
     if (success) {
-      NotificationsManager.success("Result copied to clipboard");
+      NotificationsManager.success(t("resultCopiedToClipboard"));
     } else {
       NotificationsManager.fromBackend("Failed to copy result");
     }
@@ -289,7 +290,7 @@ export function ToolTestPanel({
   const handleCopyToolName = async () => {
     const success = await copyToClipboard(tool.name);
     if (success) {
-      NotificationsManager.success("Tool name copied to clipboard");
+      NotificationsManager.success(t("toolNameCopiedToClipboard"));
     } else {
       NotificationsManager.fromBackend("Failed to copy tool name");
     }

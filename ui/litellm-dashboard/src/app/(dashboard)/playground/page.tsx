@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "@/i18n";
 
 import { useState, useEffect } from "react";
 import AgentBuilderView from "@/app/(dashboard)/playground/components/chat_ui/AgentBuilderView";
@@ -15,6 +16,7 @@ interface ProxySettings {
 }
 
 export default function PlaygroundPage() {
+  const { t } = useTranslations("playground");
   const { accessToken, userRole, userId, disabledPersonalKeyCreation, token } = useAuthorized();
   const [proxySettings, setProxySettings] = useState<ProxySettings | undefined>(undefined);
 

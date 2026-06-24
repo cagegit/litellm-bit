@@ -160,7 +160,7 @@ const CloudZeroExportModal: React.FC<CloudZeroExportModalProps> = ({ isOpen, onC
     setExportLoading(true);
     try {
       // TODO: Implement CSV export functionality
-      NotificationsManager.info("CSV export functionality coming soon!");
+      NotificationsManager.info(t("csvExportComingSoon"));
       onClose();
     } catch (error) {
       console.error("Error exporting CSV:", error);

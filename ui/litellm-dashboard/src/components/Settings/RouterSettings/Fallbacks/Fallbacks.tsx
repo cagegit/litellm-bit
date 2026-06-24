@@ -10,6 +10,7 @@ import NotificationsManager from "../../../molecules/notifications_manager";
 import { getCallbacksCall, setCallbacksCall } from "../../../networking";
 import { isProxyAdminRole } from "@/utils/roles";
 import AddFallbacks from "./AddFallbacks";
+import { useTranslations } from "@/i18n";
 
 type FallbackEntry = { [modelName: string]: string[] };
 type Fallbacks = FallbackEntry[];
@@ -67,7 +68,7 @@ interface FallbacksProps {
   userID: string | null;
 }
 
-async function testFallbackModelResponse(selectedModel: string, accessToken: string) {
+async function testFallbackModelResponse(selectedModel: string, accessToken: string, testingMessage: string) {
   const isLocal = process.env.NODE_ENV === "development";
   if (isLocal != true) {
     console.log = function () {};
@@ -80,7 +81,7 @@ async function testFallbackModelResponse(selectedModel: string, accessToken: str
   });
 
   try {
-    NotificationsManager.info("Testing fallback model response...");
+    NotificationsManager.info(testingMessage);
 
     const response = await client.chat.completions.create({
       model: selectedModel,
@@ -115,6 +116,7 @@ async function testFallbackModelResponse(selectedModel: string, accessToken: str
 }
 
 const Fallbacks: React.FC<FallbacksProps> = ({ accessToken, userRole, userID }) => {
+  const { t } = useTranslations("settings");
   const [routerSettings, setRouterSettings] = useState<{ [key: string]: any }>({});
   const [isDeleting, setIsDeleting] = useState(false);
   const [fallbackToDelete, setFallbackToDelete] = useState<FallbackEntry | null>(null);
@@ -180,7 +182,7 @@ const Fallbacks: React.FC<FallbacksProps> = ({ accessToken, userRole, userID }) 
     try {
       await setCallbacksCall(accessToken, payload);
       setRouterSettings(updatedSettings);
-      NotificationsManager.success("Router settings updated successfully");
+      NotificationsManager.success(t("routerSettingsUpdatedSuccessfully"));
     } catch (error) {
       NotificationsManager.fromBackend("Failed to update router settings: " + error);
     } finally {
@@ -274,15 +276,21 @@ const Fallbacks: React.FC<FallbacksProps> = ({ accessToken, userRole, userID }) 
                   <TableCell className="align-top">
                     {canModify && (
                       <>
-                        <Tooltip title="Test fallback">
+                        <Tooltip title={t("testFallback")}>
                           <Icon
                             icon={PlayIcon}
                             size="sm"
-                            onClick={() => testFallbackModelResponse(Object.keys(item)[0], accessToken || "")}
+                            onClick={() =>
+                              testFallbackModelResponse(
+                                Object.keys(item)[0],
+                                accessToken || "",
+                                t("testingFallbackModelResponse"),
+                              )
+                            }
                             className="cursor-pointer hover:text-blue-600"
                           />
                         </Tooltip>
-                        <Tooltip title="Delete fallback">
+                        <Tooltip title={t("deleteFallback")}>
                           <span
                             data-testid="delete-fallback-button"
                             role="button"
@@ -305,12 +313,12 @@ const Fallbacks: React.FC<FallbacksProps> = ({ accessToken, userRole, userID }) 
       )}
       <DeleteResourceModal
         isOpen={isDeleteModalOpen}
-        title="Delete Fallback?"
+        title={t("deleteFallbackQuestion")}
         message="Are you sure you want to delete this fallback? This action cannot be undone."
         resourceInformationTitle="Fallback Information"
         resourceInformation={[
           {
-            label: "Model Name",
+            label: t("modelName"),
             value: fallbackToDelete ? Object.keys(fallbackToDelete)[0] : "",
             code: true,
           },

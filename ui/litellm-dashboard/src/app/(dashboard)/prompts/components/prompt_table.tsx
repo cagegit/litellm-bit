@@ -95,7 +95,7 @@ const PromptTable: React.FC<PromptTableProps> = ({
                 {displayId}
               </Button>
             </Tooltip>
-            <Tooltip title="Copy prompt ID">
+            <Tooltip title={t("copyPromptId")}>
               <CopyOutlined
                 onClick={(e) => {
                   e.stopPropagation();
@@ -234,7 +234,7 @@ const PromptTable: React.FC<PromptTableProps> = ({
 
               return (
                 <div className="flex items-center gap-1">
-                  <Tooltip title="Delete prompt">
+                  <Tooltip title={t("deletePrompt")}>
                     <Button
                       size="xs"
                       variant="light"

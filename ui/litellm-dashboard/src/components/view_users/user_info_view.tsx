@@ -179,7 +179,7 @@ export default function UserInfoView({
         user_id: userId,
       };
       await teamMemberAddCall(accessToken, selectedTeamId, member);
-      NotificationsManager.success("User added to team successfully");
+      NotificationsManager.success(t("userAddedToTeam"));
       setIsAddTeamModalOpen(false);
       // Re-fetch user data to refresh teams
       const data = await userGetInfoV2(accessToken, userId);
@@ -219,7 +219,7 @@ export default function UserInfoView({
         user_id: userId,
       };
       await teamMemberDeleteCall(accessToken, teamToRemove.team_id, member);
-      NotificationsManager.success("User removed from team successfully");
+      NotificationsManager.success(t("userRemovedFromTeam"));
       setIsRemoveTeamModalOpen(false);
       setTeamToRemove(null);
       // Re-fetch user data to refresh teams
@@ -259,7 +259,7 @@ export default function UserInfoView({
       return;
     }
     try {
-      NotificationsManager.success("Generating password reset link...");
+      NotificationsManager.success(t("generatingPasswordResetLink"));
       const data = await invitationCreateCall(accessToken, userId);
       setInvitationLinkData(data);
       setIsInvitationLinkModalVisible(true);
@@ -273,7 +273,7 @@ export default function UserInfoView({
       if (!accessToken) return;
       setIsDeletingUser(true);
       await userDeleteCall(accessToken, [userId]);
-      NotificationsManager.success("User deleted successfully");
+      NotificationsManager.success(t("userDeletedSuccessfully"));
       if (onDelete) {
         onDelete();
       }
@@ -308,7 +308,7 @@ export default function UserInfoView({
         metadata: formValues.metadata ?? userData.metadata,
       });
 
-      NotificationsManager.success("User updated successfully");
+      NotificationsManager.success(t("userUpdatedSuccessfully"));
       setIsEditing(false);
     } catch (error) {
       console.error("Error updating user:", error);

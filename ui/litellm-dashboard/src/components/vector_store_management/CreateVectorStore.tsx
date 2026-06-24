@@ -167,7 +167,7 @@ const CreateVectorStore: React.FC<CreateVectorStoreProps> = ({ accessToken, onSu
 
       setIngestResults(results);
       NotificationsManager.success(
-        t("vectorStoreCreated", { count: results.length, vectorStoreId: vectorStoreId ?? "" }),
+        t("vectorStoreCreatedWithDocuments", { count: results.length }),
       );
 
       if (onSuccess && vectorStoreId) {

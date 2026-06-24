@@ -15,6 +15,7 @@ import {
 } from "antd";
 import React, { useEffect, useState } from "react";
 import { ModelGroup } from "@/components/llm_calls/fetch_models";
+import { useTranslations } from "@/i18n";
 
 const { Text } = Typography;
 
@@ -48,6 +49,7 @@ interface RouterConfigBuilderProps {
 }
 
 const RouterConfigBuilder: React.FC<RouterConfigBuilderProps> = ({ modelInfo, value, onChange }) => {
+  const { t } = useTranslations("models");
   const [routes, setRoutes] = useState<Route[]>([]);
   const [showJsonPreview, setShowJsonPreview] = useState<boolean>(false);
   const [expandedRoutes, setExpandedRoutes] = useState<string[]>([]);
@@ -158,7 +160,7 @@ const RouterConfigBuilder: React.FC<RouterConfigBuilderProps> = ({ modelInfo, va
           <Typography.Title level={4} style={{ margin: 0 }}>
             Routes Configuration
           </Typography.Title>
-          <Tooltip title="Configure routing logic to automatically select the best model based on user input patterns">
+          <Tooltip title={t("configureRoutingLogic")}>
             <InfoCircleOutlined className="text-gray-400" />
           </Tooltip>
         </Space>
@@ -204,7 +206,7 @@ const RouterConfigBuilder: React.FC<RouterConfigBuilderProps> = ({ modelInfo, va
                   <AntdSelect
                     value={route.model}
                     onChange={(value) => updateRoute(route.id, "model", value)}
-                    placeholder="Select model"
+                    placeholder={t("selectModel")}
                     showSearch
                     style={{ width: "100%" }}
                     options={modelOptions}
@@ -217,7 +219,7 @@ const RouterConfigBuilder: React.FC<RouterConfigBuilderProps> = ({ modelInfo, va
                   <TextArea
                     value={route.description}
                     onChange={(e) => updateRoute(route.id, "description", e.target.value)}
-                    placeholder="Describe when this route should be used..."
+                    placeholder={t("describeRouteUsage")}
                     rows={2}
                     style={{ width: "100%" }}
                   />
@@ -227,7 +229,7 @@ const RouterConfigBuilder: React.FC<RouterConfigBuilderProps> = ({ modelInfo, va
                 <div className="mb-4 w-full">
                   <div className="flex items-center gap-2 mb-2">
                     <Text className="text-sm font-medium">Score Threshold</Text>
-                    <Tooltip title="Minimum similarity score to route to this model (0-1)">
+                    <Tooltip title={t("minSimilarityScore")}>
                       <InfoCircleOutlined className="text-gray-400" />
                     </Tooltip>
                   </div>
@@ -246,7 +248,7 @@ const RouterConfigBuilder: React.FC<RouterConfigBuilderProps> = ({ modelInfo, va
                 <div className="w-full">
                   <div className="flex items-center gap-2 mb-2">
                     <Text className="text-sm font-medium">Example Utterances</Text>
-                    <Tooltip title="Training examples for this route. Type an utterance and press Enter to add it.">
+                    <Tooltip title={t("trainingExamples")}>
                       <InfoCircleOutlined className="text-gray-400" />
                     </Tooltip>
                   </div>
@@ -257,7 +259,7 @@ const RouterConfigBuilder: React.FC<RouterConfigBuilderProps> = ({ modelInfo, va
                     mode="tags"
                     value={route.utterances}
                     onChange={(utterances) => updateRoute(route.id, "utterances", utterances)}
-                    placeholder="Type an utterance and press Enter..."
+                    placeholder={t("typeUtteranceAndEnter")}
                     style={{ width: "100%" }}
                     tokenSeparators={["\n"]}
                     maxTagCount="responsive"

@@ -381,7 +381,7 @@ const AllModelsTab = ({
                     <div className="relative w-64">
                       <input
                         type="text"
-                        placeholder="Search model names..."
+                        placeholder={t("searchModelNames")}
                         data-testid="model-search-input"
                         className="w-full px-3 py-2 pl-8 border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         value={modelNameSearch}
@@ -439,7 +439,7 @@ const AllModelsTab = ({
                   <Button
                     icon={<SettingOutlined />}
                     onClick={() => setIsModelSettingsModalVisible(true)}
-                    title="Model Settings"
+                    title={t("modelSettings")}
                   />
                 </div>
 
@@ -452,7 +452,7 @@ const AllModelsTab = ({
                         className="w-full"
                         value={selectedModelGroup ?? "all"}
                         onChange={(value) => setSelectedModelGroup(value === "all" ? "all" : value)}
-                        placeholder="Filter by Public Model Name"
+                        placeholder={t("filterByPublicModelName")}
                         showSearch
                         options={[
                           { value: "all", label: "All Models" },
@@ -471,7 +471,7 @@ const AllModelsTab = ({
                         className="w-full"
                         value={selectedModelAccessGroupFilter ?? "all"}
                         onChange={(value) => setSelectedModelAccessGroupFilter(value === "all" ? null : value)}
-                        placeholder="Filter by Model Access Group"
+                        placeholder={t("filterByModelAccessGroup")}
                         showSearch
                         options={[
                           { value: "all", label: "All Model Access Groups" },
@@ -572,7 +572,7 @@ const AllModelsTab = ({
 
       <DeleteResourceModal
         isOpen={!!deleteModalModelId}
-        title="Delete Model"
+        title={t("deleteModel")}
         alertMessage="This action cannot be undone."
         message="Are you sure you want to delete this model?"
         resourceInformationTitle="Model Information"

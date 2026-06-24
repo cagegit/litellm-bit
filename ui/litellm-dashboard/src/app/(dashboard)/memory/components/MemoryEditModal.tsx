@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "@/i18n";
 
 import React, { useEffect, useState } from "react";
 import { Form, Input, Modal, Typography } from "antd";
@@ -15,6 +16,7 @@ interface MemoryEditModalProps {
 }
 
 export const MemoryEditModal: React.FC<MemoryEditModalProps> = ({ open, mode, initialRow, onClose, onSave }) => {
+  const { t } = useTranslations("memoryView");
   const [form] = Form.useForm();
   const [submitting, setSubmitting] = useState(false);
 
@@ -66,12 +68,12 @@ export const MemoryEditModal: React.FC<MemoryEditModalProps> = ({ open, mode, in
           <Input placeholder="e.g. user_role" disabled={mode === "edit"} />
         </Form.Item>
         <Form.Item
-          label="Value"
+          label={t("value")}
           name="value"
           rules={[{ required: true, message: "Value is required" }]}
           tooltip="Markdown/text injected into LLM context. Plain strings are fine."
         >
-          <Input.TextArea rows={8} placeholder="What the agent should remember…" />
+          <Input.TextArea rows={8} placeholder={t("memoryPlaceholder")} />
         </Form.Item>
         <Form.Item
           label={
@@ -79,7 +81,7 @@ export const MemoryEditModal: React.FC<MemoryEditModalProps> = ({ open, mode, in
               Metadata <Text type="secondary">(optional JSON)</Text>
             </span>
           }
-          name="metadata"
+          name={t("metadata")}
           tooltip="Optional structured metadata — must be valid JSON if provided."
         >
           <Input.TextArea

@@ -3,8 +3,10 @@ import PriceDataReload from "@/components/price_data_reload";
 import React from "react";
 import useAuthorized from "@/app/(dashboard)/hooks/useAuthorized";
 import { useModelCostMap } from "../../hooks/models/useModelCostMap";
+import { useTranslations } from "@/i18n";
 
 const PriceDataManagementTab = () => {
+  const { t } = useTranslations("models");
   const { accessToken } = useAuthorized();
   const { refetch: refetchModelCostMap } = useModelCostMap();
 

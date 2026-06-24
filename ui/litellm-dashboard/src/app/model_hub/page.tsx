@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "@/i18n";
 import React, { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import PublicModelHubPage from "@/components/public_model_hub";
@@ -19,6 +20,7 @@ function PublicModelHubContent() {
 }
 
 export default function PublicModelHub() {
+  const { t } = useTranslations("common");
   return (
     <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
       <PublicModelHubContent />

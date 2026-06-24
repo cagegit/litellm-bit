@@ -1,6 +1,7 @@
 import { Button, Select, SelectItem, TabPanel, Text, Title } from "@tremor/react";
 import { InputNumber } from "antd";
 import React from "react";
+import { useTranslations } from "@/i18n";
 
 interface GlobalRetryPolicyObject {
   [retryPolicyKey: string]: number;
@@ -42,6 +43,7 @@ const ModelRetrySettingsTab = ({
   setModelGroupRetryPolicy,
   handleSaveRetrySettings,
 }: ModelRetrySettingsTabProps) => {
+  const { t } = useTranslations("models");
   //  const [modelGroupRetryPolicy, setModelGroupRetryPolicy] = useState<RetryPolicyObject | null>(null);
 
   return (

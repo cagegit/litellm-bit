@@ -1106,7 +1106,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
                     )}
                   </div>
                   <TextInput
-                    placeholder="Optional: Enter custom proxy URL (e.g., http://localhost:5000)"
+                    placeholder={t("customProxyUrl")}
                     onValueChange={(value) => {
                       setCustomProxyBaseUrl(value);
                       sessionStorage.setItem("customProxyBaseUrl", value);

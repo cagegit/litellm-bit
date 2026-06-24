@@ -195,7 +195,7 @@ const TeamSSOSettings: React.FC<TeamSSOSettingsProps> = ({ accessToken }) => {
           <div className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Budget & Rate Limits</div>
           <div className="border-t border-gray-100">
             <SettingRow
-              label="Max Budget"
+              label={t("maxBudget")}
               description="Maximum budget (in USD) for new automatically created teams."
               isEditing={isEditing}
               viewContent={
@@ -211,7 +211,7 @@ const TeamSSOSettings: React.FC<TeamSSOSettingsProps> = ({ accessToken }) => {
                   style={{ maxWidth: 320 }}
                   value={editedValues.max_budget}
                   onChange={(v) => update("max_budget", v)}
-                  placeholder="Not set"
+                  placeholder={t("notSet")}
                   prefix="$"
                   min={0}
                 />
@@ -219,7 +219,7 @@ const TeamSSOSettings: React.FC<TeamSSOSettingsProps> = ({ accessToken }) => {
             />
 
             <SettingRow
-              label="Budget Duration"
+              label={t("budgetDuration")}
               description="How frequently the team's budget resets."
               isEditing={isEditing}
               viewContent={
@@ -239,7 +239,7 @@ const TeamSSOSettings: React.FC<TeamSSOSettingsProps> = ({ accessToken }) => {
             />
 
             <SettingRow
-              label="TPM Limit"
+              label={t("tpmLimit")}
               description="Maximum tokens per minute allowed across all models."
               isEditing={isEditing}
               viewContent={
@@ -255,14 +255,14 @@ const TeamSSOSettings: React.FC<TeamSSOSettingsProps> = ({ accessToken }) => {
                   style={{ maxWidth: 320 }}
                   value={editedValues.tpm_limit}
                   onChange={(v) => update("tpm_limit", v)}
-                  placeholder="Not set"
+                  placeholder={t("notSet")}
                   min={0}
                 />
               }
             />
 
             <SettingRow
-              label="RPM Limit"
+              label={t("rpmLimit")}
               description="Maximum requests per minute allowed across all models."
               isEditing={isEditing}
               viewContent={
@@ -278,7 +278,7 @@ const TeamSSOSettings: React.FC<TeamSSOSettingsProps> = ({ accessToken }) => {
                   style={{ maxWidth: 320 }}
                   value={editedValues.rpm_limit}
                   onChange={(v) => update("rpm_limit", v)}
-                  placeholder="Not set"
+                  placeholder={t("notSet")}
                   min={0}
                 />
               }
@@ -291,7 +291,7 @@ const TeamSSOSettings: React.FC<TeamSSOSettingsProps> = ({ accessToken }) => {
           <div className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Access & Permissions</div>
           <div className="border-t border-gray-100">
             <SettingRow
-              label="Models"
+              label={t("models")}
               description="Default list of models that new teams can access."
               isEditing={isEditing}
               viewContent={renderTags(values.models, getModelDisplayName, t("notSet"))}
@@ -307,7 +307,7 @@ const TeamSSOSettings: React.FC<TeamSSOSettingsProps> = ({ accessToken }) => {
             />
 
             <SettingRow
-              label="Team Member Permissions"
+              label={t("teamMemberPermissions")}
               description="Default permissions granted to members of newly created teams. /key/info and /key/health are always included."
               isEditing={isEditing}
               viewContent={renderTags(values.team_member_permissions, undefined, t("notSet"))}
@@ -317,7 +317,7 @@ const TeamSSOSettings: React.FC<TeamSSOSettingsProps> = ({ accessToken }) => {
                   style={{ width: "100%" }}
                   value={editedValues.team_member_permissions || []}
                   onChange={(v) => update("team_member_permissions", v)}
-                  placeholder="Select permissions"
+                  placeholder={t("selectPermissions")}
                   tagRender={({ label, closable, onClose }) => (
                     <Tag color="blue" closable={closable} onClose={onClose} className="mr-1 mt-1 mb-1">
                       {label}

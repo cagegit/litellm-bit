@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "@/i18n";
 
 import { Suspense, useEffect, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
@@ -28,6 +29,7 @@ const resolveDefaultRedirect = () => {
 };
 
 const McpOAuthCallbackContent = () => {
+  const { t } = useTranslations("mcp");
   const searchParams = useSearchParams();
 
   const payload = useMemo(() => {

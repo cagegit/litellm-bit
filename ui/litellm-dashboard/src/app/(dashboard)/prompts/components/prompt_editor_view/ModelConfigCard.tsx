@@ -3,6 +3,7 @@ import { Text } from "@tremor/react";
 import { Input } from "antd";
 import { SettingsIcon } from "lucide-react";
 import ModelSelector from "@/components/common_components/ModelSelector";
+import { useTranslations } from "@/i18n";
 
 interface ModelConfigCardProps {
   model: string;
@@ -23,6 +24,7 @@ const ModelConfigCard: React.FC<ModelConfigCardProps> = ({
   onTemperatureChange,
   onMaxTokensChange,
 }) => {
+  const { t } = useTranslations("prompts");
   const [showConfig, setShowConfig] = useState(false);
 
   return (

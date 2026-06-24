@@ -133,7 +133,7 @@ const EditAutoRouterModal: React.FC<EditAutoRouterModalProps> = ({
         model_info: updatedModelInfo,
       };
 
-      NotificationsManager.success("Auto router configuration updated successfully");
+      NotificationsManager.success(t("autoRouterConfigUpdatedSuccessfully"));
       onSuccess(updatedModelData);
       onCancel();
     } catch (error) {

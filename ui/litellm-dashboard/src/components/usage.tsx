@@ -51,6 +51,7 @@ import {
 } from "./networking";
 import TopKeyView from "./UsagePage/components/EntityUsage/TopKeyView";
 import { formatNumberWithCommas } from "@/utils/dataUtils";
+import { useTranslations } from "@/i18n";
 console.log("process.env.NODE_ENV", process.env.NODE_ENV);
 
 interface UsagePageProps {
@@ -133,6 +134,7 @@ const isAdminOrAdminViewer = (role: string | null): boolean => {
 };
 
 const UsagePage: React.FC<UsagePageProps> = ({ accessToken, token, userRole, userID, keys, premiumUser }) => {
+  const { t } = useTranslations("billing");
   const currentDate = new Date();
   const [keySpendData, setKeySpendData] = useState<any[]>([]);
   const [topKeys, setTopKeys] = useState<any[]>([]);

@@ -99,6 +99,7 @@ const deepParse = (input: any) => {
 };
 
 const CacheDashboard: React.FC<CachePageProps> = ({ accessToken, token, userRole, userID, premiumUser }) => {
+  const { t } = useTranslations("caching");
   const [filteredData, setFilteredData] = useState<uiData[]>([]);
   const [selectedApiKeys, setSelectedApiKeys] = useState<string[]>([]);
   const [selectedModels, setSelectedModels] = useState<string[]>([]);
@@ -294,7 +295,7 @@ const CacheDashboard: React.FC<CachePageProps> = ({ accessToken, token, userRole
             <Grid numItems={3} className="gap-4 mt-4">
               <Col>
                 <MultiSelect
-                  placeholder="Select Virtual Keys"
+                  placeholder={t("selectVirtualKeys")}
                   value={selectedApiKeys}
                   onValueChange={setSelectedApiKeys}
                 >
@@ -306,7 +307,7 @@ const CacheDashboard: React.FC<CachePageProps> = ({ accessToken, token, userRole
                 </MultiSelect>
               </Col>
               <Col>
-                <MultiSelect placeholder="Select Models" value={selectedModels} onValueChange={setSelectedModels}>
+                <MultiSelect placeholder={t("selectModels")} value={selectedModels} onValueChange={setSelectedModels}>
                   {uniqueModels.map((model) => (
                     <MultiSelectItem key={model} value={model}>
                       {model}
@@ -361,7 +362,7 @@ const CacheDashboard: React.FC<CachePageProps> = ({ accessToken, token, userRole
 
             <Subtitle className="mt-4">Cache Hits vs API Requests</Subtitle>
             <BarChart
-              title="Cache Hits vs API Requests"
+              title={t("cacheHitsVsApiRequests")}
               data={filteredData}
               stack={true}
               index="name"

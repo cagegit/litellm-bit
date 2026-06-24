@@ -57,7 +57,7 @@ const MemberPermissions: React.FC<MemberPermissionsProps> = ({ teamId, accessTok
       if (!accessToken) return;
       setSaving(true);
       await teamPermissionsUpdateCall(accessToken, teamId, selectedPermissions);
-      NotificationsManager.success("Permissions updated successfully");
+      NotificationsManager.success(t("permissionsUpdated"));
       setHasChanges(false);
     } catch (error) {
       NotificationsManager.fromBackend("Failed to update permissions");

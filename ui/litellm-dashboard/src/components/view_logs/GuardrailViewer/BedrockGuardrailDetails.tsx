@@ -211,17 +211,17 @@ export const BedrockGuardrailDetails: React.FC<{ response: BedrockGuardrailRespo
       <div className="border rounded-lg p-4">
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
-            <KV label="Action:">{chip(response.action ?? "N/A", actionTone)}</KV>
-            {response.actionReason && <KV label="Action Reason:">{response.actionReason}</KV>}
+            <KV label={t("action")}>{chip(response.action ?? "N/A", actionTone)}</KV>
+            {response.actionReason && <KV label={t("actionReason")}>{response.actionReason}</KV>}
             {response.blockedResponse && (
-              <KV label="Blocked Response:">
+              <KV label={t("blockedResponse")}>
                 <span className="italic">{response.blockedResponse}</span>
               </KV>
             )}
           </div>
           <div className="space-y-2">
-            <KV label="Coverage:">{coverageChips}</KV>
-            <KV label="Usage:">{usagePills}</KV>
+            <KV label={t("coverage")}>{coverageChips}</KV>
+            <KV label={t("usage")}>{usagePills}</KV>
           </div>
         </div>
 
@@ -439,7 +439,7 @@ export const BedrockGuardrailDetails: React.FC<{ response: BedrockGuardrailRespo
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <KV label={t("latencyms")}>{assess.invocationMetrics.guardrailProcessingLatency ?? "—"}</KV>
-                        <KV label="Coverage:">
+                        <KV label={t("coverage")}>
                           <div className="flex flex-wrap gap-2">
                             {assess.invocationMetrics.guardrailCoverage?.textCharacters &&
                               chip(
@@ -459,7 +459,7 @@ export const BedrockGuardrailDetails: React.FC<{ response: BedrockGuardrailRespo
                         </KV>
                       </div>
                       <div className="space-y-2">
-                        <KV label="Usage:">
+                        <KV label={t("usage")}>
                           <div className="flex flex-wrap gap-2">
                             {assess.invocationMetrics.usage &&
                               Object.entries(assess.invocationMetrics.usage).map(([k, v]) =>

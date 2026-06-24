@@ -76,7 +76,7 @@ const OrganizationInfoView: React.FC<OrganizationInfoProps> = ({
       };
       const response = await organizationMemberAddCall(accessToken, organizationId, member);
 
-      NotificationsManager.success("Organization member added successfully");
+      NotificationsManager.success(t("orgMemberAdded"));
       setIsAddMemberModalVisible(false);
       form.resetFields();
       queryClient.invalidateQueries({ queryKey: organizationKeys.all });
@@ -97,7 +97,7 @@ const OrganizationInfoView: React.FC<OrganizationInfoProps> = ({
       };
 
       const response = await organizationMemberUpdateCall(accessToken, organizationId, member);
-      NotificationsManager.success("Organization member updated successfully");
+      NotificationsManager.success(t("orgMemberUpdated"));
       setIsEditMemberModalVisible(false);
       form.resetFields();
       queryClient.invalidateQueries({ queryKey: organizationKeys.all });
@@ -112,7 +112,7 @@ const OrganizationInfoView: React.FC<OrganizationInfoProps> = ({
       if (!accessToken) return;
 
       await organizationMemberDeleteCall(accessToken, organizationId, values.user_id);
-      NotificationsManager.success("Organization member deleted successfully");
+      NotificationsManager.success(t("orgMemberDeleted"));
       setIsEditMemberModalVisible(false);
       form.resetFields();
       queryClient.invalidateQueries({ queryKey: organizationKeys.all });
@@ -163,7 +163,7 @@ const OrganizationInfoView: React.FC<OrganizationInfoProps> = ({
 
       const response = await organizationUpdateCall(accessToken, updateData);
 
-      NotificationsManager.success("Organization settings updated successfully");
+      NotificationsManager.success(t("orgSettingsUpdated"));
       setIsEditing(false);
       queryClient.invalidateQueries({ queryKey: organizationKeys.all });
     } catch (error) {

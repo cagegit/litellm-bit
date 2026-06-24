@@ -82,7 +82,7 @@ const CreateTagModal: React.FC<CreateTagModalProps> = ({ visible, onCancel, onSu
               label={
                 <span>
                   Max Budget (USD){" "}
-                  <Tooltip title="Maximum amount in USD this tag can spend. When reached, requests with this tag will be blocked">
+                  <Tooltip title={t("maxAmountDescription")}>
                     <InfoCircleOutlined style={{ marginLeft: "4px" }} />
                   </Tooltip>
                 </span>

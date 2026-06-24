@@ -2,6 +2,7 @@ import { CloseOutlined, PlayCircleOutlined } from "@ant-design/icons";
 import { Button, Modal, Select, Input } from "antd";
 import React, { useEffect, useState } from "react";
 import { fetchAvailableModels, type ModelGroup } from "@/components/llm_calls/fetch_models";
+import { useTranslations } from "@/i18n";
 
 const DEFAULT_PROMPT = `Evaluate whether this guardrail's decision was correct.
 Analyze the user input, the guardrail action taken, and determine if it was appropriate.
@@ -37,6 +38,7 @@ export function EvaluationSettingsModal({
   accessToken,
   onRunEvaluation,
 }: EvaluationSettingsModalProps) {
+  const { t } = useTranslations("settings");
   const [prompt, setPrompt] = useState(DEFAULT_PROMPT);
   const [schema, setSchema] = useState(DEFAULT_SCHEMA);
   const [model, setModel] = useState<string | null>(null);
@@ -80,7 +82,7 @@ export function EvaluationSettingsModal({
 
   return (
     <Modal
-      title="Evaluation Settings"
+      title={t("evaluationSettings")}
       open={open}
       onCancel={onClose}
       width={640}

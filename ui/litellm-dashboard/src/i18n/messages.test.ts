@@ -41,4 +41,11 @@ describe("translation messages", () => {
     });
     expect(mismatches).toEqual([]);
   });
+
+  it("preserves context required by prompt and vector store notifications", () => {
+    expect(placeholders(en.prompts.versionHistoryWithEnvironment)).toEqual(["environment"]);
+    expect(placeholders(zh.prompts.versionHistoryWithEnvironment)).toEqual(["environment"]);
+    expect(placeholders(en.vectorStore.vectorStoreCreatedWithDocuments)).toEqual(["count"]);
+    expect(placeholders(zh.vectorStore.vectorStoreCreatedWithDocuments)).toEqual(["count"]);
+  });
 });

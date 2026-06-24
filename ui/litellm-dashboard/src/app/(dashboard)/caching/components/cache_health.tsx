@@ -74,6 +74,7 @@ interface ErrorDetails {
 
 // Update HealthCheckDetails component to handle errors
 const HealthCheckDetails: React.FC<{ response: any }> = ({ response }) => {
+  const { t } = useTranslations("caching");
   // Initialize with safe default values
   let errorDetails: ErrorDetails | null = null;
   let parsedLitellmParams: any = {};
@@ -186,8 +187,8 @@ const HealthCheckDetails: React.FC<{ response: any }> = ({ response }) => {
                           Error Details
                         </td>
                       </tr>
-                      <TableClickableErrorField label="Error Message" value={errorDetails.message} />
-                      <TableClickableErrorField label="Traceback" value={errorDetails.traceback} />
+                      <TableClickableErrorField label={t("errorMessage")} value={errorDetails.message} />
+                      <TableClickableErrorField label={t("traceback")} value={errorDetails.traceback} />
                     </>
                   )}
 
@@ -197,9 +198,9 @@ const HealthCheckDetails: React.FC<{ response: any }> = ({ response }) => {
                       Cache Details
                     </td>
                   </tr>
-                  <TableClickableErrorField label="Cache Configuration" value={String(parsedLitellmParams?.type)} />
-                  <TableClickableErrorField label="Ping Response" value={String(response.ping_response)} />
-                  <TableClickableErrorField label="Set Cache Response" value={response.set_cache_response || "N/A"} />
+                  <TableClickableErrorField label={t("cacheConfiguration")} value={String(parsedLitellmParams?.type)} />
+                  <TableClickableErrorField label={t("pingResponse")} value={String(response.ping_response)} />
+                  <TableClickableErrorField label={t("setCacheResponse")} value={response.set_cache_response || "N/A"} />
                   <TableClickableErrorField
                     label="litellm_settings.cache_params"
                     value={JSON.stringify(parsedLitellmParams, null, 2)}
@@ -213,11 +214,11 @@ const HealthCheckDetails: React.FC<{ response: any }> = ({ response }) => {
                           Redis Details
                         </td>
                       </tr>
-                      <TableClickableErrorField label="Redis Host" value={redisDetails.redis_host || "N/A"} />
-                      <TableClickableErrorField label="Redis Port" value={redisDetails.redis_port || "N/A"} />
-                      <TableClickableErrorField label="Redis Version" value={redisDetails.redis_version || "N/A"} />
-                      <TableClickableErrorField label="Startup Nodes" value={redisDetails.startup_nodes || "N/A"} />
-                      <TableClickableErrorField label="Namespace" value={redisDetails.namespace || "N/A"} />
+                      <TableClickableErrorField label={t("redisHost")} value={redisDetails.redis_host || "N/A"} />
+                      <TableClickableErrorField label={t("redisPort")} value={redisDetails.redis_port || "N/A"} />
+                      <TableClickableErrorField label={t("redisVersion")} value={redisDetails.redis_version || "N/A"} />
+                      <TableClickableErrorField label={t("startupNodes")} value={redisDetails.startup_nodes || "N/A"} />
+                      <TableClickableErrorField label={t("namespace")} value={redisDetails.namespace || "N/A"} />
                     </>
                   )}
                 </tbody>
@@ -269,6 +270,7 @@ export const CacheHealthTab: React.FC<{
   runCachingHealthCheck: () => void;
   responseTimeMs?: number | null;
 }> = ({ accessToken, healthCheckResponse, runCachingHealthCheck, responseTimeMs }) => {
+  const { t } = useTranslations("caching");
   const [localResponseTimeMs, setLocalResponseTimeMs] = React.useState<number | null>(null);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 

@@ -1,6 +1,7 @@
 import { Drawer, List, Skeleton, Tag, Typography } from "antd";
 import React, { useEffect, useState } from "react";
 import { getPromptVersions, PromptSpec } from "@/components/networking";
+import { useTranslations } from "@/i18n";
 
 const { Text } = Typography;
 
@@ -21,6 +22,7 @@ const VersionHistorySidePanel: React.FC<VersionHistorySidePanelProps> = ({
   activeVersionId,
   onSelectVersion,
 }) => {
+  const { t } = useTranslations("prompts");
   const [versions, setVersions] = useState<PromptSpec[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -68,7 +70,7 @@ const VersionHistorySidePanel: React.FC<VersionHistorySidePanelProps> = ({
 
   return (
     <Drawer
-      title="Version History"
+      title={t("versionHistory")}
       placement="right"
       onClose={onClose}
       open={isOpen}

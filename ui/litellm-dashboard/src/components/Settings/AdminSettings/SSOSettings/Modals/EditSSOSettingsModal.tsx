@@ -107,7 +107,7 @@ const EditSSOSettingsModal: React.FC<EditSSOSettingsModalProps> = ({ isVisible, 
 
       await mutateAsync(payload, {
         onSuccess: () => {
-          NotificationsManager.success("SSO settings updated successfully");
+          NotificationsManager.success(t("ssoSettingsUpdatedSuccessfully"));
           onSuccess();
         },
         onError: (error) => {

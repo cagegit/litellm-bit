@@ -5,6 +5,7 @@ import { InfoCircleOutlined } from "@ant-design/icons";
 import { Providers, provider_map, providerLogoMap } from "@/components/provider_info_helpers";
 import { MarginConfig } from "./types";
 import { handleImageError } from "./provider_display_helpers";
+import { useTranslations } from "@/i18n";
 
 interface AddMarginFormProps {
   marginConfig: MarginConfig;
@@ -31,13 +32,14 @@ const AddMarginForm: React.FC<AddMarginFormProps> = ({
   onFixedAmountChange,
   onAddProvider,
 }) => {
+  const { t } = useTranslations("billing");
   return (
     <div className="space-y-6">
       <Form.Item
         label={
           <span className="text-sm font-medium text-gray-700 flex items-center">
             Provider
-            <Tooltip title="Select 'Global' to apply margin to all providers, or select a specific provider">
+            <Tooltip title={t("selectGlobalOrSpecific")}>
               <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
             </Tooltip>
           </span>
@@ -46,7 +48,7 @@ const AddMarginForm: React.FC<AddMarginFormProps> = ({
       >
         <AntdSelect
           showSearch
-          placeholder="Select provider or 'Global'"
+          placeholder={t("selectGlobalOrProvider")}
           value={selectedProvider}
           onChange={onProviderChange}
           style={{ width: "100%" }}
@@ -58,9 +60,9 @@ const AddMarginForm: React.FC<AddMarginFormProps> = ({
               .includes(input.toLowerCase())
           }
         >
-          <AntdSelect.Option key="global" value="global" label="Global (All Providers)">
+          <AntdSelect.Option key="global" value="global" label={t("globalAllProviders")}>
             <div className="flex items-center space-x-2">
-              <span className="font-medium">Global (All Providers)</span>
+              <span className="font-medium">{t("globalAllProviders")}</span>
             </div>
           </AntdSelect.Option>
           {Object.entries(Providers).map(([providerEnum, providerDisplayName]) => {
@@ -90,7 +92,7 @@ const AddMarginForm: React.FC<AddMarginFormProps> = ({
         label={
           <span className="text-sm font-medium text-gray-700 flex items-center">
             Margin Type
-            <Tooltip title="Choose how to apply the margin: percentage-based or fixed amount">
+            <Tooltip title={t("marginTypeHelp")}>
               <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
             </Tooltip>
           </span>
@@ -98,8 +100,8 @@ const AddMarginForm: React.FC<AddMarginFormProps> = ({
         rules={[{ required: true, message: "Please select a margin type" }]}
       >
         <Radio.Group value={marginType} onChange={(e) => onMarginTypeChange(e.target.value)} className="w-full">
-          <Radio value="percentage">Percentage-based</Radio>
-          <Radio value="fixed">Fixed Amount</Radio>
+          <Radio value="percentage">{t("percentageBased")}</Radio>
+          <Radio value="fixed">{t("fixedAmount")}</Radio>
         </Radio.Group>
       </Form.Item>
 
@@ -108,7 +110,7 @@ const AddMarginForm: React.FC<AddMarginFormProps> = ({
           label={
             <span className="text-sm font-medium text-gray-700 flex items-center">
               Margin Percentage
-              <Tooltip title="Enter a percentage value (e.g., 10 for 10% margin)">
+              <Tooltip title={t("marginPercentageHelp")}>
                 <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
               </Tooltip>
             </span>
@@ -146,7 +148,7 @@ const AddMarginForm: React.FC<AddMarginFormProps> = ({
           label={
             <span className="text-sm font-medium text-gray-700 flex items-center">
               Fixed Margin Amount
-              <Tooltip title="Enter a fixed amount in USD (e.g., 0.001 for $0.001 per request)">
+              <Tooltip title={t("fixedMarginAmountHelp")}>
                 <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
               </Tooltip>
             </span>

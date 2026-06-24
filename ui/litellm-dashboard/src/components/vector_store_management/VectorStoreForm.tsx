@@ -94,7 +94,7 @@ const VectorStoreForm: React.FC<VectorStoreFormProps> = ({
       payload["litellm_params"] = litellmParams;
 
       await vectorStoreCreateCall(accessToken, payload);
-      NotificationsManager.success("Vector store created successfully");
+      NotificationsManager.success(t("vectorStoreCreated"));
       form.resetFields();
       setMetadataJson("{}");
       onSuccess();
@@ -112,7 +112,7 @@ const VectorStoreForm: React.FC<VectorStoreFormProps> = ({
   };
 
   return (
-    <Modal title="Add New Vector Store" open={isVisible} width={1000} footer={null} onCancel={handleCancel}>
+    <Modal title={t("addNewVectorStore")} open={isVisible} width={1000} footer={null} onCancel={handleCancel}>
       <Form form={form} onFinish={handleCreate} labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} labelAlign="left">
         <Form.Item
           label={
@@ -353,7 +353,7 @@ const VectorStoreForm: React.FC<VectorStoreFormProps> = ({
           <TextInput />
         </Form.Item>
 
-        <Form.Item label="Description" name="vector_store_description">
+        <Form.Item label={t("description")} name="vector_store_description">
           <Input.TextArea rows={4} />
         </Form.Item>
 
@@ -370,7 +370,7 @@ const VectorStoreForm: React.FC<VectorStoreFormProps> = ({
         >
           <Select
             showSearch
-            placeholder="Select or search for existing credentials"
+            placeholder={t("selectOrSearchCredentials")}
             optionFilterProp="children"
             filterOption={(input, option) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase())}
             options={[

@@ -273,15 +273,15 @@ export const MemoryView: React.FC<MemoryViewProps> = ({ accessToken }) => {
       width: 140,
       render: (_: unknown, r: MemoryRow) => (
         <Space size={4}>
-          <Button size="small" type="text" icon={<EyeOutlined />} onClick={() => setDetailRow(r)} aria-label="View" />
-          <Button size="small" type="text" icon={<EditOutlined />} onClick={() => setEditRow(r)} aria-label="Edit" />
+          <Button size="small" type="text" icon={<EyeOutlined />} onClick={() => setDetailRow(r)} aria-label={t("view")} />
+          <Button size="small" type="text" icon={<EditOutlined />} onClick={() => setEditRow(r)} aria-label={t("edit")} />
           <Button
             size="small"
             type="text"
             danger
             icon={<DeleteOutlined />}
             onClick={() => handleDelete(r)}
-            aria-label="Delete"
+            aria-label={t("delete")}
           />
         </Space>
       ),

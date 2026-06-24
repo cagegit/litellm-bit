@@ -42,8 +42,6 @@ const HEALTH_RANK: Record<string, number> = {
 };
 
 const compareServers = (a: MCPServer, b: MCPServer, sort: SortKey): number => {
-  const { t } = useTranslations("mcp");
-
   switch (sort) {
     case "name_asc": {
       const nameA = (a.server_name || a.alias || a.server_id).toLowerCase();
@@ -321,7 +319,7 @@ const MCPServers: React.FC<MCPServerProps> = ({ accessToken, userRole, userID })
     try {
       setIsDeletingServer(true);
       await deleteMCPServer(accessToken, serverIdToDelete);
-      NotificationsManager.success("Deleted MCP Server successfully");
+      NotificationsManager.success(t("mcpServerDeleted"));
       // If the user is currently viewing the detail page of the server they
       // just deleted, return them to the All Servers list. Otherwise the
       // detail view would stay mounted, fall back to an empty stub server,

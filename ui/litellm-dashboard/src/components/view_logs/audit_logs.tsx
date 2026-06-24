@@ -186,7 +186,7 @@ export default function AuditLogs({ userID, userRole, token, accessToken, isActi
           {/* Filters + pagination on same row */}
           <div className="flex flex-wrap items-center gap-3">
             <Search
-              placeholder="Object ID"
+              placeholder={t("objectId")}
               allowClear
               style={{ width: 200 }}
               onSearch={(val) => {
@@ -201,7 +201,7 @@ export default function AuditLogs({ userID, userRole, token, accessToken, isActi
               }}
             />
             <Search
-              placeholder="Changed By"
+              placeholder={t("changedBy")}
               allowClear
               style={{ width: 180 }}
               onSearch={(val) => {
@@ -216,7 +216,7 @@ export default function AuditLogs({ userID, userRole, token, accessToken, isActi
               }}
             />
             <Search
-              placeholder="Team ID"
+              placeholder={t("teamId")}
               allowClear
               style={{ width: 180 }}
               onSearch={(val) => {
@@ -231,7 +231,7 @@ export default function AuditLogs({ userID, userRole, token, accessToken, isActi
               }}
             />
             <Search
-              placeholder="Key Hash"
+              placeholder={t("keyHash")}
               allowClear
               style={{ width: 180 }}
               onSearch={(val) => {
@@ -246,7 +246,7 @@ export default function AuditLogs({ userID, userRole, token, accessToken, isActi
               }}
             />
             <Select
-              placeholder="All Actions"
+              placeholder={t("allActions")}
               allowClear
               style={{ width: 140 }}
               options={[
@@ -261,7 +261,7 @@ export default function AuditLogs({ userID, userRole, token, accessToken, isActi
               }}
             />
             <Select
-              placeholder="All Tables"
+              placeholder={t("allTables")}
               allowClear
               style={{ width: 150 }}
               options={[

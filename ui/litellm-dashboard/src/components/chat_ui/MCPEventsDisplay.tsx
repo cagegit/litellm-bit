@@ -1,6 +1,7 @@
 import React from "react";
 import { Typography, Collapse } from "antd";
 import type { MCPEvent } from "@/components/mcp_tools/types";
+import { useTranslations } from "@/i18n";
 
 const { Text } = Typography;
 const { Panel } = Collapse;
@@ -11,6 +12,7 @@ interface MCPEventsDisplayProps {
 }
 
 const MCPEventsDisplay: React.FC<MCPEventsDisplayProps> = ({ events, className }) => {
+  const { t } = useTranslations("mcp");
   console.log("MCPEventsDisplay: Received events:", events);
 
   if (!events || events.length === 0) {
@@ -173,7 +175,7 @@ const MCPEventsDisplay: React.FC<MCPEventsDisplayProps> = ({ events, className }
         >
           {/* List Tools Panel */}
           {toolsEvent && (
-            <Panel header="List tools" key="list-tools">
+            <Panel header={t("listTools")} key="list-tools">
               <div>
                 {toolsEvent.item?.tools?.map((tool, index) => (
                   <div key={index} className="tool-item">

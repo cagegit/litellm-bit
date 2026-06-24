@@ -5,6 +5,7 @@ import { InfoCircleOutlined } from "@ant-design/icons";
 import { Providers, provider_map, providerLogoMap } from "@/components/provider_info_helpers";
 import { DiscountConfig } from "./types";
 import { handleImageError } from "./provider_display_helpers";
+import { useTranslations } from "@/i18n";
 
 interface AddProviderFormProps {
   discountConfig: DiscountConfig;
@@ -23,6 +24,7 @@ const AddProviderForm: React.FC<AddProviderFormProps> = ({
   onDiscountChange,
   onAddProvider,
 }) => {
+  const { t } = useTranslations("billing");
   return (
     <div className="space-y-6">
       <Form.Item
@@ -38,7 +40,7 @@ const AddProviderForm: React.FC<AddProviderFormProps> = ({
       >
         <AntdSelect
           showSearch
-          placeholder="Select provider"
+          placeholder={t("selectProvider")}
           value={selectedProvider}
           onChange={onProviderChange}
           style={{ width: "100%" }}

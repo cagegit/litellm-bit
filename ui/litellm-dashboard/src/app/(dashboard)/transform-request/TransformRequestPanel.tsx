@@ -4,6 +4,7 @@ import { CopyOutlined } from "@ant-design/icons";
 import { Title } from "@tremor/react";
 import { transformRequestCall } from "@/components/networking";
 import NotificationsManager from "@/components/molecules/notifications_manager";
+import { useTranslations } from "@/i18n";
 interface TransformRequestPanelProps {
   accessToken: string | null;
 }
@@ -15,6 +16,7 @@ interface TransformResponse {
 }
 
 const TransformRequestPanel: React.FC<TransformRequestPanelProps> = ({ accessToken }) => {
+  const { t } = useTranslations("settings");
   const [originalRequestJSON, setOriginalRequestJSON] = useState(`{
   "model": "openai/gpt-4o",
   "messages": [

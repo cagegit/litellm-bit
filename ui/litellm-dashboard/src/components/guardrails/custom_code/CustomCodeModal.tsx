@@ -377,7 +377,7 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
         }
 
         await updateGuardrailCall(accessToken, editData.guardrail_id, updateData);
-        NotificationsManager.success("Custom code guardrail updated successfully");
+        NotificationsManager.success(t("customCodeGuardrailUpdated"));
       } else {
         // Create new guardrail
         const guardrailData = {
@@ -392,7 +392,7 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
         };
 
         await createGuardrailCall(accessToken, guardrailData);
-        NotificationsManager.success("Custom code guardrail created successfully");
+        NotificationsManager.success(t("customCodeGuardrailCreated"));
       }
       onSuccess();
       onClose();

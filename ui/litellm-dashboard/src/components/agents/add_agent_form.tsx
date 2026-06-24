@@ -742,7 +742,7 @@ const AddAgentForm: React.FC<AddAgentFormProps> = ({ visible, onClose, accessTok
               <Input placeholder="e.g. my-custom-agent" />
             </Form.Item>
             <Form.Item label={t("description")} name="description">
-              <Input.TextArea placeholder="Describe what this agent does…" rows={3} />
+              <Input.TextArea placeholder={t("describeAgent")} rows={3} />
             </Form.Item>
           </div>
         ) : agentType === "a2a" ? (
@@ -884,7 +884,7 @@ const AddAgentForm: React.FC<AddAgentFormProps> = ({ visible, onClose, accessTok
                     <Select
                       showSearch
                       style={{ width: "100%" }}
-                      placeholder="Search by key name…"
+                      placeholder={t("searchByKeyName")}
                       loading={loadingKeys}
                       value={selectedExistingKey}
                       onChange={(value) => setSelectedExistingKey(value)}

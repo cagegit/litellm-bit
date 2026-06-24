@@ -186,7 +186,7 @@ const PriceDataReload: React.FC<PriceDataReloadProps> = ({
       const response = await cancelModelCostMapReload(accessToken);
 
       if (response.status === "success") {
-        NotificationsManager.success("Periodic reload cancelled successfully");
+        NotificationsManager.success(t("periodicReloadCancelled"));
         await fetchReloadStatus();
       } else {
         NotificationsManager.fromBackend("Failed to cancel periodic reload");

@@ -3,6 +3,7 @@ import { Switch, Tooltip } from "antd";
 import { InfoCircleOutlined, CopyOutlined } from "@ant-design/icons";
 import { EndpointType } from "@/components/chat_ui/mode_endpoint_mapping";
 import NotificationsManager from "@/components/molecules/notifications_manager";
+import { useTranslations } from "@/i18n";
 
 interface SessionManagementProps {
   endpointType: string;
@@ -17,6 +18,7 @@ const SessionManagement: React.FC<SessionManagementProps> = ({
   useApiSessionManagement,
   onToggleSessionManagement,
 }) => {
+  const { t } = useTranslations("playground");
   if (endpointType !== EndpointType.RESPONSES) {
     return null;
   }

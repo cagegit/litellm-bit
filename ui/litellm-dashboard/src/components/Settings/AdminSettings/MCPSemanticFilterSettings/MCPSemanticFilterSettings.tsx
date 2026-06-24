@@ -31,6 +31,7 @@ interface MCPSemanticFilterSettingsProps {
 }
 
 export default function MCPSemanticFilterSettings({ accessToken }: MCPSemanticFilterSettingsProps) {
+  const { t } = useTranslations("settings");
   const { data, isLoading, isError, error } = useMCPSemanticFilterSettings();
   const {
     mutate: updateSettings,
@@ -194,13 +195,13 @@ export default function MCPSemanticFilterSettings({ accessToken }: MCPSemanticFi
                   </Typography.Text>
                 </Card>
 
-                <Card title="Configuration" style={{ marginBottom: 16 }}>
+                <Card title={t("configuration")} style={{ marginBottom: 16 }}>
                   <Form.Item
                     name="embedding_model"
                     label={
                       <Space>
                         <Typography.Text strong>Embedding Model</Typography.Text>
-                        <Tooltip title="The model used to generate embeddings for semantic matching">
+                        <Tooltip title={t("embeddingModelDescription")}>
                           <QuestionCircleOutlined style={{ color: "#8c8c8c" }} />
                         </Tooltip>
                       </Space>
@@ -224,7 +225,7 @@ export default function MCPSemanticFilterSettings({ accessToken }: MCPSemanticFi
                     label={
                       <Space>
                         <Typography.Text strong>Top K Results</Typography.Text>
-                        <Tooltip title="Maximum number of tools to return after filtering">
+                        <Tooltip title={t("maxToolsDescription")}>
                           <QuestionCircleOutlined style={{ color: "#8c8c8c" }} />
                         </Tooltip>
                       </Space>
@@ -238,7 +239,7 @@ export default function MCPSemanticFilterSettings({ accessToken }: MCPSemanticFi
                     label={
                       <Space>
                         <Typography.Text strong>Similarity Threshold</Typography.Text>
-                        <Tooltip title="Minimum similarity score (0-1) for a tool to be included">
+                        <Tooltip title={t("minSimilarityDescription")}>
                           <QuestionCircleOutlined style={{ color: "#8c8c8c" }} />
                         </Tooltip>
                       </Space>

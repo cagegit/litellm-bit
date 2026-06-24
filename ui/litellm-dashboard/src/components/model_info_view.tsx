@@ -223,9 +223,9 @@ export default function ModelInfoView({
         custom_llm_provider: localModelData.litellm_params?.custom_llm_provider,
       },
     };
-    NotificationsManager.info("Storing credential..");
+    NotificationsManager.info(t("storingCredential"));
     let credentialResponse = await credentialCreateCall(accessToken, credentialItem);
-    NotificationsManager.success("Credential stored successfully");
+    NotificationsManager.success(t("credentialStoredSuccessfully"));
   };
 
   const handleModelUpdate = async (values: any) => {
@@ -376,7 +376,7 @@ export default function ModelInfoView({
         onModelUpdate(updatedModelData);
       }
 
-      NotificationsManager.success("Model settings updated successfully");
+      NotificationsManager.success(t("modelSettingsUpdatedSuccessfully"));
       setIsDirty(false);
       setIsEditing(false);
     } catch (error) {
@@ -414,7 +414,7 @@ export default function ModelInfoView({
   const handleTestConnection = async () => {
     if (!accessToken) return;
     try {
-      NotificationsManager.info("Testing connection...");
+      NotificationsManager.info(t("testingConnection"));
       const response = await testConnectionRequest(
         accessToken,
         {
@@ -453,7 +453,7 @@ export default function ModelInfoView({
       setDeleteLoading(true);
       if (!accessToken) return;
       await modelDeleteCall(accessToken, modelId);
-      NotificationsManager.success("Model deleted successfully");
+      NotificationsManager.success(t("modelDeletedSuccessfully"));
 
       if (onModelUpdate) {
         onModelUpdate({

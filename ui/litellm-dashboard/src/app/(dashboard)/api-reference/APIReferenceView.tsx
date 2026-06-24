@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "@/i18n";
 import React from "react";
 import { Text, Tab, TabGroup, TabList, TabPanel, TabPanels, Grid } from "@tremor/react";
 import CodeBlock from "./components/CodeBlock";
@@ -12,6 +13,7 @@ interface ApiRefProps {
 }
 
 const APIReferenceView: React.FC<ApiRefProps> = ({ proxySettings }) => {
+  const { t } = useTranslations("common");
   let base_url = "<your_proxy_base_url>";
   const customDocBaseUrl = proxySettings?.LITELLM_UI_API_DOC_BASE_URL;
   if (customDocBaseUrl && customDocBaseUrl.trim()) {
@@ -120,7 +122,7 @@ chat = ChatOpenAI(
 
 messages = [
     SystemMessage(
-        content="You are a helpful assistant that im using to make a test request to."
+        content={t("testRequestPlaceholder")}
     ),
     HumanMessage(
         content="test from litellm. tell me why it's amazing in 1 sentence"

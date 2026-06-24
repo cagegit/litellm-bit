@@ -33,7 +33,7 @@ const SearchConnectionTest: React.FC<SearchConnectionTestProps> = ({ litellmPara
         const result = await testSearchToolConnection(accessToken, litellmParams);
         setTestResult(result);
         if (result.status === "success") {
-          NotificationsManager.success("Connection test successful!");
+          NotificationsManager.success(t("connectionTestSuccessful"));
         }
       } catch (error) {
         setTestResult({

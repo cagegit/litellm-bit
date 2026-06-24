@@ -5,6 +5,7 @@ import { UploadOutlined } from "@ant-design/icons";
 import type { UploadFile, UploadProps } from "antd";
 import { convertPromptFileToJson, createPromptCall } from "@/components/networking";
 import NotificationsManager from "@/components/molecules/notifications_manager";
+import { useTranslations } from "@/i18n";
 
 const { Option } = Select;
 
@@ -22,15 +23,16 @@ interface PromptFormData {
 }
 
 const AddPromptForm: React.FC<AddPromptFormProps> = ({ visible, onClose, accessToken, onSuccess }) => {
+  const { t } = useTranslations("prompts");
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const [promptIntegration, setPromptIntegration] = useState<string>("dotprompt");
+  const [promptIntegration, setPromptIntegration] = useState<string>(t("dotprompt"));
 
   const handleCancel = () => {
     form.resetFields();
     setFileList([]);
-    setPromptIntegration("dotprompt");
+    setPromptIntegration(t("dotprompt"));
     onClose();
   };
 
@@ -44,7 +46,7 @@ const AddPromptForm: React.FC<AddPromptFormProps> = ({ visible, onClose, accessT
         return;
       }
 
-      if (promptIntegration === "dotprompt" && fileList.length === 0) {
+      if (promptIntegration === t("dotprompt") && fileList.length === 0) {
         NotificationsManager.fromBackend("Please upload a .prompt file");
         return;
       }
@@ -53,7 +55,7 @@ const AddPromptForm: React.FC<AddPromptFormProps> = ({ visible, onClose, accessT
 
       let promptData: any = {};
 
-      if (promptIntegration === "dotprompt" && fileList.length > 0) {
+      if (promptIntegration === t("dotprompt") && fileList.length > 0) {
         // Convert the uploaded file to JSON
         const file = fileList[0].originFileObj as File;
 
@@ -65,7 +67,7 @@ const AddPromptForm: React.FC<AddPromptFormProps> = ({ visible, onClose, accessT
           promptData = {
             prompt_id: values.prompt_id,
             litellm_params: {
-              prompt_integration: "dotprompt",
+              prompt_integration: t("dotprompt"),
               prompt_id: conversionResult.prompt_id,
               prompt_data: conversionResult.json_data,
             },
@@ -117,7 +119,7 @@ const AddPromptForm: React.FC<AddPromptFormProps> = ({ visible, onClose, accessT
 
   return (
     <Modal
-      title="Add New Prompt"
+      title={t("addNewPrompt")}
       open={visible}
       onCancel={handleCancel}
       footer={[
@@ -132,7 +134,7 @@ const AddPromptForm: React.FC<AddPromptFormProps> = ({ visible, onClose, accessT
     >
       <Form form={form} layout="vertical" requiredMark={false}>
         <Form.Item
-          label="Prompt ID"
+          label={t("promptId")}
           name="prompt_id"
           rules={[
             { required: true, message: "Please enter a prompt ID" },
@@ -145,16 +147,16 @@ const AddPromptForm: React.FC<AddPromptFormProps> = ({ visible, onClose, accessT
           <TextInput placeholder="Enter unique prompt ID (e.g., my_prompt_id)" />
         </Form.Item>
 
-        <Form.Item label="Prompt Integration" name="prompt_integration" initialValue="dotprompt">
+        <Form.Item label={t("promptIntegration")} name="prompt_integration" initialValue={t("dotprompt")}>
           <Select value={promptIntegration} onChange={setPromptIntegration}>
-            <Option value="dotprompt">dotprompt</Option>
+            <Option value={t("dotprompt")}>dotprompt</Option>
           </Select>
         </Form.Item>
 
-        {promptIntegration === "dotprompt" && (
+        {promptIntegration === t("dotprompt") && (
           <>
             <Divider />
-            <Form.Item label="Prompt File" extra="Upload a .prompt file that follows the Dotprompt specification">
+            <Form.Item label={t("promptFile")} extra="Upload a .prompt file that follows the Dotprompt specification">
               <Upload {...uploadProps}>
                 <Button icon={<UploadOutlined />}>Select .prompt File</Button>
               </Upload>

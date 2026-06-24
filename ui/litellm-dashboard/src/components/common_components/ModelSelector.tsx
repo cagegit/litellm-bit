@@ -3,6 +3,7 @@ import { TextInput, Text } from "@tremor/react";
 import { Select } from "antd";
 import { RobotOutlined } from "@ant-design/icons";
 import { fetchAvailableModels, ModelGroup } from "@/components/llm_calls/fetch_models";
+import { useTranslations } from "@/i18n";
 
 interface ModelSelectorProps {
   accessToken: string;
@@ -19,7 +20,7 @@ interface ModelSelectorProps {
 const ModelSelector: React.FC<ModelSelectorProps> = ({
   accessToken,
   value,
-  placeholder = "Select a Model",
+  placeholder,
   onChange,
   disabled = false,
   style,
@@ -27,6 +28,7 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({
   showLabel = true,
   labelText = "Select Model",
 }) => {
+  const { t } = useTranslations("common");
   const [selectedModel, setSelectedModel] = useState<string | undefined>(value);
   const [showCustomModelInput, setShowCustomModelInput] = useState<boolean>(false);
   const [modelInfo, setModelInfo] = useState<ModelGroup[]>([]);
@@ -91,7 +93,7 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({
       )}
       <Select
         value={selectedModel}
-        placeholder={placeholder}
+        placeholder={placeholder || t("selectAModel")}
         onChange={onModelChange}
         options={[
           ...Array.from(new Set(modelInfo.map((option) => option.model_group))).map((model_group, index) => ({
@@ -109,7 +111,7 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({
       {showCustomModelInput && (
         <TextInput
           className="mt-2"
-          placeholder="Enter custom model name"
+          placeholder={t("enterCustomModelName")}
           onValueChange={handleCustomModelChange}
           disabled={disabled}
         />

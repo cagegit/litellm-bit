@@ -117,7 +117,7 @@ const SkillHubDashboard: React.FC<SkillHubDashboardProps> = ({
           </div>
         </div>
         <ModelDataTable
-          columns={skillHubColumns((skill) => setSelectedSkill(skill), copyToClipboard, publicPage)}
+          columns={skillHubColumns((skill) => setSelectedSkill(skill), copyToClipboard, publicPage, t)}
           data={filteredSkills}
           isLoading={false}
           defaultSorting={[{ id: "name", desc: false }]}

@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "@/i18n";
 
 import useAuthorized from "@/app/(dashboard)/hooks/useAuthorized";
 import { NumberInput, TextInput } from "@tremor/react";
@@ -13,6 +14,7 @@ interface CacheFieldRendererProps {
 }
 
 const CacheFieldRenderer: React.FC<CacheFieldRendererProps> = ({ field, currentValue }) => {
+  const { t } = useTranslations("settings");
   const [modelInfo, setModelInfo] = useState<ModelGroup[]>([]);
   const [selectedModel, setSelectedModel] = useState<string>(currentValue || "");
   const { accessToken } = useAuthorized();
@@ -99,7 +101,7 @@ const CacheFieldRenderer: React.FC<CacheFieldRendererProps> = ({ field, currentV
           value={selectedModel}
           onChange={setSelectedModel}
           showSearch={true}
-          placeholder="Search and select a model..."
+          placeholder={t("searchAndSelectModel")}
           options={embeddingModels}
           style={{ width: "100%" }}
           className="rounded-md"

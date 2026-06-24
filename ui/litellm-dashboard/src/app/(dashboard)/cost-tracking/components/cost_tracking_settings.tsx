@@ -25,6 +25,7 @@ import HowItWorks from "./how_it_works";
 import { useDiscountConfig } from "./use_discount_config";
 import { useMarginConfig } from "./use_margin_config";
 import { fetchAvailableModels, ModelGroup } from "@/components/llm_calls/fetch_models";
+import { useTranslations } from "@/i18n";
 
 const DOCS_LINKS = [
   { label: "Custom pricing for models", href: "https://docs.litellm.ai/docs/proxy/custom_pricing" },
@@ -32,6 +33,7 @@ const DOCS_LINKS = [
 ];
 
 const CostTrackingSettings: React.FC<CostTrackingSettingsProps> = ({ userID, userRole, accessToken }) => {
+  const { t } = useTranslations("billing");
   const [selectedProvider, setSelectedProvider] = useState<string | undefined>(undefined);
   const [newDiscount, setNewDiscount] = useState<string>("");
   const [isFetching, setIsFetching] = useState(true);
@@ -165,7 +167,7 @@ const CostTrackingSettings: React.FC<CostTrackingSettingsProps> = ({ userID, use
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6">
         <div>
           <div className="flex items-center gap-2">
-            <Title>Cost Tracking Settings</Title>
+            <Title>{t("costTrackingSettings")}</Title>
             <DocsMenu items={DOCS_LINKS} />
           </div>
           <Text className="text-gray-500 mt-1">
@@ -181,7 +183,7 @@ const CostTrackingSettings: React.FC<CostTrackingSettingsProps> = ({ userID, use
           <Accordion>
             <AccordionHeader className="px-6 py-4">
               <div className="flex flex-col items-start w-full">
-                <Text className="text-lg font-semibold text-gray-900">Provider Discounts</Text>
+                <Text className="text-lg font-semibold text-gray-900">{t("providerDiscounts")}</Text>
                 <Text className="text-sm text-gray-500 mt-1">
                   Apply percentage-based discounts to reduce costs for specific providers
                 </Text>
@@ -190,7 +192,7 @@ const CostTrackingSettings: React.FC<CostTrackingSettingsProps> = ({ userID, use
             <AccordionBody className="px-0">
               <TabGroup>
                 <TabList className="px-6 pt-4">
-                  <Tab>Discounts</Tab>
+                  <Tab>{t("discounts")}</Tab>
                   <Tab>Test It</Tab>
                 </TabList>
                 <TabPanels>

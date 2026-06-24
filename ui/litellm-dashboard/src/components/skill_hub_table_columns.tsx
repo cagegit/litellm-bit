@@ -3,12 +3,12 @@ import { Badge, Text } from "@tremor/react";
 import { Tooltip } from "antd";
 import { CopyOutlined, LinkOutlined } from "@ant-design/icons";
 import { Plugin } from "./claude_code_plugins/types";
-import { useTranslations } from "@/i18n";
 
 export const skillHubColumns = (
   showModal: (skill: Plugin) => void,
   copyToClipboard: (text: string) => void,
   publicPage: boolean = false,
+  translate: (key: string) => string,
 ): ColumnDef<Plugin>[] => [
   {
     header: "Skill Name",
@@ -27,7 +27,7 @@ export const skillHubColumns = (
             >
               {skill.name}
             </button>
-            <Tooltip title="Copy skill name">
+            <Tooltip title={translate("copySkillName")}>
               <CopyOutlined
                 onClick={() => copyToClipboard(skill.name)}
                 className="cursor-pointer text-gray-500 hover:text-blue-500 text-xs"

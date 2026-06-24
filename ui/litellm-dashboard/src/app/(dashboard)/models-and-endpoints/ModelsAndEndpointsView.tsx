@@ -28,6 +28,7 @@ import NotificationsManager from "../../../components/molecules/notifications_ma
 import PassThroughSettings from "../../../components/pass_through_settings";
 import TeamInfoView from "../../../components/team/TeamInfo";
 import useAuthorized from "../hooks/useAuthorized";
+import { useTranslations } from "@/i18n";
 
 interface ModelDashboardProps {
   premiumUser: boolean;
@@ -45,6 +46,7 @@ interface GlobalRetryPolicyObject {
 const HEALTH_PAGE_SIZE = 50;
 
 const ModelsAndEndpointsView: React.FC<ModelDashboardProps> = ({ premiumUser, teams }) => {
+  const { t } = useTranslations("models");
   const { accessToken, token, userRole, userId: userID } = useAuthorized();
   const [addModelForm] = Form.useForm();
   const [lastRefreshed, setLastRefreshed] = useState("");
@@ -354,7 +356,7 @@ const ModelsAndEndpointsView: React.FC<ModelDashboardProps> = ({ premiumUser, te
                   localStorage.setItem("hideMissingProviderBanner", "true");
                 }}
                 className="flex-shrink-0 p-1 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors"
-                aria-label="Dismiss banner"
+                aria-label={t("dismissBanner")}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

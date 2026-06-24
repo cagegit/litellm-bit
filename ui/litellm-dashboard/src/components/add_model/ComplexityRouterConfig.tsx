@@ -2,6 +2,7 @@ import { InfoCircleOutlined } from "@ant-design/icons";
 import { Select as AntdSelect, Card, Divider, Space, Tooltip, Typography } from "antd";
 import React from "react";
 import { ModelGroup } from "@/components/llm_calls/fetch_models";
+import { useTranslations } from "@/i18n";
 
 const { Text } = Typography;
 
@@ -42,6 +43,7 @@ const TIER_DESCRIPTIONS: Record<keyof ComplexityTiers, { label: string; descript
 };
 
 const ComplexityRouterConfig: React.FC<ComplexityRouterConfigProps> = ({ modelInfo, value, onChange }) => {
+  const { t } = useTranslations("models");
   // Prepare model options for dropdowns
   const modelOptions = modelInfo.map((model) => ({
     value: model.model_group,

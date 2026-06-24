@@ -21,6 +21,7 @@ import { TrashIcon, CheckCircleIcon } from "@heroicons/react/outline";
 import RouterSettings from "./router_settings";
 import Fallbacks from "./Settings/RouterSettings/Fallbacks/Fallbacks";
 import RoutingGroups from "./routing_groups";
+import { useTranslations } from "@/i18n";
 interface GeneralSettingsPageProps {
   accessToken: string | null;
   userRole: string | null;
@@ -36,6 +37,7 @@ interface generalSettingsItem {
 }
 
 const GeneralSettings: React.FC<GeneralSettingsPageProps> = ({ accessToken, userRole, userID }) => {
+  const { t } = useTranslations("settings");
   const [generalSettings, setGeneralSettings] = useState<generalSettingsItem[]>([]);
 
   useEffect(() => {

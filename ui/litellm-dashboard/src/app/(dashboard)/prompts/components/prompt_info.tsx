@@ -347,7 +347,7 @@ const PromptInfoView: React.FC<PromptInfoProps> = ({ promptId, onClose, accessTo
 
             {/* Version History Table */}
             <Card className="mt-6">
-              <Title className="mb-3">{t("versionHistory", { environment: selectedEnv ?? "" })}</Title>
+              <Title className="mb-3">{t("versionHistoryWithEnvironment", { environment: selectedEnv ?? "" })}</Title>
               {loadingVersions ? (
                 <Text>{t("loadingVersions")}</Text>
               ) : versionHistory.length > 0 ? (

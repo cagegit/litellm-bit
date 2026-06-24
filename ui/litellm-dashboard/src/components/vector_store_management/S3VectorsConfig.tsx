@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Alert, Form, Input, Select, Tooltip } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import { fetchAvailableModels, ModelGroup } from "@/components/llm_calls/fetch_models";
+import { useTranslations } from "@/i18n";
 
 interface S3VectorsConfigProps {
   accessToken: string | null;
@@ -10,6 +11,7 @@ interface S3VectorsConfigProps {
 }
 
 const S3VectorsConfig: React.FC<S3VectorsConfigProps> = ({ accessToken, providerParams, onParamsChange }) => {
+  const { t } = useTranslations("vectorStore");
   const [embeddingModels, setEmbeddingModels] = useState<ModelGroup[]>([]);
   const [isLoadingModels, setIsLoadingModels] = useState(false);
 
@@ -44,7 +46,7 @@ const S3VectorsConfig: React.FC<S3VectorsConfigProps> = ({ accessToken, provider
     <>
       {/* S3 Vectors Setup Instructions */}
       <Alert
-        message="AWS S3 Vectors Setup"
+        message={t("s3VectorsSetup")}
         description={
           <div>
             <p>AWS S3 Vectors allows you to store and query vector embeddings directly in S3:</p>
@@ -93,7 +95,7 @@ const S3VectorsConfig: React.FC<S3VectorsConfigProps> = ({ accessToken, provider
         <Input
           value={providerParams.vector_bucket_name || ""}
           onChange={(e) => handleFieldChange("vector_bucket_name", e.target.value)}
-          placeholder="my-vector-bucket (min 3 chars)"
+          placeholder={t("bucketNamePlaceholder")}
           size="large"
           className="rounded-md"
         />
@@ -134,7 +136,7 @@ const S3VectorsConfig: React.FC<S3VectorsConfigProps> = ({ accessToken, provider
         label={
           <span>
             AWS Region{" "}
-            <Tooltip title="AWS region where the S3 bucket is located (e.g., us-west-2)">
+            <Tooltip title={t("awsRegion")}>
               <InfoCircleOutlined style={{ marginLeft: "4px" }} />
             </Tooltip>
           </span>
@@ -155,7 +157,7 @@ const S3VectorsConfig: React.FC<S3VectorsConfigProps> = ({ accessToken, provider
         label={
           <span>
             Embedding Model{" "}
-            <Tooltip title="Select the embedding model to use for vector generation">
+            <Tooltip title={t("selectEmbeddingModel")}>
               <InfoCircleOutlined style={{ marginLeft: "4px" }} />
             </Tooltip>
           </span>
@@ -165,7 +167,7 @@ const S3VectorsConfig: React.FC<S3VectorsConfigProps> = ({ accessToken, provider
         <Select
           value={providerParams.embedding_model || undefined}
           onChange={(value) => handleFieldChange("embedding_model", value)}
-          placeholder="Select an embedding model"
+          placeholder={t("selectEmbeddingModel")}
           size="large"
           showSearch
           loading={isLoadingModels}

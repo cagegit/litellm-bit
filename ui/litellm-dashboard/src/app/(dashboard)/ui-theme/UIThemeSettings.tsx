@@ -3,6 +3,7 @@ import { Card, Title, Text, TextInput, Button } from "@tremor/react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { getProxyBaseUrl, getGlobalLitellmHeaderName } from "@/components/networking";
 import NotificationsManager from "@/components/molecules/notifications_manager";
+import { useTranslations } from "@/i18n";
 
 interface UIThemeSettingsProps {
   userID: string | null;
@@ -11,6 +12,7 @@ interface UIThemeSettingsProps {
 }
 
 const UIThemeSettings: React.FC<UIThemeSettingsProps> = ({ userID, userRole, accessToken }) => {
+  const { t } = useTranslations("settings");
   const { logoUrl, setLogoUrl, faviconUrl, setFaviconUrl } = useTheme();
   const [logoUrlInput, setLogoUrlInput] = useState<string>("");
   const [faviconUrlInput, setFaviconUrlInput] = useState<string>("");

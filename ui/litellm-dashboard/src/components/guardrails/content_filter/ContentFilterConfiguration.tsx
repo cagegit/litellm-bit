@@ -121,7 +121,7 @@ const ContentFilterConfiguration: React.FC<ContentFilterConfigurationProps> = ({
 
   const handleAddPrebuiltPattern = () => {
     if (!selectedPatternName) {
-      NotificationsManager.error("Please select a pattern");
+      NotificationsManager.error(t("pleaseSelectPattern"));
       return;
     }
 
@@ -142,7 +142,7 @@ const ContentFilterConfiguration: React.FC<ContentFilterConfigurationProps> = ({
 
   const handleAddCustomPattern = () => {
     if (!customPatternName || !customPatternRegex) {
-      NotificationsManager.error("Please provide pattern name and regex");
+      NotificationsManager.error(t("pleaseProvidePatternNameAndRegex"));
       return;
     }
 
@@ -162,7 +162,7 @@ const ContentFilterConfiguration: React.FC<ContentFilterConfigurationProps> = ({
 
   const handleAddKeyword = () => {
     if (!newKeyword) {
-      NotificationsManager.error("Please enter a keyword");
+      NotificationsManager.error(t("pleaseEnterKeyword"));
       return;
     }
 

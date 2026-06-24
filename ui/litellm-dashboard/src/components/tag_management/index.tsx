@@ -69,7 +69,7 @@ const TagManagement: React.FC<TagProps> = ({ accessToken, userID, userRole }) =>
         rpm_limit: formValues.rpm_limit,
         budget_duration: formValues.budget_duration,
       });
-      NotificationsManager.success("Tag created successfully");
+      NotificationsManager.success(t("tagCreated"));
       setIsCreateModalVisible(false);
       fetchTags();
     } catch (error) {
@@ -87,7 +87,7 @@ const TagManagement: React.FC<TagProps> = ({ accessToken, userID, userRole }) =>
     if (!accessToken || !tagToDelete) return;
     try {
       await tagDeleteCall(accessToken, tagToDelete);
-      NotificationsManager.success("Tag deleted successfully");
+      NotificationsManager.success(t("tagDeleted"));
       fetchTags();
     } catch (error) {
       console.error("Error deleting tag:", error);
