@@ -89,7 +89,6 @@ export const ssoProviderConfigs: Record<string, SSOProviderConfig> = {
 
 // Helper function to render provider fields
 export const renderProviderFields = (provider: string) => {
-
   const config = ssoProviderConfigs[provider];
   if (!config) return null;
 
@@ -111,7 +110,7 @@ const BaseSSOSettingsForm: React.FC<BaseSSOSettingsFormProps> = ({ form, onFormS
     <div>
       <Form form={form} onFinish={onFormSubmit} labelCol={{ span: 8 }} wrapperCol={{ span: 16 }} labelAlign="left">
         <Form.Item
-          label={t("ssoProvider")}
+          label={t("ssoProviderLabel")}
           name="sso_provider"
           rules={[{ required: true, message: t("pleaseSelectSSOProvider") }]}
         >

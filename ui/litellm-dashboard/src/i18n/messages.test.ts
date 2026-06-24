@@ -14,12 +14,24 @@ function placeholders(message: string): string[] {
   return [...message.matchAll(/\{(\w+)\}/g)].map((match) => match[1]).sort();
 }
 
+function dottedPropertyNames(value: unknown, prefix = ""): string[] {
+  if (typeof value !== "object" || value === null || Array.isArray(value)) return [];
+  return Object.entries(value).flatMap(([key, child]) => {
+    const path = prefix ? `${prefix}.${key}` : key;
+    return [...(key.includes(".") ? [path] : []), ...dottedPropertyNames(child, path)];
+  });
+}
 describe("translation messages", () => {
   const enMessages = flatten(en);
   const zhMessages = flatten(zh);
 
   it("has identical English and Chinese keys", () => {
     expect([...zhMessages.keys()].sort()).toEqual([...enMessages.keys()].sort());
+  });
+
+  it("does not use dotted property names that the runtime resolver cannot traverse", () => {
+    expect(dottedPropertyNames(en)).toEqual([]);
+    expect(dottedPropertyNames(zh)).toEqual([]);
   });
 
   it("has identical placeholders for every translated message", () => {

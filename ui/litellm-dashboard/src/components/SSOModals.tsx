@@ -343,7 +343,7 @@ const SSOModals: React.FC<SSOModalsProps> = ({
         >
           <>
             <Form.Item
-              label={t("ssoProvider")}
+              label={t("ssoProviderLabel")}
               name="sso_provider"
               rules={[{ required: true, message: t("pleaseSelectSSOProvider") }]}
             >

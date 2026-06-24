@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { I18nProvider } from "@/i18n";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import React from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -128,7 +129,11 @@ const createQueryClient = () => {
 
 const renderWithQueryClient = (component: React.ReactElement) => {
   const queryClient = createQueryClient();
-  return render(<QueryClientProvider client={queryClient}>{component}</QueryClientProvider>);
+  return render(
+    <I18nProvider>
+      <QueryClientProvider client={queryClient}>{component}</QueryClientProvider>
+    </I18nProvider>,
+  );
 };
 
 describe("OldTeams - handleCreate organization handling", () => {

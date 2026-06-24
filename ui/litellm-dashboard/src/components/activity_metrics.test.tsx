@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { renderWithProviders as render, screen } from "../../tests/test-utils";
 import React from "react";
 import { beforeAll, describe, expect, it, vi } from "vitest";
 import { ActivityMetrics, formatKeyLabel, processActivityData } from "./activity_metrics";
