@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { act, fireEvent, render } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import ModelsAndEndpointsView from "./ModelsAndEndpointsView";
+import { I18nProvider } from "@/i18n";
 
 // Mock localStorage
 const localStorageMock = (() => {
@@ -31,9 +32,30 @@ vi.mock("@/components/networking", () => ({
   getCallbacksCall: vi.fn().mockResolvedValue({ router_settings: {} }),
   setCallbacksCall: vi.fn().mockResolvedValue(undefined),
   getUiSettings: vi.fn().mockResolvedValue({ values: {} }),
+  getProxyConfigCall: vi.fn().mockResolvedValue({}),
   latestHealthChecksCall: vi.fn().mockResolvedValue({ latest_health_checks: {} }),
   getModelCostMapReloadStatus: vi.fn().mockResolvedValue({}),
+  getModelCostMapSource: vi.fn().mockResolvedValue({
+    source: "local",
+    url: null,
+    is_env_forced: false,
+    fallback_reason: null,
+    model_count: 0,
+  }),
+  getGlobalLitellmHeaderName: vi.fn().mockResolvedValue("x-litellm-api-key"),
+  proxyBaseUrl: "",
 }));
+
+vi.mock("@/app/(dashboard)/hooks/proxyConfig/useProxyConfig", async () => {
+  const actual = await vi.importActual<typeof import("@/app/(dashboard)/hooks/proxyConfig/useProxyConfig")>(
+    "@/app/(dashboard)/hooks/proxyConfig/useProxyConfig",
+  );
+  return {
+    ...actual,
+    useDeleteProxyConfigField: vi.fn(),
+    useProxyConfig: vi.fn(() => ({ data: [], isLoading: false, refetch: vi.fn() })),
+  };
+});
 
 vi.mock("@/app/(dashboard)/models-and-endpoints/components/ModelAnalyticsTab/ModelAnalyticsTab", () => ({
   default: () => null,
@@ -87,6 +109,15 @@ const createQueryClient = () =>
     defaultOptions: { queries: { retry: false, gcTime: 0 } },
   });
 
+const renderView = (queryClient: QueryClient) =>
+  render(
+    <I18nProvider>
+      <QueryClientProvider client={queryClient}>
+        <ModelsAndEndpointsView premiumUser={false} teams={[]} />
+      </QueryClientProvider>
+    </I18nProvider>,
+  );
+
 describe("ModelsAndEndpointsView", () => {
   beforeEach(() => {
     mockUseModelsInfo.mockReturnValue({
@@ -118,33 +149,21 @@ describe("ModelsAndEndpointsView", () => {
 
   it("should render the models and endpoints view", async () => {
     const queryClient = createQueryClient();
-    const { findByText } = render(
-      <QueryClientProvider client={queryClient}>
-        <ModelsAndEndpointsView premiumUser={false} teams={[]} />
-      </QueryClientProvider>,
-    );
+    const { findByText } = renderView(queryClient);
     expect(await findByText("Model Management", {}, { timeout: 10000 })).toBeInTheDocument();
   });
 
   it("should show Missing provider banner by default", async () => {
     localStorageMock.clear();
     const queryClient = createQueryClient();
-    const { findByText } = render(
-      <QueryClientProvider client={queryClient}>
-        <ModelsAndEndpointsView premiumUser={false} teams={[]} />
-      </QueryClientProvider>,
-    );
+    const { findByText } = renderView(queryClient);
     expect(await findByText("Missing a provider?", {}, { timeout: 10000 })).toBeInTheDocument();
   });
 
   it("should hide Missing provider banner when dismiss button is clicked and persist to localStorage", async () => {
     localStorageMock.clear();
     const queryClient = createQueryClient();
-    const { findByText, queryByText, container } = render(
-      <QueryClientProvider client={queryClient}>
-        <ModelsAndEndpointsView premiumUser={false} teams={[]} />
-      </QueryClientProvider>,
-    );
+    const { findByText, queryByText, container } = renderView(queryClient);
 
     // Wait for banner to appear
     expect(await findByText("Missing a provider?", {}, { timeout: 10000 })).toBeInTheDocument();
@@ -165,11 +184,7 @@ describe("ModelsAndEndpointsView", () => {
     // Set localStorage to hide banner
     localStorageMock.setItem("hideMissingProviderBanner", "true");
     const queryClient = createQueryClient();
-    const { findByText, queryByText } = render(
-      <QueryClientProvider client={queryClient}>
-        <ModelsAndEndpointsView premiumUser={false} teams={[]} />
-      </QueryClientProvider>,
-    );
+    const { findByText, queryByText } = renderView(queryClient);
 
     // Wait for component to render
     await findByText("Model Management", {}, { timeout: 10000 });
@@ -198,11 +213,7 @@ describe("ModelsAndEndpointsView", () => {
     });
 
     const queryClient = createQueryClient();
-    const { getByRole } = render(
-      <QueryClientProvider client={queryClient}>
-        <ModelsAndEndpointsView premiumUser={false} teams={[]} />
-      </QueryClientProvider>,
-    );
+    const { getByRole } = renderView(queryClient);
 
     const healthStatusTab = getByRole("tab", { name: "Health Status" });
     await act(async () => {

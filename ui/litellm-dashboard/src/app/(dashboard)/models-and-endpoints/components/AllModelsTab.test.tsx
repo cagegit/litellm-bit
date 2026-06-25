@@ -8,7 +8,27 @@ import AllModelsTab from "./AllModelsTab";
 const mockModelDeleteCall = vi.fn().mockResolvedValue({});
 vi.mock("@/components/networking", () => ({
   modelDeleteCall: (...args: any[]) => mockModelDeleteCall(...args),
+  getProxyConfigCall: vi.fn().mockResolvedValue({}),
+  getModelCostMapSource: vi.fn().mockResolvedValue({
+    source: "local",
+    url: null,
+    is_env_forced: false,
+    fallback_reason: null,
+    model_count: 0,
+  }),
+  getGlobalLitellmHeaderName: vi.fn().mockResolvedValue("x-litellm-api-key"),
+  proxyBaseUrl: "",
 }));
+vi.mock("@/app/(dashboard)/hooks/proxyConfig/useProxyConfig", async () => {
+  const actual = await vi.importActual<typeof import("@/app/(dashboard)/hooks/proxyConfig/useProxyConfig")>(
+    "@/app/(dashboard)/hooks/proxyConfig/useProxyConfig",
+  );
+  return {
+    ...actual,
+    useDeleteProxyConfigField: vi.fn(),
+    useProxyConfig: vi.fn(() => ({ data: [], isLoading: false, refetch: vi.fn() })),
+  };
+});
 
 // Mock NotificationsManager
 vi.mock("@/components/molecules/notifications_manager", () => ({

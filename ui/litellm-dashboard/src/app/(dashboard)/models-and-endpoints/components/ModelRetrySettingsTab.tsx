@@ -50,14 +50,14 @@ const ModelRetrySettingsTab = ({
     <TabPanel>
       <div className="flex items-center gap-4 mb-6">
         <div className="flex items-center">
-          <Text>Retry Policy Scope:</Text>
+          <Text>{t("retryPolicyScope")}:</Text>
           <Select
             className="ml-2 w-48"
             defaultValue="global"
             value={selectedModelGroup === "global" ? "global" : selectedModelGroup || availableModelGroups[0]}
             onValueChange={(value) => setSelectedModelGroup(value)}
           >
-            <SelectItem value="global">Global Default</SelectItem>
+            <SelectItem value="global">{t("globalDefault")}</SelectItem>
             {availableModelGroups.map((group, idx) => (
               <SelectItem key={idx} value={group} onClick={() => setSelectedModelGroup(group)}>
                 {group}
@@ -69,13 +69,13 @@ const ModelRetrySettingsTab = ({
 
       {selectedModelGroup === "global" ? (
         <>
-          <Title>Global Retry Policy</Title>
-          <Text className="mb-6">Default retry settings applied to all model groups unless overridden</Text>
+          <Title>{t("globalRetryPolicy")}</Title>
+          <Text className="mb-6">{t("defaultRetrySettingsAppliedToAllModelGroupsUnlessOverridden")}</Text>
         </>
       ) : (
         <>
-          <Title>Retry Policy for {selectedModelGroup}</Title>
-          <Text className="mb-6">Model-specific retry settings. Falls back to global defaults if not set.</Text>
+          <Title>{t("retryPolicyForModelGroup", { modelGroup: selectedModelGroup })}</Title>
+          <Text className="mb-6">{t("modelRetrySettingsDescription")}</Text>
         </>
       )}
       {retryPolicyMap && (
@@ -147,7 +147,7 @@ const ModelRetrySettingsTab = ({
         </table>
       )}
       <Button className="mt-6 mr-8" onClick={handleSaveRetrySettings}>
-        Save
+        {t("saveSettings")}
       </Button>
     </TabPanel>
   );

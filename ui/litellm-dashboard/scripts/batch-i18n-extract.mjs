@@ -100,7 +100,7 @@ function processFile(filePath) {
         const before = result.slice(0, match.index);
         const after = result.slice(match.index + match[0].length);
         if (!before.endsWith("{t(") && !after.startsWith("{t(")) {
-          result = before + `{t("${ns}.${key}")}` + after;
+          result = before + `{t("${key}")}` + after;
           replacements++;
         }
       }
@@ -114,7 +114,7 @@ function processFile(filePath) {
     if (isUIText(text) && text.length > 1) {
       const key = getOrCreateKey(ns, text, usedKeys, fileKeys);
       if (key) {
-        result = result.replace(`${match[1]}="${text}"`, `${match[1]}={t("${ns}.${key}")}`);
+        result = result.replace(`${match[1]}="${text}"`, `${match[1]}={t("${key}")}`);
         replacements++;
       }
     }
@@ -127,7 +127,7 @@ function processFile(filePath) {
     if (isUIText(text) && text.length > 2) {
       const key = getOrCreateKey(ns, text, usedKeys, fileKeys);
       if (key) {
-        result = result.replace(`${match[1]}: "${text}"`, `${match[1]}: t("${ns}.${key}")`);
+        result = result.replace(`${match[1]}: "${text}"`, `${match[1]}: t("${key}")`);
         replacements++;
       }
     }
@@ -140,7 +140,7 @@ function processFile(filePath) {
     if (isUIText(text) && text.length > 1) {
       const key = getOrCreateKey(ns, text, usedKeys, fileKeys);
       if (key) {
-        result = result.replace(`${match[1]}="${text}"`, `${match[1]}={t("${ns}.${key}")}`);
+        result = result.replace(`${match[1]}="${text}"`, `${match[1]}={t("${key}")}`);
         replacements++;
       }
     }
@@ -153,7 +153,7 @@ function processFile(filePath) {
     if (isUIText(text)) {
       const key = getOrCreateKey(ns, text, usedKeys, fileKeys);
       if (key) {
-        result = result.replace(`Tooltip title="${text}"`, `Tooltip title={t("${ns}.${key}")}`);
+        result = result.replace(`Tooltip title="${text}"`, `Tooltip title={t("${key}")}`);
         replacements++;
       }
     }
@@ -167,7 +167,7 @@ function processFile(filePath) {
     if (isUIText(text) && !text.includes('${')) {
       const key = getOrCreateKey(ns, text, usedKeys, fileKeys);
       if (key) {
-        result = result.replace(`\`${text}\``, `{t("${ns}.${key}")}`);
+        result = result.replace(`\`${text}\``, `{t("${key}")}`);
         replacements++;
       }
     }
@@ -233,7 +233,8 @@ function getOrCreateKey(ns, text, usedKeys, fileKeys) {
 }
 
 function detectNamespace(filePath) {
-  const relPath = filePath.replace(/^src\/components\//, "");
+  const normalizedPath = path.relative(process.cwd(), filePath).replace(/\\/g, "/");
+  const relPath = normalizedPath.replace(/^src\/(?:components|app)\//, "");
   const dir = path.dirname(relPath);
   const baseName = path.basename(filePath, ".tsx");
 
@@ -265,6 +266,8 @@ function detectNamespace(filePath) {
     "SearchTools": "mcp", "LanguageSwitcher": "layout",
     "edit_auto_router": "settings", "key_team_helpers": "users",
     "molecules/models": "models", "survey": "survey", "templates": "settings", "workflow_runs": "logs",
+    "(dashboard)/models-and-endpoints": "models", "(dashboard)/models-and-endpoints/components": "models",
+    "models-and-endpoints": "models", "models-and-endpoints/components": "models",
   };
 
   if (nsMap[baseName]) return nsMap[baseName];

@@ -1,4 +1,5 @@
-import { render, screen } from "@testing-library/react";
+import { render as baseRender, screen } from "@testing-library/react";
+import { I18nProvider } from "@/i18n";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 import { describe, expect, it, vi } from "vitest";
@@ -23,6 +24,19 @@ vi.mock("@tremor/react", async (importOriginal) => {
   };
 });
 
+vi.mock("@/app/(dashboard)/hooks/proxyConfig/useProxyConfig", async () => {
+  const actual = await vi.importActual<typeof import("@/app/(dashboard)/hooks/proxyConfig/useProxyConfig")>(
+    "@/app/(dashboard)/hooks/proxyConfig/useProxyConfig",
+  );
+  return {
+    ...actual,
+    useDeleteProxyConfigField: vi.fn(),
+    useProxyConfig: vi.fn(() => ({ data: [], isLoading: false, refetch: vi.fn() })),
+  };
+});
+
+const render = (ui: React.ReactNode) => baseRender(<I18nProvider>{ui}</I18nProvider>);
+
 type GlobalRetryPolicy = { [key: string]: number };
 type ModelGroupRetryPolicy = { [key: string]: { [key: string]: number } | undefined };
 
@@ -43,19 +57,31 @@ const buildProps = (overrides: Record<string, unknown> = {}) => ({
 
 describe("ModelRetrySettingsTab", () => {
   it("should render the 'Global Retry Policy' heading when selectedModelGroup is 'global'", () => {
-    render(<ModelRetrySettingsTab {...buildProps()} />);
+    render(
+      <I18nProvider>
+        <ModelRetrySettingsTab {...buildProps()} />
+      </I18nProvider>,
+    );
 
     expect(screen.getByText("Global Retry Policy")).toBeInTheDocument();
   });
 
   it("should render a model-specific heading when a model group is selected", () => {
-    render(<ModelRetrySettingsTab {...buildProps({ selectedModelGroup: "gpt-4" })} />);
+    render(
+      <I18nProvider>
+        <ModelRetrySettingsTab {...buildProps({ selectedModelGroup: "gpt-4" })} />
+      </I18nProvider>,
+    );
 
     expect(screen.getByText("Retry Policy for gpt-4")).toBeInTheDocument();
   });
 
   it("should render a row for every error type in the retry policy map", () => {
-    render(<ModelRetrySettingsTab {...buildProps()} />);
+    render(
+      <I18nProvider>
+        <ModelRetrySettingsTab {...buildProps()} />
+      </I18nProvider>,
+    );
 
     expect(screen.getByText(/BadRequestError \(400\)/)).toBeInTheDocument();
     expect(screen.getByText(/AuthenticationError/)).toBeInTheDocument();
@@ -66,7 +92,11 @@ describe("ModelRetrySettingsTab", () => {
   });
 
   it("should use defaultRetry when globalRetryPolicy is null (global scope)", () => {
-    render(<ModelRetrySettingsTab {...buildProps({ defaultRetry: 3 })} />);
+    render(
+      <I18nProvider>
+        <ModelRetrySettingsTab {...buildProps({ defaultRetry: 3 })} />
+      </I18nProvider>,
+    );
 
     // All 6 spinbutton inputs should show the defaultRetry value
     const inputs = screen.getAllByRole("spinbutton");
@@ -79,7 +109,11 @@ describe("ModelRetrySettingsTab", () => {
     const globalRetryPolicy: GlobalRetryPolicy = {
       RateLimitErrorRetries: 5,
     };
-    render(<ModelRetrySettingsTab {...buildProps({ globalRetryPolicy, defaultRetry: 0 })} />);
+    render(
+      <I18nProvider>
+        <ModelRetrySettingsTab {...buildProps({ globalRetryPolicy, defaultRetry: 0 })} />
+      </I18nProvider>,
+    );
 
     // The RateLimitError row is the 4th entry in the map
     const inputs = screen.getAllByRole("spinbutton");
@@ -153,7 +187,11 @@ describe("ModelRetrySettingsTab", () => {
   });
 
   it("should not show global reference annotations in global scope", () => {
-    render(<ModelRetrySettingsTab {...buildProps({ selectedModelGroup: "global" })} />);
+    render(
+      <I18nProvider>
+        <ModelRetrySettingsTab {...buildProps({ selectedModelGroup: "global" })} />
+      </I18nProvider>,
+    );
 
     expect(screen.queryByText(/Global:/)).not.toBeInTheDocument();
   });
@@ -161,7 +199,11 @@ describe("ModelRetrySettingsTab", () => {
   it("should call handleSaveRetrySettings when the Save button is clicked", async () => {
     const user = userEvent.setup();
     const handleSaveRetrySettings = vi.fn();
-    render(<ModelRetrySettingsTab {...buildProps({ handleSaveRetrySettings })} />);
+    render(
+      <I18nProvider>
+        <ModelRetrySettingsTab {...buildProps({ handleSaveRetrySettings })} />
+      </I18nProvider>,
+    );
 
     await user.click(screen.getByRole("button", { name: /save/i }));
 
