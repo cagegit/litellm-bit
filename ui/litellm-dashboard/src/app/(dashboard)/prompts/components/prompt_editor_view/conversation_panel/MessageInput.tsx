@@ -60,7 +60,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
 
       {isLoading && (
         <TremorButton onClick={onCancel} className="bg-red-50 hover:bg-red-100 text-red-600 border-red-200">
-          Cancel
+          {t("cancel")}
         </TremorButton>
       )}
     </div>

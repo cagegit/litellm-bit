@@ -147,7 +147,7 @@ const CodeInterpreterOutput: React.FC<CodeInterpreterOutputProps> = ({
               key: "code",
               label: (
                 <span className="flex items-center gap-2 text-sm text-gray-600">
-                  <CodeOutlined /> Python Code Executed
+                  <CodeOutlined /> {t("pythonCodeExecuted")}
                 </span>
               ),
               children: (
@@ -194,7 +194,7 @@ const CodeInterpreterOutput: React.FC<CodeInterpreterOutputProps> = ({
                   onClick={() => handleDownload(annotation)}
                   className="text-xs text-blue-500 hover:text-blue-700 flex items-center gap-1"
                 >
-                  <DownloadOutlined /> Download
+                  <DownloadOutlined /> {t("download")}
                 </button>
               </div>
             </div>

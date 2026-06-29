@@ -136,7 +136,11 @@ const TagManagement: React.FC<TagProps> = ({ accessToken, userID, userRole }) =>
           <div className="flex justify-between mt-2 w-full items-center mb-4">
             <h1>{t("tagManagement")}</h1>
             <div className="flex items-center space-x-2">
-              {lastRefreshed && <Text>Last Refreshed: {lastRefreshed}</Text>}
+              {lastRefreshed && (
+                <Text>
+                  {t("lastRefreshed")} {lastRefreshed}
+                </Text>
+              )}
               <Icon
                 icon={RefreshIcon}
                 variant="shadow"
@@ -148,10 +152,9 @@ const TagManagement: React.FC<TagProps> = ({ accessToken, userID, userRole }) =>
           </div>
 
           <Text className="mb-4">
-            Click on a tag name to view and edit its details.
+            {t("clickOnATagNameToViewAndEditItsDetails")}
             <p>
-              You can use tags to restrict the usage of certain LLMs based on tags passed in the request. Read more
-              about tag routing{" "}
+              {t("useTagsToRestrictUsageDescription")}{" "}
               <a href="https://docs.litellm.ai/docs/proxy/tag_routing" target="_blank" rel="noopener noreferrer">
                 here
               </a>
@@ -160,7 +163,7 @@ const TagManagement: React.FC<TagProps> = ({ accessToken, userID, userRole }) =>
           </Text>
 
           <Button className="mb-4" onClick={() => setIsCreateModalVisible(true)}>
-            + Create New Tag
+            {t("createNewTag1")}
           </Button>
 
           <Grid numItems={1} className="gap-2 pt-2 pb-2 h-[75vh] w-full mt-2">
@@ -205,7 +208,7 @@ const TagManagement: React.FC<TagProps> = ({ accessToken, userID, userRole }) =>
                   </div>
                   <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                     <Button onClick={confirmDelete} color="red" className="ml-2">
-                      Delete
+                      {t("delete")}
                     </Button>
                     <Button
                       onClick={() => {
@@ -213,7 +216,7 @@ const TagManagement: React.FC<TagProps> = ({ accessToken, userID, userRole }) =>
                         setTagToDelete(null);
                       }}
                     >
-                      Cancel
+                      {t("cancel")}
                     </Button>
                   </div>
                 </div>

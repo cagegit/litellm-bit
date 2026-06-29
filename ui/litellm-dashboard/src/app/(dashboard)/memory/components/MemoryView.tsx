@@ -273,8 +273,20 @@ export const MemoryView: React.FC<MemoryViewProps> = ({ accessToken }) => {
       width: 140,
       render: (_: unknown, r: MemoryRow) => (
         <Space size={4}>
-          <Button size="small" type="text" icon={<EyeOutlined />} onClick={() => setDetailRow(r)} aria-label={t("view")} />
-          <Button size="small" type="text" icon={<EditOutlined />} onClick={() => setEditRow(r)} aria-label={t("edit")} />
+          <Button
+            size="small"
+            type="text"
+            icon={<EyeOutlined />}
+            onClick={() => setDetailRow(r)}
+            aria-label={t("view")}
+          />
+          <Button
+            size="small"
+            type="text"
+            icon={<EditOutlined />}
+            onClick={() => setEditRow(r)}
+            aria-label={t("edit")}
+          />
           <Button
             size="small"
             type="text"
@@ -324,14 +336,14 @@ export const MemoryView: React.FC<MemoryViewProps> = ({ accessToken }) => {
                 style={{ width: 280 }}
               />
               <Button type="primary" ghost onClick={() => setAppliedSearch(searchInput.trim())}>
-                Search
+                {t("search")}
               </Button>
               <Button icon={<ReloadOutlined />} onClick={() => invalidateList()} loading={isFetching && !isLoading}>
-                Refresh
+                {t("refresh")}
               </Button>
             </Space>
             <Button type="primary" icon={<PlusOutlined />} onClick={() => setIsCreateOpen(true)}>
-              New memory
+              {t("newMemory")}
             </Button>
           </Space>
 

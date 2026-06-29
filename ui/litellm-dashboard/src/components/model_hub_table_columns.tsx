@@ -2,7 +2,8 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Button, Badge, Text } from "@tremor/react";
 import { Tooltip, Tag } from "antd";
 import { CopyOutlined, InfoCircleOutlined } from "@ant-design/icons";
-import { useTranslations } from "@/i18n";
+
+type Translate = <T extends string>(key: T, values?: Record<string, string | number>) => string;
 
 interface ModelHubData {
   model_group: string;
@@ -23,8 +24,6 @@ interface ModelHubData {
 }
 
 const formatCapabilityName = (key: string) => {
-  const { t } = useTranslations("common");
-
   return key
     .replace(/^supports_/, "")
     .split("_")
@@ -54,9 +53,9 @@ const formatTokens = (tokens: number) => {
 export const modelHubColumns = (
   showModal: (model: ModelHubData) => void,
   copyToClipboard: (text: string) => void,
+  t: Translate,
   publicPage: boolean = false,
 ): ColumnDef<ModelHubData>[] => {
-  const { t } = useTranslations("common");
   const allColumns: ColumnDef<ModelHubData>[] = [
     {
       header: "Public Model Name",
@@ -217,7 +216,7 @@ export const modelHubColumns = (
 
         return model.is_public_model_group === true ? (
           <Badge color="green" size="xs">
-            Yes
+            {t("yes")}
           </Badge>
         ) : (
           <Badge color="gray" size="xs">

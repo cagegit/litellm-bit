@@ -25,9 +25,9 @@ const DocLink = ({ href, className }: DocLinkProps) => {
         className,
       )}
     >
-      <span>API Reference Docs</span>
+      <span>{t("apiReferenceDocs")}</span>
       <ExternalLink aria-hidden className="h-4 w-4 opacity-80" />
-      <span className="sr-only">(opens in a new tab)</span>
+      <span className="sr-only">{t("opensInANewTab")}</span>
     </a>
   );
 };

@@ -108,7 +108,7 @@ const CategoryTable: React.FC<CategoryTableProps> = ({
       width: 100,
       render: (_: any, record: ContentCategory) => (
         <Button type="text" danger size="small" icon={<DeleteOutlined />} onClick={() => onRemove?.(record.id)}>
-          Delete
+          {t("delete")}
         </Button>
       ),
     } as any);

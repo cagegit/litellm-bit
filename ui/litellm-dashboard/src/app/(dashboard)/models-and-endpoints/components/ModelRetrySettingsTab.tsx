@@ -74,7 +74,7 @@ const ModelRetrySettingsTab = ({
         </>
       ) : (
         <>
-          <Title>{t("retryPolicyForModelGroup", { modelGroup: selectedModelGroup })}</Title>
+          <Title>{t("retryPolicyForModelGroup", { modelGroup: selectedModelGroup ?? "" })}</Title>
           <Text className="mb-6">{t("modelRetrySettingsDescription")}</Text>
         </>
       )}

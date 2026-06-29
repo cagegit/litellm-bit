@@ -228,7 +228,7 @@ const AddAttachmentForm: React.FC<AddAttachmentFormProps> = ({
             <Form.Item
               name="teams"
               label={t("teams")}
-              tooltip="Select team aliases or enter custom patterns. Supports wildcards (e.g., healthcare-*)"
+              tooltip={t("selectTeamAliasesOrEnterCustomPatternsSupportsWildcardsEGHealthcare")}
             >
               <Select
                 mode="tags"
@@ -248,7 +248,7 @@ const AddAttachmentForm: React.FC<AddAttachmentFormProps> = ({
             <Form.Item
               name="keys"
               label={t("keys")}
-              tooltip="Select key aliases or enter custom patterns. Supports wildcards (e.g., dev-*)"
+              tooltip={t("selectKeyAliasesOrEnterCustomPatternsSupportsWildcardsEGDev")}
             >
               <Select
                 mode="tags"
@@ -268,7 +268,7 @@ const AddAttachmentForm: React.FC<AddAttachmentFormProps> = ({
             <Form.Item
               name="models"
               label={t("models")}
-              tooltip="Model names this attachment applies to. Supports wildcards (e.g., gpt-4*). Leave empty to apply to all models."
+              tooltip={t("modelNamesThisAttachmentAppliesToSupportsWildcardsEGGpt4LeaveEmptyToApplyToAllMo")}
             >
               <Select
                 mode="tags"
@@ -290,18 +290,16 @@ const AddAttachmentForm: React.FC<AddAttachmentFormProps> = ({
             <Form.Item
               name="tags"
               label={t("tags")}
-              tooltip="Match against tags set in key or team metadata. Use exact values (e.g., healthcare) or wildcard patterns (e.g., health-*) where * matches any suffix."
+              tooltip={t("matchAgainstTagsSetInKeyOrTeamMetadataUseExactValuesEGHealthcareOrWildcardPatter")}
               extra={
                 <Text type="secondary" style={{ fontSize: 12 }}>
-                  Matches tags from key/team <code>metadata.tags</code> or tags passed dynamically in the request body.
-                  Use <code>*</code> as a suffix wildcard (e.g., <code>prod-*</code> matches <code>prod-us</code>,{" "}
-                  <code>prod-eu</code>).
+                  {t("matchesTagsFromKeyTeamMetadataOrRequestBody")} {t("useAsteriskAsSuffixWildcardDescription")}
                 </Text>
               }
             >
               <Select
                 mode="tags"
-                placeholder="Type a tag and press Enter (e.g. healthcare, prod-*)"
+                placeholder={t("typeATagAndPressEnterEGHealthcareProd")}
                 tokenSeparators={[",", " "]}
                 notFoundContent={null}
                 suffixIcon={null}
@@ -316,15 +314,15 @@ const AddAttachmentForm: React.FC<AddAttachmentFormProps> = ({
 
         <div className="flex justify-end space-x-2 mt-4">
           <Button variant="secondary" onClick={handleClose}>
-            Cancel
+            {t("cancel")}
           </Button>
           {scopeType === "specific" && (
             <Button variant="secondary" onClick={handlePreviewImpact} loading={isEstimating}>
-              Estimate Impact
+              {t("estimateImpact")}
             </Button>
           )}
           <Button onClick={handleSubmit} loading={isSubmitting}>
-            Create Attachment
+            {t("createAttachment")}
           </Button>
         </div>
       </Form>

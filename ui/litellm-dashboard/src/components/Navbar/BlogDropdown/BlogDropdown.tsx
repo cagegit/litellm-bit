@@ -40,7 +40,7 @@ export const BlogDropdown: React.FC = () => {
           <Space>
             <Text type="danger">{t("failedToLoadPosts")}</Text>
             <Button size="small" onClick={() => refetch()}>
-              Retry
+              {t("retry")}
             </Button>
           </Space>
         ),
@@ -70,7 +70,7 @@ export const BlogDropdown: React.FC = () => {
         key: "view-all",
         label: (
           <a href="https://docs.litellm.ai/blog" target="_blank" rel="noopener noreferrer">
-            View all posts
+            {t("viewAllPosts")}
           </a>
         ),
       },
@@ -81,7 +81,7 @@ export const BlogDropdown: React.FC = () => {
   return (
     <Dropdown menu={{ items }} trigger={["hover"]} placement="bottomRight">
       <Button type="text" className={`${NAV_PRODUCT_LINK_CLASS} !border-0 !bg-transparent`}>
-        Blog
+        {t("blog")}
         <DownOutlined className="text-[10px] text-gray-500" aria-hidden />
       </Button>
     </Dropdown>

@@ -393,7 +393,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
         accessorKey: "last_active",
         header: () => (
           <span className="flex items-center gap-1">
-            Last Active
+            {t("lastActive")}
             <Popover
               content="This is a new field and is not backfilled. Only new key usage will update this value."
               trigger="hover"
@@ -623,7 +623,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
                 <Skeleton.Node active style={{ width: 74, height: 20 }} />
               ) : (
                 <span className="text-sm text-gray-700">
-                  Page {pageIndex + 1} of {table.getPageCount()}
+                  {t("page")} {pageIndex + 1} of {table.getPageCount()}
                 </span>
               )}
 
@@ -635,7 +635,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
                   disabled={isLoading || isFetching || !table.getCanPreviousPage()}
                   className="px-3 py-1 text-sm border rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Previous
+                  {t("previous")}
                 </button>
               )}
 
@@ -647,7 +647,7 @@ export function TeamVirtualKeysTable({ teamId, teamAlias, organization }: TeamVi
                   disabled={isLoading || isFetching || !table.getCanNextPage()}
                   className="px-3 py-1 text-sm border rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Next
+                  {t("next")}
                 </button>
               )}
             </div>

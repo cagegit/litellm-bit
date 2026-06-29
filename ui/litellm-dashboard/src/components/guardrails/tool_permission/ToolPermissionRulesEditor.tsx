@@ -122,7 +122,7 @@ const ToolPermissionRulesEditor: React.FC<ToolPermissionRulesEditorProps> = ({ v
           size="small"
           onClick={() => updateRule(index, { allowed_param_patterns: { "": "" } })}
         >
-          + Restrict tool arguments (optional)
+          {t("restrictToolArgumentsOptional")}
         </Button>
       );
     }
@@ -168,7 +168,7 @@ const ToolPermissionRulesEditor: React.FC<ToolPermissionRulesEditorProps> = ({ v
             })
           }
         >
-          + Add another constraint
+          {t("addAnotherConstraint")}
         </Button>
       </div>
     );
@@ -179,10 +179,7 @@ const ToolPermissionRulesEditor: React.FC<ToolPermissionRulesEditorProps> = ({ v
       <div className="flex items-center justify-between">
         <div>
           <Text className="text-lg font-semibold">{t("litellmToolPermissionGuardrail")}</Text>
-          <Text className="text-sm text-gray-500">
-            Provide regex patterns (e.g., ^mcp__github_.*$) for tool names or types and optionally constrain payload
-            fields.
-          </Text>
+          <Text className="text-sm text-gray-500">{t("provideRegexPatternsForToolNamesOrTypesDescription")}</Text>
         </div>
         {!disabled && (
           <Button
@@ -191,7 +188,7 @@ const ToolPermissionRulesEditor: React.FC<ToolPermissionRulesEditorProps> = ({ v
             onClick={addRule}
             className="!bg-blue-600 !text-white hover:!bg-blue-500"
           >
-            Add Rule
+            {t("addRule")}
           </Button>
         )}
       </div>
@@ -205,7 +202,9 @@ const ToolPermissionRulesEditor: React.FC<ToolPermissionRulesEditorProps> = ({ v
           {config.rules.map((rule, index) => (
             <Card key={rule.id || index} className="bg-gray-50">
               <div className="flex items-center justify-between mb-3">
-                <Text className="font-semibold">Rule {index + 1}</Text>
+                <Text className="font-semibold">
+                  {t("rule")} {index + 1}
+                </Text>
                 <Button
                   icon={<DeleteOutlined />}
                   danger
@@ -213,7 +212,7 @@ const ToolPermissionRulesEditor: React.FC<ToolPermissionRulesEditorProps> = ({ v
                   disabled={disabled}
                   onClick={() => removeRule(index)}
                 >
-                  Remove
+                  {t("remove")}
                 </Button>
               </div>
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -292,8 +291,8 @@ const ToolPermissionRulesEditor: React.FC<ToolPermissionRulesEditorProps> = ({ v
         </div>
         <div>
           <Text className="text-sm font-medium flex items-center gap-1">
-            On disallowed action
-            <Tooltip title="Block returns an error when a forbidden tool is invoked. Rewrite strips the tool call but lets the rest of the response continue.">
+            {t("onDisallowedAction")}
+            <Tooltip title={t("blockReturnsAnErrorWhenAForbiddenToolIsInvokedRewriteStripsTheToolCallButLetsThe")}>
               <InfoCircleOutlined />
             </Tooltip>
           </Text>

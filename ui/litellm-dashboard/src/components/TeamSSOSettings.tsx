@@ -192,11 +192,13 @@ const TeamSSOSettings: React.FC<TeamSSOSettingsProps> = ({ accessToken }) => {
       <div className="mt-8">
         {/* Budget & Rate Limits */}
         <div className="mb-8">
-          <div className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Budget & Rate Limits</div>
+          <div className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">
+            {t("budgetAndRateLimits")}
+          </div>
           <div className="border-t border-gray-100">
             <SettingRow
               label={t("maxBudget")}
-              description="Maximum budget (in USD) for new automatically created teams."
+              description={t("maximumBudgetinUsdForNewAutomaticallyCreatedTeams")}
               isEditing={isEditing}
               viewContent={
                 values.max_budget != null ? (
@@ -220,7 +222,7 @@ const TeamSSOSettings: React.FC<TeamSSOSettingsProps> = ({ accessToken }) => {
 
             <SettingRow
               label={t("budgetDuration")}
-              description="How frequently the team's budget resets."
+              description={t("howFrequentlyTheTeamsBudgetResets")}
               isEditing={isEditing}
               viewContent={
                 values.budget_duration ? (
@@ -240,7 +242,7 @@ const TeamSSOSettings: React.FC<TeamSSOSettingsProps> = ({ accessToken }) => {
 
             <SettingRow
               label={t("tpmLimit")}
-              description="Maximum tokens per minute allowed across all models."
+              description={t("maximumTokensPerMinuteAllowedAcrossAllModels")}
               isEditing={isEditing}
               viewContent={
                 values.tpm_limit != null ? (
@@ -263,7 +265,7 @@ const TeamSSOSettings: React.FC<TeamSSOSettingsProps> = ({ accessToken }) => {
 
             <SettingRow
               label={t("rpmLimit")}
-              description="Maximum requests per minute allowed across all models."
+              description={t("maximumRequestsPerMinuteAllowedAcrossAllModels")}
               isEditing={isEditing}
               viewContent={
                 values.rpm_limit != null ? (
@@ -288,11 +290,13 @@ const TeamSSOSettings: React.FC<TeamSSOSettingsProps> = ({ accessToken }) => {
 
         {/* Access & Permissions */}
         <div className="mb-8">
-          <div className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Access & Permissions</div>
+          <div className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">
+            {t("accessAndPermissions")}
+          </div>
           <div className="border-t border-gray-100">
             <SettingRow
               label={t("models")}
-              description="Default list of models that new teams can access."
+              description={t("defaultListOfModelsThatNewTeamsCanAccess")}
               isEditing={isEditing}
               viewContent={renderTags(values.models, getModelDisplayName, t("notSet"))}
               editContent={

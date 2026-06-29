@@ -148,7 +148,7 @@ const MCPToolPermissions: React.FC<MCPToolPermissionsProps> = ({
                       onClick={() => handleSelectAll(server.server_id)}
                       disabled={isLoading}
                     >
-                      Select All
+                      {t("selectAll")}
                     </button>
                     <button
                       type="button"
@@ -156,7 +156,7 @@ const MCPToolPermissions: React.FC<MCPToolPermissionsProps> = ({
                       onClick={() => handleDeselectAll(server.server_id)}
                       disabled={isLoading}
                     >
-                      Deselect All
+                      {t("deselectAll")}
                     </button>
                   </>
                 )}

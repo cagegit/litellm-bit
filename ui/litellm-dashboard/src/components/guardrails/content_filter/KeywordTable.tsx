@@ -57,7 +57,7 @@ const KeywordTable: React.FC<KeywordTableProps> = ({ keywords, onActionChange, o
       width: 100,
       render: (_: any, record: BlockedWord) => (
         <Button type="text" danger size="small" icon={<DeleteOutlined />} onClick={() => onRemove(record.id)}>
-          Delete
+          {t("delete")}
         </Button>
       ),
     },

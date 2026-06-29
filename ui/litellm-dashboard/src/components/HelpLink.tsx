@@ -68,7 +68,7 @@ export const HelpLink: React.FC<HelpLinkProps> = ({
     >
       <span>{children}</span>
       <ExternalLink className="h-3.5 w-3.5 flex-shrink-0" aria-hidden="true" />
-      <span className="sr-only">(opens in a new tab)</span>
+      <span className="sr-only">{t("opensInANewTab")}</span>
     </a>
   );
 };

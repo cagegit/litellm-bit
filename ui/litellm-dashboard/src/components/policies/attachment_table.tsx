@@ -72,7 +72,7 @@ const AttachmentTable: React.FC<AttachmentTableProps> = ({
         if (attachment.scope === "*") {
           return (
             <Badge color="amber" size="xs">
-              Global (*)
+              {t("global1")}
             </Badge>
           );
         }

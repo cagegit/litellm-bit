@@ -115,13 +115,13 @@ const UIThemeSettings: React.FC<UIThemeSettingsProps> = ({ userID, userRole, acc
   return (
     <div className="w-full mx-auto max-w-4xl px-6 py-8">
       <div className="mb-8">
-        <Title className="text-2xl font-bold mb-2">UI Theme Customization</Title>
-        <Text className="text-gray-600">Customize your LiteLLM admin dashboard with a custom logo and favicon.</Text>
+        <Title className="text-2xl font-bold mb-2">{t("uiThemeCustomization")}</Title>
+        <Text className="text-gray-600">{t("customizeYourLitellmAdminDashboardWithACustomLogoAndFavicon")}</Text>
       </div>
       <Card className="shadow-sm p-6">
         <div className="space-y-6">
           <div>
-            <Text className="text-sm font-medium text-gray-700 mb-2 block">Custom Logo URL</Text>
+            <Text className="text-sm font-medium text-gray-700 mb-2 block">{t("customLogoUrl")}</Text>
             <TextInput
               placeholder="https://example.com/logo.png"
               value={logoUrlInput}
@@ -131,12 +131,10 @@ const UIThemeSettings: React.FC<UIThemeSettingsProps> = ({ userID, userRole, acc
               }}
               className="w-full"
             />
-            <Text className="text-xs text-gray-500 mt-1">
-              Enter a URL for your custom logo or leave empty for default
-            </Text>
+            <Text className="text-xs text-gray-500 mt-1">{t("enterAURLForYourCustomLogoOrLeaveEmptyForDefault")}</Text>
           </div>
           <div>
-            <Text className="text-sm font-medium text-gray-700 mb-2 block">Custom Favicon URL</Text>
+            <Text className="text-sm font-medium text-gray-700 mb-2 block">{t("customFaviconUrl")}</Text>
             <TextInput
               placeholder="https://example.com/favicon.ico"
               value={faviconUrlInput}
@@ -147,15 +145,15 @@ const UIThemeSettings: React.FC<UIThemeSettingsProps> = ({ userID, userRole, acc
               className="w-full"
             />
             <Text className="text-xs text-gray-500 mt-1">
-              Enter a URL for your custom favicon (.ico, .png, or .svg) or leave empty for default
+              {t("enterAURLForYourCustomFaviconIcoPngOrSvgOrLeaveEmptyForDefault")}
             </Text>
           </div>
           <div className="flex gap-3 pt-4">
             <Button onClick={handleSave} loading={loading} disabled={loading} color="indigo">
-              Save Changes
+              {t("saveChanges")}
             </Button>
             <Button onClick={handleReset} loading={loading} disabled={loading} variant="secondary" color="gray">
-              Reset to Default
+              {t("resetToDefault1")}
             </Button>
           </div>
         </div>

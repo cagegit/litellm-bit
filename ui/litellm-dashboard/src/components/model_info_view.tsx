@@ -88,7 +88,6 @@ export default function ModelInfoView({
 
   // Transform the model data
   const getProviderFromModel = (model: string) => {
-
     if (modelCostMapData !== null && modelCostMapData !== undefined) {
       if (typeof modelCostMapData == "object" && model in modelCostMapData) {
         return modelCostMapData[model]["litellm_provider"];
@@ -392,7 +391,7 @@ export default function ModelInfoView({
     return (
       <div className="p-4">
         <TremorButton icon={ArrowLeftIcon} variant="light" onClick={onClose} className="mb-4">
-          Back to Models
+          {t("backToModels")}
         </TremorButton>
         <Text>{t("loading")}</Text>
       </div>
@@ -404,7 +403,7 @@ export default function ModelInfoView({
     return (
       <div className="p-4">
         <TremorButton icon={ArrowLeftIcon} variant="light" onClick={onClose} className="mb-4">
-          Back to Models
+          {t("backToModels")}
         </TremorButton>
         <Text>{t("modelNotFound")}</Text>
       </div>
@@ -495,9 +494,11 @@ export default function ModelInfoView({
       <div className="flex justify-between items-center mb-6">
         <div>
           <TremorButton icon={ArrowLeftIcon} variant="light" onClick={onClose} className="mb-4">
-            Back to Models
+            {t("backToModels")}
           </TremorButton>
-          <Title>Public Model Name: {getDisplayModelName(modelData)}</Title>
+          <Title>
+            {t("publicModelName1")} {getDisplayModelName(modelData)}
+          </Title>
           <div className="flex items-center cursor-pointer">
             <Text className="text-gray-500 font-mono">{modelData.model_info.id}</Text>
             <Button
@@ -521,7 +522,7 @@ export default function ModelInfoView({
             className="flex items-center gap-2"
             data-testid="test-connection-button"
           >
-            Test Connection
+            {t("testConnection")}
           </TremorButton>
 
           <TremorButton
@@ -532,7 +533,7 @@ export default function ModelInfoView({
             disabled={!isAdmin}
             data-testid="reuse-credentials-button"
           >
-            Re-use Credentials
+            {t("reUseCredentials")}
           </TremorButton>
           <TremorButton
             icon={TrashIcon}
@@ -542,7 +543,7 @@ export default function ModelInfoView({
             disabled={!canEditModel}
             data-testid="delete-model-button"
           >
-            Delete Model
+            {t("deleteModel1")}
           </TremorButton>
         </div>
       </div>
@@ -600,8 +601,14 @@ export default function ModelInfoView({
               <Card>
                 <Text>{t("pricing")}</Text>
                 <div className="mt-2">
-                  <Text>Input: ${modelData.input_cost}/1M tokens</Text>
-                  <Text>Output: ${modelData.output_cost}/1M tokens</Text>
+                  <Text>
+                    {t("input")}
+                    {modelData.input_cost}/1M tokens
+                  </Text>
+                  <Text>
+                    {t("output")}
+                    {modelData.output_cost}/1M tokens
+                  </Text>
                 </div>
               </Card>
             </Grid>
@@ -617,7 +624,7 @@ export default function ModelInfoView({
                     d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
-                Created At{" "}
+                {t("createdAt")}{" "}
                 {modelData.model_info.created_at
                   ? new Date(modelData.model_info.created_at).toLocaleDateString("en-US", {
                       month: "short",
@@ -635,7 +642,7 @@ export default function ModelInfoView({
                     d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
                   />
                 </svg>
-                Created By {modelData.model_info.created_by || "Not Set"}
+                {t("createdBy")} {modelData.model_info.created_by || "Not Set"}
               </div>
             </div>
 
@@ -646,17 +653,17 @@ export default function ModelInfoView({
                 <div className="flex gap-2">
                   {isAutoRouter && canEditModel && !isEditing && (
                     <TremorButton onClick={() => setIsAutoRouterModalOpen(true)} className="flex items-center">
-                      Edit Auto Router
+                      {t("editAutoRouter")}
                     </TremorButton>
                   )}
                   {canEditModel ? (
                     !isEditing && (
                       <TremorButton onClick={() => setIsEditing(true)} className="flex items-center">
-                        Edit Settings
+                        {t("editSettings")}
                       </TremorButton>
                     )
                   ) : (
-                    <Tooltip title="Only DB models can be edited. You must be an admin or the creator of the model to edit it.">
+                    <Tooltip title={t("onlyDBModelsCanBeEditedYouMustBeAnAdminOrTheCreatorOfTheModelToEditIt")}>
                       <InfoCircleOutlined />
                     </Tooltip>
                   )}
@@ -815,7 +822,7 @@ export default function ModelInfoView({
                           <Form.Item
                             name="cache_write_cost"
                             className="mb-0"
-                            tooltip="If left blank on save, defaults to Input Cost (backend falls back to input_cost_per_token)."
+                            tooltip={t("ifLeftBlankOnSaveDefaultsToInputCostBackendFallsBackToInputCostPerToken")}
                           >
                             <NumericalInput placeholder={t("defaultsToInputCostIfBlank")} />
                           </Form.Item>
@@ -985,7 +992,7 @@ export default function ModelInfoView({
 
                       <div>
                         <Text className="font-medium">
-                          Guardrails
+                          {t("guardrails")}
                           <Tooltip title={t("applySafetyGuardrailsToThisModelToFilterContentOrEnforcePolicies")}>
                             <a
                               href="https://docs.litellm.ai/docs/proxy/guardrails/quick_start"
@@ -1046,8 +1053,12 @@ export default function ModelInfoView({
 
                       <div>
                         <Text className="font-medium">
-                          Attached Knowledge Bases (RAG)
-                          <Tooltip title="Vector stores used for RAG. Every request to this model will automatically retrieve context from these knowledge bases.">
+                          {t("attachedKnowledgeBasesRAG")}
+                          <Tooltip
+                            title={t(
+                              "vectorStoresUsedForRAGEveryRequestToThisModelWillAutomaticallyRetrieveContextFro",
+                            )}
+                          >
                             <a
                               href="https://docs.litellm.ai/docs/completion/knowledgebase"
                               target="_blank"
@@ -1260,8 +1271,12 @@ export default function ModelInfoView({
                       </div>
                       <div>
                         <Text className="font-medium">
-                          LiteLLM Params
-                          <Tooltip title="Optional litellm params used for making a litellm.completion() call. Some params are automatically added by LiteLLM.">
+                          {t("litellmParams")}
+                          <Tooltip
+                            title={t(
+                              "optionalLitellmParamsUsedForMakingALitellmCompletionCallSomeParamsAreAutomatical",
+                            )}
+                          >
                             <a
                               href="https://docs.litellm.ai/docs/completion/input"
                               target="_blank"
@@ -1308,10 +1323,10 @@ export default function ModelInfoView({
                           }}
                           disabled={isSaving}
                         >
-                          Cancel
+                          {t("cancel")}
                         </TremorButton>
                         <TremorButton variant="primary" onClick={() => form.submit()} loading={isSaving}>
-                          Save Changes
+                          {t("saveChanges")}
                         </TremorButton>
                       </div>
                     )}
@@ -1335,7 +1350,7 @@ export default function ModelInfoView({
         isOpen={isDeleteModalOpen}
         title={t("deleteModel")}
         alertMessage="This action cannot be undone."
-        message="Are you sure you want to delete this model?"
+        message={t("areYouSureYouWantToDeleteThisModel")}
         resourceInformationTitle="Model Information"
         resourceInformation={[
           {

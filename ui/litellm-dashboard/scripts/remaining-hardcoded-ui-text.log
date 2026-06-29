@@ -1,0 +1,18 @@
+src/app/(dashboard)/playground/components/chat_ui/ChatUI.tsx:2239:135 jsx-text: tab. Toolsets can then be assigned to keys and teams to scope their tool access.
+src/app/(dashboard)/playground/components/complianceUI/ComplianceUI.tsx:1291:128 jsx-text: to submit ·
+src/app/(dashboard)/playground/components/complianceUI/ComplianceUI.tsx:1293:114 jsx-text: for new line
+src/components/guardrails/content_filter/CompetitorIntentConfiguration.tsx:272:48 jsx-text: : Treat as full competitor comparison → uses &quot;Competitor comparison&quot; policy
+src/components/guardrails/content_filter/CompetitorIntentConfiguration.tsx:276:50 jsx-text: : Treat as possible comparison → uses &quot;Possible competitor comparison&quot; policy
+src/components/guardrails/custom_code/CustomCodeModal.tsx:666:123 jsx-text: , MCP as OpenAI tool
+src/components/policies/add_attachment_form.tsx:296:73 jsx-text: or tags passed dynamically in the request body. Use
+src/components/policies/ai_suggestion_modal.tsx:648:129 jsx-text: to submit
+src/components/templates/key_info_view.tsx:507:98 jsx-text: . Spend history is preserved in logs. This resets the current period spend counter, the same as an automatic budget reset.
+src/components/UsagePage/components/EntityUsage/EntityUsage.tsx:412:105 jsx-text: pages. Charts will update periodically as data loads. Moving off of this page will stop and reset this. To continue using the UI in the meantime,
+src/components/UsagePage/components/EntityUsage/EntityUsage.tsx:448:115 jsx-text: pages. Charts will update periodically as data loads. Moving off of this page will stop and reset this. To continue using the UI in the meantime,
+src/components/UsagePage/components/UsagePageView.tsx:469:59 jsx-text: pages. Charts will update periodically as data loads. Moving off of this page will stop and reset this. To continue using the UI in the meantime,
+src/components/vector_store_management/VectorStoreForm.tsx:225:21 jsx-text: Enable the Discovery Engine API on your Google Cloud project and create a data store following the guide:
+src/components/vector_store_management/VectorStoreForm.tsx:238:21 jsx-text: For most data store types (Cloud Storage, BigQuery, Media): copy the data store ID and enter it in the Vector Store ID field below.
+src/components/vector_store_management/VectorStoreForm.tsx:242:21 jsx-text: For website, healthcare, and connector-based sources (Drive, Gmail, Slack, Jira, etc.): create a search app on top of the data store, then copy the
+src/components/view_logs/ConfigInfoMessage.tsx:35:144 jsx-text: file, or toggle the setting in
+
+Found 16 hardcoded English UI strings

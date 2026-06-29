@@ -396,7 +396,7 @@ export function LogDetailsDrawer({
               </div>
               {isSessionMode && sessionTruncated && (
                 <div className="mt-1 text-[11px] text-amber-600 font-mono">
-                  Showing most recent {logsForList.length} of {sessionTotalCount}
+                  {t("showingMostRecent")} {logsForList.length} of {sessionTotalCount}
                 </div>
               )}
             </div>

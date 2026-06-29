@@ -305,7 +305,7 @@ const PromptTable: React.FC<PromptTableProps> = ({
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-8 text-center">
                   <div className="text-center text-gray-500">
-                    <p>Loading...</p>
+                    <p>{t("loading")}</p>
                   </div>
                 </TableCell>
               </TableRow>
@@ -323,7 +323,7 @@ const PromptTable: React.FC<PromptTableProps> = ({
               <TableRow>
                 <TableCell colSpan={columns.length} className="h-8 text-center">
                   <div className="text-center text-gray-500">
-                    <p>No prompts found</p>
+                    <p>{t("noPromptsFound")}</p>
                   </div>
                 </TableCell>
               </TableRow>

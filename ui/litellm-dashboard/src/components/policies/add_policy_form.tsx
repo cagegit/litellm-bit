@@ -33,116 +33,120 @@ interface ModePicker {
   onSelect: (mode: "simple" | "flow_builder") => void;
 }
 
-const ModePicker: React.FC<ModePicker> = ({ selected, onSelect }) => (
-  <div className="flex gap-4" style={{ padding: "8px 0" }}>
-    {/* Simple Mode Card */}
-    <div
-      onClick={() => onSelect("simple")}
-      style={{
-        flex: 1,
-        padding: "24px 20px",
-        border: `2px solid ${selected === "simple" ? "#4f46e5" : "#e5e7eb"}`,
-        borderRadius: 12,
-        cursor: "pointer",
-        backgroundColor: selected === "simple" ? "#eef2ff" : "#fff",
-        transition: "all 0.15s ease",
-      }}
-    >
-      <div
-        style={{
-          width: 40,
-          height: 40,
-          borderRadius: 10,
-          backgroundColor: selected === "simple" ? "#e0e7ff" : "#f3f4f6",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          marginBottom: 16,
-        }}
-      >
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke={selected === "simple" ? "#4f46e5" : "#6b7280"}
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <rect x="3" y="3" width="18" height="18" rx="2" />
-          <path d="M8 7h8M8 12h8M8 17h5" />
-        </svg>
-      </div>
-      <Text strong style={{ fontSize: 15, display: "block", marginBottom: 4 }}>
-        Simple Mode
-      </Text>
-      <Text type="secondary" style={{ fontSize: 13 }}>
-        Pick guardrails from a list. All run in parallel.
-      </Text>
-    </div>
+const ModePicker: React.FC<ModePicker> = ({ selected, onSelect }) => {
+  const { t } = useTranslations("settings");
 
-    {/* Flow Builder Card */}
-    <div
-      onClick={() => onSelect("flow_builder")}
-      style={{
-        flex: 1,
-        padding: "24px 20px",
-        border: `2px solid ${selected === "flow_builder" ? "#4f46e5" : "#e5e7eb"}`,
-        borderRadius: 12,
-        cursor: "pointer",
-        backgroundColor: selected === "flow_builder" ? "#eef2ff" : "#fff",
-        transition: "all 0.15s ease",
-        position: "relative",
-      }}
-    >
-      <Tag
-        color="purple"
-        style={{
-          position: "absolute",
-          top: 12,
-          right: 12,
-          fontSize: 10,
-          fontWeight: 600,
-          margin: 0,
-        }}
-      >
-        NEW
-      </Tag>
+  return (
+    <div className="flex gap-4" style={{ padding: "8px 0" }}>
+      {/* Simple Mode Card */}
       <div
+        onClick={() => onSelect("simple")}
         style={{
-          width: 40,
-          height: 40,
-          borderRadius: 10,
-          backgroundColor: selected === "flow_builder" ? "#e0e7ff" : "#f3f4f6",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          marginBottom: 16,
+          flex: 1,
+          padding: "24px 20px",
+          border: `2px solid ${selected === "simple" ? "#4f46e5" : "#e5e7eb"}`,
+          borderRadius: 12,
+          cursor: "pointer",
+          backgroundColor: selected === "simple" ? "#eef2ff" : "#fff",
+          transition: "all 0.15s ease",
         }}
       >
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke={selected === "flow_builder" ? "#4f46e5" : "#6b7280"}
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
+        <div
+          style={{
+            width: 40,
+            height: 40,
+            borderRadius: 10,
+            backgroundColor: selected === "simple" ? "#e0e7ff" : "#f3f4f6",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            marginBottom: 16,
+          }}
         >
-          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-        </svg>
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke={selected === "simple" ? "#4f46e5" : "#6b7280"}
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <rect x="3" y="3" width="18" height="18" rx="2" />
+            <path d="M8 7h8M8 12h8M8 17h5" />
+          </svg>
+        </div>
+        <Text strong style={{ fontSize: 15, display: "block", marginBottom: 4 }}>
+          {t("simpleMode")}
+        </Text>
+        <Text type="secondary" style={{ fontSize: 13 }}>
+          {t("pickGuardrailsFromAListAllRunInParallel")}
+        </Text>
       </div>
-      <Text strong style={{ fontSize: 15, display: "block", marginBottom: 4 }}>
-        Flow Builder
-      </Text>
-      <Text type="secondary" style={{ fontSize: 13 }}>
-        Define steps, conditions, and error responses.
-      </Text>
+
+      {/* Flow Builder Card */}
+      <div
+        onClick={() => onSelect("flow_builder")}
+        style={{
+          flex: 1,
+          padding: "24px 20px",
+          border: `2px solid ${selected === "flow_builder" ? "#4f46e5" : "#e5e7eb"}`,
+          borderRadius: 12,
+          cursor: "pointer",
+          backgroundColor: selected === "flow_builder" ? "#eef2ff" : "#fff",
+          transition: "all 0.15s ease",
+          position: "relative",
+        }}
+      >
+        <Tag
+          color="purple"
+          style={{
+            position: "absolute",
+            top: 12,
+            right: 12,
+            fontSize: 10,
+            fontWeight: 600,
+            margin: 0,
+          }}
+        >
+          NEW
+        </Tag>
+        <div
+          style={{
+            width: 40,
+            height: 40,
+            borderRadius: 10,
+            backgroundColor: selected === "flow_builder" ? "#e0e7ff" : "#f3f4f6",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            marginBottom: 16,
+          }}
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke={selected === "flow_builder" ? "#4f46e5" : "#6b7280"}
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+          </svg>
+        </div>
+        <Text strong style={{ fontSize: 15, display: "block", marginBottom: 4 }}>
+          {t("flowBuilder")}
+        </Text>
+        <Text type="secondary" style={{ fontSize: 13 }}>
+          {t("defineStepsConditionsAndErrorResponses")}
+        </Text>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Main Component
@@ -364,12 +368,12 @@ const AddPolicyForm: React.FC<AddPolicyFormProps> = ({
   // ── Mode Picker Step ──────────────────────────────────────────────────────
   if (step === "pick_mode") {
     return (
-      <Modal title="Create New Policy" open={visible} onCancel={handleClose} footer={null} width={620}>
+      <Modal title={t("createNewPolicy")} open={visible} onCancel={handleClose} footer={null} width={620}>
         <ModePicker selected={selectedMode} onSelect={setSelectedMode} />
 
         {selectedMode === "flow_builder" && (
           <Alert
-            message="You'll be redirected to the full-screen Flow Builder to design your policy logic visually."
+            message={t("youLlBeRedirectedToTheFullScreenFlowBuilderToDesignYourPolicyLogicVisually")}
             type="info"
             style={{
               marginTop: 16,
@@ -381,7 +385,7 @@ const AddPolicyForm: React.FC<AddPolicyFormProps> = ({
 
         <div className="flex justify-end gap-2" style={{ marginTop: 24 }}>
           <Button variant="secondary" onClick={handleClose}>
-            Cancel
+            {t("cancel")}
           </Button>
           <Button
             onClick={handleModeConfirm}
@@ -418,52 +422,52 @@ const AddPolicyForm: React.FC<AddPolicyFormProps> = ({
       >
         <Form.Item
           name="policy_name"
-          label="Policy Name"
+          label={t("policyName1")}
           rules={[
-            { required: true, message: "Please enter a policy name" },
+            { required: true, message: t("pleaseEnterAPolicyName") },
             {
               pattern: /^[a-zA-Z0-9_-]+$/,
-              message: "Policy name can only contain letters, numbers, hyphens, and underscores",
+              message: t("policyNameCanOnlyContainLettersNumbersHyphensAndUnderscores"),
             },
           ]}
         >
-          <TextInput placeholder="e.g., global-baseline, healthcare-compliance" disabled={isEditing} />
+          <TextInput placeholder={t("eGGlobalBaselineHealthcareCompliance")} disabled={isEditing} />
         </Form.Item>
 
-        <Form.Item name="description" label="Description">
-          <Textarea rows={2} placeholder="Describe what this policy does..." />
+        <Form.Item name="description" label={t("description")}>
+          <Textarea rows={2} placeholder={t("describeWhatThisPolicyDoes")} />
         </Form.Item>
 
         <Divider orientation="left">
-          <Text strong>Inheritance</Text>
+          <Text strong>{t("inheritance")}</Text>
         </Divider>
 
         <Form.Item
           name="inherit"
-          label="Inherit From"
-          tooltip="Inherit guardrails from another policy. The child policy will include all guardrails from the parent."
+          label={t("inheritFrom")}
+          tooltip={t("inheritGuardrailsFromAnotherPolicyTheChildPolicyWillIncludeAllGuardrailsFromTheP")}
         >
           <Select
             allowClear
-            placeholder="Select a parent policy (optional)"
+            placeholder={t("selectAParentPolicyoptional")}
             options={policyOptions}
             style={{ width: "100%" }}
           />
         </Form.Item>
 
         <Divider orientation="left">
-          <Text strong>Guardrails</Text>
+          <Text strong>{t("guardrails")}</Text>
         </Divider>
 
         <Form.Item
           name="guardrails_add"
-          label="Guardrails to Add"
-          tooltip="These guardrails will be added to requests matching this policy"
+          label={t("guardrailsToAdd")}
+          tooltip={t("theseGuardrailsWillBeAddedToRequestsMatchingThisPolicy")}
         >
           <Select
             mode="multiple"
             allowClear
-            placeholder="Select guardrails to add"
+            placeholder={t("selectGuardrailsToAdd")}
             options={guardrailOptions}
             style={{ width: "100%" }}
           />
@@ -471,13 +475,13 @@ const AddPolicyForm: React.FC<AddPolicyFormProps> = ({
 
         <Form.Item
           name="guardrails_remove"
-          label="Guardrails to Remove"
-          tooltip="These guardrails will be removed from inherited guardrails"
+          label={t("guardrailsToRemove")}
+          tooltip={t("theseGuardrailsWillBeRemovedFromInheritedGuardrails")}
         >
           <Select
             mode="multiple"
             allowClear
-            placeholder="Select guardrails to remove (from inherited)"
+            placeholder={t("selectGuardrailsToRemovefromInherited")}
             options={guardrailOptions}
             style={{ width: "100%" }}
           />
@@ -485,11 +489,11 @@ const AddPolicyForm: React.FC<AddPolicyFormProps> = ({
 
         {resolvedGuardrails.length > 0 && (
           <Alert
-            message="Resolved Guardrails"
+            message={t("resolvedGuardrails")}
             description={
               <div>
                 <Text type="secondary" style={{ display: "block", marginBottom: 8 }}>
-                  These are the final guardrails that will be applied (including inheritance):
+                  {t("theseAreTheFinalGuardrailsThatWillBeAppliedIncludingInheritance")}
                 </Text>
                 <div className="flex flex-wrap gap-1">
                   {resolvedGuardrails.map((g) => (
@@ -507,18 +511,18 @@ const AddPolicyForm: React.FC<AddPolicyFormProps> = ({
         )}
 
         <Divider orientation="left">
-          <Text strong>Conditions (Optional)</Text>
+          <Text strong>{t("conditionsoptional")}</Text>
         </Divider>
 
         <Alert
-          message="Model Scope"
-          description="By default, this policy will run on all models. You can optionally restrict it to specific models below."
+          message={t("modelScope")}
+          description={t("byDefaultThisPolicyWillRunOnAllModelsYouCanOptionallyRestrictItToSpecificModelsB")}
           type="info"
           showIcon
           style={{ marginBottom: 16 }}
         />
 
-        <Form.Item label="Model Condition Type">
+        <Form.Item label={t("modelConditionType")}>
           <Radio.Group
             value={modelConditionType}
             onChange={(e) => {
@@ -526,8 +530,8 @@ const AddPolicyForm: React.FC<AddPolicyFormProps> = ({
               form.setFieldValue("model_condition", undefined);
             }}
           >
-            <Radio value="model">Select Model</Radio>
-            <Radio value="regex">Custom Regex Pattern</Radio>
+            <Radio value="model">{t("selectModel")}</Radio>
+            <Radio value="regex">{t("customRegexPattern")}</Radio>
           </Radio.Group>
         </Form.Item>
 
@@ -544,7 +548,7 @@ const AddPolicyForm: React.FC<AddPolicyFormProps> = ({
             <Select
               showSearch
               allowClear
-              placeholder="Leave empty to apply to all models"
+              placeholder={t("leaveEmptyToApplyToAllModels")}
               options={availableModels.map((model) => ({
                 label: model,
                 value: model,
@@ -559,7 +563,7 @@ const AddPolicyForm: React.FC<AddPolicyFormProps> = ({
 
         <div className="flex justify-end space-x-2 mt-4">
           <Button variant="secondary" onClick={handleClose}>
-            Cancel
+            {t("cancel")}
           </Button>
           <Button onClick={handleSubmit} loading={isSubmitting}>
             {isEditing ? "Update Policy" : "Create Policy"}

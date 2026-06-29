@@ -19,25 +19,25 @@ interface ComplexityRouterConfigProps {
   onChange: (tiers: ComplexityTiers) => void;
 }
 
-const TIER_DESCRIPTIONS: Record<keyof ComplexityTiers, { label: string; description: string; examples: string }> = {
+const TIER_DESCRIPTIONS: Record<keyof ComplexityTiers, { label: string; descriptionKey: string; examples: string }> = {
   SIMPLE: {
     label: "Simple",
-    description: "Basic questions, greetings, simple factual queries",
+    descriptionKey: "basicQuestionsGreetingsSimpleFactualQueries",
     examples: '"Hello!", "What is Python?", "Thanks!"',
   },
   MEDIUM: {
     label: "Medium",
-    description: "Standard queries requiring some reasoning or explanation",
+    descriptionKey: "standardQueriesRequiringSomeReasoningOrExplanation",
     examples: '"Explain how REST APIs work", "Debug this error"',
   },
   COMPLEX: {
     label: "Complex",
-    description: "Technical, multi-part requests requiring deep knowledge",
+    descriptionKey: "technicalMultiPartRequestsRequiringDeepKnowledge",
     examples: '"Design a microservices architecture", "Implement a rate limiter"',
   },
   REASONING: {
     label: "Reasoning",
-    description: "Chain-of-thought, analysis, explicit reasoning requests",
+    descriptionKey: "chainOfThoughtAnalysisExplicitReasoningRequests",
     examples: '"Think step by step...", "Analyze the pros and cons..."',
   },
 };
@@ -61,7 +61,7 @@ const ComplexityRouterConfig: React.FC<ComplexityRouterConfigProps> = ({ modelIn
     <div className="w-full max-w-none">
       <Space align="center" style={{ marginBottom: 16 }}>
         <Typography.Title level={4} style={{ margin: 0 }}>
-          Complexity Tier Configuration
+          {t("complexityTierConfiguration")}
         </Typography.Title>
         <Tooltip title="Map each complexity tier to a model. Simple queries use cheaper/faster models, complex queries use more capable models.">
           <InfoCircleOutlined className="text-gray-400" />
@@ -82,9 +82,9 @@ const ComplexityRouterConfig: React.FC<ComplexityRouterConfigProps> = ({ modelIn
               <div className="mb-4">
                 <div className="flex items-center gap-2 mb-2">
                   <Text strong style={{ fontSize: 16 }}>
-                    {tierInfo.label} Tier
+                    {tierInfo.label} {t("tier")}
                   </Text>
-                  <Tooltip title={tierInfo.description}>
+                  <Tooltip title={t(tierInfo.descriptionKey)}>
                     <InfoCircleOutlined className="text-gray-400" />
                   </Tooltip>
                 </div>
@@ -109,7 +109,7 @@ const ComplexityRouterConfig: React.FC<ComplexityRouterConfigProps> = ({ modelIn
 
       <Card className="bg-gray-50">
         <Text strong style={{ display: "block", marginBottom: 8 }}>
-          How Classification Works
+          {t("howClassificationWorks")}
         </Text>
         <Text type="secondary" style={{ fontSize: 13 }}>
           The router scores each request across 7 dimensions: token count, code presence, reasoning markers, technical
@@ -118,16 +118,20 @@ const ComplexityRouterConfig: React.FC<ComplexityRouterConfigProps> = ({ modelIn
         </Text>
         <ul style={{ marginTop: 8, marginBottom: 0, paddingLeft: 20, fontSize: 13, color: "rgba(0, 0, 0, 0.45)" }}>
           <li>
-            <strong>SIMPLE</strong>: Score &lt; 0.15
+            <strong>{t("simple")}</strong>
+            {t("scoreLt015")}
           </li>
           <li>
-            <strong>MEDIUM</strong>: Score 0.15 - 0.35
+            <strong>{t("medium")}</strong>
+            {t("score015035")}
           </li>
           <li>
-            <strong>COMPLEX</strong>: Score 0.35 - 0.60
+            <strong>{t("complex")}</strong>
+            {t("score035060")}
           </li>
           <li>
-            <strong>REASONING</strong>: Score &gt; 0.60 (or 2+ reasoning markers)
+            <strong>{t("reasoning")}</strong>
+            {t("scoreGt060Or2ReasoningMarkers")}
           </li>
         </ul>
       </Card>

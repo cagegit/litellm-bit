@@ -38,13 +38,13 @@ const AddMarginForm: React.FC<AddMarginFormProps> = ({
       <Form.Item
         label={
           <span className="text-sm font-medium text-gray-700 flex items-center">
-            Provider
+            {t("provider")}
             <Tooltip title={t("selectGlobalOrSpecific")}>
               <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
             </Tooltip>
           </span>
         }
-        rules={[{ required: true, message: "Please select a provider" }]}
+        rules={[{ required: true, message: t("pleaseSelectAProvider") }]}
       >
         <AntdSelect
           showSearch
@@ -91,13 +91,13 @@ const AddMarginForm: React.FC<AddMarginFormProps> = ({
       <Form.Item
         label={
           <span className="text-sm font-medium text-gray-700 flex items-center">
-            Margin Type
+            {t("marginType")}
             <Tooltip title={t("marginTypeHelp")}>
               <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
             </Tooltip>
           </span>
         }
-        rules={[{ required: true, message: "Please select a margin type" }]}
+        rules={[{ required: true, message: t("pleaseSelectAMarginType") }]}
       >
         <Radio.Group value={marginType} onChange={(e) => onMarginTypeChange(e.target.value)} className="w-full">
           <Radio value="percentage">{t("percentageBased")}</Radio>
@@ -109,14 +109,14 @@ const AddMarginForm: React.FC<AddMarginFormProps> = ({
         <Form.Item
           label={
             <span className="text-sm font-medium text-gray-700 flex items-center">
-              Margin Percentage
+              {t("marginPercentage")}
               <Tooltip title={t("marginPercentageHelp")}>
                 <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
               </Tooltip>
             </span>
           }
           rules={[
-            { required: true, message: "Please enter a margin percentage" },
+            { required: true, message: t("pleaseEnterAMarginPercentage") },
             {
               validator: (_, value) => {
                 if (!value) {
@@ -147,14 +147,14 @@ const AddMarginForm: React.FC<AddMarginFormProps> = ({
         <Form.Item
           label={
             <span className="text-sm font-medium text-gray-700 flex items-center">
-              Fixed Margin Amount
+              {t("fixedMarginAmount")}
               <Tooltip title={t("fixedMarginAmountHelp")}>
                 <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
               </Tooltip>
             </span>
           }
           rules={[
-            { required: true, message: "Please enter a fixed amount" },
+            { required: true, message: t("pleaseEnterAFixedAmount") },
             {
               validator: (_, value) => {
                 if (!value) {
@@ -191,7 +191,7 @@ const AddMarginForm: React.FC<AddMarginFormProps> = ({
             (marginType === "fixed" && !fixedAmountValue)
           }
         >
-          Add Provider Margin
+          {t("addProviderMargin")}
         </Button>
       </div>
     </div>

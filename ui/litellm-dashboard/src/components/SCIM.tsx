@@ -11,7 +11,6 @@ import {
   ExclamationCircleOutlined,
   PlusCircleOutlined,
 } from "@ant-design/icons";
-import { parseErrorMessage } from "./shared/errorUtils";
 import NotificationsManager from "./molecules/notifications_manager";
 
 interface SCIMConfigProps {
@@ -165,7 +164,7 @@ const SCIMConfig: React.FC<SCIMConfigProps> = ({ accessToken, userID, proxySetti
                   >
                     <TremorButton variant="primary" className="flex items-center">
                       <CopyOutlined className="h-4 w-4 mr-1" />
-                      Copy
+                      {t("copy")}
                     </TremorButton>
                   </CopyToClipboard>
                 </div>

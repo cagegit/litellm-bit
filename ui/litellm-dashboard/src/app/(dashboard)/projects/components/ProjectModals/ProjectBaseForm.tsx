@@ -111,7 +111,7 @@ export function ProjectBaseForm({ form }: ProjectBaseFormProps) {
           letterSpacing: "0.05em",
         }}
       >
-        Basic Information
+        {t("basicInformation")}
       </Typography.Text>
       <Divider style={{ marginTop: 8, marginBottom: 16 }} />
 
@@ -181,7 +181,7 @@ export function ProjectBaseForm({ form }: ProjectBaseFormProps) {
               }}
             >
               <Select.Option key="all-team-models" value="all-team-models">
-                All Team Models
+                {t("allTeamModels")}
               </Select.Option>
               {modelsToPick.map((model) => (
                 <Select.Option key={model} value={model}>
@@ -216,7 +216,7 @@ export function ProjectBaseForm({ form }: ProjectBaseFormProps) {
                 key: "1",
                 label: (
                   <Typography.Text strong style={{ color: "#374151" }}>
-                    Advanced Settings
+                    {t("advancedSettings")}
                   </Typography.Text>
                 ),
                 children: (
@@ -258,7 +258,7 @@ export function ProjectBaseForm({ form }: ProjectBaseFormProps) {
                     <Divider />
 
                     <Typography.Text strong style={{ display: "block", marginBottom: 12 }}>
-                      Model-Specific Limits
+                      {t("modelSpecificLimits")}
                     </Typography.Text>
                     <Form.List name="modelLimits">
                       {(fields, { add, remove }) => (
@@ -296,7 +296,7 @@ export function ProjectBaseForm({ form }: ProjectBaseFormProps) {
                           ))}
                           <Form.Item>
                             <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                              Add Model Limit
+                              {t("addModelLimit")}
                             </Button>
                           </Form.Item>
                         </>
@@ -306,7 +306,7 @@ export function ProjectBaseForm({ form }: ProjectBaseFormProps) {
                     <Divider />
 
                     <Typography.Text strong style={{ display: "block", marginBottom: 12 }}>
-                      Metadata
+                      {t("metadata1")}
                     </Typography.Text>
                     <Form.List name="metadata">
                       {(fields, { add, remove }) => (
@@ -345,7 +345,7 @@ export function ProjectBaseForm({ form }: ProjectBaseFormProps) {
                           ))}
                           <Form.Item>
                             <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                              Add Key-Value Pair
+                              {t("addKeyValuePair")}
                             </Button>
                           </Form.Item>
                         </>

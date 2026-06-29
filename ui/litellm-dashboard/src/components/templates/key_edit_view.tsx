@@ -341,7 +341,9 @@ export function KeyEditView({
                   onChange={(value) => setFieldValue("models", value)}
                 >
                   {/* Only show All Team Models if team has models */}
-                  {availableModels.length > 0 && <Select.Option value="all-team-models">All Team Models</Select.Option>}
+                  {availableModels.length > 0 && (
+                    <Select.Option value="all-team-models">{t("allTeamModels")}</Select.Option>
+                  )}
                   {availableModels.map((model) => (
                     <Select.Option key={model} value={model}>
                       {model}
@@ -350,7 +352,7 @@ export function KeyEditView({
                 </Select>
                 {isDisabled && (
                   <div style={{ fontSize: "11px", color: "#6b7280", marginTop: "2px" }}>
-                    Models field is disabled for this key type
+                    {t("modelsFieldIsDisabledForThisKeyType")}
                   </div>
                 )}
               </>
@@ -399,15 +401,15 @@ export function KeyEditView({
               >
                 <Select.Option value="default" label={t("fullAccess")}>
                   <div style={{ padding: "4px 0" }}>
-                    <div style={{ fontWeight: 500 }}>Full Access</div>
+                    <div style={{ fontWeight: 500 }}>{t("fullAccess")}</div>
                     <div style={{ fontSize: "11px", color: "#6b7280", marginTop: "2px" }}>
-                      Can call all routes (AI APIs, Management, and read-only)
+                      {t("canCallAllRoutesAIAPIsManagementAndReadOnly")}
                     </div>
                   </div>
                 </Select.Option>
                 <Select.Option value="llm_api" label={t("aiApis")}>
                   <div style={{ padding: "4px 0" }}>
-                    <div style={{ fontWeight: 500 }}>AI APIs</div>
+                    <div style={{ fontWeight: 500 }}>{t("aiApis")}</div>
                     <div style={{ fontSize: "11px", color: "#6b7280", marginTop: "2px" }}>
                       Can call only AI API routes (chat/completions, embeddings, etc.)
                     </div>
@@ -415,7 +417,7 @@ export function KeyEditView({
                 </Select.Option>
                 <Select.Option value="management" label={t("management")}>
                   <div style={{ padding: "4px 0" }}>
-                    <div style={{ fontWeight: 500 }}>Management</div>
+                    <div style={{ fontWeight: 500 }}>{t("management")}</div>
                     <div style={{ fontSize: "11px", color: "#6b7280", marginTop: "2px" }}>
                       Can call only management routes (user/team/key management)
                     </div>
@@ -430,7 +432,7 @@ export function KeyEditView({
       <Form.Item
         label={
           <span>
-            Allowed Routes{" "}
+            {t("allowedRoutes")}{" "}
             <Tooltip title="List of allowed routes for the key (comma-separated). Can be specific routes (e.g., '/chat/completions') or route patterns (e.g., 'llm_api_routes', 'management_routes', '/keys/*'). Leave empty to allow all routes.">
               <InfoCircleOutlined style={{ marginLeft: "4px" }} />
             </Tooltip>
@@ -447,17 +449,17 @@ export function KeyEditView({
 
       <Form.Item label={t("resetBudget")} name="budget_duration">
         <Select placeholder="n/a">
-          <Select.Option value="daily">Daily</Select.Option>
-          <Select.Option value="weekly">Weekly</Select.Option>
-          <Select.Option value="monthly">Monthly</Select.Option>
+          <Select.Option value="daily">{t("daily")}</Select.Option>
+          <Select.Option value="weekly">{t("weekly")}</Select.Option>
+          <Select.Option value="monthly">{t("monthly")}</Select.Option>
         </Select>
       </Form.Item>
 
       <Form.Item
         label={
           <span>
-            Budget Windows{" "}
-            <Tooltip title="Set multiple independent budget windows (e.g., hourly $10 AND monthly $200). Each window tracks spend separately and resets on its own schedule.">
+            {t("budgetWindows")}{" "}
+            <Tooltip title={t("setMultipleIndependentBudgetWindowsEGHourly10ANDMonthly200EachWindowTracksSpendS")}>
               <InfoCircleOutlined style={{ marginLeft: "4px" }} />
             </Tooltip>
           </span>
@@ -505,8 +507,8 @@ export function KeyEditView({
       <Form.Item
         label={
           <span>
-            Disable Global Guardrails{" "}
-            <Tooltip title="When enabled, this key will bypass any guardrails configured to run on every request (global guardrails)">
+            {t("disableGlobalGuardrails")}{" "}
+            <Tooltip title={t("whenEnabledThisKeyWillBypassAnyGuardrailsConfiguredToRunOnEveryRequestGlobalGuar")}>
               <InfoCircleOutlined style={{ marginLeft: "4px" }} />
             </Tooltip>
           </span>
@@ -520,7 +522,7 @@ export function KeyEditView({
       <Form.Item
         label={
           <span>
-            Policies{" "}
+            {t("policies")}{" "}
             <Tooltip title={t("applyPoliciesDescription")}>
               <InfoCircleOutlined style={{ marginLeft: "4px" }} />
             </Tooltip>
@@ -573,8 +575,8 @@ export function KeyEditView({
       <Form.Item
         label={
           <span>
-            Access Groups{" "}
-            <Tooltip title="Assign access groups to this key. Access groups control which models, MCP servers, and agents this key can use">
+            {t("accessGroups")}{" "}
+            <Tooltip title={t("assignAccessGroupsToThisKeyAccessGroupsControlWhichModelsMCPServersAndAgentsThis")}>
               <InfoCircleOutlined style={{ marginLeft: "4px" }} />
             </Tooltip>
           </span>
@@ -660,8 +662,8 @@ export function KeyEditView({
       <Form.Item
         label={
           <span>
-            Organization{" "}
-            <Tooltip title="The organization this key belongs to. Selecting an organization filters the available teams.">
+            {t("organization")}{" "}
+            <Tooltip title={t("theOrganizationThisKeyBelongsToSelectingAnOrganizationFiltersTheAvailableTeams")}>
               <InfoCircleOutlined style={{ marginLeft: "4px" }} />
             </Tooltip>
           </span>
@@ -778,10 +780,10 @@ export function KeyEditView({
       <div className="sticky z-10 bg-white p-4 border-t border-gray-200 bottom-[-1.5rem] inset-x-[-1.5rem]">
         <div className="flex justify-end items-center gap-2">
           <TremorButton variant="secondary" onClick={onCancel} disabled={isKeySaving}>
-            Cancel
+            {t("cancel")}
           </TremorButton>
           <TremorButton type="submit" loading={isKeySaving}>
-            Save Changes
+            {t("saveChanges")}
           </TremorButton>
         </div>
       </div>

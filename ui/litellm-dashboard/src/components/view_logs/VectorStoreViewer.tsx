@@ -79,7 +79,7 @@ export function VectorStoreViewer({ data }: VectorStoreViewerProps) {
                             <span className="font-mono">{request.query}</span>
                           </div>
                           <div className="flex">
-                            <span className="font-medium w-1/3">Vector Store ID:</span>
+                            <span className="font-medium w-1/3">{t("vectorStoreID")}</span>
                             <span className="font-mono">{request.vector_store_id}</span>
                           </div>
                           <div className="flex">
@@ -99,11 +99,11 @@ export function VectorStoreViewer({ data }: VectorStoreViewerProps) {
                         </div>
                         <div className="space-y-2">
                           <div className="flex">
-                            <span className="font-medium w-1/3">Start Time:</span>
+                            <span className="font-medium w-1/3">{t("startTime1")}</span>
                             <span>{formatTime(request.start_time)}</span>
                           </div>
                           <div className="flex">
-                            <span className="font-medium w-1/3">End Time:</span>
+                            <span className="font-medium w-1/3">{t("endTime1")}</span>
                             <span>{formatTime(request.end_time)}</span>
                           </div>
                           <div className="flex">
@@ -134,7 +134,9 @@ export function VectorStoreViewer({ data }: VectorStoreViewerProps) {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                               </svg>
                               <div className="flex items-center">
-                                <span className="font-medium mr-2">Result {resultIndex + 1}</span>
+                                <span className="font-medium mr-2">
+                                  {t("result")} {resultIndex + 1}
+                                </span>
                                 <span className="text-gray-500 text-sm">
                                   Score: <span className="font-mono">{result.score.toFixed(4)}</span>
                                 </span>

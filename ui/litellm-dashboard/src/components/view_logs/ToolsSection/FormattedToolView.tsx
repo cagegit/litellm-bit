@@ -83,7 +83,7 @@ export function FormattedToolView({ tool }: FormattedToolViewProps) {
               marginBottom: 8,
             }}
           >
-            Parameters
+            {t("parameters")}
           </Text>
           <Table dataSource={parameterRows} columns={columns} pagination={false} size="small" bordered />
         </div>
@@ -100,7 +100,7 @@ export function FormattedToolView({ tool }: FormattedToolViewProps) {
               marginBottom: 8,
             }}
           >
-            Called With
+            {t("calledWith")}
           </Text>
           <div
             style={{

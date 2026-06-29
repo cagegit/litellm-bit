@@ -120,17 +120,14 @@ const CompetitorIntentConfiguration: React.FC<CompetitorIntentConfigurationProps
         title={
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <Title level={5} style={{ margin: 0 }}>
-              Competitor Intent Filter
+              {t("competitorIntentFilter")}
             </Title>
             <Switch checked={false} onChange={handleEnabledChange} />
           </div>
         }
         size="small"
       >
-        <Text type="secondary">
-          Block or reframe competitor comparison questions. When enabled, airline type auto-loads competitors from IATA;
-          generic type requires manual competitor list.
-        </Text>
+        <Text type="secondary">{t("blockOrReframeCompetitorComparisonQuestionsDescription")}</Text>
       </Card>
     );
   }
@@ -140,7 +137,7 @@ const CompetitorIntentConfiguration: React.FC<CompetitorIntentConfigurationProps
       title={
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <Title level={5} style={{ margin: 0 }}>
-            Competitor Intent Filter
+            {t("competitorIntentFilter")}
           </Title>
           <Switch checked={enabled} onChange={handleEnabledChange} />
         </div>
@@ -148,23 +145,22 @@ const CompetitorIntentConfiguration: React.FC<CompetitorIntentConfigurationProps
       size="small"
     >
       <Text type="secondary" style={{ display: "block", marginBottom: 16 }}>
-        Block or reframe competitor comparison questions. Airline type uses major airlines (excluding your brand);
-        generic requires manual competitor list.
+        {t("blockOrReframeCompetitorComparisonQuestionsShortDescription")}
       </Text>
       <Form layout="vertical" size="small">
-        <Form.Item label="Type">
+        <Form.Item label={t("type")}>
           <Select
             value={effectiveConfig.competitor_intent_type}
             onChange={(v) => handleConfigChange("competitor_intent_type", v)}
             style={{ width: "100%" }}
           >
-            <Option value="airline">Airline (auto-load competitors from IATA)</Option>
-            <Option value="generic">Generic (specify competitors manually)</Option>
+            <Option value="airline">{t("airlineautoLoadCompetitorsFromIata")}</Option>
+            <Option value="generic">{t("genericspecifyCompetitorsManually")}</Option>
           </Select>
         </Form.Item>
 
         <Form.Item
-          label="Your Brand (brand_self)"
+          label={t("yourBrandbrandSelf")}
           required
           help={
             effectiveConfig.competitor_intent_type === "airline"
@@ -215,13 +211,13 @@ const CompetitorIntentConfiguration: React.FC<CompetitorIntentConfigurationProps
 
         {effectiveConfig.competitor_intent_type === "airline" && (
           <Form.Item
-            label="Locations (optional)"
+            label={t("locationsoptional")}
             help="Countries, cities, airports for disambiguation (e.g. qatar, doha)"
           >
             <Select
               mode="tags"
               style={{ width: "100%" }}
-              placeholder="Type and press Enter to add"
+              placeholder={t("typeAndPressEnterToAdd")}
               value={effectiveConfig.locations ?? []}
               onChange={(v) => handleNestedArrayChange("locations", v ?? [])}
               tokenSeparators={[","]}
@@ -230,11 +226,11 @@ const CompetitorIntentConfiguration: React.FC<CompetitorIntentConfigurationProps
         )}
 
         {effectiveConfig.competitor_intent_type === "generic" && (
-          <Form.Item label="Competitors" required help="Competitor names to detect (required for generic type)">
+          <Form.Item label={t("competitors")} required help="Competitor names to detect (required for generic type)">
             <Select
               mode="tags"
               style={{ width: "100%" }}
-              placeholder="Type and press Enter to add"
+              placeholder={t("typeAndPressEnterToAdd")}
               value={effectiveConfig.competitors ?? []}
               onChange={(v) => handleNestedArrayChange("competitors", v ?? [])}
               tokenSeparators={[","]}
@@ -242,52 +238,53 @@ const CompetitorIntentConfiguration: React.FC<CompetitorIntentConfigurationProps
           </Form.Item>
         )}
 
-        <Form.Item label="Policy: Competitor comparison">
+        <Form.Item label={t("policyCompetitorComparison")}>
           <Select
             value={effectiveConfig.policy?.competitor_comparison ?? "refuse"}
             onChange={(v) => handlePolicyChange("competitor_comparison", v)}
             style={{ width: "100%" }}
           >
-            <Option value="refuse">Refuse (block request)</Option>
-            <Option value="reframe">Reframe (suggest alternative)</Option>
+            <Option value="refuse">{t("refuseblockRequest")}</Option>
+            <Option value="reframe">{t("reframesuggestAlternative")}</Option>
           </Select>
         </Form.Item>
 
-        <Form.Item label="Policy: Possible competitor comparison">
+        <Form.Item label={t("policyPossibleCompetitorComparison")}>
           <Select
             value={effectiveConfig.policy?.possible_competitor_comparison ?? "reframe"}
             onChange={(v) => handlePolicyChange("possible_competitor_comparison", v)}
             style={{ width: "100%" }}
           >
-            <Option value="refuse">Refuse (block request)</Option>
-            <Option value="reframe">Reframe (suggest alternative to backend LLM)</Option>
+            <Option value="refuse">{t("refuseblockRequest")}</Option>
+            <Option value="reframe">{t("reframesuggestAlternativeToBackendLlm")}</Option>
           </Select>
         </Form.Item>
 
         <Form.Item
-          label="Confidence thresholds"
+          label={t("confidenceThresholds")}
           help={
             <>
-              Classify competitor intent by confidence (0–1). Higher confidence → stronger intent.
+              {t("classifyCompetitorIntentByConfidence01HigherConfidenceStrongerIntent")}
               <ul style={{ marginBottom: 0, marginTop: 4, paddingLeft: 20 }}>
                 <li>
-                  <strong>High (≥)</strong>: Treat as full competitor comparison → uses &quot;Competitor
-                  comparison&quot; policy
+                  <strong>{t("high1")}</strong>
+                  {t("treatAsFullCompetitorComparisonPolicy")}
                 </li>
                 <li>
-                  <strong>Medium (≥)</strong>: Treat as possible comparison → uses &quot;Possible competitor
-                  comparison&quot; policy
+                  <strong>{t("medium1")}</strong>
+                  {t("treatAsPossibleCompetitorComparisonPolicy")}
                 </li>
                 <li>
-                  <strong>Low (≥)</strong>: Log only; allow request. Below Low → allow with no action
+                  <strong>{t("low1")}</strong>
+                  {t("logOnlyAllowRequestBelowLowAllowWithNoAction")}
                 </li>
               </ul>
-              Raise thresholds to be more permissive; lower them to be stricter.
+              {t("raiseThresholdsToBeMorePermissiveLowerThemToBeStricter")}
             </>
           }
         >
           <Space wrap>
-            <Form.Item label="High" style={{ marginBottom: 0 }} help="e.g. 0.7">
+            <Form.Item label={t("high")} style={{ marginBottom: 0 }} help="e.g. 0.7">
               <InputNumber
                 min={0}
                 max={1}
@@ -297,7 +294,7 @@ const CompetitorIntentConfiguration: React.FC<CompetitorIntentConfigurationProps
                 style={{ width: 80 }}
               />
             </Form.Item>
-            <Form.Item label="Medium" style={{ marginBottom: 0 }} help="e.g. 0.45">
+            <Form.Item label={t("medium")} style={{ marginBottom: 0 }} help="e.g. 0.45">
               <InputNumber
                 min={0}
                 max={1}
@@ -307,7 +304,7 @@ const CompetitorIntentConfiguration: React.FC<CompetitorIntentConfigurationProps
                 style={{ width: 80 }}
               />
             </Form.Item>
-            <Form.Item label="Low" style={{ marginBottom: 0 }} help="e.g. 0.3">
+            <Form.Item label={t("low")} style={{ marginBottom: 0 }} help="e.g. 0.3">
               <InputNumber
                 min={0}
                 max={1}

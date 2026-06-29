@@ -30,11 +30,11 @@ export const ConfigInfoMessage: React.FC<ConfigInfoMessageProps> = ({ show }) =>
         </svg>
       </div>
       <div>
-        <h4 className="text-sm font-medium text-blue-800">Request/Response Data Not Available</h4>
+        <h4 className="text-sm font-medium text-blue-800">{t("requestResponseDataNotAvailable")}</h4>
         <p className="text-sm text-blue-700 mt-1">
-          To view request and response details, enable prompt storage in your LiteLLM configuration by adding the
-          following to your <code className="bg-blue-100 px-1 py-0.5 rounded">proxy_config.yaml</code> file, or toggle
-          the setting in <strong>Admin Settings → Logging Settings</strong>.
+          {t("enablePromptStorageToViewRequestAndResponseDetails")}{" "}
+          <code className="bg-blue-100 px-1 py-0.5 rounded">proxy_config.yaml</code> file, or toggle the setting in{" "}
+          <strong>{t("adminSettingsLoggingSettings")}</strong>.
         </p>
         <pre className="mt-2 bg-white p-3 rounded border border-blue-200 text-xs font-mono overflow-auto">
           {`general_settings:
@@ -42,7 +42,7 @@ export const ConfigInfoMessage: React.FC<ConfigInfoMessageProps> = ({ show }) =>
   store_prompts_in_spend_logs: true`}
         </pre>
         <p className="text-xs text-blue-700 mt-2">
-          Note: This will only affect new requests after the configuration change.
+          {t("noteThisWillOnlyAffectNewRequestsAfterTheConfigurationChange")}
         </p>
       </div>
     </div>

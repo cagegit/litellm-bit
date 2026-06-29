@@ -432,7 +432,7 @@ function DetailPanel({
             </div>
             <p className="text-xs text-blue-700 leading-relaxed">
               {t("forwardLiteLLMApiKeyDescBefore")}{" "}
-              <code className="font-mono bg-blue-100 px-1 rounded">Authorization</code>{" "}
+              <code className="font-mono bg-blue-100 px-1 rounded">{t("authorization")}</code>{" "}
               {t("forwardLiteLLMApiKeyDescAfter")}
             </p>
           </div>

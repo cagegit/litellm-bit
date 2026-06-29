@@ -31,7 +31,7 @@ const AgentFormFields: React.FC<AgentFormFieldsProps> = ({ showAgentName = true,
           rules={[{ required: true, message: t("pleaseEnterUniqueAgentName") }]}
           tooltip={t("uniqueIdentifierForAgent")}
         >
-          <Input placeholder="e.g., customer-support-agent" />
+          <Input placeholder={t("eGCustomerSupportAgent")} />
         </Form.Item>
       )}
 
@@ -126,12 +126,12 @@ const AgentFormFields: React.FC<AgentFormFieldsProps> = ({ showAgentName = true,
                       </Form.Item>
 
                       <AntButton type="link" danger onClick={() => remove(field.name)} icon={<MinusCircleOutlined />}>
-                        Remove Skill
+                        {t("removeSkill")}
                       </AntButton>
                     </div>
                   ))}
                   <AntButton type="dashed" onClick={() => add()} icon={<PlusOutlined />} style={{ width: "100%" }}>
-                    Add Skill
+                    {t("addSkill")}
                   </AntButton>
                 </>
               )}
@@ -196,8 +196,10 @@ const AgentFormFields: React.FC<AgentFormFieldsProps> = ({ showAgentName = true,
             <Form.Item
               label={
                 <span>
-                  Static Headers{" "}
-                  <Tooltip title="Headers always sent to the backend agent, regardless of the client request. Admin-configured, static wins on conflict.">
+                  {t("staticHeaders")}{" "}
+                  <Tooltip
+                    title={t("headersAlwaysSentToTheBackendAgentRegardlessOfTheClientRequestAdminConfiguredSta")}
+                  >
                     <InfoCircleOutlined style={{ color: "#8c8c8c" }} />
                   </Tooltip>
                 </span>
@@ -226,7 +228,7 @@ const AgentFormFields: React.FC<AgentFormFieldsProps> = ({ showAgentName = true,
                       </Space>
                     ))}
                     <AntButton type="dashed" onClick={() => add()} icon={<PlusOutlined />} style={{ width: "100%" }}>
-                      Add Static Header
+                      {t("addStaticHeader")}
                     </AntButton>
                   </>
                 )}
@@ -237,8 +239,10 @@ const AgentFormFields: React.FC<AgentFormFieldsProps> = ({ showAgentName = true,
             <Form.Item
               label={
                 <span>
-                  Forward Client Headers{" "}
-                  <Tooltip title="Header names to extract from the client's request and forward to the agent. Type a name and press Enter.">
+                  {t("forwardClientHeaders")}{" "}
+                  <Tooltip
+                    title={t("headerNamesToExtractFromTheClientSRequestAndForwardToTheAgentTypeANameAndPressEn")}
+                  >
                     <InfoCircleOutlined style={{ color: "#8c8c8c" }} />
                   </Tooltip>
                 </span>
@@ -248,7 +252,7 @@ const AgentFormFields: React.FC<AgentFormFieldsProps> = ({ showAgentName = true,
               <Select
                 mode="tags"
                 style={{ width: "100%" }}
-                placeholder="e.g. x-api-key, Authorization"
+                placeholder={t("eGXApiKeyAuthorization")}
                 tokenSeparators={[","]}
               />
             </Form.Item>

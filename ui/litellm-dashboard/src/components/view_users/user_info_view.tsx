@@ -70,7 +70,7 @@ export default function UserInfoView({
   initialTab = 0,
   startInEditMode = false,
 }: UserInfoViewProps) {
-  const { t } = useTranslations('users');
+  const { t } = useTranslations("users");
   const [userData, setUserData] = useState<UserInfoV2Response | null>(null);
   const [teamDetails, setTeamDetails] = useState<TeamDisplayInfo[]>([]);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -320,9 +320,9 @@ export default function UserInfoView({
     return (
       <div className="p-4">
         <Button icon={ArrowLeftIcon} variant="light" onClick={onClose} className="mb-4">
-          {t('backToUsers')}
+          {t("backToUsers")}
         </Button>
-        <Text>{t('loadingUserData')}</Text>
+        <Text>{t("loadingUserData")}</Text>
       </div>
     );
   }
@@ -331,9 +331,9 @@ export default function UserInfoView({
     return (
       <div className="p-4">
         <Button icon={ArrowLeftIcon} variant="light" onClick={onClose} className="mb-4">
-          {t('backToUsers')}
+          {t("backToUsers")}
         </Button>
-        <Text>{t('userNotFound')}</Text>
+        <Text>{t("userNotFound")}</Text>
       </div>
     );
   }
@@ -367,7 +367,7 @@ export default function UserInfoView({
       <div className="flex justify-between items-center mb-6">
         <div>
           <Button icon={ArrowLeftIcon} variant="light" onClick={onClose} className="mb-4">
-            Back to Users
+            {t("backToUsers")}
           </Button>
           <Title>{userData.user_email || "User"}</Title>
           <div className="flex items-center cursor-pointer">
@@ -388,7 +388,7 @@ export default function UserInfoView({
         {userRole && rolesWithWriteAccess.includes(userRole) && (
           <div className="flex items-center space-x-2">
             <Button icon={RefreshIcon} variant="secondary" onClick={handleResetPassword} className="flex items-center">
-              Reset Password
+              {t("resetPassword")}
             </Button>
             <Button
               icon={TrashIcon}
@@ -396,7 +396,7 @@ export default function UserInfoView({
               onClick={() => setIsDeleteModalOpen(true)}
               className="flex items-center text-red-500 border-red-500 hover:text-red-600 hover:border-red-600"
             >
-              Delete User
+              {t("deleteUser")}
             </Button>
           </div>
         )}
@@ -405,7 +405,7 @@ export default function UserInfoView({
       <DeleteResourceModal
         isOpen={isDeleteModalOpen}
         title={t("deleteUserQuestion")}
-        message="Are you sure you want to delete this user? This action cannot be undone."
+        message={t("areYouSureYouWantToDeleteThisUserThisActionCannotBeUndone")}
         resourceInformationTitle="User Information"
         resourceInformation={[
           { label: "Email", value: userData.user_email },
@@ -450,7 +450,7 @@ export default function UserInfoView({
                   <Text>{t("teams")}</Text>
                   {isProxyAdmin && (
                     <Button icon={PlusIcon} variant="light" size="xs" onClick={handleOpenAddTeamModal}>
-                      Add Team
+                      {t("addTeam")}
                     </Button>
                   )}
                 </div>
@@ -494,7 +494,7 @@ export default function UserInfoView({
                   )}
                   {isTeamsExpanded && teamDetails.length > 20 && (
                     <Button variant="light" size="xs" className="mt-2" onClick={() => setIsTeamsExpanded(false)}>
-                      Show Less
+                      {t("showLess")}
                     </Button>
                   )}
                 </div>
@@ -634,7 +634,7 @@ export default function UserInfoView({
         isOpen={isRemoveTeamModalOpen}
         title={t("removeFromTeam")}
         alertMessage="Removing this user from the team will also delete any keys the user created for this team."
-        message="Are you sure you want to remove this user from the team? This action cannot be undone."
+        message={t("areYouSureYouWantToRemoveThisUserFromTheTeamThisActionCannotBeUndone")}
         resourceInformationTitle="Team Membership"
         resourceInformation={[
           { label: "Team", value: teamToRemove?.team_alias || teamToRemove?.team_id },
@@ -682,14 +682,14 @@ export default function UserInfoView({
               <AntdSelect.Option value="user">
                 <Tooltip title={t("canViewTeamInfoButNotManageIt")}>
                   <span className="font-medium">user</span>
-                  <span className="ml-2 text-gray-500 text-sm">- Can view team info, but not manage it</span>
+                  <span className="ml-2 text-gray-500 text-sm">{t("canViewTeamInfoButNotManageIt1")}</span>
                 </Tooltip>
               </AntdSelect.Option>
               <AntdSelect.Option value="admin">
                 <Tooltip title={t("canCreateTeamKeysAddMembersAndManageSettings")}>
                   <span className="font-medium">admin</span>
                   <span className="ml-2 text-gray-500 text-sm">
-                    - Can create team keys, add members, and manage settings
+                    {t("canCreateTeamKeysAddMembersAndManageSettings1")}
                   </span>
                 </Tooltip>
               </AntdSelect.Option>

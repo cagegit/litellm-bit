@@ -76,7 +76,7 @@ export default function EditCredentialsModal({
         <Form.Item
           label={t("credentialName")}
           name="credential_name"
-          rules={[{ required: true, message: "Credential name is required" }]}
+          rules={[{ required: true, message: t("credentialNameIsRequired") }]}
           initialValue={existingCredential?.credential_name}
         >
           <TextInput
@@ -87,10 +87,10 @@ export default function EditCredentialsModal({
 
         {/* Provider Selection */}
         <Form.Item
-          rules={[{ required: true, message: "Required" }]}
+          rules={[{ required: true, message: t("required") }]}
           label={t("provider")}
           name="custom_llm_provider"
-          tooltip="Helper to auto-populate provider specific fields"
+          tooltip={t("helperToAutoPopulateProviderSpecificFields")}
         >
           <AntdSelect
             showSearch
@@ -129,7 +129,7 @@ export default function EditCredentialsModal({
         {/* Modal Footer */}
         <div className="flex justify-between items-center">
           <Tooltip title={t("getHelpOnGithub")}>
-            <Link href="https://github.com/BerriAI/litellm/issues">Need Help?</Link>
+            <Link href="https://github.com/BerriAI/litellm/issues">{t("needHelp")}</Link>
           </Tooltip>
 
           <div>
@@ -140,7 +140,7 @@ export default function EditCredentialsModal({
               }}
               style={{ marginRight: 10 }}
             >
-              Cancel
+              {t("cancel")}
             </Button>
             <Button htmlType="submit">{"Update Credential"}</Button>
           </div>

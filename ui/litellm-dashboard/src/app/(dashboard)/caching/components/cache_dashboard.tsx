@@ -28,7 +28,6 @@ import CacheSettings from "./cache_settings";
 import { useTranslations } from "@/i18n";
 
 const formatDateWithoutTZ = (date: Date | undefined) => {
-
   if (!date) return undefined;
   return date.toISOString().split("T")[0];
 };
@@ -263,7 +262,7 @@ const CacheDashboard: React.FC<CachePageProps> = ({ accessToken, token, userRole
           errorData = { message: error.message };
         }
       } else {
-        errorData = { message: "Unknown error occurred" };
+        errorData = { message: t("unknownErrorOccurred") };
       }
       setHealthCheckResponse({ error: errorData });
     }
@@ -273,13 +272,17 @@ const CacheDashboard: React.FC<CachePageProps> = ({ accessToken, token, userRole
     <TabGroup className="gap-2 p-8 h-full w-full mt-2 mb-8">
       <TabList className="flex justify-between mt-2 w-full items-center">
         <div className="flex">
-          <Tab>Cache Analytics</Tab>
-          <Tab>Cache Health</Tab>
-          <Tab>Cache Settings</Tab>
+          <Tab>{t("cacheAnalytics")}</Tab>
+          <Tab>{t("cacheHealth")}</Tab>
+          <Tab>{t("cacheSettings")}</Tab>
         </div>
 
         <div className="flex items-center space-x-2">
-          {lastRefreshed && <Text>Last Refreshed: {lastRefreshed}</Text>}
+          {lastRefreshed && (
+            <Text>
+              {t("lastRefreshed")} {lastRefreshed}
+            </Text>
+          )}
           <Icon
             icon={RefreshIcon} // Modify as necessary for correct icon name
             variant="shadow"
@@ -329,7 +332,7 @@ const CacheDashboard: React.FC<CachePageProps> = ({ accessToken, token, userRole
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-4">
               <Card>
                 <p className="text-tremor-default font-medium text-tremor-content dark:text-dark-tremor-content">
-                  Cache Hit Ratio
+                  {t("cacheHitRatio")}
                 </p>
                 <div className="mt-2 flex items-baseline space-x-2.5">
                   <p className="text-tremor-metric font-semibold text-tremor-content-strong dark:text-dark-tremor-content-strong">
@@ -339,7 +342,7 @@ const CacheDashboard: React.FC<CachePageProps> = ({ accessToken, token, userRole
               </Card>
               <Card>
                 <p className="text-tremor-default font-medium text-tremor-content dark:text-dark-tremor-content">
-                  Cache Hits
+                  {t("cacheHits")}
                 </p>
                 <div className="mt-2 flex items-baseline space-x-2.5">
                   <p className="text-tremor-metric font-semibold text-tremor-content-strong dark:text-dark-tremor-content-strong">
@@ -350,7 +353,7 @@ const CacheDashboard: React.FC<CachePageProps> = ({ accessToken, token, userRole
 
               <Card>
                 <p className="text-tremor-default font-medium text-tremor-content dark:text-dark-tremor-content">
-                  Cached Tokens
+                  {t("cachedTokens")}
                 </p>
                 <div className="mt-2 flex items-baseline space-x-2.5">
                   <p className="text-tremor-metric font-semibold text-tremor-content-strong dark:text-dark-tremor-content-strong">
@@ -360,7 +363,7 @@ const CacheDashboard: React.FC<CachePageProps> = ({ accessToken, token, userRole
               </Card>
             </div>
 
-            <Subtitle className="mt-4">Cache Hits vs API Requests</Subtitle>
+            <Subtitle className="mt-4">{t("cacheHitsVsApiRequests")}</Subtitle>
             <BarChart
               title={t("cacheHitsVsApiRequests")}
               data={filteredData}
@@ -372,7 +375,7 @@ const CacheDashboard: React.FC<CachePageProps> = ({ accessToken, token, userRole
               yAxisWidth={48}
             />
 
-            <Subtitle className="mt-4">Cached Completion Tokens vs Generated Completion Tokens</Subtitle>
+            <Subtitle className="mt-4">{t("cachedCompletionTokensVsGeneratedCompletionTokens")}</Subtitle>
             <BarChart
               className="mt-6"
               data={filteredData}

@@ -88,7 +88,7 @@ const TagTable: React.FC<TagTableProps> = ({ data, onEdit, onDelete, onSelectTag
           <div style={{ display: "flex", flexDirection: "column" }}>
             {tag?.models?.length === 0 ? (
               <Badge size="xs" className="mb-1" color="red">
-                All Models
+                {t("allModels")}
               </Badge>
             ) : (
               tag?.models?.map((modelId) => (

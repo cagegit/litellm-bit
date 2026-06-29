@@ -320,14 +320,16 @@ const AddPassThroughEndpoint: React.FC<AddFallbacksProps> = ({
 
             {/* Performance Section */}
             <Card className="p-6">
-              <Title className="text-lg font-semibold text-gray-900 mb-2">Performance</Title>
-              <Subtitle className="text-gray-600 mb-6">Configure upstream request timeout for this endpoint</Subtitle>
+              <Title className="text-lg font-semibold text-gray-900 mb-2">{t("performance")}</Title>
+              <Subtitle className="text-gray-600 mb-6">{t("configureUpstreamRequestTimeoutForThisEndpoint")}</Subtitle>
 
               <Form.Item
                 label={
                   <span className="text-sm font-medium text-gray-700 flex items-center">
-                    Request Timeout (seconds)
-                    <Tooltip title="Max time to wait for the upstream API to respond. Leave empty to use general_settings.pass_through_request_timeout (default 600s).">
+                    {t("requestTimeoutseconds")}
+                    <Tooltip
+                      title={t("maxTimeToWaitForTheUpstreamAPIToRespondLeaveEmptyToUseGeneralSettingsPassThrough")}
+                    >
                       <InfoCircleOutlined className="ml-2 text-gray-400 hover:text-gray-600" />
                     </Tooltip>
                   </span>
@@ -335,7 +337,7 @@ const AddPassThroughEndpoint: React.FC<AddFallbacksProps> = ({
                 name="timeout"
                 extra={
                   <div className="text-xs text-gray-500 mt-2">
-                    Use a higher value for slow upstream APIs (e.g. 1200 for long-running LLM calls)
+                    {t("useAHigherValueForSlowUpstreamAPIsEG1200ForLongRunningLLMCalls")}
                   </div>
                 }
               >

@@ -57,12 +57,12 @@ const SearchTools: React.FC<SearchToolsProps> = ({ accessToken, userRole, userID
 
   const columns = React.useMemo(
     () =>
-      searchToolColumns(
-        (toolId: string) => {
+      searchToolColumns({
+        onView: (toolId: string) => {
           setSelectedToolId(toolId);
           setEditTool(false);
         },
-        (toolId: string) => {
+        onEdit: (toolId: string) => {
           const tool = searchTools?.find((t) => t.search_tool_id === toolId);
           if (tool) {
             form.setFieldsValue({
@@ -78,10 +78,11 @@ const SearchTools: React.FC<SearchToolsProps> = ({ accessToken, userRole, userID
             setEditModalVisible(true);
           }
         },
-        handleDelete,
+        onDelete: handleDelete,
         availableProviders,
-      ),
-    [availableProviders, searchTools, form],
+        t,
+      }),
+    [availableProviders, searchTools, form, t],
   );
 
   function handleDelete(toolId: string) {
@@ -160,18 +161,18 @@ const SearchTools: React.FC<SearchToolsProps> = ({ accessToken, userRole, userID
     <Form form={form} layout="vertical">
       <Form.Item
         name="search_tool_name"
-        label={"Search Tool Name"}
-        rules={[{ required: true, message: "Enter Search Tool Name" }]}
+        label={t("searchToolName")}
+        rules={[{ required: true, message: t("enterSearchToolName") }]}
       >
-        <Input placeholder={"Search Tool Name Placeholder"} />
+        <Input placeholder={t("searchToolNamePlaceholder1")} />
       </Form.Item>
 
       <Form.Item
         name="search_provider"
-        label={"Search Provider"}
-        rules={[{ required: true, message: "Select Search Provider" }]}
+        label={t("searchProvider")}
+        rules={[{ required: true, message: t("selectSearchProvider") }]}
       >
-        <Select placeholder={"Select Search Provider Placeholder"} loading={isLoadingProviders}>
+        <Select placeholder={t("selectSearchProviderPlaceholder1")} loading={isLoadingProviders}>
           {availableProviders.map((provider) => (
             <Select.Option key={provider.provider_name} value={provider.provider_name}>
               {provider.ui_friendly_name}
@@ -180,12 +181,12 @@ const SearchTools: React.FC<SearchToolsProps> = ({ accessToken, userRole, userID
         </Select>
       </Form.Item>
 
-      <Form.Item name="api_key" label={"Api Key"} extra={t("apiKeyExtra")}>
-        <Input.Password placeholder={"Enter Api Key"} />
+      <Form.Item name="api_key" label={t("apiKey1")} extra={t("apiKeyExtra")}>
+        <Input.Password placeholder={t("enterApiKey1")} />
       </Form.Item>
 
-      <Form.Item name="description" label={"Description"}>
-        <Input.TextArea rows={3} placeholder={"Search Tool Description"} />
+      <Form.Item name="description" label={t("description")}>
+        <Input.TextArea rows={3} placeholder={t("searchToolDescription1")} />
       </Form.Item>
     </Form>
   );
@@ -286,7 +287,7 @@ const SearchTools: React.FC<SearchToolsProps> = ({ accessToken, userRole, userID
       <Text className="text-tremor-content mt-2">{t("configureSearchProviders")}</Text>
       {isAdminRole(userRole) && (
         <Button className="mt-4 mb-4" onClick={() => setCreateModalVisible(true)}>
-          + Add New Search Tool
+          {t("addNewSearchTool1")}
         </Button>
       )}
 

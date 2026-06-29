@@ -158,21 +158,21 @@ const RouterConfigBuilder: React.FC<RouterConfigBuilderProps> = ({ modelInfo, va
       <Flex justify="space-between" align="center" gap="middle" style={{ width: "100%", marginBottom: 24 }}>
         <Space align="center">
           <Typography.Title level={4} style={{ margin: 0 }}>
-            Routes Configuration
+            {t("routesConfiguration")}
           </Typography.Title>
           <Tooltip title={t("configureRoutingLogic")}>
             <InfoCircleOutlined className="text-gray-400" />
           </Tooltip>
         </Space>
         <Button type="primary" icon={<PlusOutlined />} onClick={addRoute} className="bg-blue-600 hover:bg-blue-700">
-          Add Route
+          {t("addRoute")}
         </Button>
       </Flex>
 
       {/* Routes */}
       {routes.length === 0 ? (
         <Card>
-          <Empty description='No routes configured. Click "Add Route" to get started.' />
+          <Empty description={t("noRoutesConfiguredClickAddRouteToGetStarted")} />
         </Card>
       ) : (
         <Collapse
@@ -183,7 +183,7 @@ const RouterConfigBuilder: React.FC<RouterConfigBuilderProps> = ({ modelInfo, va
             key: route.id,
             label: (
               <Text style={{ fontSize: 16 }}>
-                Route {index + 1}: {route.model || "Unnamed"}
+                {t("route")} {index + 1}: {route.model || "Unnamed"}
               </Text>
             ),
             extra: (
@@ -202,7 +202,7 @@ const RouterConfigBuilder: React.FC<RouterConfigBuilderProps> = ({ modelInfo, va
               <Card key={route.id}>
                 {/* Model Selection */}
                 <div className="mb-4 w-full">
-                  <Text className="text-sm font-medium mb-2 block">Model</Text>
+                  <Text className="text-sm font-medium mb-2 block">{t("model")}</Text>
                   <AntdSelect
                     value={route.model}
                     onChange={(value) => updateRoute(route.id, "model", value)}
@@ -215,7 +215,7 @@ const RouterConfigBuilder: React.FC<RouterConfigBuilderProps> = ({ modelInfo, va
 
                 {/* Description */}
                 <div className="mb-4 w-full">
-                  <Text className="text-sm font-medium mb-2 block">Description</Text>
+                  <Text className="text-sm font-medium mb-2 block">{t("description")}</Text>
                   <TextArea
                     value={route.description}
                     onChange={(e) => updateRoute(route.id, "description", e.target.value)}
@@ -228,7 +228,7 @@ const RouterConfigBuilder: React.FC<RouterConfigBuilderProps> = ({ modelInfo, va
                 {/* Score Threshold */}
                 <div className="mb-4 w-full">
                   <div className="flex items-center gap-2 mb-2">
-                    <Text className="text-sm font-medium">Score Threshold</Text>
+                    <Text className="text-sm font-medium">{t("scoreThreshold")}</Text>
                     <Tooltip title={t("minSimilarityScore")}>
                       <InfoCircleOutlined className="text-gray-400" />
                     </Tooltip>
@@ -247,13 +247,13 @@ const RouterConfigBuilder: React.FC<RouterConfigBuilderProps> = ({ modelInfo, va
                 {/* Example Utterances */}
                 <div className="w-full">
                   <div className="flex items-center gap-2 mb-2">
-                    <Text className="text-sm font-medium">Example Utterances</Text>
+                    <Text className="text-sm font-medium">{t("exampleUtterances")}</Text>
                     <Tooltip title={t("trainingExamples")}>
                       <InfoCircleOutlined className="text-gray-400" />
                     </Tooltip>
                   </div>
                   <Text className="text-xs text-gray-500 mb-2">
-                    Type an utterance and press Enter to add it. You can also paste multiple lines.
+                    {t("typeAnUtteranceAndPressEnterToAddItYouCanAlsoPasteMultipleLines")}
                   </Text>
                   <AntdSelect
                     mode="tags"
@@ -275,7 +275,7 @@ const RouterConfigBuilder: React.FC<RouterConfigBuilderProps> = ({ modelInfo, va
       {/* JSON Preview */}
       <Divider />
       <div className="flex justify-between items-center mb-4 w-full">
-        <Text className="text-lg font-semibold">JSON Preview</Text>
+        <Text className="text-lg font-semibold">{t("jsonPreview")}</Text>
         <Button type="link" onClick={() => setShowJsonPreview(!showJsonPreview)} className="text-blue-600 p-0">
           {showJsonPreview ? "Hide" : "Show"}
         </Button>

@@ -191,11 +191,11 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
             type: "function",
             function: {
               name: "get_weather",
-              description: "Get the current weather in a location",
+              description: t("getTheCurrentWeatherInALocation"),
               parameters: {
                 type: "object",
                 properties: {
-                  location: { type: "string", description: "City name" },
+                  location: { type: "string", description: t("cityName") },
                 },
                 required: ["location"],
               },
@@ -240,7 +240,7 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
             type: "function",
             function: {
               name: "read_wiki_structure",
-              description: "Read the structure of a GitHub repository (MCP tool passed as OpenAI tool)",
+              description: t("readTheStructureOfAGithubRepositorymcpToolPassedAsOpenaiTool"),
               parameters: {
                 type: "object",
                 properties: {
@@ -490,17 +490,17 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
           <h2 className="text-xl font-semibold text-gray-900">
             {isEditMode ? "Edit Custom Guardrail" : "Create Custom Guardrail"}
           </h2>
-          <p className="text-sm text-gray-500 mt-1">Define custom logic using Python-like syntax</p>
+          <p className="text-sm text-gray-500 mt-1">{t("defineCustomLogicUsingPythonLikeSyntax")}</p>
         </div>
 
         {/* Top Controls */}
         <div className="flex items-center gap-4 py-4 border-b border-gray-100">
           <div className="flex-1 max-w-[200px]">
-            <label className="block text-xs font-medium text-gray-600 mb-1">Guardrail Name</label>
-            <TextInput value={guardrailName} onValueChange={setGuardrailName} placeholder="e.g., block-pii-custom" />
+            <label className="block text-xs font-medium text-gray-600 mb-1">{t("guardrailName")}</label>
+            <TextInput value={guardrailName} onValueChange={setGuardrailName} placeholder={t("eGBlockPiiCustom")} />
           </div>
           <div className="w-[280px]">
-            <label className="block text-xs font-medium text-gray-600 mb-1">Mode (can select multiple)</label>
+            <label className="block text-xs font-medium text-gray-600 mb-1">{t("modecanSelectMultiple")}</label>
             <Select
               mode="multiple"
               value={mode}
@@ -508,11 +508,11 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
               options={MODE_OPTIONS}
               className="w-full"
               size="middle"
-              placeholder="Select modes"
+              placeholder={t("selectModes")}
             />
           </div>
           <div className="w-[180px]">
-            <label className="block text-xs font-medium text-gray-600 mb-1">Template</label>
+            <label className="block text-xs font-medium text-gray-600 mb-1">{t("template")}</label>
             <Select
               value={selectedTemplate}
               onChange={handleTemplateChange}
@@ -544,13 +544,13 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
                     }}
                   >
                     <UsergroupAddOutlined />
-                    <span>Browse Community templates</span>
+                    <span>{t("browseCommunityTemplates")}</span>
                     <ExportOutlined style={{ fontSize: "10px" }} />
                   </div>
                 </>
               )}
             >
-              <Select.OptGroup label="STANDARD">
+              <Select.OptGroup label={t("standard")}>
                 {Object.entries(CODE_TEMPLATES).map(([key, template]) => (
                   <Select.Option key={key} value={key}>
                     {template.name}
@@ -560,7 +560,7 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
             </Select>
           </div>
           <div className="flex items-center gap-2 pt-5">
-            <span className="text-sm text-gray-600">Default On</span>
+            <span className="text-sm text-gray-600">{t("defaultOn")}</span>
             <Switch checked={defaultOn} onChange={setDefaultOn} />
           </div>
         </div>
@@ -570,8 +570,8 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
           {/* Code Editor */}
           <div className="flex-[2] flex flex-col min-w-0 overflow-y-auto">
             <div className="flex items-center justify-between mb-2 flex-shrink-0">
-              <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Python Logic</span>
-              <span className="text-xs text-gray-400">Restricted environment (no imports)</span>
+              <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">{t("pythonLogic")}</span>
+              <span className="text-xs text-gray-400">{t("restrictedEnvironmentnoImports")}</span>
             </div>
             <div
               className="relative rounded-lg overflow-hidden border border-gray-700 bg-[#1e1e1e] flex-shrink-0"
@@ -620,7 +620,7 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
                 header={
                   <span className="flex items-center gap-2 text-sm font-medium">
                     <PlayCircleOutlined className="text-blue-500" />
-                    Test Your Guardrail
+                    {t("testYourGuardrail")}
                   </span>
                 }
                 key="test"
@@ -628,9 +628,9 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
                 <div className="space-y-3">
                   <div>
                     <div className="flex items-center justify-between mb-2">
-                      <label className="block text-xs font-medium text-gray-600">Test Input (JSON)</label>
+                      <label className="block text-xs font-medium text-gray-600">{t("testInputjson")}</label>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs text-gray-500">Load example:</span>
+                        <span className="text-xs text-gray-500">{t("loadExample")}</span>
                         <button
                           type="button"
                           onClick={() => setTestInput(JSON.stringify(TEST_INPUT_EXAMPLES.pre_call.data, null, 2))}
@@ -643,7 +643,7 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
                           onClick={() => setTestInput(JSON.stringify(TEST_INPUT_EXAMPLES.pre_mcp_call.data, null, 2))}
                           className="px-2 py-1 text-xs rounded border border-purple-200 bg-purple-50 text-purple-700 hover:bg-purple-100 transition-colors"
                         >
-                          Pre MCP
+                          {t("preMCP")}
                         </button>
                         <button
                           type="button"
@@ -657,25 +657,29 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
                     <div className="mb-2 p-2 bg-gray-50 rounded text-xs text-gray-600 border border-gray-200">
                       <div className="grid grid-cols-2 gap-x-4 gap-y-1">
                         <div>
-                          <strong>texts</strong>: Message content (always)
+                          <strong>texts</strong>
+                          {t("messageContentAlways")}
                         </div>
                         <div>
-                          <strong>images</strong>: Base64 images (vision)
+                          <strong>images</strong>
+                          {t("base64ImagesVision")}
                         </div>
                         <div>
-                          <strong>tools</strong>: Tool definitions <span className="text-orange-600">(pre_call)</span>,
-                          MCP as OpenAI tool <span className="text-purple-600">(pre_mcp_call)</span>
+                          <strong>{t("tools")}</strong>
+                          {t("toolDefinitions")} <span className="text-orange-600">(pre_call)</span>,
+                          {t("mcpAsOpenaiTool")} <span className="text-purple-600">(pre_mcp_call)</span>
                         </div>
                         <div>
-                          <strong>tool_calls</strong>: LLM tool calls{" "}
-                          <span className="text-green-600">(post_call)</span>
+                          <strong>tool_calls</strong>
+                          {t("lLMToolCalls")} <span className="text-green-600">(post_call)</span>
                         </div>
                         <div>
-                          <strong>structured_messages</strong>: Full messages{" "}
-                          <span className="text-orange-600">(pre_call)</span>
+                          <strong>structured_messages</strong>
+                          {t("fullMessages")} <span className="text-orange-600">(pre_call)</span>
                         </div>
                         <div>
-                          <strong>model</strong>: Model name (always)
+                          <strong>model</strong>
+                          {t("modelNameAlways")}
                         </div>
                       </div>
                     </div>
@@ -713,7 +717,7 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
                           </>
                         ) : testResult.action === "allow" ? (
                           <>
-                            <CheckCircleOutlined /> Allowed
+                            <CheckCircleOutlined /> {t("allowed")}
                           </>
                         ) : testResult.action === "block" ? (
                           <>
@@ -721,7 +725,7 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
                           </>
                         ) : testResult.action === "modify" ? (
                           <>
-                            <CheckCircleOutlined /> Modified
+                            <CheckCircleOutlined /> {t("modified")}
                             {testResult.texts && testResult.texts.length > 0 && (
                               <span className="text-xs text-gray-500 ml-1">
                                 → {testResult.texts[0].substring(0, 50)}
@@ -747,8 +751,8 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
                   <UsergroupAddOutlined className="text-blue-600 text-lg" />
                 </div>
                 <div>
-                  <div className="text-sm font-medium text-gray-900">Built a useful guardrail?</div>
-                  <div className="text-xs text-gray-600">Share it with the community and help others build faster</div>
+                  <div className="text-sm font-medium text-gray-900">{t("builtAUsefulGuardrail")}</div>
+                  <div className="text-xs text-gray-600">{t("shareItWithTheCommunityAndHelpOthersBuildFaster")}</div>
                 </div>
               </div>
               <Button
@@ -757,7 +761,7 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
                 icon={ExportOutlined}
                 className="bg-blue-600 hover:bg-blue-700 text-white border-0"
               >
-                Contribute Template
+                {t("contributeTemplate")}
               </Button>
             </div>
           </div>
@@ -766,9 +770,9 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
           <div className="w-[300px] flex-shrink-0 overflow-auto border-l border-gray-200 pl-6">
             <div className="flex items-center gap-2 mb-3">
               <CodeOutlined className="text-blue-500" />
-              <span className="font-semibold text-gray-700">Available Primitives</span>
+              <span className="font-semibold text-gray-700">{t("availablePrimitives")}</span>
             </div>
-            <p className="text-xs text-gray-500 mb-3">Click to copy functions to clipboard</p>
+            <p className="text-xs text-gray-500 mb-3">{t("clickToCopyFunctionsToClipboard")}</p>
 
             <Collapse
               defaultActiveKey={["Return Values"]}
@@ -811,10 +815,10 @@ const CustomCodeModal: React.FC<CustomCodeModalProps> = ({ visible, onClose, onS
 
         {/* Footer */}
         <div className="flex items-center justify-between pt-4 mt-4 border-t border-gray-200">
-          <span className="text-xs text-gray-400">Changes are auto-saved to local draft</span>
+          <span className="text-xs text-gray-400">{t("changesAreAutoSavedToLocalDraft")}</span>
           <div className="flex items-center gap-3">
             <Button variant="secondary" onClick={onClose}>
-              Cancel
+              {t("cancel")}
             </Button>
             <Button
               onClick={handleSave}

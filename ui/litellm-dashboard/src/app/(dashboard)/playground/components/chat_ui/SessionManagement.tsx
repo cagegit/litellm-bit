@@ -57,8 +57,8 @@ const SessionManagement: React.FC<SessionManagementProps> = ({
       {/* Session Management Toggle */}
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2">
-          <span className="text-sm font-medium text-gray-700">Session Management</span>
-          <Tooltip title="Choose between LiteLLM API session management (using previous_response_id) or UI-based session management (using chat history)">
+          <span className="text-sm font-medium text-gray-700">{t("sessionManagement")}</span>
+          <Tooltip title={t("sessionManagementTooltip")}>
             <InfoCircleOutlined className="text-gray-400" style={{ fontSize: "12px" }} />
           </Tooltip>
         </div>
@@ -88,7 +88,7 @@ const SessionManagement: React.FC<SessionManagementProps> = ({
             <Tooltip
               title={
                 <div className="text-xs">
-                  <div className="mb-1">Copy response ID to continue session:</div>
+                  <div className="mb-1">{t("copyResponseIdToContinue")}</div>
                   <div className="bg-gray-800 text-gray-100 p-2 rounded font-mono text-xs whitespace-pre-wrap">
                     {`curl -X POST "your-proxy-url/v1/responses" \\
   -H "Authorization: Bearer your-api-key" \\

@@ -465,16 +465,15 @@ const UsagePage: React.FC<UsagePageProps> = ({ teams, organizations }) => {
                 <div className="flex items-center justify-between">
                   <span>
                     <LoadingOutlined spin className="mr-2" />
-                    Currently fetching spend data: fetched {paginatedResult.progress.currentPage} /{" "}
-                    {paginatedResult.progress.totalPages} pages. Charts will update periodically as data loads. Moving
-                    off of this page will stop and reset this. To continue using the UI in the meantime,{" "}
+                    {t("currentlyFetchingSpendDataFetched")} {paginatedResult.progress.currentPage} /{" "}
+                    {paginatedResult.progress.totalPages} {t("pagesChartsUpdatePeriodicallyDescription")}{" "}
                     <a href={window.location.href} target="_blank" rel="noopener noreferrer">
-                      open a new tab <ExportOutlined />
+                      {t("openANewTab")} <ExportOutlined />
                     </a>
                     .
                   </span>
                   <Button type="primary" danger onClick={paginatedResult.cancel}>
-                    Stop
+                    {t("stop")}
                   </Button>
                 </div>
               }
@@ -487,8 +486,8 @@ const UsagePage: React.FC<UsagePageProps> = ({ teams, organizations }) => {
               className="mb-2"
               message={
                 <span>
-                  Showing partial data ({paginatedResult.progress.currentPage}/{paginatedResult.progress.totalPages}{" "}
-                  pages loaded)
+                  {t("showingPartialData")}
+                  {paginatedResult.progress.currentPage}/{paginatedResult.progress.totalPages} {t("pagesLoaded")}
                 </span>
               }
             />
@@ -544,7 +543,7 @@ const UsagePage: React.FC<UsagePageProps> = ({ teams, organizations }) => {
                         </svg>
                       }
                     >
-                      Ask AI
+                      {t("askAi")}
                     </Button>
                     <Button
                       onClick={() => setIsGlobalExportModalOpen(true)}
@@ -559,7 +558,7 @@ const UsagePage: React.FC<UsagePageProps> = ({ teams, organizations }) => {
                         </svg>
                       }
                     >
-                      Export Data
+                      {t("exportData")}
                     </Button>
                   </div>
                 </div>
@@ -571,7 +570,7 @@ const UsagePage: React.FC<UsagePageProps> = ({ teams, organizations }) => {
                       <Col numColSpan={2}>
                         <div className="flex items-center gap-4 mt-2 mb-2">
                           <Text className="text-tremor-default text-tremor-content dark:text-dark-tremor-content text-lg">
-                            Project Spend{" "}
+                            {t("projectSpend")}{" "}
                             {dateValue.from && dateValue.to && (
                               <>
                                 {dateValue.from.toLocaleDateString("en-US", {
@@ -617,7 +616,11 @@ const UsagePage: React.FC<UsagePageProps> = ({ teams, organizations }) => {
                             <Card>
                               <div className="flex items-center gap-2">
                                 <Title>{t("failedRequests")}</Title>
-                                <Tooltip title="Includes requests that failed to route to a provider, tool usage failures, and other request errors where the provider cannot be determined.">
+                                <Tooltip
+                                  title={t(
+                                    "includesRequestsThatFailedToRouteToAProviderToolUsageFailuresAndOtherRequestErro",
+                                  )}
+                                >
                                   <InfoCircleOutlined className="text-gray-400 hover:text-gray-600" />
                                 </Tooltip>
                               </div>
@@ -705,7 +708,8 @@ const UsagePage: React.FC<UsagePageProps> = ({ teams, organizations }) => {
                                   <div className="bg-white p-4 shadow-lg rounded-lg border">
                                     <p className="font-bold">{data.date}</p>
                                     <p className="text-cyan-500">
-                                      Spend: ${formatNumberWithCommas(data.metrics.spend, 2)}
+                                      {t("spend1")}
+                                      {formatNumberWithCommas(data.metrics.spend, 2)}
                                     </p>
                                     <p className="text-gray-600">Requests: {data.metrics.api_requests}</p>
                                     <p className="text-gray-600">Successful: {data.metrics.successful_requests}</p>
@@ -755,7 +759,7 @@ const UsagePage: React.FC<UsagePageProps> = ({ teams, organizations }) => {
                                 }`}
                                 onClick={() => setModelViewType("groups")}
                               >
-                                Public Model Name
+                                {t("publicModelName")}
                               </button>
                               <button
                                 className={`px-3 py-1 text-sm rounded-md transition-colors ${
@@ -765,7 +769,7 @@ const UsagePage: React.FC<UsagePageProps> = ({ teams, organizations }) => {
                                 }`}
                                 onClick={() => setModelViewType("individual")}
                               >
-                                Litellm Model Name
+                                {t("litellmModelName")}
                               </button>
                             </div>
                           </div>
@@ -794,10 +798,11 @@ const UsagePage: React.FC<UsagePageProps> = ({ teams, organizations }) => {
                                         <div className="bg-white p-4 shadow-lg rounded-lg border">
                                           <p className="font-bold">{data.key}</p>
                                           <p className="text-cyan-500">
-                                            Spend: ${formatNumberWithCommas(data.spend, 2)}
+                                            {t("spend1")}
+                                            {formatNumberWithCommas(data.spend, 2)}
                                           </p>
                                           <p className="text-gray-600">
-                                            Total Requests: {data.requests.toLocaleString()}
+                                            {t("totalRequests1")} {data.requests.toLocaleString()}
                                           </p>
                                           <p className="text-green-600">
                                             Successful: {data.successful_requests.toLocaleString()}
@@ -908,12 +913,12 @@ const UsagePage: React.FC<UsagePageProps> = ({ teams, organizations }) => {
                 <Alert
                   banner
                   type="info"
-                  message="Reusable credentials are automatically tracked as tags"
+                  message={t("reusableCredentialsAreAutomaticallyTrackedAsTags")}
                   description={
                     <Typography.Text>
-                      When a reusable credential is used, it will appear as a tag prefixed with{" "}
+                      {t("whenAReusableCredentialIsUsedItWillAppearAsATagPrefixedWith")}{" "}
                       <Typography.Text code>Credential: </Typography.Text>
-                      in this view.
+                      {t("inThisView")}
                     </Typography.Text>
                   }
                   closable

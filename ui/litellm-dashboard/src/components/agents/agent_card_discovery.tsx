@@ -250,7 +250,7 @@ const AgentCardDiscovery: React.FC<AgentCardDiscoveryProps> = ({
       {isParentDriven ? (
         <>
           <Paragraph className="text-xs text-gray-500 mb-2">
-            Using the connection details you entered above. We&apos;ll fetch:
+            {t("usingTheConnectionDetailsYouEnteredAboveWeAposLlFetch")}
           </Paragraph>
           <div className="bg-white border border-gray-200 rounded px-3 py-2 mb-3 font-mono text-xs text-gray-700 break-all">
             {discoveryRequest!.display_url || effectiveUrl || (
@@ -272,8 +272,9 @@ const AgentCardDiscovery: React.FC<AgentCardDiscoveryProps> = ({
       ) : (
         <>
           <Paragraph className="text-xs text-gray-500 mb-3">
-            Paste the upstream agent&apos;s base URL. We&apos;ll try <code>/.well-known/agent-card.json</code>,{" "}
-            <code>/.well-known/agent.json</code>, and <code>/agent.json</code> in order.
+            {t("pasteTheUpstreamAgentAposSBaseURLWeAposLlTry")} <code>/.well-known/agent-card.json</code>,{" "}
+            <code>/.well-known/agent.json</code>
+            {t("and")} <code>/agent.json</code> {t("inOrder")}
           </Paragraph>
 
           <Space.Compact style={{ width: "100%" }}>
@@ -301,7 +302,7 @@ const AgentCardDiscovery: React.FC<AgentCardDiscoveryProps> = ({
         <Alert
           className="mt-3"
           type="error"
-          message="Discovery failed"
+          message={t("discoveryFailed")}
           description={error}
           showIcon
           closable
@@ -400,7 +401,9 @@ const AgentCardDiscovery: React.FC<AgentCardDiscoveryProps> = ({
               header={
                 <Space>
                   <Text strong>{t("capabilities")}</Text>
-                  <Tooltip title="Only capabilities LiteLLM can faithfully proxy today are listed. Others (push notifications, extensions) are coming soon.">
+                  <Tooltip
+                    title={t("onlyCapabilitiesLitellmCanFaithfullyProxyTodayAreListedOthersPushNotificationsEx")}
+                  >
                     <InfoCircleOutlined className="text-gray-400" />
                   </Tooltip>
                 </Space>
@@ -420,7 +423,7 @@ const AgentCardDiscovery: React.FC<AgentCardDiscoveryProps> = ({
                         </Text>
                         {!upstreamHas && (
                           <Tag className="ml-2" color="default">
-                            not advertised upstream
+                            {t("notAdvertisedUpstream")}
                           </Tag>
                         )}
                       </div>

@@ -1,5 +1,5 @@
 "use client";
-
+import { useTranslations } from "@/i18n";
 import ApiKeysDashboard from "@/app/(dashboard)/api-keys/ApiKeysDashboard";
 import { teamListCall as v2TeamListCall } from "@/app/(dashboard)/hooks/teams/useTeams";
 import LoadingScreen from "@/components/common_components/LoadingScreen";
@@ -147,6 +147,7 @@ function CreateKeyPageContent() {
 }
 
 export default function CreateKeyPage() {
+  const { t } = useTranslations("common");
   return (
     <Suspense fallback={<LoadingScreen />}>
       <CreateKeyPageContent />

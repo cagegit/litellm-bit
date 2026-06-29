@@ -1,5 +1,5 @@
 "use client";
-
+import { useTranslations } from "@/i18n";
 import React, { Suspense, useState } from "react";
 import Navbar from "@/components/navbar";
 import LoadingScreen from "@/components/common_components/LoadingScreen";
@@ -60,6 +60,7 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+  const { t } = useTranslations("common");
   return (
     <Suspense fallback={<LoadingScreen />}>
       <LayoutContent>{children}</LayoutContent>

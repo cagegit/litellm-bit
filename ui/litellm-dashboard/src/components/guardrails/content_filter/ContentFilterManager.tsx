@@ -242,12 +242,7 @@ const ContentFilterManager: React.FC<ContentFilterManagerProps> = ({
           type="warning"
           showIcon
           className="mb-4"
-          message={
-            <Text>
-              You have unsaved changes to patterns or keywords. Remember to click &quot;Save Changes&quot; at the
-              bottom.
-            </Text>
-          }
+          message={<Text>{t("unsavedPatternOrKeywordChangesRememberToSave")}</Text>}
         />
       )}
       <div className="mb-6">

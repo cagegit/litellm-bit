@@ -2,7 +2,6 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Button, Badge, Text } from "@tremor/react";
 import { Tooltip, Tag } from "antd";
 import { CopyOutlined, InfoCircleOutlined } from "@ant-design/icons";
-import { useTranslations } from "@/i18n";
 
 export interface MCPServerData {
   server_id: string;
@@ -36,6 +35,7 @@ export const mcpHubColumns = (
   showModal: (server: MCPServerData) => void,
   copyToClipboard: (text: string) => void,
   publicPage: boolean = false,
+  t: (key: string, values?: Record<string, string | number>) => string,
 ): ColumnDef<MCPServerData>[] => {
   const allColumns: ColumnDef<MCPServerData>[] = [
     {
@@ -50,7 +50,7 @@ export const mcpHubColumns = (
           <div className="space-y-1">
             <div className="flex items-center space-x-2">
               <Text className="font-medium text-sm">{server.server_name}</Text>
-              <Tooltip title="Copy server name">
+              <Tooltip title={t("copyServerName")}>
                 <CopyOutlined
                   onClick={() => copyToClipboard(server.server_name)}
                   className="cursor-pointer text-gray-500 hover:text-blue-500 text-xs"
@@ -90,7 +90,7 @@ export const mcpHubColumns = (
         return (
           <div className="flex items-center space-x-2">
             <Text className="text-xs truncate max-w-xs">{server.url}</Text>
-            <Tooltip title="Copy URL">
+            <Tooltip title={t("copyUrl")}>
               <CopyOutlined
                 onClick={() => copyToClipboard(server.url)}
                 className="cursor-pointer text-gray-500 hover:text-blue-500 text-xs flex-shrink-0"
@@ -224,7 +224,7 @@ export const mcpHubColumns = (
 
         return server.mcp_info?.is_public === true ? (
           <Badge color="green" size="xs">
-            Yes
+            {t("yes")}
           </Badge>
         ) : (
           <Badge color="gray" size="xs">
@@ -245,8 +245,8 @@ export const mcpHubColumns = (
 
         return (
           <Button size="xs" variant="secondary" onClick={() => showModal(server)} icon={InfoCircleOutlined}>
-            <span className="hidden lg:inline">Details</span>
-            <span className="lg:hidden">Info</span>
+            <span className="hidden lg:inline">{t("details")}</span>
+            <span className="lg:hidden">{t("info")}</span>
           </Button>
         );
       },

@@ -237,7 +237,7 @@ main();`;
   return (
     <>
       <TremorButton variant="secondary" icon={CodeOutlined} onClick={showModal}>
-        Get Code
+        {t("getCode")}
       </TremorButton>
 
       <Modal title={t("generatedCode")} open={isModalVisible} onCancel={handleCancel} footer={null} width={800}>
@@ -261,7 +261,7 @@ main();`;
               NotificationsManager.success("Copied to clipboard!");
             }}
           >
-            Copy to Clipboard
+            {t("copyToClipboard")}
           </AntdButton>
         </div>
 

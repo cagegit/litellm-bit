@@ -52,7 +52,9 @@ const AutoRotationView: React.FC<AutoRotationViewProps> = ({
           {autoRotate && rotationInterval && (
             <>
               <Text className="text-gray-400">•</Text>
-              <Text className="text-sm text-gray-600">Every {rotationInterval}</Text>
+              <Text className="text-sm text-gray-600">
+                {t("every")} {rotationInterval}
+              </Text>
             </>
           )}
         </div>

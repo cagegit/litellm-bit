@@ -149,9 +149,9 @@ const PassThroughGuardrailsSection: React.FC<PassThroughGuardrailsSectionProps> 
                             <div className="font-medium mb-1">{t("specifyRequestFields")}</div>
                             <div className="text-xs space-y-1">
                               <div>{t("examples")}</div>
-                              <div>• query</div>
-                              <div>• documents[*].text</div>
-                              <div>• messages[*].content</div>
+                              <div>{t("query")}</div>
+                              <div>{t("documentsText")}</div>
+                              <div>{t("messagesContent")}</div>
                             </div>
                           </div>
                         }
@@ -204,8 +204,8 @@ const PassThroughGuardrailsSection: React.FC<PassThroughGuardrailsSectionProps> 
                             <div className="font-medium mb-1">{t("specifyResponseFields")}</div>
                             <div className="text-xs space-y-1">
                               <div>{t("examples")}</div>
-                              <div>• results[*].text</div>
-                              <div>• choices[*].message.content</div>
+                              <div>{t("resultsText")}</div>
+                              <div>{t("choicesMessageContent")}</div>
                             </div>
                           </div>
                         }

@@ -146,16 +146,16 @@ export default function AuditLogs({ userID, userRole, token, accessToken, isActi
   if (!premiumUser) {
     return (
       <div style={{ textAlign: "center", marginTop: "20px" }}>
-        <h1 style={{ display: "block", marginBottom: "10px" }}>✨ Enterprise Feature.</h1>
+        <h1 style={{ display: "block", marginBottom: "10px" }}>{t("enterpriseFeature")}</h1>
         <p style={{ display: "block", marginBottom: "10px" }}>
-          This is a LiteLLM Enterprise feature, and requires a valid key to use.
+          {t("thisIsALitellmEnterpriseFeatureAndRequiresAValidKeyToUse")}
         </p>
         <p style={{ display: "block", marginBottom: "20px", fontStyle: "italic" }}>
-          Here&apos;s a preview of what Audit Logs offer:
+          {t("hereAposSAPreviewOfWhatAuditLogsOffer")}
         </p>
         <img
           src={auditLogsPreviewImg}
-          alt="Audit Logs Preview"
+          alt={t("auditLogsPreview")}
           style={{
             maxWidth: "100%",
             maxHeight: "700px",
@@ -180,7 +180,7 @@ export default function AuditLogs({ userID, userRole, token, accessToken, isActi
         {/* Header */}
         <div className="border-b px-6 py-4">
           <div className="flex items-center justify-between mb-4">
-            <h1 className="text-xl font-semibold">Audit Logs</h1>
+            <h1 className="text-xl font-semibold">{t("auditLogs")}</h1>
           </div>
 
           {/* Filters + pagination on same row */}

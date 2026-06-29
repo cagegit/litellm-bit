@@ -206,7 +206,7 @@ export function VirtualKeysTable({ teams, organizations, onSortChange, currentSo
           if (key.blocked !== true) {
             return (
               <Tag color="green" data-testid={`key-status-${key.token_id}`}>
-                Active
+                {t("active")}
               </Tag>
             );
           }
@@ -217,7 +217,7 @@ export function VirtualKeysTable({ teams, organizations, onSortChange, currentSo
           return (
             <Tooltip title={reason}>
               <Tag color="red" data-testid={`key-status-${key.token_id}`}>
-                Blocked
+                {t("blocked")}
               </Tag>
             </Tooltip>
           );
@@ -274,7 +274,7 @@ export function VirtualKeysTable({ teams, organizations, onSortChange, currentSo
         accessorKey: "user",
         header: () => (
           <span className="flex items-center gap-1">
-            User
+            {t("user")}
             <Popover content="Displays the first available value: User Alias, User Email, or User ID." trigger="hover">
               <InfoCircleOutlined className="text-gray-400 text-xs cursor-help" />
             </Popover>
@@ -421,7 +421,7 @@ export function VirtualKeysTable({ teams, organizations, onSortChange, currentSo
         accessorKey: "last_active",
         header: () => (
           <span className="flex items-center gap-1">
-            Last Active
+            {t("lastActive")}
             <Popover
               content="This is a new field and is not backfilled. Only new key usage will update this value."
               trigger="hover"
@@ -730,7 +730,7 @@ export function VirtualKeysTable({ teams, organizations, onSortChange, currentSo
                 <Skeleton.Node active style={{ width: 200, height: 20 }} />
               ) : (
                 <span className="inline-flex text-sm text-gray-700">
-                  Showing {rangeLabel} of {totalCount} results
+                  {t("showing")} {rangeLabel} of {totalCount} results
                 </span>
               )}
 
@@ -750,7 +750,7 @@ export function VirtualKeysTable({ teams, organizations, onSortChange, currentSo
                 <Skeleton.Node active style={{ width: 74, height: 20 }} />
               ) : (
                 <span className="text-sm text-gray-700">
-                  Page {pageIndex + 1} of {table.getPageCount()}
+                  {t("page")} {pageIndex + 1} of {table.getPageCount()}
                 </span>
               )}
 
@@ -762,7 +762,7 @@ export function VirtualKeysTable({ teams, organizations, onSortChange, currentSo
                   disabled={isLoading || !table.getCanPreviousPage()}
                   className="px-3 py-1 text-sm border rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Previous
+                  {t("previous")}
                 </button>
               )}
 
@@ -774,7 +774,7 @@ export function VirtualKeysTable({ teams, organizations, onSortChange, currentSo
                   disabled={isLoading || !table.getCanNextPage()}
                   className="px-3 py-1 text-sm border rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Next
+                  {t("next")}
                 </button>
               )}
             </div>
@@ -861,7 +861,7 @@ export function VirtualKeysTable({ teams, organizations, onSortChange, currentSo
                       <TableRow>
                         <TableCell colSpan={columns.length} className="h-8 text-center">
                           <div className="text-center text-gray-500">
-                            <p>🚅 Loading keys...</p>
+                            <p>{t("loadingKeys")}</p>
                           </div>
                         </TableCell>
                       </TableRow>

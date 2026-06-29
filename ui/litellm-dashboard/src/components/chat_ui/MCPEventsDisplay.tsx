@@ -192,7 +192,7 @@ const MCPEventsDisplay: React.FC<MCPEventsDisplayProps> = ({ events, className }
               <div>
                 {/* Request section */}
                 <div className="mcp-section">
-                  <div className="mcp-section-header">Request</div>
+                  <div className="mcp-section-header">{t("request")}</div>
                   <div className="mcp-code-block">
                     {callEvent.item?.arguments && (
                       <pre className="mcp-json">
@@ -211,14 +211,14 @@ const MCPEventsDisplay: React.FC<MCPEventsDisplayProps> = ({ events, className }
                 {/* Approved section */}
                 <div className="mcp-section">
                   <div className="mcp-approved">
-                    <span className="mcp-checkmark">✓</span> Approved
+                    <span className="mcp-checkmark">✓</span> {t("approved")}
                   </div>
                 </div>
 
                 {/* Response section */}
                 {callEvent.item?.output && (
                   <div className="mcp-section">
-                    <div className="mcp-section-header">Response</div>
+                    <div className="mcp-section-header">{t("response")}</div>
                     <div className="mcp-response-content">{callEvent.item.output}</div>
                   </div>
                 )}

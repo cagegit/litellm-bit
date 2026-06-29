@@ -164,7 +164,7 @@ export function ProjectsPage() {
           <Text type="secondary">{t("manageProjects")}</Text>
         </Space>
         <Button type="primary" icon={<PlusOutlined />} onClick={() => setIsCreateModalVisible(true)}>
-          Create Project
+          {t("createProject")}
         </Button>
       </Flex>
 

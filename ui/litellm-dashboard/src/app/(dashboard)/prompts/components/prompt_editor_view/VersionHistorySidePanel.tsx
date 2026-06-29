@@ -81,7 +81,7 @@ const VersionHistorySidePanel: React.FC<VersionHistorySidePanelProps> = ({
       {loading ? (
         <Skeleton active paragraph={{ rows: 4 }} />
       ) : versions.length === 0 ? (
-        <div className="text-center py-8 text-gray-500">No version history available.</div>
+        <div className="text-center py-8 text-gray-500">{t("noVersionHistoryAvailable")}</div>
       ) : (
         <List
           dataSource={versions}
@@ -115,13 +115,13 @@ const VersionHistorySidePanel: React.FC<VersionHistorySidePanelProps> = ({
                     <Tag className="m-0">{getVersionNumber(item)}</Tag>
                     {index === 0 && (
                       <Tag color="blue" className="m-0">
-                        Latest
+                        {t("latest1")}
                       </Tag>
                     )}
                   </div>
                   {isSelected && (
                     <Tag color="green" className="m-0">
-                      Active
+                      {t("active")}
                     </Tag>
                   )}
                 </div>

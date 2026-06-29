@@ -55,6 +55,7 @@ const ComplianceCard = ({
   loading: boolean;
   error: string | null;
 }) => {
+  const { t } = useTranslations("logs");
   const [expanded, setExpanded] = useState(false);
 
   return (
@@ -108,7 +109,7 @@ const ComplianceCard = ({
 
       {expanded && (
         <div className="border-t border-gray-100 px-4 py-3">
-          {loading && <p className="text-sm text-gray-500">"Checking compliance..."</p>}
+          {loading && <p className="text-sm text-gray-500">{t("checkingCompliance1")}</p>}
           {error && <p className="text-sm text-red-600">{error}</p>}
           {data && (
             <div className="space-y-2">

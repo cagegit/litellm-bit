@@ -131,8 +131,8 @@ ${formattedBody}
 
   return (
     <div className="w-full m-2" style={{ overflow: "hidden" }}>
-      <Title>Playground</Title>
-      <p className="text-sm text-gray-500">See how LiteLLM transforms your request for the specified provider.</p>
+      <Title>{t("playground")}</Title>
+      <p className="text-sm text-gray-500">{t("seeHowLitellmTransformsYourRequestForTheSpecifiedProvider")}</p>
       <div
         style={{
           display: "flex",
@@ -158,7 +158,7 @@ ${formattedBody}
           }}
         >
           <div style={{ marginBottom: "24px" }}>
-            <h2 style={{ fontSize: "24px", fontWeight: "bold", margin: "0 0 4px 0" }}>Original Request</h2>
+            <h2 style={{ fontSize: "24px", fontWeight: "bold", margin: "0 0 4px 0" }}>{t("originalRequest")}</h2>
             <p style={{ color: "#666", margin: 0 }}>
               The request you would send to LiteLLM /chat/completions endpoint.
             </p>
@@ -202,7 +202,7 @@ ${formattedBody}
               onClick={handleTransform}
               loading={isLoading}
             >
-              <span>Transform</span>
+              <span>{t("transform")}</span>
               <span>→</span>
             </Button>
           </div>
@@ -223,11 +223,11 @@ ${formattedBody}
           }}
         >
           <div style={{ marginBottom: "24px" }}>
-            <h2 style={{ fontSize: "24px", fontWeight: "bold", margin: "0 0 4px 0" }}>Transformed Request</h2>
-            <p style={{ color: "#666", margin: 0 }}>How LiteLLM transforms your request for the specified provider.</p>
+            <h2 style={{ fontSize: "24px", fontWeight: "bold", margin: "0 0 4px 0" }}>{t("transformedRequest")}</h2>
+            <p style={{ color: "#666", margin: 0 }}>{t("howLitellmTransformsYourRequestForTheSpecifiedProvider")}</p>
             <br />
             <p style={{ color: "#666", margin: 0 }} className="text-xs">
-              Note: Sensitive headers are not shown.
+              {t("noteSensitiveHeadersAreNotShown")}
             </p>
           </div>
 
@@ -288,7 +288,7 @@ ${formattedBody}
       </div>
       <div className="mt-4 text-right w-full">
         <p className="text-sm text-gray-500">
-          Found an error? File an issue{" "}
+          {t("foundAnErrorFileAnIssue")}{" "}
           <a href="https://github.com/BerriAI/litellm/issues" target="_blank" rel="noopener noreferrer">
             here
           </a>

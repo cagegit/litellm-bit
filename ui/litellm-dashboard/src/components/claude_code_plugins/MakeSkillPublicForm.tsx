@@ -116,12 +116,13 @@ const MakeSkillPublicForm: React.FC<MakeSkillPublicFormProps> = ({
           onChange={(e) => handleSelectAll(e.target.checked)}
           disabled={skillsList.length === 0}
         >
-          Select All ({skillsList.length})
+          {t("selectAll")}
+          {skillsList.length})
         </Checkbox>
       </div>
 
       <Text className="text-sm text-gray-600">
-        Selected skills will be visible to all users in the Skill Hub. Deselected skills will be unpublished.
+        {t("selectedSkillsWillBeVisibleToAllUsersInTheSkillHubDeselectedSkillsWillBeUnpublis")}
       </Text>
 
       <div className="max-h-96 overflow-y-auto border rounded-lg p-4">
@@ -142,7 +143,7 @@ const MakeSkillPublicForm: React.FC<MakeSkillPublicFormProps> = ({
                     <Text className="font-medium font-mono text-sm">{skill.name}</Text>
                     {skill.enabled && (
                       <Badge color="green" size="xs">
-                        Public
+                        {t("public")}
                       </Badge>
                     )}
                   </div>
@@ -164,7 +165,7 @@ const MakeSkillPublicForm: React.FC<MakeSkillPublicFormProps> = ({
       {selectedSkills.size > 0 && (
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
           <Text className="text-sm text-blue-800">
-            <strong>{selectedSkills.size}</strong> skill{selectedSkills.size !== 1 ? "s" : ""} will be published
+            <strong>{selectedSkills.size}</strong> skill{selectedSkills.size !== 1 ? "s" : ""} {t("willBePublished")}
           </Text>
         </div>
       )}
@@ -177,13 +178,12 @@ const MakeSkillPublicForm: React.FC<MakeSkillPublicFormProps> = ({
 
       <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
         <Text className="text-sm text-yellow-800">
-          <strong>Note:</strong> Published skills will be visible to all users in the Skill Hub tab. Skills not in the
-          list below will be unpublished.
+          <strong>{t("note")}:</strong> {t("publishedSkillsVisibleToAllUsersDescription")}
         </Text>
       </div>
 
       <div className="space-y-3">
-        <Text className="font-medium">Skills to be published:</Text>
+        <Text className="font-medium">{t("skillsToBePublished")}</Text>
         <div className="max-h-48 overflow-y-auto border rounded-lg p-3">
           <div className="space-y-2">
             {Array.from(selectedSkills).map((name) => {
@@ -205,7 +205,8 @@ const MakeSkillPublicForm: React.FC<MakeSkillPublicFormProps> = ({
 
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
         <Text className="text-sm text-blue-800">
-          Total: <strong>{selectedSkills.size}</strong> skill{selectedSkills.size !== 1 ? "s" : ""} will be published
+          Total: <strong>{selectedSkills.size}</strong> skill{selectedSkills.size !== 1 ? "s" : ""}{" "}
+          {t("willBePublished")}
         </Text>
       </div>
     </div>
@@ -235,12 +236,12 @@ const MakeSkillPublicForm: React.FC<MakeSkillPublicFormProps> = ({
           <div className="flex space-x-2">
             {currentStep === 0 && (
               <Button onClick={handleNext} disabled={selectedSkills.size === 0}>
-                Next
+                {t("next")}
               </Button>
             )}
             {currentStep === 1 && (
               <Button onClick={handleSubmit} loading={loading}>
-                Publish to Hub
+                {t("publishToHub")}
               </Button>
             )}
           </div>

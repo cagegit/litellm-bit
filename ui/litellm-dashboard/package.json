@@ -22,6 +22,7 @@
     "knip:fix": "knip --fix",
     "gen:api": "node scripts/gen-api-types.mjs",
     "check:ui-text": "node scripts/check-hardcoded-ui-text.mjs",
+    "i18n:auto-hardcoded": "python scripts/auto-i18n-hardcoded.py",
     "check:i18n": "node scripts/check-i18n-sync.mjs && node scripts/check-hardcoded-ui-text.mjs"
   },
   "dependencies": {

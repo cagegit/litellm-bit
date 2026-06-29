@@ -46,7 +46,7 @@ export const SearchToolView: React.FC<SearchToolViewProps> = ({
       <div className="flex justify-between items-center mb-6">
         <div>
           <Button icon={ArrowLeftIcon} variant="light" className="mb-4" onClick={onBack}>
-            Back to All Search Tools
+            {t("backToAllSearchTools")}
           </Button>
           <div className="flex items-center cursor-pointer">
             <Title>{searchTool.search_tool_name}</Title>

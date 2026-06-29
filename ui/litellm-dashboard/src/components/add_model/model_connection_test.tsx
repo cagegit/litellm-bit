@@ -157,7 +157,9 @@ ${formattedBody}
               }}
             />
           </div>
-          <Text style={{ fontSize: "16px" }}>Testing connection to {modelName}...</Text>
+          <Text style={{ fontSize: "16px" }}>
+            {t("testingConnectionTo")} {modelName}...
+          </Text>
           <style jsx>{`
             @keyframes spin {
               0% {
@@ -189,7 +191,7 @@ ${formattedBody}
             type="success"
             style={{ fontSize: "18px", fontWeight: 500, marginLeft: "10px" }}
           >
-            Connection to {modelName} successful!
+            {t("connectionTo")} {modelName} successful!
           </Text>
         </div>
       ) : (
@@ -198,7 +200,7 @@ ${formattedBody}
             <div style={{ display: "flex", alignItems: "center", marginBottom: "20px" }}>
               <WarningOutlined style={{ color: "#ff4d4f", fontSize: "24px", marginRight: "12px" }} />
               <Text data-testid="connection-failure-msg" type="danger" style={{ fontSize: "18px", fontWeight: 500 }}>
-                Connection to {modelName} failed
+                {t("connectionTo")} {modelName} failed
               </Text>
             </div>
 
@@ -235,7 +237,7 @@ ${formattedBody}
             {showDetails && (
               <div style={{ marginBottom: "20px" }}>
                 <Text strong style={{ display: "block", marginBottom: "8px", fontSize: "15px" }}>
-                  Troubleshooting Details
+                  {t("troubleshootingDetails")}
                 </Text>
                 <pre
                   style={{
@@ -256,7 +258,7 @@ ${formattedBody}
 
             <div>
               <Text strong style={{ display: "block", marginBottom: "8px", fontSize: "15px" }}>
-                API Request
+                {t("aPIRequest")}
               </Text>
               <pre
                 style={{
@@ -280,7 +282,7 @@ ${formattedBody}
                   NotificationsManager.success(t("copiedToClipboard"));
                 }}
               >
-                Copy to Clipboard
+                {t("copyToClipboard")}
               </Button>
             </div>
           </div>
@@ -289,7 +291,7 @@ ${formattedBody}
       <Divider style={{ margin: "24px 0 16px" }} />
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <Button type="link" href="https://docs.litellm.ai/docs/providers" target="_blank" icon={<InfoCircleOutlined />}>
-          View Documentation
+          {t("viewDocumentation")}
         </Button>
       </div>
     </div>

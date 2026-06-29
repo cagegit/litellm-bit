@@ -26,12 +26,11 @@ const CreatedKeyDisplay: React.FC<CreatedKeyDisplayProps> = ({ apiKey }) => {
   return (
     <div>
       <p className="mb-2">
-        Please save this secret key somewhere safe and accessible. For security reasons,{" "}
-        <b>you will not be able to view it again</b> through your LiteLLM account. If you lose this secret key, you will
-        need to generate a new one.
+        {t("pleaseSaveThisSecretKeySomewhereSafeAndAccessibleForSecurityReasons")}{" "}
+        <b>{t("youWillNotBeAbleToViewItAgain")}</b> {t("throughYourLitellmAccountSecretKeyWarning")}
       </p>
 
-      <p className="text-sm text-gray-600 mt-3 mb-1">Virtual Key:</p>
+      <p className="text-sm text-gray-600 mt-3 mb-1">{t("virtualKey1")}</p>
       <div
         style={{
           background: "#f8f8f8",

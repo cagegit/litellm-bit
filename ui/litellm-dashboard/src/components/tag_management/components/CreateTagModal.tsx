@@ -52,7 +52,7 @@ const CreateTagModal: React.FC<CreateTagModalProps> = ({ visible, onCancel, onSu
         <Form.Item
           label={
             <span>
-              Allowed Models
+              {t("allowedModels")}
               <Tooltip title={t("selectWhichModelsAreAllowedToProcessRequestsFromThisTag")}>
                 <InfoCircleOutlined style={{ marginLeft: "4px" }} />
               </Tooltip>
@@ -74,14 +74,14 @@ const CreateTagModal: React.FC<CreateTagModalProps> = ({ visible, onCancel, onSu
 
         <Accordion className="mt-4 mb-4">
           <AccordionHeader>
-            <Title className="m-0">Budget & Rate Limits (Optional)</Title>
+            <Title className="m-0">{t("budgetRateLimitsOptional")}</Title>
           </AccordionHeader>
           <AccordionBody>
             <Form.Item
               className="mt-4"
               label={
                 <span>
-                  Max Budget (USD){" "}
+                  {t("maxBudgetUsd")}{" "}
                   <Tooltip title={t("maxAmountDescription")}>
                     <InfoCircleOutlined style={{ marginLeft: "4px" }} />
                   </Tooltip>
@@ -95,8 +95,10 @@ const CreateTagModal: React.FC<CreateTagModalProps> = ({ visible, onCancel, onSu
               className="mt-4"
               label={
                 <span>
-                  Reset Budget{" "}
-                  <Tooltip title="How often the budget should reset. For example, setting 'daily' will reset the budget every 24 hours">
+                  {t("resetBudget")}{" "}
+                  <Tooltip
+                    title={t("howOftenTheBudgetShouldResetForExampleSettingDailyWillResetTheBudgetEvery24Hours")}
+                  >
                     <InfoCircleOutlined style={{ marginLeft: "4px" }} />
                   </Tooltip>
                 </span>
@@ -115,7 +117,7 @@ const CreateTagModal: React.FC<CreateTagModalProps> = ({ visible, onCancel, onSu
                   rel="noopener noreferrer"
                   className="text-blue-600 hover:text-blue-800 underline"
                 >
-                  create a GitHub issue
+                  {t("createGithubIssue")}
                 </a>
                 .
               </p>

@@ -68,7 +68,12 @@ interface FallbacksProps {
   userID: string | null;
 }
 
-async function testFallbackModelResponse(selectedModel: string, accessToken: string, testingMessage: string) {
+async function testFallbackModelResponse(
+  selectedModel: string,
+  accessToken: string,
+  testingMessage: string,
+  t: (key: string) => string,
+) {
   const isLocal = process.env.NODE_ENV === "development";
   if (isLocal != true) {
     console.log = function () {};
@@ -97,8 +102,11 @@ async function testFallbackModelResponse(selectedModel: string, accessToken: str
 
     NotificationsManager.success(
       <span>
-        Test model=<strong>{selectedModel}</strong>, received model=
-        <strong>{response.model}</strong>. See{" "}
+        {t("testModel")}
+        <strong>{selectedModel}</strong>
+        {t("receivedModel")}
+        <strong>{response.model}</strong>
+        {t("see")}{" "}
         <a
           href="#"
           onClick={() => window.open("https://docs.litellm.ai/docs/proxy/reliability", "_blank")}
@@ -251,17 +259,15 @@ const Fallbacks: React.FC<FallbacksProps> = ({ accessToken, userRole, userID }) 
       )}
       {!hasFallbacks ? (
         <div className="rounded-lg border border-gray-200 bg-gray-50 px-4 py-6 text-center">
-          <Typography.Text type="secondary">
-            No fallbacks configured. Add fallbacks to automatically try another model when the primary fails.
-          </Typography.Text>
+          <Typography.Text type="secondary">{t("noFallbacksConfigured")}</Typography.Text>
         </div>
       ) : (
         <Table>
           <TableHead>
             <TableRow>
-              <TableHeaderCell>Model Name</TableHeaderCell>
-              <TableHeaderCell>Fallbacks</TableHeaderCell>
-              <TableHeaderCell>Actions</TableHeaderCell>
+              <TableHeaderCell>{t("modelName")}</TableHeaderCell>
+              <TableHeaderCell>{t("fallbacks")}</TableHeaderCell>
+              <TableHeaderCell>{t("actions")}</TableHeaderCell>
             </TableRow>
           </TableHead>
 
@@ -285,6 +291,7 @@ const Fallbacks: React.FC<FallbacksProps> = ({ accessToken, userRole, userID }) 
                                 Object.keys(item)[0],
                                 accessToken || "",
                                 t("testingFallbackModelResponse"),
+                                t,
                               )
                             }
                             className="cursor-pointer hover:text-blue-600"
@@ -314,7 +321,7 @@ const Fallbacks: React.FC<FallbacksProps> = ({ accessToken, userRole, userID }) 
       <DeleteResourceModal
         isOpen={isDeleteModalOpen}
         title={t("deleteFallbackQuestion")}
-        message="Are you sure you want to delete this fallback? This action cannot be undone."
+        message={t("deleteFallbackMessage")}
         resourceInformationTitle="Fallback Information"
         resourceInformation={[
           {

@@ -401,7 +401,7 @@ const MCPServers: React.FC<MCPServerProps> = ({ accessToken, userRole, userID })
       >
         <div className="space-y-4">
           <AntdText className="text-gray-600">
-            This action is permanent and cannot be undone. All associated configurations will be removed.
+            {t("thisActionIsPermanentAndCannotBeUndoneAllAssociatedConfigurationsWillBeRemoved")}
           </AntdText>
 
           {serverToDelete && (
@@ -461,7 +461,7 @@ const MCPServers: React.FC<MCPServerProps> = ({ accessToken, userRole, userID })
         <div className="flex items-center gap-2">
           {isAdminRole(userRole) && (
             <Button className="flex-shrink-0" onClick={() => setDiscoveryVisible(true)}>
-              + Add New MCP Server
+              {t("addNewMCPServer")}
             </Button>
           )}
           {!isAdminRole(userRole) && (
@@ -473,7 +473,7 @@ const MCPServers: React.FC<MCPServerProps> = ({ accessToken, userRole, userID })
               }}
               variant="secondary"
             >
-              + Submit MCP Server
+              {t("submitMCPServer")}
             </Button>
           )}
         </div>
@@ -504,7 +504,7 @@ const MCPServers: React.FC<MCPServerProps> = ({ accessToken, userRole, userID })
             {isAdminRole(userRole) && (
               <Tab>
                 <span className="flex items-center gap-2">
-                  Submitted MCPs <NewBadge />
+                  {t("submittedMCPs")} <NewBadge />
                 </span>
               </Tab>
             )}
@@ -551,7 +551,7 @@ const MCPServers: React.FC<MCPServerProps> = ({ accessToken, userRole, userID })
                       <div className="h-6 w-px bg-gray-200"></div>
                       <div className="flex items-center gap-2">
                         <Text className="text-sm font-medium text-gray-600 whitespace-nowrap">
-                          Access Group
+                          {t("accessGroup")}
                           <Tooltip title="An MCP Access Group is a set of users or teams that have permission to access specific MCP servers. Use access groups to control and organize who can connect to which servers.">
                             <QuestionCircleOutlined style={{ marginLeft: 4, color: "#9ca3af" }} />
                           </Tooltip>

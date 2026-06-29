@@ -60,17 +60,17 @@ export const MemoryEditModal: React.FC<MemoryEditModalProps> = ({ open, mode, in
     >
       <Form form={form} layout="vertical">
         <Form.Item
-          label="Key"
+          label={t("key")}
           name="key"
-          rules={[{ required: true, message: "Key is required" }]}
-          tooltip="Globally unique — two memories cannot share a key. Namespace your own keys if you need per-user isolation (e.g. user:123:notes)."
+          rules={[{ required: true, message: t("keyIsRequired") }]}
+          tooltip={t("keyTooltip")}
         >
-          <Input placeholder="e.g. user_role" disabled={mode === "edit"} />
+          <Input placeholder={t("keyPlaceholder")} disabled={mode === "edit"} />
         </Form.Item>
         <Form.Item
           label={t("value")}
           name="value"
-          rules={[{ required: true, message: "Value is required" }]}
+          rules={[{ required: true, message: t("valueIsRequired") }]}
           tooltip="Markdown/text injected into LLM context. Plain strings are fine."
         >
           <Input.TextArea rows={8} placeholder={t("memoryPlaceholder")} />
@@ -78,11 +78,11 @@ export const MemoryEditModal: React.FC<MemoryEditModalProps> = ({ open, mode, in
         <Form.Item
           label={
             <span>
-              Metadata <Text type="secondary">(optional JSON)</Text>
+              {t("metadata1")} <Text type="secondary">{t("optionalJson")}</Text>
             </span>
           }
           name={t("metadata")}
-          tooltip="Optional structured metadata — must be valid JSON if provided."
+          tooltip={t("metadataTooltip")}
         >
           <Input.TextArea
             rows={4}

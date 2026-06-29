@@ -233,7 +233,7 @@ export const BedrockGuardrailDetails: React.FC<{ response: BedrockGuardrailRespo
             <div className="space-y-2">
               {outputs.map((o, i) => (
                 <div key={i} className="p-3 bg-gray-50 rounded-md">
-                  <div className="text-sm whitespace-pre-wrap">{o.text ?? <em>(non-text output)</em>}</div>
+                  <div className="text-sm whitespace-pre-wrap">{o.text ?? <em>{t("nonTextOutput")}</em>}</div>
                 </div>
               ))}
             </div>

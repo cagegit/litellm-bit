@@ -2,15 +2,24 @@ import { Tag } from "antd";
 import { ColumnsType } from "antd/es/table";
 import TableIconActionButton from "../common_components/IconActionButton/TableIconActionButtons/TableIconActionButton";
 import { SearchTool } from "./types";
-import { useTranslations } from "@/i18n";
 
-export const searchToolColumns = (
-  onView: (searchToolId: string) => void,
-  onEdit: (searchToolId: string) => void,
-  onDelete: (searchToolId: string) => void,
-  availableProviders: Array<{ provider_name: string; ui_friendly_name: string }>,
-): ColumnsType<SearchTool> => {
-  const { t } = useTranslations("mcp");
+type Translate = <T extends string>(key: T, values?: Record<string, string | number>) => string;
+
+interface SearchToolColumnsOptions {
+  onView: (searchToolId: string) => void;
+  onEdit: (searchToolId: string) => void;
+  onDelete: (searchToolId: string) => void;
+  availableProviders: Array<{ provider_name: string; ui_friendly_name: string }>;
+  t: Translate;
+}
+
+export const searchToolColumns = ({
+  onView,
+  onEdit,
+  onDelete,
+  availableProviders,
+  t,
+}: SearchToolColumnsOptions): ColumnsType<SearchTool> => {
   return [
     {
       title: t("searchToolId"),

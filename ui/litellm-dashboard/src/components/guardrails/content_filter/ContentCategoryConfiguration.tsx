@@ -227,7 +227,7 @@ const ContentCategoryConfiguration: React.FC<ContentCategoryConfigurationProps> 
       width: 80,
       render: (_: any, record: SelectedCategory) => (
         <Button icon={<DeleteOutlined />} onClick={() => onCategoryRemove(record.id)} size="small">
-          Remove
+          {t("remove")}
         </Button>
       ),
     },
@@ -244,10 +244,10 @@ const ContentCategoryConfiguration: React.FC<ContentCategoryConfigurationProps> 
           style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 }}
         >
           <Title level={5} style={{ margin: 0 }}>
-            Blocked topics
+            {t("blockedTopics")}
           </Title>
           <Text type="secondary" style={{ fontSize: 12, fontWeight: 400 }}>
-            Select topics to block using keyword and semantic analysis
+            {t("selectTopicsToBlockUsingKeywordAndSemanticAnalysis")}
           </Text>
         </div>
       }
@@ -275,7 +275,7 @@ const ContentCategoryConfiguration: React.FC<ContentCategoryConfigurationProps> 
           ))}
         </Select>
         <Button type="primary" onClick={handleAddCategory} disabled={!selectedCategoryName} icon={<PlusOutlined />}>
-          Add
+          {t("add")}
         </Button>
       </div>
 
@@ -321,7 +321,7 @@ const ContentCategoryConfiguration: React.FC<ContentCategoryConfigurationProps> 
             </pre>
           ) : (
             <div style={{ padding: "8px", textAlign: "center", color: "#888", fontSize: "12px" }}>
-              Unable to load category content
+              {t("unableToLoadCategoryContent")}
             </div>
           )}
         </div>
@@ -358,7 +358,7 @@ const ContentCategoryConfiguration: React.FC<ContentCategoryConfigurationProps> 
                     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                       <FileTextOutlined />
                       <span>
-                        View {fileTypeLabel} for {category.display_name}
+                        {t("view")} {fileTypeLabel} for {category.display_name}
                       </span>
                     </div>
                   ),
@@ -381,7 +381,7 @@ const ContentCategoryConfiguration: React.FC<ContentCategoryConfigurationProps> 
                     </pre>
                   ) : (
                     <div style={{ padding: "16px", textAlign: "center", color: "#888" }}>
-                      Content will load when expanded
+                      {t("contentWillLoadWhenExpanded")}
                     </div>
                   ),
                 };
@@ -399,7 +399,7 @@ const ContentCategoryConfiguration: React.FC<ContentCategoryConfigurationProps> 
             borderRadius: "4px",
           }}
         >
-          No blocked topics selected. Add topics to detect and block harmful content.
+          {t("noBlockedTopicsSelectedAddTopicsToDetectAndBlockHarmfulContent")}
         </div>
       )}
     </Card>

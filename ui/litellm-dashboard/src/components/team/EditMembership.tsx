@@ -239,7 +239,7 @@ const MemberModal = <T extends BaseMember>({
 
         <div className="text-right mt-6">
           <AntButton onClick={onCancel} className="mr-2" disabled={isSubmitting}>
-            Cancel
+            {t("cancel")}
           </AntButton>
           <AntButton type="default" htmlType="submit" loading={isSubmitting}>
             {mode === "add" ? (isSubmitting ? "Adding..." : "Add Member") : isSubmitting ? "Saving..." : "Save Changes"}

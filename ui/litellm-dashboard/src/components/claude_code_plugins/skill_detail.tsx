@@ -103,13 +103,17 @@ const SkillDetail: React.FC<SkillDetailProps> = ({ skill, onBack }) => {
         <div style={{ display: "flex", gap: 64 }}>
           {/* Left column */}
           <div style={{ flex: 1, minWidth: 0 }}>
-            <h2 style={{ fontSize: 18, fontWeight: 400, color: "#202124", margin: "0 0 4px 0" }}>{t("skillDetails")}</h2>
-            <p style={{ fontSize: 13, color: "#5f6368", margin: "0 0 16px 0" }}>{t("metadataRegisteredWithThisSkill")}</p>
+            <h2 style={{ fontSize: 18, fontWeight: 400, color: "#202124", margin: "0 0 4px 0" }}>
+              {t("skillDetails")}
+            </h2>
+            <p style={{ fontSize: 13, color: "#5f6368", margin: "0 0 16px 0" }}>
+              {t("metadataRegisteredWithThisSkill")}
+            </p>
             <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14 }}>
               <thead>
                 <tr style={{ borderBottom: "1px solid #dadce0" }}>
                   <th style={{ textAlign: "left", padding: "12px 0", color: "#5f6368", fontWeight: 500, width: 160 }}>
-                    Property
+                    {t("property")}
                   </th>
                   <th style={{ textAlign: "left", padding: "12px 0", color: "#5f6368", fontWeight: 500 }}>
                     {skill.name}
@@ -203,9 +207,11 @@ const SkillDetail: React.FC<SkillDetailProps> = ({ skill, onBack }) => {
       {/* How to Use tab */}
       {activeTab === "usage" && (
         <div style={{ maxWidth: 640 }}>
-          <h2 style={{ fontSize: 18, fontWeight: 400, color: "#202124", margin: "0 0 8px 0" }}>{t("usingThisSkill")}</h2>
+          <h2 style={{ fontSize: 18, fontWeight: 400, color: "#202124", margin: "0 0 8px 0" }}>
+            {t("usingThisSkill")}
+          </h2>
           <p style={{ fontSize: 14, color: "#5f6368", margin: "0 0 24px 0", lineHeight: 1.6 }}>
-            Once your proxy is set as a marketplace, enable this skill in Claude Code with one command:
+            {t("onceYourProxyIsSetAsAMarketplaceEnableThisSkillInClaudeCodeWithOneCommand")}
           </p>
 
           {/* Install command */}
@@ -261,9 +267,9 @@ const SkillDetail: React.FC<SkillDetailProps> = ({ skill, onBack }) => {
           </div>
 
           <p style={{ fontSize: 13, color: "#5f6368", lineHeight: 1.6, margin: 0 }}>
-            Don&apos;t have the marketplace configured yet?{" "}
+            {t("donAposTHaveTheMarketplaceConfiguredYet")}{" "}
             <span onClick={() => setActiveTab("setup")} style={{ color: "#1a73e8", cursor: "pointer" }}>
-              See one-time setup →
+              {t("seeOneTimeSetup")}
             </span>
           </p>
         </div>
@@ -273,14 +279,14 @@ const SkillDetail: React.FC<SkillDetailProps> = ({ skill, onBack }) => {
       {activeTab === "setup" && (
         <div style={{ maxWidth: 640 }}>
           <h2 style={{ fontSize: 18, fontWeight: 400, color: "#202124", margin: "0 0 8px 0" }}>
-            One-time marketplace setup
+            {t("oneTimeMarketplaceSetup")}
           </h2>
           <p style={{ fontSize: 14, color: "#5f6368", margin: "0 0 24px 0", lineHeight: 1.6 }}>
-            Add this to{" "}
+            {t("addThisTo")}{" "}
             <code style={{ fontSize: 13, backgroundColor: "#f1f3f4", padding: "1px 6px", borderRadius: 4 }}>
               ~/.claude/settings.json
             </code>{" "}
-            to point Claude Code at your proxy:
+            {t("toPointClaudeCodeAtYourProxy")}
           </p>
           <div
             style={{

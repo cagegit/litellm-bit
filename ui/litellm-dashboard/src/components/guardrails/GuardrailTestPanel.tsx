@@ -133,7 +133,8 @@ export function GuardrailTestPanel({
             />
             <div className="flex justify-between items-center mt-1">
               <Text className="text-xs text-gray-500">
-                {t("press")} <kbd className="px-1 py-0.5 bg-gray-100 border border-gray-300 rounded text-xs">Enter</kbd>{" "}
+                {t("press")}{" "}
+                <kbd className="px-1 py-0.5 bg-gray-100 border border-gray-300 rounded text-xs">{t("enter")}</kbd>{" "}
                 {t("toSubmit")} •{" "}
                 <kbd className="px-1 py-0.5 bg-gray-100 border border-gray-300 rounded text-xs">Shift+Enter</kbd>{" "}
                 {t("forNewLine")}

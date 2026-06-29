@@ -48,7 +48,7 @@ export function CreateProjectModal({ isOpen, onClose }: CreateProjectModalProps)
     <Modal
       title={
         <Typography.Text strong style={{ fontSize: 18 }}>
-          Create New Project
+          {t("createNewProject")}
         </Typography.Text>
       }
       open={isOpen}
@@ -57,7 +57,7 @@ export function CreateProjectModal({ isOpen, onClose }: CreateProjectModalProps)
       destroyOnHidden
       footer={[
         <Button key="cancel" onClick={handleCancel}>
-          Cancel
+          {t("cancel")}
         </Button>,
         <Button
           key="submit"
@@ -66,7 +66,7 @@ export function CreateProjectModal({ isOpen, onClose }: CreateProjectModalProps)
           loading={createMutation.isPending}
           onClick={handleSubmit}
         >
-          Create Project
+          {t("createProject")}
         </Button>,
       ]}
     >

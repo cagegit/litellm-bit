@@ -301,7 +301,9 @@ const ModelAliasManager: React.FC<ModelAliasManagerProps> = ({
                 Object.entries(aliasObject).map(([key, value]) => (
                   <span key={key}>
                     <br />
-                    &nbsp;&nbsp;&quot;{key}&quot;: &quot;{value}&quot;
+                    &nbsp;&nbsp;&quot;{key}
+                    {t("quotQuot")}
+                    {value}&quot;
                   </span>
                 ))
               )}

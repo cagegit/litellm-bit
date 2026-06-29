@@ -36,7 +36,7 @@ const CustomPatternModal: React.FC<CustomPatternModalProps> = ({
         <div>
           <Text strong>{t("patternName")}</Text>
           <Input
-            placeholder="e.g., internal_id, employee_code"
+            placeholder={t("eGInternalIdEmployeeCode")}
             value={patternName}
             onChange={(e) => onNameChange(e.target.value)}
             style={{ marginTop: 8 }}
@@ -52,14 +52,14 @@ const CustomPatternModal: React.FC<CustomPatternModalProps> = ({
             style={{ marginTop: 8 }}
           />
           <Text type="secondary" style={{ fontSize: 12 }}>
-            Enter a valid regular expression to match sensitive data
+            {t("enterAValidRegularExpressionToMatchSensitiveData")}
           </Text>
         </div>
 
         <div>
           <Text strong>{t("action")}</Text>
           <Text type="secondary" style={{ display: "block", marginTop: 4, marginBottom: 8 }}>
-            Choose what action the guardrail should take when this pattern is detected
+            {t("chooseWhatActionTheGuardrailShouldTakeWhenThisPatternIsDetected")}
           </Text>
           <Select value={patternAction} onChange={onActionChange} style={{ width: "100%" }}>
             <Option value="BLOCK">{t("block")}</Option>
@@ -71,7 +71,7 @@ const CustomPatternModal: React.FC<CustomPatternModalProps> = ({
       <div style={{ display: "flex", justifyContent: "flex-end", gap: "8px", marginTop: "24px" }}>
         <Button onClick={onCancel}>{t("cancel")}</Button>
         <Button type="primary" onClick={onAdd}>
-          Add
+          {t("add")}
         </Button>
       </div>
     </Modal>

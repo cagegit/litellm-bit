@@ -156,10 +156,10 @@ const EditAutoRouterModal: React.FC<EditAutoRouterModalProps> = ({
       onCancel={onCancel}
       footer={[
         <Button key="cancel" onClick={onCancel}>
-          Cancel
+          {t("cancel")}
         </Button>,
         <Button key="submit" loading={loading} onClick={handleSubmit}>
-          Save Changes
+          {t("saveChanges")}
         </Button>,
       ]}
       width={1000}
@@ -167,7 +167,7 @@ const EditAutoRouterModal: React.FC<EditAutoRouterModalProps> = ({
     >
       <div className="space-y-6">
         <Text className="text-gray-600">
-          Edit the auto router configuration including routing logic, default models, and access settings.
+          {t("editTheAutoRouterConfigurationIncludingRoutingLogicDefaultModelsAndAccessSetting")}
         </Text>
 
         <Form form={form} layout="vertical" className="space-y-4">
@@ -177,7 +177,7 @@ const EditAutoRouterModal: React.FC<EditAutoRouterModalProps> = ({
             name="auto_router_name"
             rules={[{ required: true, message: t("autoRouterNameIsRequired") }]}
           >
-            <TextInput placeholder="e.g., auto_router_1, smart_routing" />
+            <TextInput placeholder={t("eGAutoRouter1SmartRouting")} />
           </Form.Item>
 
           {/* Router Configuration Builder */}

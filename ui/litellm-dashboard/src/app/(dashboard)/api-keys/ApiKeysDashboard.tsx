@@ -1,5 +1,5 @@
 "use client";
-
+import { useTranslations } from "@/i18n";
 import { teamListCall as v2TeamListCall } from "@/app/(dashboard)/hooks/teams/useTeams";
 import useAuthorized from "@/app/(dashboard)/hooks/useAuthorized";
 import { KeyResponse, Team } from "@/components/key_team_helpers/key_list";
@@ -12,6 +12,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 
 export default function ApiKeysDashboard() {
+  const { t } = useTranslations("common");
   // Identity comes from useAuthorized (synchronous cookie decode) so userID is set whenever the
   // route is authorized; useAuth only supplies the backfill setters UserDashboard still expects.
   const { userId: userID, userRole, userEmail, accessToken, premiumUser } = useAuthorized();

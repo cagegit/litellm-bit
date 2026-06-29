@@ -45,7 +45,7 @@ const MCPServerCostConfig: React.FC<MCPServerCostConfigProps> = ({
         <div className="flex items-center gap-2 mb-4">
           <DollarOutlined className="text-green-600" />
           <Title>{t("costConfiguration")}</Title>
-          <Tooltip title="Configure costs for this MCP server's tool calls. Set a default rate and per-tool overrides.">
+          <Tooltip title={t("configureCostsForThisMCPServerSToolCallsSetADefaultRateAndPerToolOverrides")}>
             <InfoCircleOutlined className="text-gray-400" />
           </Tooltip>
         </div>
@@ -53,7 +53,7 @@ const MCPServerCostConfig: React.FC<MCPServerCostConfigProps> = ({
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Default Cost per Query ($)
+              {t("defaultCostPerQuery1")}
               <Tooltip title={t("defaultCostChargedForEachToolCallToThisServer")}>
                 <InfoCircleOutlined className="ml-1 text-gray-400" />
               </Tooltip>
@@ -69,16 +69,14 @@ const MCPServerCostConfig: React.FC<MCPServerCostConfigProps> = ({
               style={{ width: "200px" }}
               addonBefore="$"
             />
-            <Text className="block mt-1 text-gray-500 text-sm">
-              Set a default cost for all tool calls to this server
-            </Text>
+            <Text className="block mt-1 text-gray-500 text-sm">{t("setADefaultCostForAllToolCallsToThisServer")}</Text>
           </div>
 
           {tools.length > 0 && (
             <div className="space-y-4">
               <label className="block text-sm font-medium text-gray-700">
-                Tool-Specific Costs ($)
-                <Tooltip title="Override the default cost for specific tools. Leave blank to use the default rate.">
+                {t("toolSpecificCosts1")}
+                <Tooltip title={t("overrideTheDefaultCostForSpecificToolsLeaveBlankToUseTheDefaultRate")}>
                   <InfoCircleOutlined className="ml-1 text-gray-400" />
                 </Tooltip>
               </label>
@@ -136,11 +134,12 @@ const MCPServerCostConfig: React.FC<MCPServerCostConfigProps> = ({
         {(value.default_cost_per_query ||
           (value.tool_name_to_cost_per_query && Object.keys(value.tool_name_to_cost_per_query).length > 0)) && (
           <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-            <Text className="text-blue-800 font-medium">Cost Summary:</Text>
+            <Text className="text-blue-800 font-medium">{t("costSummary")}</Text>
             <div className="mt-2 space-y-1">
               {value.default_cost_per_query && (
                 <Text className="text-blue-700">
-                  • Default cost: ${value.default_cost_per_query.toFixed(4)} per query
+                  {t("defaultCost")}
+                  {value.default_cost_per_query.toFixed(4)} {t("perQuery")}
                 </Text>
               )}
               {value.tool_name_to_cost_per_query &&
@@ -149,7 +148,7 @@ const MCPServerCostConfig: React.FC<MCPServerCostConfigProps> = ({
                     cost !== null &&
                     cost !== undefined && (
                       <Text key={toolName} className="text-blue-700">
-                        • {toolName}: ${cost.toFixed(4)} per query
+                        • {toolName}: ${cost.toFixed(4)} {t("perQuery")}
                       </Text>
                     ),
                 )}

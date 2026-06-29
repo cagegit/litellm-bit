@@ -106,7 +106,7 @@ const ConditionalPublicModelName: React.FC = () => {
       </div>
       <div className="mb-2 font-normal">
         <strong>{t("usage")}:</strong> {t("youMakeAnApiCallWith")}{" "}
-        <code className="bg-gray-700 px-1 py-0.5 rounded text-xs">model = &quot;example-name&quot;</code>
+        <code className="bg-gray-700 px-1 py-0.5 rounded text-xs">{t("modelQuotExampleNameQuot")}</code>
       </div>
       <div className="font-normal">
         <strong>{t("result")}:</strong> {t("litellmSends")}{" "}

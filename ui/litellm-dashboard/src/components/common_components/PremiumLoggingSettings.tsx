@@ -25,10 +25,10 @@ export function PremiumLoggingSettings({
       <div>
         <div className="flex flex-wrap gap-2 mb-3">
           <div className="inline-flex items-center px-3 py-1.5 rounded-lg bg-green-50 border border-green-200 text-green-800 text-sm font-medium opacity-50">
-            ✨ langfuse-logging
+            {t("langfuseLogging")}
           </div>
           <div className="inline-flex items-center px-3 py-1.5 rounded-lg bg-green-50 border border-green-200 text-green-800 text-sm font-medium opacity-50">
-            ✨ datadog-logging
+            {t("datadogLogging")}
           </div>
         </div>
         <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-lg">

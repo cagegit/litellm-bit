@@ -21,8 +21,8 @@ const StdioConfiguration: React.FC<StdioConfigurationProps> = ({ isVisible, requ
     <Form.Item
       label={
         <span className="text-sm font-medium text-gray-700 flex items-center">
-          Stdio Configuration (JSON)
-          <Tooltip title="Paste your stdio MCP server configuration in JSON format. You can use the full mcpServers structure from config.yaml or just the inner server configuration.">
+          {t("stdioConfigurationJSON")}
+          <Tooltip title={t("pasteYourStdioMCPServerConfigurationInJSONFormatYouCanUseTheFullMcpServersStruct")}>
             <InfoCircleOutlined className="ml-2 text-blue-400 hover:text-blue-600 cursor-help" />
           </Tooltip>
         </span>

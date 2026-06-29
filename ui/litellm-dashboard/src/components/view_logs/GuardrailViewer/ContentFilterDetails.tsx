@@ -84,7 +84,7 @@ const ContentFilterDetails: React.FC<ContentFilterDetailsProps> = ({ response })
       return (
         <div className="bg-white rounded-lg border border-red-200 p-4">
           <div className="text-red-800">
-            <h5 className="font-medium mb-2">Error</h5>
+            <h5 className="font-medium mb-2">{t("error")}</h5>
             <p className="text-sm">{response}</p>
           </div>
         </div>

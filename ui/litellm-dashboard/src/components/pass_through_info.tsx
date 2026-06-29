@@ -366,7 +366,7 @@ const PassThroughInfoView: React.FC<PassThroughInfoProps> = ({
                     </Form.Item>
 
                     <Form.Item
-                      label="Request Timeout (seconds)"
+                      label={t("requestTimeoutseconds")}
                       name="timeout"
                       extra="Max time to wait for upstream response. Leave empty to use the global pass_through_request_timeout (default 600s)."
                     >
@@ -419,7 +419,7 @@ const PassThroughInfoView: React.FC<PassThroughInfoProps> = ({
                     )}
                     {endpointData.timeout !== undefined && endpointData.timeout !== null && (
                       <div>
-                        <Text className="font-medium">Request Timeout</Text>
+                        <Text className="font-medium">{t("requestTimeout")}</Text>
                         <div>{endpointData.timeout}s</div>
                       </div>
                     )}

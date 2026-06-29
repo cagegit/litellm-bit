@@ -124,10 +124,10 @@ const AddPromptForm: React.FC<AddPromptFormProps> = ({ visible, onClose, accessT
       onCancel={handleCancel}
       footer={[
         <Button key="cancel" onClick={handleCancel}>
-          Cancel
+          {t("cancel")}
         </Button>,
         <Button key="submit" loading={loading} onClick={handleSubmit}>
-          Create Prompt
+          {t("createPrompt")}
         </Button>,
       ]}
       width={600}
@@ -137,14 +137,14 @@ const AddPromptForm: React.FC<AddPromptFormProps> = ({ visible, onClose, accessT
           label={t("promptId")}
           name="prompt_id"
           rules={[
-            { required: true, message: "Please enter a prompt ID" },
+            { required: true, message: t("pleaseEnterAPromptId") },
             {
               pattern: /^[a-zA-Z0-9_-]+$/,
-              message: "Prompt ID can only contain letters, numbers, underscores, and hyphens",
+              message: t("promptIdCanOnlyContainLettersNumbersUnderscoresAndHyphens"),
             },
           ]}
         >
-          <TextInput placeholder="Enter unique prompt ID (e.g., my_prompt_id)" />
+          <TextInput placeholder={t("enterUniquePromptIdegMyPromptId")} />
         </Form.Item>
 
         <Form.Item label={t("promptIntegration")} name="prompt_integration" initialValue={t("dotprompt")}>
@@ -158,7 +158,7 @@ const AddPromptForm: React.FC<AddPromptFormProps> = ({ visible, onClose, accessT
             <Divider />
             <Form.Item label={t("promptFile")} extra="Upload a .prompt file that follows the Dotprompt specification">
               <Upload {...uploadProps}>
-                <Button icon={<UploadOutlined />}>Select .prompt File</Button>
+                <Button icon={<UploadOutlined />}>{t("selectpromptFile")}</Button>
               </Upload>
               {fileList.length > 0 && <div className="mt-2 text-sm text-gray-600">Selected: {fileList[0].name}</div>}
             </Form.Item>

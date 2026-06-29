@@ -84,10 +84,10 @@ const MemberPermissions: React.FC<MemberPermissionsProps> = ({ teamId, accessTok
         {canEditTeam && hasChanges && (
           <div className="flex gap-3">
             <Button icon={<ReloadOutlined />} onClick={handleReset}>
-              Reset
+              {t("reset")}
             </Button>
             <Button onClick={handleSave} loading={saving} type="primary" icon={<SaveOutlined />}>
-              Save Changes
+              {t("saveChanges")}
             </Button>
           </div>
         )}
@@ -104,7 +104,7 @@ const MemberPermissions: React.FC<MemberPermissionsProps> = ({ teamId, accessTok
                 <TableHeaderCell>{t("endpoint")}</TableHeaderCell>
                 <TableHeaderCell>{t("description")}</TableHeaderCell>
                 <TableHeaderCell className="sticky right-0 bg-white shadow-[-4px_0_4px_-4px_rgba(0,0,0,0.1)] text-center">
-                  Allow Access
+                  {t("allowAccess")}
                 </TableHeaderCell>
               </TableRow>
             </TableHead>

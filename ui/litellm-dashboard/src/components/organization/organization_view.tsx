@@ -222,7 +222,7 @@ const OrganizationInfoView: React.FC<OrganizationInfoProps> = ({
       <div className="flex justify-between items-center mb-6">
         <div>
           <TremorButton icon={ArrowLeftIcon} onClick={onClose} variant="light" className="mb-4">
-            Back to Organizations
+            {t("backToOrganizations")}
           </TremorButton>
           <Title>{orgData.organization_alias}</Title>
           <div className="flex items-center cursor-pointer">
@@ -256,7 +256,9 @@ const OrganizationInfoView: React.FC<OrganizationInfoProps> = ({
                   <div className="mt-2">
                     <Text>Created: {new Date(orgData.created_at).toLocaleDateString()}</Text>
                     <Text>Updated: {new Date(orgData.updated_at).toLocaleDateString()}</Text>
-                    <Text>Created By: {orgData.created_by}</Text>
+                    <Text>
+                      {t("createdBy")} {orgData.created_by}
+                    </Text>
                   </div>
                 </Card>
 
@@ -282,7 +284,9 @@ const OrganizationInfoView: React.FC<OrganizationInfoProps> = ({
                     <Text>TPM: {orgData.litellm_budget_table.tpm_limit || "Unlimited"}</Text>
                     <Text>RPM: {orgData.litellm_budget_table.rpm_limit || "Unlimited"}</Text>
                     {orgData.litellm_budget_table.max_parallel_requests && (
-                      <Text>Max Parallel Requests: {orgData.litellm_budget_table.max_parallel_requests}</Text>
+                      <Text>
+                        {t("maxParallelRequests")} {orgData.litellm_budget_table.max_parallel_requests}
+                      </Text>
                     )}
                   </div>
                 </Card>
@@ -431,7 +435,7 @@ const OrganizationInfoView: React.FC<OrganizationInfoProps> = ({
                       />
                     </Form.Item>
 
-                    <Form.Item label="MCP Servers & Access Groups" name="mcp_servers_and_groups">
+                    <Form.Item label={t("mCPServersAccessGroups")} name="mcp_servers_and_groups">
                       <MCPServerSelector
                         onChange={(values) => form.setFieldValue("mcp_servers_and_groups", values)}
                         value={form.getFieldValue("mcp_servers_and_groups")}
@@ -447,10 +451,10 @@ const OrganizationInfoView: React.FC<OrganizationInfoProps> = ({
                     <div className="sticky z-10 bg-white p-4 border-t border-gray-200 bottom-[-1.5rem] inset-x-[-1.5rem]">
                       <div className="flex justify-end items-center gap-2">
                         <TremorButton variant="secondary" onClick={() => setIsEditing(false)} disabled={isOrgSaving}>
-                          Cancel
+                          {t("cancel")}
                         </TremorButton>
                         <TremorButton type="submit" loading={isOrgSaving}>
-                          Save Changes
+                          {t("saveChanges")}
                         </TremorButton>
                       </div>
                     </div>

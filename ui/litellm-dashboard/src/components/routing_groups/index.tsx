@@ -116,13 +116,13 @@ const RoutingGroups: React.FC = () => {
           />
           <Flex align="center" gap={12}>
             <Button icon={<ReloadOutlined />} onClick={() => refetch()} loading={isFetching && !isLoading}>
-              Refresh
+              {t("refresh")}
             </Button>
             <Button type="primary" icon={<PlusOutlined />} onClick={openCreate}>
-              Create Group
+              {t("createGroup")}
             </Button>
             <Text type="secondary" className="text-sm whitespace-nowrap">
-              Showing {filteredGroups.length} {filteredGroups.length === 1 ? "result" : "results"}
+              {t("showing")} {filteredGroups.length} {filteredGroups.length === 1 ? "result" : "results"}
             </Text>
           </Flex>
         </Flex>
@@ -159,8 +159,8 @@ const RoutingGroups: React.FC = () => {
         onCancel={() => setDeletingGroup(null)}
       >
         <Text>
-          Models in <Text strong>{deletingGroup?.group_name}</Text> will fall back to the proxy&apos;s top-level routing
-          strategy. This cannot be undone.
+          {t("modelsIn")} <Text strong>{deletingGroup?.group_name}</Text>{" "}
+          {t("willFallBackToProxyTopLevelRoutingStrategy")}
         </Text>
       </Modal>
     </Space>

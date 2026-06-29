@@ -110,7 +110,7 @@ export const MCPServerView: React.FC<MCPServerViewProps> = ({
     <div className="p-4 max-w-full">
       <div className="mb-6">
         <Button icon={ArrowLeftIcon} variant="light" className="mb-4" onClick={onBack}>
-          Back to All Servers
+          {t("backToAllServers")}
         </Button>
         <div className="flex items-center gap-2">
           <Title className="text-2xl">{mcpServer.server_name || mcpServer.alias || "Unnamed Server"}</Title>
@@ -199,7 +199,9 @@ export const MCPServerView: React.FC<MCPServerViewProps> = ({
               </Card>
             </Grid>
             <Card className="mt-4 p-4">
-              <Text className="text-xs font-medium text-gray-500 uppercase tracking-wide">{t("costConfiguration")}</Text>
+              <Text className="text-xs font-medium text-gray-500 uppercase tracking-wide">
+                {t("costConfiguration")}
+              </Text>
               <div className="mt-3">
                 <MCPServerCostDisplay costConfig={mcpServer.mcp_info?.mcp_server_cost_info} />
               </div>
@@ -229,7 +231,7 @@ export const MCPServerView: React.FC<MCPServerViewProps> = ({
                 <Title>{t("mcpServerSettings")}</Title>
                 {editing ? null : (
                   <Button variant="light" onClick={() => setEditing(true)}>
-                    Edit Settings
+                    {t("editSettings")}
                   </Button>
                 )}
               </div>
@@ -302,11 +304,11 @@ export const MCPServerView: React.FC<MCPServerViewProps> = ({
                       {mcpServer.allow_all_keys ? (
                         <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-green-50 text-green-700 rounded-full border border-green-200 text-xs font-medium">
                           <span className="h-1.5 w-1.5 rounded-full bg-green-500"></span>
-                          Enabled
+                          {t("enabled")}
                         </span>
                       ) : (
                         <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-gray-50 text-gray-600 rounded-full border border-gray-200 text-xs font-medium">
-                          Disabled
+                          {t("disabled")}
                         </span>
                       )}
                     </div>
@@ -317,12 +319,12 @@ export const MCPServerView: React.FC<MCPServerViewProps> = ({
                       {mcpServer.available_on_public_internet ? (
                         <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-green-50 text-green-700 rounded-full border border-green-200 text-xs font-medium">
                           <span className="h-1.5 w-1.5 rounded-full bg-green-500"></span>
-                          Public
+                          {t("public")}
                         </span>
                       ) : (
                         <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-orange-50 text-orange-700 rounded-full border border-orange-200 text-xs font-medium">
                           <span className="h-1.5 w-1.5 rounded-full bg-orange-500"></span>
-                          Internal only
+                          {t("internalOnly")}
                         </span>
                       )}
                     </div>
@@ -334,11 +336,11 @@ export const MCPServerView: React.FC<MCPServerViewProps> = ({
                         {mcpServer.delegate_auth_to_upstream ? (
                           <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-green-50 text-green-700 rounded-full border border-green-200 text-xs font-medium">
                             <span className="h-1.5 w-1.5 rounded-full bg-green-500"></span>
-                            Enabled (PKCE passthrough)
+                            {t("enabledPKCEPassthrough")}
                           </span>
                         ) : (
                           <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-gray-50 text-gray-600 rounded-full border border-gray-200 text-xs font-medium">
-                            Disabled
+                            {t("disabled")}
                           </span>
                         )}
                       </div>
@@ -355,11 +357,11 @@ export const MCPServerView: React.FC<MCPServerViewProps> = ({
                           {mcpServer.oauth_passthrough ? (
                             <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-green-50 text-green-700 rounded-full border border-green-200 text-xs font-medium">
                               <span className="h-1.5 w-1.5 rounded-full bg-green-500"></span>
-                              Enabled
+                              {t("enabled")}
                             </span>
                           ) : (
                             <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-gray-50 text-gray-600 rounded-full border border-gray-200 text-xs font-medium">
-                              Disabled
+                              {t("disabled")}
                             </span>
                           )}
                         </div>
@@ -400,7 +402,7 @@ export const MCPServerView: React.FC<MCPServerViewProps> = ({
                         </div>
                       ) : (
                         <span className="inline-flex items-center text-xs font-medium px-2 py-0.5 rounded bg-green-50 text-green-700 border border-green-200">
-                          All tools enabled
+                          {t("allToolsEnabled")}
                         </span>
                       )}
                     </div>

@@ -287,24 +287,24 @@ export const ToolPolicies: React.FC<ToolPoliciesProps> = ({ accessToken, onSelec
         <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
           <h2 className="text-sm font-semibold text-amber-900 mb-1">{t("needsReview")}</h2>
           <p className="text-sm text-amber-800 mb-3">
-            {needsReviewTools.length} new tool{needsReviewTools.length !== 1 ? "s" : ""} discovered that require policy
-            decisions.
+            {needsReviewTools.length} {t("newTool")}
+            {needsReviewTools.length !== 1 ? "s" : ""} {t("discoveredThatRequirePolicyDecisions")}
           </p>
           <div className="flex flex-wrap gap-2">
-            {needsReviewTools.map((t) => (
+            {needsReviewTools.map((tool) => (
               <span
-                key={t.tool_id}
+                key={tool.tool_id}
                 className="inline-flex items-center gap-2 px-3 py-1.5 bg-white border border-amber-200 rounded-md text-sm"
               >
-                <span className="font-mono text-amber-900 truncate max-w-[200px]" title={t.tool_name}>
-                  {t.tool_name}
+                <span className="font-mono text-amber-900 truncate max-w-[200px]" title={tool.tool_name}>
+                  {tool.tool_name}
                 </span>
                 <button
                   type="button"
-                  onClick={() => scrollToToolRow(t.tool_id)}
+                  onClick={() => scrollToToolRow(tool.tool_id)}
                   className="text-amber-700 hover:text-amber-900 font-medium text-xs whitespace-nowrap"
                 >
-                  Review
+                  {t("review")}
                 </button>
               </span>
             ))}
@@ -371,11 +371,11 @@ export const ToolPolicies: React.FC<ToolPoliciesProps> = ({ accessToken, onSelec
 
             <div className="flex items-center gap-4 text-sm text-gray-600 whitespace-nowrap">
               <span>
-                Showing {filtered.length === 0 ? 0 : (currentPage - 1) * pageSize + 1} -{" "}
+                {t("showing")} {filtered.length === 0 ? 0 : (currentPage - 1) * pageSize + 1} -{" "}
                 {Math.min(currentPage * pageSize, filtered.length)} of {filtered.length} results
               </span>
               <span>
-                Page {currentPage} of {totalPages}
+                {t("page")} {currentPage} of {totalPages}
               </span>
               <div className="flex gap-1">
                 <button
@@ -383,14 +383,14 @@ export const ToolPolicies: React.FC<ToolPoliciesProps> = ({ accessToken, onSelec
                   disabled={currentPage === 1}
                   className="px-3 py-1.5 border rounded-md text-sm hover:bg-gray-50 disabled:opacity-40"
                 >
-                  Previous
+                  {t("previous")}
                 </button>
                 <button
                   onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                   disabled={currentPage === totalPages}
                   className="px-3 py-1.5 border rounded-md text-sm hover:bg-gray-50 disabled:opacity-40"
                 >
-                  Next
+                  {t("next")}
                 </button>
               </div>
             </div>
@@ -410,7 +410,7 @@ export const ToolPolicies: React.FC<ToolPoliciesProps> = ({ accessToken, onSelec
           <div className="bg-green-50 border-b border-green-100 px-6 py-2 flex items-center justify-between">
             <span className="text-sm text-green-700">{t("autoRefreshingEvery15Seconds")}</span>
             <button onClick={() => setIsLiveTail(false)} className="text-xs text-green-600 underline">
-              Stop
+              {t("stop")}
             </button>
           </div>
         )}
@@ -435,7 +435,7 @@ export const ToolPolicies: React.FC<ToolPoliciesProps> = ({ accessToken, onSelec
                 <SortHeader label={t("outputPolicy")} field="output_policy" />
               </TableHeaderCell>
               <TableHeaderCell className="py-1 h-8">
-                <SortHeader label="# Calls" field="call_count" />
+                <SortHeader label={t("calls")} field="call_count" />
               </TableHeaderCell>
               <TableHeaderCell className="py-1 h-8">
                 <SortHeader label={t("teamName")} field="team_id" />
@@ -451,13 +451,13 @@ export const ToolPolicies: React.FC<ToolPoliciesProps> = ({ accessToken, onSelec
             {loading ? (
               <TableRow>
                 <TableCell colSpan={9} className="h-8 text-center text-gray-500">
-                  Loading tools…
+                  {t("loadingTools")}
                 </TableCell>
               </TableRow>
             ) : paginated.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={9} className="h-8 text-center text-gray-500">
-                  No tools discovered yet. Make a chat completion that returns tool_calls to start auto-discovery.
+                  {t("noToolsDiscoveredYetMakeAChatCompletionThatReturnsToolCallsToStartAutoDiscovery")}
                 </TableCell>
               </TableRow>
             ) : (
@@ -533,7 +533,7 @@ export const ToolPolicies: React.FC<ToolPoliciesProps> = ({ accessToken, onSelec
         {totalPages > 1 && (
           <div className="border-t px-6 py-3 flex items-center justify-between text-sm text-gray-600">
             <span>
-              Showing {(currentPage - 1) * pageSize + 1} - {Math.min(currentPage * pageSize, sorted.length)} of{" "}
+              {t("showing")} {(currentPage - 1) * pageSize + 1} - {Math.min(currentPage * pageSize, sorted.length)} of{" "}
               {sorted.length}
             </span>
             <div className="flex gap-1">
@@ -542,14 +542,14 @@ export const ToolPolicies: React.FC<ToolPoliciesProps> = ({ accessToken, onSelec
                 disabled={currentPage === 1}
                 className="px-3 py-1.5 border rounded-md hover:bg-gray-50 disabled:opacity-40"
               >
-                Previous
+                {t("previous")}
               </button>
               <button
                 onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                 disabled={currentPage === totalPages}
                 className="px-3 py-1.5 border rounded-md hover:bg-gray-50 disabled:opacity-40"
               >
-                Next
+                {t("next")}
               </button>
             </div>
           </div>

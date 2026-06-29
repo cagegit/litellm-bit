@@ -76,7 +76,8 @@ const GuardrailCard: React.FC<{ card: GuardrailCardInfo; onClick: () => void }> 
         <div style={{ marginTop: 10, display: "flex", alignItems: "center", gap: 4 }}>
           <CheckCircleFilled style={{ color: "#16a34a", fontSize: 12 }} />
           <span style={{ fontSize: 11, color: "#16a34a", fontWeight: 500 }}>
-            F1: {card.eval.f1}% &middot; {t("testCases", { count: card.eval.testCases })}
+            F1: {card.eval.f1}
+            {t("middot")} {t("testCases", { count: card.eval.testCases })}
           </span>
         </div>
       )}

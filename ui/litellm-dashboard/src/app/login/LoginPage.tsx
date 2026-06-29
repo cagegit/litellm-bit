@@ -152,17 +152,14 @@ function LoginPageContent() {
         <Card className="w-full max-w-lg shadow-md">
           <Space direction="vertical" size="middle" className="w-full">
             <div className="text-center">
-              <Title level={2}>🚅 LiteLLM</Title>
+              <Title level={2}>{t("litellm")}</Title>
             </div>
 
             <Alert
-              message="Admin UI Disabled"
+              message={t("adminUIDisabled")}
               description={
                 <>
-                  <Paragraph className="text-sm">
-                    The Admin UI has been disabled by the administrator. To re-enable it, please update the following
-                    environment variable:
-                  </Paragraph>
+                  <Paragraph className="text-sm">{t("adminUiDisabledUpdateEnvironmentVariable")}</Paragraph>
                   <Paragraph className="text-sm">
                     <code className="bg-gray-100 px-1 py-0.5 rounded text-xs">DISABLE_ADMIN_UI=False</code>
                   </Paragraph>
@@ -182,28 +179,29 @@ function LoginPageContent() {
       <Card className="w-full max-w-lg shadow-md">
         <Space direction="vertical" size="middle" className="w-full">
           <div className="text-center">
-            <Title level={2}>🚅 LiteLLM</Title>
+            <Title level={2}>{t("litellm")}</Title>
           </div>
 
           <div className="text-center">
-            <Title level={3}>Login</Title>
-            <Text type="secondary">Access your LiteLLM Admin UI.</Text>
+            <Title level={3}>{t("login")}</Title>
+            <Text type="secondary">{t("accessYourLitellmAdminUi")}</Text>
           </div>
 
           {!uiConfig?.hide_default_credentials_hint && (
             <Alert
-              message="Default Credentials"
+              message={t("defaultCredentials")}
               description={
                 <>
                   <Paragraph className="text-sm">
-                    By default, Username is <code className="bg-gray-100 px-1 py-0.5 rounded text-xs">admin</code> and
-                    Password is your set LiteLLM Proxy
-                    <code className="bg-gray-100 px-1 py-0.5 rounded text-xs">MASTER_KEY</code>.
+                    {t("byDefaultUsernameIs")} <code className="bg-gray-100 px-1 py-0.5 rounded text-xs">admin</code>{" "}
+                    and
+                    {t("passwordIsYourSetLitellmProxy")}{" "}
+                    <code className="bg-gray-100 px-1 py-0.5 rounded text-xs">{t("masterKey")}</code>.
                   </Paragraph>
                   <Paragraph className="text-sm">
-                    {t("needToSetUICredentials")} {" "}
+                    {t("needToSetUICredentials")}{" "}
                     <a href="https://docs.litellm.ai/docs/proxy/ui" target="_blank" rel="noopener noreferrer">
-                      Check the documentation
+                      {t("checkTheDocumentation")}
                     </a>
                     .
                   </Paragraph>
@@ -281,7 +279,7 @@ function LoginPageContent() {
               {!uiConfig?.sso_configured ? (
                 <Popover content={t("pleaseConfigureSSO")} trigger="hover">
                   <Button disabled block size="large">
-                    Login with SSO
+                    {t("loginWithSSO")}
                   </Button>
                 </Popover>
               ) : (
@@ -303,7 +301,7 @@ function LoginPageContent() {
                   block
                   size="large"
                 >
-                  Login with SSO
+                  {t("loginWithSSO")}
                 </Button>
               )}
             </Form.Item>
@@ -316,9 +314,8 @@ function LoginPageContent() {
             closable
             message={
               <Text>
-                Single Sign-On (SSO) is enabled. LiteLLM no longer automatically redirects to the SSO login flow upon
-                loading this page. To re-enable auto-redirect-to-SSO, set{" "}
-                <Text code>AUTO_REDIRECT_UI_LOGIN_TO_SSO=true</Text> in your environment configuration.
+                {t("singleSignOnEnabledNoAutoRedirectDescription")} <Text code>AUTO_REDIRECT_UI_LOGIN_TO_SSO=true</Text>{" "}
+                {t("inYourEnvironmentConfiguration")}
               </Text>
             }
           />

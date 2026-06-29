@@ -1044,7 +1044,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
               <div className="space-y-4">
                 <div>
                   <Text className="font-medium block mb-2 text-gray-700 flex items-center">
-                    <KeyOutlined className="mr-2" /> Virtual Key Source
+                    <KeyOutlined className="mr-2" /> {t("virtualKeySource")}
                   </Text>
                   <Select
                     disabled={disabledPersonalKeyCreation}
@@ -1074,7 +1074,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
                 <div>
                   <div className="flex items-center justify-between mb-2">
                     <Text className="font-medium block text-gray-700 flex items-center">
-                      <SettingOutlined className="mr-2" /> Custom Proxy Base URL
+                      <SettingOutlined className="mr-2" /> {t("customProxyBaseURL")}
                     </Text>
                     {proxySettings?.LITELLM_UI_API_DOC_BASE_URL && !customProxyBaseUrl && (
                       <Button
@@ -1087,7 +1087,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
                         }}
                         className="text-gray-500 hover:text-gray-700"
                       >
-                        Fill
+                        {t("fill")}
                       </Button>
                     )}
                     {customProxyBaseUrl && (
@@ -1101,7 +1101,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
                         }}
                         className="text-gray-500 hover:text-gray-700"
                       >
-                        Clear
+                        {t("clear")}
                       </Button>
                     )}
                   </div>
@@ -1115,13 +1115,15 @@ const ChatUI: React.FC<ChatUIProps> = ({
                     icon={ApiOutlined}
                   />
                   {customProxyBaseUrl && (
-                    <Text className="text-xs text-gray-500 mt-1">API calls will be sent to: {customProxyBaseUrl}</Text>
+                    <Text className="text-xs text-gray-500 mt-1">
+                      {t("aPICallsWillBeSentTo")} {customProxyBaseUrl}
+                    </Text>
                   )}
                 </div>
 
                 <div>
                   <Text className="font-medium block mb-2 text-gray-700 flex items-center">
-                    <ApiOutlined className="mr-2" /> Endpoint Type
+                    <ApiOutlined className="mr-2" /> {t("endpointType")}
                   </Text>
                   <EndpointSelector
                     endpointType={endpointType}
@@ -1149,7 +1151,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
                     <div className="mb-4">
                       <Text className="font-medium block mb-2 text-gray-700 flex items-center">
                         <SoundOutlined className="mr-2" />
-                        Voice
+                        {t("voice")}
                       </Text>
                       <Select
                         value={selectedVoice}
@@ -1178,7 +1180,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
                   <div>
                     <Text className="font-medium block mb-2 text-gray-700 flex items-center justify-between">
                       <span className="flex items-center">
-                        <RobotOutlined className="mr-2" /> Select Model
+                        <RobotOutlined className="mr-2" /> {t("selectModel1")}
                       </span>
                       {isChatModel() ? (
                         <Popover
@@ -1283,7 +1285,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
                 {endpointType === EndpointType.A2A_AGENTS && (
                   <div>
                     <Text className="font-medium block mb-2 text-gray-700 flex items-center">
-                      <RobotOutlined className="mr-2" /> Select Agent
+                      <RobotOutlined className="mr-2" /> {t("selectAgent")}
                     </Text>
                     <Select
                       value={selectedAgent}
@@ -1324,7 +1326,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
 
                 <div>
                   <Text className="font-medium block mb-2 text-gray-700 flex items-center">
-                    <TagsOutlined className="mr-2" /> Tags
+                    <TagsOutlined className="mr-2" /> {t("tags")}
                   </Text>
                   <TagSelector
                     value={selectedTags}
@@ -1453,7 +1455,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
                                   className="text-xs px-1 rounded"
                                   style={{ background: "#ede9fe", color: "#7c3aed" }}
                                 >
-                                  Toolset
+                                  {t("toolset")}
                                 </span>
                                 <span className="text-xs text-gray-500">({toolset.tools.length} tools)</span>
                               </div>
@@ -1545,7 +1547,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
                           return (
                             <div key={serverId} className="border rounded p-2">
                               <Text className="text-xs text-gray-600 mb-1">
-                                Limit tools for {server?.alias || server?.server_name || serverId}:
+                                {t("limitToolsFor")} {server?.alias || server?.server_name || serverId}:
                               </Text>
                               <Select
                                 mode="multiple"
@@ -1588,17 +1590,19 @@ const ChatUI: React.FC<ChatUIProps> = ({
                               key={serverId}
                               className="border border-blue-100 rounded p-2 bg-blue-50 flex items-center justify-between"
                             >
-                              <Text className="text-xs text-blue-700">{serverName} requires your API key</Text>
+                              <Text className="text-xs text-blue-700">
+                                {serverName} {t("requiresYourAPIKey")}
+                              </Text>
                               {server.has_user_credential ? (
                                 <div className="flex items-center gap-2">
                                   <span className="text-green-600 text-xs font-medium flex items-center gap-1">
-                                    <KeyOutlined /> Connected
+                                    <KeyOutlined /> {t("connected")}
                                   </span>
                                   <button
                                     className="text-xs text-gray-400 hover:text-blue-500 underline"
                                     onClick={() => setByokModalServer(server)}
                                   >
-                                    Reconnect
+                                    {t("reconnect")}
                                   </button>
                                 </div>
                               ) : (
@@ -1606,7 +1610,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
                                   className="text-xs bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg font-medium"
                                   onClick={() => setByokModalServer(server)}
                                 >
-                                  Connect
+                                  {t("connect")}
                                 </button>
                               )}
                             </div>
@@ -1618,12 +1622,12 @@ const ChatUI: React.FC<ChatUIProps> = ({
 
                 <div>
                   <Text className="font-medium block mb-2 text-gray-700 flex items-center">
-                    <DatabaseOutlined className="mr-2" /> Vector Store
+                    <DatabaseOutlined className="mr-2" /> {t("vectorStore")}
                     <Tooltip
                       className="ml-1"
                       title={
                         <span>
-                          Select vector store(s) to use for this LLM API call. You can set up your vector store{" "}
+                          {t("selectVectorStoreSToUseForThisLLMAPICallYouCanSetUpYourVectorStore")}{" "}
                           <a href="?page=vector-stores" style={{ color: "#1890ff" }}>
                             here
                           </a>
@@ -1644,12 +1648,12 @@ const ChatUI: React.FC<ChatUIProps> = ({
 
                 <div>
                   <Text className="font-medium block mb-2 text-gray-700 flex items-center">
-                    <SafetyOutlined className="mr-2" /> Guardrails
+                    <SafetyOutlined className="mr-2" /> {t("guardrails")}
                     <Tooltip
                       className="ml-1"
                       title={
                         <span>
-                          Select guardrail(s) to use for this LLM API call. You can set up your guardrails{" "}
+                          {t("selectGuardrailSToUseForThisLLMAPICallYouCanSetUpYourGuardrails")}{" "}
                           <a href="?page=guardrails" style={{ color: "#1890ff" }}>
                             here
                           </a>
@@ -1670,7 +1674,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
 
                 <div>
                   <Text className="font-medium block mb-2 text-gray-700 flex items-center">
-                    <SafetyOutlined className="mr-2" /> Policies
+                    <SafetyOutlined className="mr-2" /> {t("policies")}
                     <Tooltip
                       className="ml-1"
                       title={
@@ -1731,7 +1735,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
                       className="bg-gray-100 hover:bg-gray-200 text-gray-700 border-gray-300"
                       icon={ClearOutlined}
                     >
-                      Clear Chat
+                      {t("clearChat")}
                     </TremorButton>
                     {!simplified && (
                       <TremorButton
@@ -1739,7 +1743,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
                         className="bg-gray-100 hover:bg-gray-200 text-gray-700 border-gray-300"
                         icon={CodeOutlined}
                       >
-                        Get Code
+                        {t("getCode")}
                       </TremorButton>
                     )}
                   </div>
@@ -1815,7 +1819,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
                           </p>
                           <p className="ant-upload-text text-sm">{t("clickOrDragImagesToUpload")}</p>
                           <p className="ant-upload-hint text-xs text-gray-500">
-                            Support for PNG, JPG, JPEG formats. Multiple images supported.
+                            {t("supportForPNGJPGJPEGFormatsMultipleImagesSupported")}
                           </p>
                         </Dragger>
                       ) : (
@@ -1884,7 +1888,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
                           </p>
                           <p className="ant-upload-text text-sm">{t("clickOrDragAudioFileToUpload")}</p>
                           <p className="ant-upload-hint text-xs text-gray-500">
-                            Support for MP3, MP4, MPEG, MPGA, M4A, WAV, WEBM formats. Max file size: 25 MB.
+                            {t("supportForMP3MP4MPEGMPGAM4AWAVWEBMFormatsMaxFileSize25MB")}
                           </p>
                         </Dragger>
                       ) : (
@@ -1900,7 +1904,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
                             className="bg-white shadow-sm border border-gray-200 rounded px-2 py-1 text-red-500 hover:bg-red-50 text-xs"
                             onClick={handleRemoveAudio}
                           >
-                            <DeleteOutlined /> Remove
+                            <DeleteOutlined /> {t("remove")}
                           </button>
                         </div>
                       )}
@@ -1945,7 +1949,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
                           className="text-xs text-blue-500 hover:text-blue-700"
                           onClick={() => codeInterpreter.setEnabled(false)}
                         >
-                          Disable
+                          {t("disable")}
                         </button>
                       </div>
                       {/* Sample prompts - only show when not loading */}
@@ -2062,7 +2066,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
                               <MCPToolArgumentsForm ref={mcpToolArgsFormRef} tool={mcpTool} className="space-y-2" />
                             ) : (
                               <div className="flex items-center justify-center h-10 text-sm text-gray-500">
-                                Loading tool schema...
+                                {t("loadingToolSchema")}
                               </div>
                             );
                           })()}
@@ -2131,7 +2135,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
                         className="bg-red-50 hover:bg-red-100 text-red-600 border-red-200"
                         icon={DeleteOutlined}
                       >
-                        Cancel
+                        {t("cancel")}
                       </TremorButton>
                     )}
                   </div>
@@ -2167,7 +2171,7 @@ const ChatUI: React.FC<ChatUIProps> = ({
               NotificationsManager.success("Copied to clipboard!");
             }}
           >
-            Copy to Clipboard
+            {t("copyToClipboard")}
           </Button>
         </div>
         <SyntaxHighlighter
@@ -2206,22 +2210,22 @@ const ChatUI: React.FC<ChatUIProps> = ({
         onCancel={() => setIsToolsetsInfoModalVisible(false)}
         footer={[
           <Button key="close" onClick={() => setIsToolsetsInfoModalVisible(false)}>
-            Close
+            {t("close")}
           </Button>,
         ]}
         width={600}
       >
         <div className="space-y-4 py-2">
           <p className="text-gray-700">
-            <strong>{t("toolsets")}</strong> are named collections of specific tools from one or more MCP servers. Instead of
-            exposing all tools from a server, a toolset gives an agent exactly the tools it needs.
+            <strong>{t("toolsets")}</strong> are named collections of specific tools from one or more MCP servers.
+            Instead of exposing all tools from a server, a toolset gives an agent exactly the tools it needs.
           </p>
           <div>
-            <h4 className="font-semibold text-gray-800 mb-2">How to use a toolset:</h4>
+            <h4 className="font-semibold text-gray-800 mb-2">{t("howToUseAToolset")}</h4>
             <ol className="list-decimal list-inside space-y-2 text-gray-700">
               <li>
-                Select a <span style={{ color: "#7c3aed", fontWeight: 600 }}>{t("toolset")}</span> (purple badge) from the MCP
-                Servers dropdown.
+                {t("selectA")} <span style={{ color: "#7c3aed", fontWeight: 600 }}>{t("toolset")}</span>{" "}
+                {t("purpleBadgeFromTheMcpServersDropdown")}
               </li>
               <li>{t("theToolPickerWillShowOnlyTheToolsIncludedInThatToolset")}</li>
               <li>{t("selectAToolAndFillInItsParametersThenSend")}</li>
@@ -2230,16 +2234,15 @@ const ChatUI: React.FC<ChatUIProps> = ({
           </div>
           <div className="bg-purple-50 border border-purple-200 rounded p-3">
             <p className="text-sm text-purple-800">
-              <strong>Example:</strong> A &quot;GitHub Read-only&quot; toolset might include only{" "}
-              <code>list_repos</code> and <code>get_file</code> from a GitHub MCP server — preventing agents from making
-              writes.
+              <strong>Example:</strong> {t("aQuotGitHubReadOnlyQuotToolsetMightIncludeOnly")} <code>list_repos</code>{" "}
+              and <code>get_file</code> {t("fromGithubMcpServerPreventingAgentWrites")}
             </p>
           </div>
           <div>
-            <h4 className="font-semibold text-gray-800 mb-1">Creating toolsets:</h4>
+            <h4 className="font-semibold text-gray-800 mb-1">{t("creatingToolsets")}</h4>
             <p className="text-sm text-gray-600">
-              Admins can create and manage toolsets from the <strong>{t("mcp")}</strong> page → <strong>{t("toolsets")}</strong> tab.
-              Toolsets can then be assigned to keys and teams to scope their tool access.
+              {t("adminsCanCreateAndManageToolsetsFromThe")} <strong>{t("mcp")}</strong> {t("page")}{" "}
+              <strong>{t("toolsets")}</strong> {t("toolsetsTabCanThenBeAssignedToKeysAndTeams")}
             </p>
           </div>
         </div>

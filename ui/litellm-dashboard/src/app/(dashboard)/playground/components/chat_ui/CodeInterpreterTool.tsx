@@ -54,7 +54,7 @@ const CodeInterpreterTool: React.FC<CodeInterpreterToolProps> = ({
         <div className="flex items-center gap-2">
           <CodeOutlined className="text-blue-500" />
           <Text className="font-medium text-gray-700">{t("codeInterpreter")}</Text>
-          <Tooltip title="Run Python code to generate files, charts, and analyze data. Container is created automatically.">
+          <Tooltip title={t("runPythonCodeToGenerateFilesChartsAndAnalyzeDataContainerIsCreatedAutomatically")}>
             <InfoCircleOutlined className="text-gray-400 text-xs" />
           </Tooltip>
         </div>
@@ -79,7 +79,7 @@ const CodeInterpreterTool: React.FC<CodeInterpreterToolProps> = ({
                 rel="noopener noreferrer"
                 className="text-blue-600 hover:text-blue-800 underline"
               >
-                Request support for other providers
+                {t("requestSupportForOtherProviders")}
               </a>
             </div>
           </div>

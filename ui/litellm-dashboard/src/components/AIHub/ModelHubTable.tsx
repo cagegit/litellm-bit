@@ -91,6 +91,7 @@ const ModelHubTable: React.FC<ModelHubTableProps> = ({ accessToken, publicPage, 
   const [skillLoading, setSkillLoading] = useState<boolean>(false);
   const [isMakeSkillPublicModalVisible, setIsMakeSkillPublicModalVisible] = useState(false);
   const { t } = useTranslations("aiHub");
+  const { t: tCommon } = useTranslations("common");
   const router = useRouter();
   const { data: uiSettings, isLoading: isUISettingsLoading } = useUISettings();
 
@@ -456,7 +457,7 @@ const ModelHubTable: React.FC<ModelHubTableProps> = ({ accessToken, publicPage, 
 
                   {/* Model Table */}
                   <ModelDataTable
-                    columns={modelHubColumns(showModal, copyToClipboard, publicPage)}
+                    columns={modelHubColumns(showModal, copyToClipboard, tCommon, publicPage)}
                     data={filteredData}
                     isLoading={loading}
                     defaultSorting={[{ id: "model_group", desc: false }]}
@@ -508,7 +509,7 @@ const ModelHubTable: React.FC<ModelHubTableProps> = ({ accessToken, publicPage, 
 
                   {/* MCP Server Table */}
                   <ModelDataTable
-                    columns={mcpHubColumns(showMcpModal, copyToClipboard, publicPage)}
+                    columns={mcpHubColumns(showMcpModal, copyToClipboard, publicPage, t)}
                     data={mcpHubData || []}
                     isLoading={mcpLoading}
                     defaultSorting={[{ id: "server_name", desc: false }]}

@@ -109,7 +109,7 @@ const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({
     <>
       <Accordion className="mt-2 mb-4">
         <AccordionHeader>
-          <b>Advanced Settings</b>
+          <b>{t("advancedSettings")}</b>
         </AccordionHeader>
         <AccordionBody>
           <div className="bg-white rounded-lg">
@@ -120,8 +120,10 @@ const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({
             <Form.Item
               label={
                 <span>
-                  Attached Knowledge Bases (RAG){" "}
-                  <Tooltip title="Vector stores to use for RAG. Every request to this model will automatically retrieve context from these knowledge bases.">
+                  {t("attachedKnowledgeBasesRAG")}{" "}
+                  <Tooltip
+                    title={t("vectorStoresToUseForRAGEveryRequestToThisModelWillAutomaticallyRetrieveContextFr")}
+                  >
                     <a
                       href="https://docs.litellm.ai/docs/completion/knowledgebase"
                       target="_blank"
@@ -147,7 +149,7 @@ const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({
             <Form.Item
               label={
                 <span>
-                  Guardrails{" "}
+                  {t("guardrails")}{" "}
                   <Tooltip title={t("guardrailsDescription")}>
                     <a
                       href="https://docs.litellm.ai/docs/proxy/guardrails/quick_start"
@@ -229,7 +231,7 @@ const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({
                       label={t("cacheWriteCost")}
                       name="cache_creation_input_token_cost"
                       rules={[{ validator: validateNumber }]}
-                      tooltip="If left blank, defaults to Input Cost (the backend falls back to input_cost_per_token when no cache-write rate is set)."
+                      tooltip={t("ifLeftBlankDefaultsToInputCostTheBackendFallsBackToInputCostPerTokenWhenNoCacheW")}
                       className="mb-4"
                     >
                       <TextInput placeholder={t("defaultsToInputCost")} />
@@ -255,9 +257,9 @@ const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({
               className="mb-4 mt-4"
               tooltip={
                 <span>
-                  Allow using these credentials in pass through routes.{" "}
+                  {t("allowUsingTheseCredentialsInPassThroughRoutes")}{" "}
                   <Link href="https://docs.litellm.ai/docs/pass_through/vertex_ai" target="_blank">
-                    Learn more
+                    {t("learnMore1")}
                   </Link>
                 </span>
               }
@@ -273,7 +275,7 @@ const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({
             <Form.Item
               label={t("litellmParams")}
               name="litellm_extra_params"
-              tooltip="Optional litellm params used for making a litellm.completion() call."
+              tooltip={t("optionalLitellmParamsUsedForMakingALitellmcompletionCall")}
               className="mb-4 mt-4"
               rules={[{ validator: formItemValidateJSON }]}
             >
@@ -290,9 +292,9 @@ const AdvancedSettings: React.FC<AdvancedSettingsProps> = ({
               <Col span={10}></Col>
               <Col span={10}>
                 <Text className="text-gray-600 text-sm">
-                  Pass JSON of litellm supported params{" "}
+                  {t("passJSONOfLitellmSupportedParams")}{" "}
                   <Link href="https://docs.litellm.ai/docs/completion/input" target="_blank">
-                    litellm.completion() call
+                    {t("litellmCompletionCall")}
                   </Link>
                 </Text>
               </Col>

@@ -149,7 +149,7 @@ export default function HashicorpVault() {
                 <KeyRound className="w-6 h-6 text-gray-400" />
                 <div>
                   <Title level={3} style={{ marginBottom: 0 }}>
-                    Hashicorp Vault
+                    {t("hashicorpVault")}
                   </Title>
                   <Text type="secondary">{t("manageSecretManagerConfig")}</Text>
                 </div>

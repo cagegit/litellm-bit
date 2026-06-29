@@ -699,7 +699,7 @@ const WorkflowRuns: React.FC<WorkflowRunsProps> = ({ accessToken }) => {
                 loading={loadingDetail}
                 style={{ color: "#71717a", borderColor: "#e4e4e7" }}
               >
-                Refresh
+                {t("refresh")}
               </Button>
             </div>
 
@@ -741,7 +741,7 @@ const WorkflowRuns: React.FC<WorkflowRunsProps> = ({ accessToken }) => {
                   children:
                     messages.length === 0 ? (
                       <div style={{ padding: "12px 4px", color: "#a1a1aa", fontSize: 12, fontFamily: "monospace" }}>
-                        No messages
+                        {t("noMessages")}
                       </div>
                     ) : (
                       <div style={{ paddingBottom: 4 }}>

@@ -1,0 +1,29 @@
+i18n validation failed
+
+Invalid source translation calls (9):
+  - app\(dashboard)\playground\components\chat_ui\ChatUI.tsx: missing translation key 'playground.toolsetsTabCanThenBeAssignedToKeysAndTeams'
+  - app\(dashboard)\playground\components\complianceUI\ComplianceUI.tsx: missing translation key 'playground.toSubmit'
+  - app\(dashboard)\playground\components\complianceUI\ComplianceUI.tsx: missing translation key 'playground.forNewLine'
+  - components\guardrails\content_filter\CompetitorIntentConfiguration.tsx: missing translation key 'settings.treatAsFullCompetitorComparisonPolicy'
+  - components\guardrails\content_filter\CompetitorIntentConfiguration.tsx: missing translation key 'settings.treatAsPossibleCompetitorComparisonPolicy'
+  - components\guardrails\custom_code\CustomCodeModal.tsx: missing translation key 'settings.mcpAsOpenaiTool'
+  - components\policies\add_attachment_form.tsx: missing translation key 'settings.matchesTagsFromKeyTeamMetadataOrRequestBody'
+  - components\UsagePage\components\EntityUsage\EntityUsage.tsx: missing translation key 'common.pagesChartsUpdatePeriodicallyDescription'
+  - components\UsagePage\components\EntityUsage\EntityUsage.tsx: missing translation key 'common.pagesChartsUpdatePeriodicallyDescription'
+
+  - components\add_model\ComplexityRouterConfig.tsx: dynamic translation call t(tierInfo.descriptionKey)
+Total: en=6512  zh=6512
+  - components\claude_code_plugins\add_plugin_form.tsx: dynamic translation call t(key)
+  - components\common_components\budget_duration_dropdown.tsx: dynamic translation call t(label as "hourly" | "daily" | "weekly" | "monthly")
+  - components\guardrails\TeamGuardrailsTab.tsx: dynamic translation call t(status.labelKey)
+  - components\guardrails\TeamGuardrailsTab.tsx: dynamic translation call t(status.labelKey)
+  - components\key_team_helpers\BudgetWindowsEditor.tsx: dynamic translation call t(o.labelKey)
+  - components\key_team_helpers\BudgetWindowsEditor.tsx: dynamic translation call t(hintKey)
+  - components\mcp_tools\MCPSubmissionsTab.tsx: dynamic translation call t(isCurrentlyActive ? "confirmRejectActive" : "confirmRejectInactive")
+  - components\mcp_tools\MCPSubmissionsTab.tsx: dynamic translation call t(approvalStatus === "pending_review" ? "pendingReview" : approvalStatus)
+  - components\settings.tsx: dynamic translation call t(value)
+  - components\SSOModals.tsx: dynamic translation call t(`field.${field.name}`)
+  - components\SSOModals.tsx: dynamic translation call t(`ssoProvider.${value}`)
+  - components\SSOModals.tsx: dynamic translation call t(`ssoProvider.${value}`)
+  - components\view_logs\AuditLogDrawer\AuditLogDrawer.tsx: dynamic translation call t(tableNameKey)
+  - components\view_logs\columns.tsx: dynamic translation call t(key)

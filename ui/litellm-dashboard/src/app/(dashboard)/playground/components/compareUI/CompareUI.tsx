@@ -704,7 +704,7 @@ export default function CompareUI({ accessToken, disabledPersonalKeyCreation }: 
                 className="w-48"
               >
                 <Select.Option value="session" disabled={!canUseSessionKey}>
-                  Current UI Session
+                  {t("currentUISession")}
                 </Select.Option>
                 <Select.Option value="custom">{t("virtualKey")}</Select.Option>
               </Select>
@@ -733,7 +733,7 @@ export default function CompareUI({ accessToken, disabledPersonalKeyCreation }: 
             </div>
             <div className="flex items-center gap-3">
               <Button onClick={clearAllChats} disabled={!hasMessages} icon={<ClearOutlined />}>
-                Clear All Chats
+                {t("clearAllChats")}
               </Button>
               <Tooltip
                 title={
@@ -741,7 +741,7 @@ export default function CompareUI({ accessToken, disabledPersonalKeyCreation }: 
                 }
               >
                 <Button onClick={addComparison} disabled={comparisons.length >= maxComparisons} icon={<PlusOutlined />}>
-                  Add Comparison
+                  {t("addComparison")}
                 </Button>
               </Tooltip>
             </div>
@@ -820,7 +820,7 @@ export default function CompareUI({ accessToken, disabledPersonalKeyCreation }: 
                       ) : (
                         <img
                           src={uploadedFilePreviewUrl || ""}
-                          alt="Upload preview"
+                          alt={t("uploadPreview")}
                           className="w-10 h-10 rounded-md border border-gray-200 object-cover"
                         />
                       )}

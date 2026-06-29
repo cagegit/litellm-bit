@@ -59,13 +59,13 @@ const OAuthFormFields: React.FC<OAuthFormFieldsProps> = ({
           <Select.Option value={OAUTH_FLOW.M2M}>
             <div>
               <span className="font-medium">{t("machineToMachinem2m")}</span>
-              <span className="text-gray-400 text-xs ml-2">server-to-server, no user interaction</span>
+              <span className="text-gray-400 text-xs ml-2">{t("serverToServerNoUserInteraction")}</span>
             </div>
           </Select.Option>
           <Select.Option value={OAUTH_FLOW.INTERACTIVE}>
             <div>
               <span className="font-medium">{t("interactivepkce")}</span>
-              <span className="text-gray-400 text-xs ml-2">browser-based user authorization</span>
+              <span className="text-gray-400 text-xs ml-2">{t("browserBasedUserAuthorization")}</span>
             </div>
           </Select.Option>
         </Select>
@@ -113,7 +113,13 @@ const OAuthFormFields: React.FC<OAuthFormFieldsProps> = ({
             }
             name={["credentials", "scopes"]}
           >
-            <Select mode="tags" tokenSeparators={[","]} placeholder={t("placeholderAddScopes")} className="rounded-lg" size="large" />
+            <Select
+              mode="tags"
+              tokenSeparators={[","]}
+              placeholder={t("placeholderAddScopes")}
+              className="rounded-lg"
+              size="large"
+            />
           </Form.Item>
         </>
       ) : (
@@ -121,10 +127,7 @@ const OAuthFormFields: React.FC<OAuthFormFieldsProps> = ({
           <Form.Item
             label={
               <span className="flex items-center justify-between w-full">
-                <FieldLabel
-                  label={t("clientIdoptional")}
-                  tooltip={t("tooltipOauthClientInfo")}
-                />
+                <FieldLabel label={t("clientIdoptional")} tooltip={t("tooltipOauthClientInfo")} />
                 {docsUrl && (
                   <a
                     href={docsUrl}
@@ -133,7 +136,7 @@ const OAuthFormFields: React.FC<OAuthFormFieldsProps> = ({
                     className="text-xs text-blue-500 hover:text-blue-700 ml-2 font-normal"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    Create OAuth App →
+                    {t("createOAuthApp")}
                   </a>
                 )}
               </span>
@@ -143,12 +146,7 @@ const OAuthFormFields: React.FC<OAuthFormFieldsProps> = ({
             <TextInput type="password" placeholder={`Enter client ID${placeholderSuffix}`} className={fieldClassName} />
           </Form.Item>
           <Form.Item
-            label={
-              <FieldLabel
-                label={t("clientSecretoptional")}
-                tooltip={t("tooltipOauthClientInfo")}
-              />
-            }
+            label={<FieldLabel label={t("clientSecretoptional")} tooltip={t("tooltipOauthClientInfo")} />}
             name={["credentials", "client_secret"]}
           >
             <TextInput
@@ -161,20 +159,21 @@ const OAuthFormFields: React.FC<OAuthFormFieldsProps> = ({
             label={
               <FieldLabel
                 label={t("scopesoptional")}
-                tooltip="Optional scopes requested during token exchange. Separate multiple scopes with enter or commas."
+                tooltip={t("optionalScopesRequestedDuringTokenExchangeSeparateMultipleScopesWithEnterOrComma")}
               />
             }
             name={["credentials", "scopes"]}
           >
-            <Select mode="tags" tokenSeparators={[","]} placeholder={t("placeholderAddScopes")} className="rounded-lg" size="large" />
+            <Select
+              mode="tags"
+              tokenSeparators={[","]}
+              placeholder={t("placeholderAddScopes")}
+              className="rounded-lg"
+              size="large"
+            />
           </Form.Item>
           <Form.Item
-            label={
-              <FieldLabel
-                label={t("authorizationUrloptional")}
-                tooltip={t("tooltipAuthUrlOverride")}
-              />
-            }
+            label={<FieldLabel label={t("authorizationUrloptional")} tooltip={t("tooltipAuthUrlOverride")} />}
             name="authorization_url"
           >
             <TextInput placeholder="https://example.com/oauth/authorize" className={fieldClassName} />
@@ -186,12 +185,7 @@ const OAuthFormFields: React.FC<OAuthFormFieldsProps> = ({
             <TextInput placeholder="https://example.com/oauth/token" className={fieldClassName} />
           </Form.Item>
           <Form.Item
-            label={
-              <FieldLabel
-                label={t("registrationUrloptional")}
-                tooltip={t("tooltipRegistrationUrlOverride")}
-              />
-            }
+            label={<FieldLabel label={t("registrationUrloptional")} tooltip={t("tooltipRegistrationUrlOverride")} />}
             name="registration_url"
           >
             <TextInput placeholder="https://example.com/oauth/register" className={fieldClassName} />
@@ -233,14 +227,16 @@ const OAuthFormFields: React.FC<OAuthFormFieldsProps> = ({
             }
             name="token_storage_ttl_seconds"
           >
-            <InputNumber min={1} placeholder="e.g. 3600" className="w-full rounded-lg" style={{ width: "100%" }} />
+            <InputNumber
+              min={1}
+              placeholder={t("placeholderTtl")}
+              className="w-full rounded-lg"
+              style={{ width: "100%" }}
+            />
           </Form.Item>
           {oauthFlow && (
             <div className="rounded-lg border border-dashed border-gray-300 p-4 space-y-2">
-              <p className="text-sm text-gray-600">
-                Use OAuth to fetch a fresh access token and temporarily save it in the session as the authentication
-                value.
-              </p>
+              <p className="text-sm text-gray-600">{t("useOAuthToFetchFreshAccessTokenDescription")}</p>
               <Button
                 variant="secondary"
                 onClick={oauthFlow.startOAuthFlow}
@@ -255,7 +251,7 @@ const OAuthFormFields: React.FC<OAuthFormFieldsProps> = ({
               {oauthFlow.error && <p className="text-sm text-red-500">{oauthFlow.error}</p>}
               {oauthFlow.status === "success" && oauthFlow.tokenResponse?.access_token && (
                 <p className="text-sm text-green-600">
-                  Token fetched. Expires in {oauthFlow.tokenResponse.expires_in ?? "?"} seconds.
+                  {t("tokenFetchedExpiresIn1")} {oauthFlow.tokenResponse.expires_in ?? "?"} seconds.
                 </p>
               )}
             </div>
